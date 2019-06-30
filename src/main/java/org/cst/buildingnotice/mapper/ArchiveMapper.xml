@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cst.buildingnotice.dao.ArchiveMapper">
+  <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Archive">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="material" jdbcType="VARCHAR" property="material" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="hold" jdbcType="VARCHAR" property="hold" />
+    <result column="holdid" jdbcType="VARCHAR" property="holdid" />
+    <result column="attr" jdbcType="VARCHAR" property="attr" />
+    <result column="layer" jdbcType="INTEGER" property="layer" />
+    <result column="create" jdbcType="DATE" property="create" />
+    <result column="typeid" jdbcType="INTEGER" property="typeid" />
+    <result column="identitytime" jdbcType="TIMESTAMP" property="identitytime" />
+    <result column="rankid" jdbcType="INTEGER" property="rankid" />
+    <result column="rankratio" jdbcType="DOUBLE" property="rankratio" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unit, phone, material, addr, hold, holdid, attr, layer, create, typeid, identitytime, 
+    rankid, rankratio, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from archive
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from archive
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cst.buildingnotice.entity.Archive">
+    insert into archive (id, unit, phone, 
+      material, addr, hold, 
+      holdid, attr, layer, 
+      create, typeid, identitytime, 
+      rankid, rankratio, userid
+      )
+    values (#{id,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{material,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{hold,jdbcType=VARCHAR}, 
+      #{holdid,jdbcType=VARCHAR}, #{attr,jdbcType=VARCHAR}, #{layer,jdbcType=INTEGER}, 
+      #{create,jdbcType=DATE}, #{typeid,jdbcType=INTEGER}, #{identitytime,jdbcType=TIMESTAMP}, 
+      #{rankid,jdbcType=INTEGER}, #{rankratio,jdbcType=DOUBLE}, #{userid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Archive">
+    insert into archive
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="hold != null">
+        hold,
+      </if>
+      <if test="holdid != null">
+        holdid,
+      </if>
+      <if test="attr != null">
+        attr,
+      </if>
+      <if test="layer != null">
+        layer,
+      </if>
+      <if test="create != null">
+        create,
+      </if>
+      <if test="typeid != null">
+        typeid,
+      </if>
+      <if test="identitytime != null">
+        identitytime,
+      </if>
+      <if test="rankid != null">
+        rankid,
+      </if>
+      <if test="rankratio != null">
+        rankratio,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null">
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="hold != null">
+        #{hold,jdbcType=VARCHAR},
+      </if>
+      <if test="holdid != null">
+        #{holdid,jdbcType=VARCHAR},
+      </if>
+      <if test="attr != null">
+        #{attr,jdbcType=VARCHAR},
+      </if>
+      <if test="layer != null">
+        #{layer,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        #{create,jdbcType=DATE},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="identitytime != null">
+        #{identitytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rankid != null">
+        #{rankid,jdbcType=INTEGER},
+      </if>
+      <if test="rankratio != null">
+        #{rankratio,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.Archive">
+    update archive
+    <set>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null">
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="hold != null">
+        hold = #{hold,jdbcType=VARCHAR},
+      </if>
+      <if test="holdid != null">
+        holdid = #{holdid,jdbcType=VARCHAR},
+      </if>
+      <if test="attr != null">
+        attr = #{attr,jdbcType=VARCHAR},
+      </if>
+      <if test="layer != null">
+        layer = #{layer,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        create = #{create,jdbcType=DATE},
+      </if>
+      <if test="typeid != null">
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="identitytime != null">
+        identitytime = #{identitytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rankid != null">
+        rankid = #{rankid,jdbcType=INTEGER},
+      </if>
+      <if test="rankratio != null">
+        rankratio = #{rankratio,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Archive">
+    update archive
+    set unit = #{unit,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      hold = #{hold,jdbcType=VARCHAR},
+      holdid = #{holdid,jdbcType=VARCHAR},
+      attr = #{attr,jdbcType=VARCHAR},
+      layer = #{layer,jdbcType=INTEGER},
+      create = #{create,jdbcType=DATE},
+      typeid = #{typeid,jdbcType=INTEGER},
+      identitytime = #{identitytime,jdbcType=TIMESTAMP},
+      rankid = #{rankid,jdbcType=INTEGER},
+      rankratio = #{rankratio,jdbcType=DOUBLE},
+      userid = #{userid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

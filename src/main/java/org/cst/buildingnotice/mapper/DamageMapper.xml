@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cst.buildingnotice.dao.DamageMapper">
+  <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Damage">
+    <id column="archid" jdbcType="INTEGER" property="archid" />
+    <result column="a111" jdbcType="INTEGER" property="a111" />
+    <result column="a112" jdbcType="INTEGER" property="a112" />
+    <result column="a121" jdbcType="INTEGER" property="a121" />
+    <result column="a122" jdbcType="INTEGER" property="a122" />
+    <result column="a131" jdbcType="INTEGER" property="a131" />
+    <result column="a132" jdbcType="INTEGER" property="a132" />
+    <result column="a211" jdbcType="INTEGER" property="a211" />
+    <result column="a212" jdbcType="INTEGER" property="a212" />
+    <result column="a221" jdbcType="INTEGER" property="a221" />
+    <result column="a222" jdbcType="INTEGER" property="a222" />
+    <result column="a311" jdbcType="INTEGER" property="a311" />
+    <result column="a312" jdbcType="INTEGER" property="a312" />
+    <result column="a411" jdbcType="INTEGER" property="a411" />
+    <result column="a412" jdbcType="INTEGER" property="a412" />
+    <result column="a511" jdbcType="INTEGER" property="a511" />
+    <result column="a512" jdbcType="INTEGER" property="a512" />
+    <result column="a611" jdbcType="INTEGER" property="a611" />
+    <result column="a612" jdbcType="INTEGER" property="a612" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    archid, a111, a112, a121, a122, a131, a132, a211, a212, a221, a222, a311, a312, a411, 
+    a412, a511, a512, a611, a612
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from damage
+    where archid = #{archid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from damage
+    where archid = #{archid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cst.buildingnotice.entity.Damage">
+    insert into damage (archid, a111, a112, 
+      a121, a122, a131, a132, 
+      a211, a212, a221, a222, 
+      a311, a312, a411, a412, 
+      a511, a512, a611, a612
+      )
+    values (#{archid,jdbcType=INTEGER}, #{a111,jdbcType=INTEGER}, #{a112,jdbcType=INTEGER}, 
+      #{a121,jdbcType=INTEGER}, #{a122,jdbcType=INTEGER}, #{a131,jdbcType=INTEGER}, #{a132,jdbcType=INTEGER}, 
+      #{a211,jdbcType=INTEGER}, #{a212,jdbcType=INTEGER}, #{a221,jdbcType=INTEGER}, #{a222,jdbcType=INTEGER}, 
+      #{a311,jdbcType=INTEGER}, #{a312,jdbcType=INTEGER}, #{a411,jdbcType=INTEGER}, #{a412,jdbcType=INTEGER}, 
+      #{a511,jdbcType=INTEGER}, #{a512,jdbcType=INTEGER}, #{a611,jdbcType=INTEGER}, #{a612,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Damage">
+    insert into damage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="archid != null">
+        archid,
+      </if>
+      <if test="a111 != null">
+        a111,
+      </if>
+      <if test="a112 != null">
+        a112,
+      </if>
+      <if test="a121 != null">
+        a121,
+      </if>
+      <if test="a122 != null">
+        a122,
+      </if>
+      <if test="a131 != null">
+        a131,
+      </if>
+      <if test="a132 != null">
+        a132,
+      </if>
+      <if test="a211 != null">
+        a211,
+      </if>
+      <if test="a212 != null">
+        a212,
+      </if>
+      <if test="a221 != null">
+        a221,
+      </if>
+      <if test="a222 != null">
+        a222,
+      </if>
+      <if test="a311 != null">
+        a311,
+      </if>
+      <if test="a312 != null">
+        a312,
+      </if>
+      <if test="a411 != null">
+        a411,
+      </if>
+      <if test="a412 != null">
+        a412,
+      </if>
+      <if test="a511 != null">
+        a511,
+      </if>
+      <if test="a512 != null">
+        a512,
+      </if>
+      <if test="a611 != null">
+        a611,
+      </if>
+      <if test="a612 != null">
+        a612,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="archid != null">
+        #{archid,jdbcType=INTEGER},
+      </if>
+      <if test="a111 != null">
+        #{a111,jdbcType=INTEGER},
+      </if>
+      <if test="a112 != null">
+        #{a112,jdbcType=INTEGER},
+      </if>
+      <if test="a121 != null">
+        #{a121,jdbcType=INTEGER},
+      </if>
+      <if test="a122 != null">
+        #{a122,jdbcType=INTEGER},
+      </if>
+      <if test="a131 != null">
+        #{a131,jdbcType=INTEGER},
+      </if>
+      <if test="a132 != null">
+        #{a132,jdbcType=INTEGER},
+      </if>
+      <if test="a211 != null">
+        #{a211,jdbcType=INTEGER},
+      </if>
+      <if test="a212 != null">
+        #{a212,jdbcType=INTEGER},
+      </if>
+      <if test="a221 != null">
+        #{a221,jdbcType=INTEGER},
+      </if>
+      <if test="a222 != null">
+        #{a222,jdbcType=INTEGER},
+      </if>
+      <if test="a311 != null">
+        #{a311,jdbcType=INTEGER},
+      </if>
+      <if test="a312 != null">
+        #{a312,jdbcType=INTEGER},
+      </if>
+      <if test="a411 != null">
+        #{a411,jdbcType=INTEGER},
+      </if>
+      <if test="a412 != null">
+        #{a412,jdbcType=INTEGER},
+      </if>
+      <if test="a511 != null">
+        #{a511,jdbcType=INTEGER},
+      </if>
+      <if test="a512 != null">
+        #{a512,jdbcType=INTEGER},
+      </if>
+      <if test="a611 != null">
+        #{a611,jdbcType=INTEGER},
+      </if>
+      <if test="a612 != null">
+        #{a612,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.Damage">
+    update damage
+    <set>
+      <if test="a111 != null">
+        a111 = #{a111,jdbcType=INTEGER},
+      </if>
+      <if test="a112 != null">
+        a112 = #{a112,jdbcType=INTEGER},
+      </if>
+      <if test="a121 != null">
+        a121 = #{a121,jdbcType=INTEGER},
+      </if>
+      <if test="a122 != null">
+        a122 = #{a122,jdbcType=INTEGER},
+      </if>
+      <if test="a131 != null">
+        a131 = #{a131,jdbcType=INTEGER},
+      </if>
+      <if test="a132 != null">
+        a132 = #{a132,jdbcType=INTEGER},
+      </if>
+      <if test="a211 != null">
+        a211 = #{a211,jdbcType=INTEGER},
+      </if>
+      <if test="a212 != null">
+        a212 = #{a212,jdbcType=INTEGER},
+      </if>
+      <if test="a221 != null">
+        a221 = #{a221,jdbcType=INTEGER},
+      </if>
+      <if test="a222 != null">
+        a222 = #{a222,jdbcType=INTEGER},
+      </if>
+      <if test="a311 != null">
+        a311 = #{a311,jdbcType=INTEGER},
+      </if>
+      <if test="a312 != null">
+        a312 = #{a312,jdbcType=INTEGER},
+      </if>
+      <if test="a411 != null">
+        a411 = #{a411,jdbcType=INTEGER},
+      </if>
+      <if test="a412 != null">
+        a412 = #{a412,jdbcType=INTEGER},
+      </if>
+      <if test="a511 != null">
+        a511 = #{a511,jdbcType=INTEGER},
+      </if>
+      <if test="a512 != null">
+        a512 = #{a512,jdbcType=INTEGER},
+      </if>
+      <if test="a611 != null">
+        a611 = #{a611,jdbcType=INTEGER},
+      </if>
+      <if test="a612 != null">
+        a612 = #{a612,jdbcType=INTEGER},
+      </if>
+    </set>
+    where archid = #{archid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Damage">
+    update damage
+    set a111 = #{a111,jdbcType=INTEGER},
+      a112 = #{a112,jdbcType=INTEGER},
+      a121 = #{a121,jdbcType=INTEGER},
+      a122 = #{a122,jdbcType=INTEGER},
+      a131 = #{a131,jdbcType=INTEGER},
+      a132 = #{a132,jdbcType=INTEGER},
+      a211 = #{a211,jdbcType=INTEGER},
+      a212 = #{a212,jdbcType=INTEGER},
+      a221 = #{a221,jdbcType=INTEGER},
+      a222 = #{a222,jdbcType=INTEGER},
+      a311 = #{a311,jdbcType=INTEGER},
+      a312 = #{a312,jdbcType=INTEGER},
+      a411 = #{a411,jdbcType=INTEGER},
+      a412 = #{a412,jdbcType=INTEGER},
+      a511 = #{a511,jdbcType=INTEGER},
+      a512 = #{a512,jdbcType=INTEGER},
+      a611 = #{a611,jdbcType=INTEGER},
+      a612 = #{a612,jdbcType=INTEGER}
+    where archid = #{archid,jdbcType=INTEGER}
+  </update>
+</mapper>

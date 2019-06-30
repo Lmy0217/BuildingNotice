@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cst.buildingnotice.dao.Type4Mapper">
+  <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Type4">
+    <id column="archid" jdbcType="INTEGER" property="archid" />
+    <result column="a21" jdbcType="INTEGER" property="a21" />
+    <result column="a22" jdbcType="INTEGER" property="a22" />
+    <result column="a23" jdbcType="INTEGER" property="a23" />
+    <result column="a24" jdbcType="INTEGER" property="a24" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    archid, a21, a22, a23, a24
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from type4
+    where archid = #{archid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from type4
+    where archid = #{archid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.cst.buildingnotice.entity.Type4">
+    insert into type4 (archid, a21, a22, 
+      a23, a24)
+    values (#{archid,jdbcType=INTEGER}, #{a21,jdbcType=INTEGER}, #{a22,jdbcType=INTEGER}, 
+      #{a23,jdbcType=INTEGER}, #{a24,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Type4">
+    insert into type4
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="archid != null">
+        archid,
+      </if>
+      <if test="a21 != null">
+        a21,
+      </if>
+      <if test="a22 != null">
+        a22,
+      </if>
+      <if test="a23 != null">
+        a23,
+      </if>
+      <if test="a24 != null">
+        a24,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="archid != null">
+        #{archid,jdbcType=INTEGER},
+      </if>
+      <if test="a21 != null">
+        #{a21,jdbcType=INTEGER},
+      </if>
+      <if test="a22 != null">
+        #{a22,jdbcType=INTEGER},
+      </if>
+      <if test="a23 != null">
+        #{a23,jdbcType=INTEGER},
+      </if>
+      <if test="a24 != null">
+        #{a24,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.Type4">
+    update type4
+    <set>
+      <if test="a21 != null">
+        a21 = #{a21,jdbcType=INTEGER},
+      </if>
+      <if test="a22 != null">
+        a22 = #{a22,jdbcType=INTEGER},
+      </if>
+      <if test="a23 != null">
+        a23 = #{a23,jdbcType=INTEGER},
+      </if>
+      <if test="a24 != null">
+        a24 = #{a24,jdbcType=INTEGER},
+      </if>
+    </set>
+    where archid = #{archid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Type4">
+    update type4
+    set a21 = #{a21,jdbcType=INTEGER},
+      a22 = #{a22,jdbcType=INTEGER},
+      a23 = #{a23,jdbcType=INTEGER},
+      a24 = #{a24,jdbcType=INTEGER}
+    where archid = #{archid,jdbcType=INTEGER}
+  </update>
+</mapper>

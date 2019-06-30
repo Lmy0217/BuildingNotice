@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cst.buildingnotice.dao.TypeMapper">
+  <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Type">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="tabel" jdbcType="VARCHAR" property="tabel" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    <result column="body2" jdbcType="LONGVARCHAR" property="body2" />
+    <result column="body3" jdbcType="LONGVARCHAR" property="body3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tabel, name
+  </sql>
+  <sql id="Blob_Column_List">
+    body2, body3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="org.cst.buildingnotice.entity.TypeKey" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from type
+    where id = #{id,jdbcType=INTEGER}
+      and tabel = #{tabel,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.cst.buildingnotice.entity.TypeKey">
+    delete from type
+    where id = #{id,jdbcType=INTEGER}
+      and tabel = #{tabel,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    insert into type (id, tabel, name, 
+      body2, body3)
+    values (#{id,jdbcType=INTEGER}, #{tabel,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{body2,jdbcType=LONGVARCHAR}, #{body3,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    insert into type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tabel != null">
+        tabel,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="body2 != null">
+        body2,
+      </if>
+      <if test="body3 != null">
+        body3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tabel != null">
+        #{tabel,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="body2 != null">
+        #{body2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body3 != null">
+        #{body3,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    update type
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="body2 != null">
+        body2 = #{body2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body3 != null">
+        body3 = #{body3,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and tabel = #{tabel,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    update type
+    set name = #{name,jdbcType=VARCHAR},
+      body2 = #{body2,jdbcType=LONGVARCHAR},
+      body3 = #{body3,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and tabel = #{tabel,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Type">
+    update type
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and tabel = #{tabel,jdbcType=VARCHAR}
+  </update>
+</mapper>
