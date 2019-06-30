@@ -26,6 +26,7 @@ var takePictureOnclick = function(){
         }
     }();
     takePicture.click();
+	console.log(takePictureUrl);
 }
 
 // 照片压缩
@@ -60,6 +61,6 @@ var compressPicture = function (blob) {
     uploadPicture(imgurl);
   };
 };
-
+console.log(compressPicture);
 // 监听照片拍摄,并获取照片流
 // var takePicture = document.getElementById('takepicture');
