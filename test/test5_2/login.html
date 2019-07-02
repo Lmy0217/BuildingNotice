@@ -13,20 +13,21 @@
 		<!-- <script type="text/javascript" src="js/myscript.js"></script> -->
 		<link href="css/mycss.css" />
 		<style>
-			.mui-input-group .lv-title {
-				width: 100%;
-			}
 			.lv-content {
 				height: auto;
 			}
-			.mui-input-group .mui-input-row{
+			.mui-input-group .mui-input-row {
 				height: auto;
 				min-height: 40px;
-				max-height:100px;
+				max-height: 100px;
 			}
-			.mui-input-row textarea{
+			.mui-input-row textarea {
 				height: auto;
 			}
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
 		</style>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.js"></script>
@@ -39,7 +40,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content lv-content">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label class="lv-title">一、委托概况</label>
@@ -122,17 +123,39 @@
 					<label class="lv-title">3.结构现状描述</label>
 				</div>
 				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；
-				2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
 				</textarea>
 				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">4.测试复选框</label>
+				</div>
+
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>checked：false</label>
+					<input name="checkbox" value="Item 1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>checked：true</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>disabled checkbox</label>
+					<input name="checkbox" type="checkbox">
+				</div>
+
+				<!-- 				<div class="mui-content-padded">
+					<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+					<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+					</div>
+				</div> -->
+				</form>
 		</div>
 		<!-- 
 				<input name="address" type="hidden" id="address" value="">
 				<button id="showFloorPicker" class="mui-btn mui-btn-block" type="button">选择结构类型</button>
 				<input name="time" type="hidden" id="time" value="">
 				<button id="showTimePicker" class="mui-btn mui-btn-block" type="button">选择鉴定时间</button> -->
-		</form>
+		
 		<!-- <form class="mui-input-group">
 			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell">
@@ -142,15 +165,15 @@
 					</div>
 				</li>
 			</ul>
-		</form>
+		</form> -->
 		<div class="mui-content-padded">
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 			<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
 			</div>
-		</div> -->
-		<div class="">
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">确定</button>
 		</div>
+		<!-- <div class="">
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">确定</button>
+		</div> -->
 		<div class="mui-content-padded oauth-area">
 
 		</div>
