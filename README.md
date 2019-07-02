@@ -1,2 +1,2 @@
 # Building Notice
-* SSM 框架
+* [Server](server)

@@ -1,0 +1,2 @@
+# Building Notice Server
+* SSM
