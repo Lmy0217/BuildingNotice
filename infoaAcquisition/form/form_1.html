@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
+		
 		<style>
 			.lv-content {
 				height: auto;
@@ -26,6 +27,13 @@
 				color: #000000;
 			}
 		</style>
+		<script>
+			//打开"下一单"
+			function openNext(){
+				var url="form_2.html";
+				plus.webview.create(url).show();
+			}
+		</script>
 	</head>
 
 	<body>
@@ -101,7 +109,7 @@
 
 		</div>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
 		</div>
 
 		<script type="text/javascript">

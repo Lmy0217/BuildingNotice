@@ -21,6 +21,11 @@
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
 				// ... code  
 			}
+			//打开"采集信息"
+			function openForm(){
+				var url="form/form_1.html";
+				plus.webview.create(url).show();
+			}
 		</script>
 	</head>
 	<body>
@@ -28,7 +33,7 @@
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="window.location.href='form/form_1.html'">采集信息</button>
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openForm()">采集信息</button>
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="window.location.href='https://baidu.com'">上传缓存</button>
 		</div>
 		</div>

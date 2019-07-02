@@ -3,10 +3,10 @@
     "id" : "H5DEB6BA3", /*应用的标识，创建应用时自动生成，勿手动修改*/
     "name" : "infoaAcquisition", /*应用名称，程序桌面图标名称*/
     "version" : {
-        "name" : "0.02", /*应用版本名称*/
-        "code" : "83"
+        "name" : "0.10", /*应用版本名称*/
+        "code" : 66
     },
-    "description" : "赣安鉴定信息采集系统", /*应用描述信息*/
+    "description" : "赣安鉴定信息采集系统,@luov.top,@myluo.cn", /*应用描述信息*/
     "icons" : {
         "72" : "icon.png"
     },
