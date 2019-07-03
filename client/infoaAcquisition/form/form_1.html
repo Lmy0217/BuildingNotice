@@ -27,41 +27,37 @@
 				color: #000000;
 			}
 		</style>
+		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/jquery.serializejson.min.js"></script>
 		<script>
+			mui.init();
+			// 扩展API是否准备好，如果没有则监听“plusready"事件  
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+			// 扩展API准备完成后要执行的操作  
+			function plusReady() {
+				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
+				// ... code  
+			}
 			function getUser(){
         console.log($('#form1').serializeJSON());
-		alert(JSON.stringify($('#form1').serializeJSON()));
         console.log(JSON.stringify($('#form1').serializeJSON()));
-        return JSON.stringify($('#form1').serializeJSON());
+        return ($('#form1').serializeJSON());
     }
+	
 			//打开"下一单"
 			function openNext(){
-				json1=getUser();
-				alert()
-				mui.openWindow({  
-    url: "form_2.html",
-    
-  extras: {  
-       name:'mui'  //自定义扩展参数，可以用来处理页面间传值  
-    },
-    show: {  
-        autoShow: true, //页面loaded事件发生后自动显示，默认为true  
-        aniShow: animationType, //页面显示动画，默认为”slide-in-right“；  
-        duration: animationTime //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；  
-    },  
-    waiting: {  
-        autoShow: true, //自动显示等待框，默认为true  
-        title: '正在加载...', //等待对话框上显示的提示内容  
-        options: {  
-            width: waiting - dialog - widht, //等待框背景区域宽度，默认根据内容自动计算合适宽度  
-            height: waiting - dialog - height, //等待框背景区域高度，默认根据内容自动计算合适高度  
-            ......  
-        }  
-    }  
-})  
-				// var url="form_2.html";
+				var extras=getUser();
+				var url="form_2.html";
+				var id="form2";
+				var style={};
+				plus.webview.create(url,id,style,extras).show();
+				// plus.webview.create(url).show();
+	// var url="form_2.html";
 				// plus.webview.create(url).show();
 			}
 		</script>
@@ -69,7 +65,7 @@
 	</head>
 
 	<body>
-		<script src="../js/mui.js"></script>
+
 
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
@@ -127,7 +123,7 @@
 					<div class="mui-numbox" data-numbox-min="1" data-numbox-max="10">
 						<!-- "-"按钮，点击可减小当前数值 -->
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" id="floor" name="floor"/>
+						<input class="mui-numbox-input" type="number" id="floor" name="floor" />
 						<!-- "+"按钮，点击可增大当前数值 -->
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
@@ -140,7 +136,7 @@
 		</div>
 		<div class="mui-content-padded">
 			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6"
-			 onclick="getUser()">下一步</button>
+			 onclick="openNext()">下一步</button>
 		</div>
 
 		<script type="text/javascript">
