@@ -36,10 +36,6 @@
 	var dataBase64;
 	mui.init();
 	mui.plusReady(function() {
-		
-		
-		
-		 document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
 		// 扩展API加载完毕后调用onPlusReady回调函数 
 		document.getElementById('photo').addEventListener('tap', function() {
 			openCamera();
@@ -56,6 +52,7 @@
 	function openNext(){
 		var tmp=plus.webview.currentWebview();
 		var form_per=chuliForm(tmp);
+		document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
 		console.log(JSON.stringify(form_per));
 		var form_now=getForm('#form2');
 		console.log(form_per);
@@ -86,7 +83,7 @@
 					</label>
 				</div>
 				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea>
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription1">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
@@ -94,7 +91,7 @@
 					</label>
 				</div>
 				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription2">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
 		</textarea>
 				</div>
 				<div class="mui-input-row">
@@ -103,7 +100,7 @@
 					</label>
 				</div>
 				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription3">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
 						</textarea>
 				</div>
 				<div class="mui-input-row">
@@ -111,15 +108,15 @@
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木梁</label>
-					<input name="checkbox" value="Item 1" type="checkbox">
+					<input name="checkbox" value="1" type="checkbox">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木柱</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
+					<input name="checkbox" value="2" type="checkbox" checked>
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>木板</label>
-					<input name="checkbox" type="checkbox">
+					<input name="checkbox" value="3" type="checkbox">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">照片采集</label>
@@ -127,7 +124,6 @@
 				<div class="mui-content-padded">
 					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
 				</div>
-
 		</div>
 		</form>
 		<div class="mui-content-padded">

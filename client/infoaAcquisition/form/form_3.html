@@ -21,6 +21,10 @@
 				min-height: 40px;
 				max-height: 100px;
 			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
 		</style>
 	</head>
 
@@ -31,101 +35,201 @@
 		<script src="../js/takePhoto.js"></script>
 		<script src="../js/form.js"></script>
 		<script>
-			var file_url;
-	var timestamp;
-	var dataBase64;
-	mui.init();
-	mui.plusReady(function() {
-		var tmp=plus.webview.currentWebview();
-		var form_per=chuliForm(tmp);
-		console.log(JSON.stringify(form_per));
-		
-		 document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
-		// 扩展API加载完毕后调用onPlusReady回调函数 
-		document.getElementById('photo').addEventListener('tap', function() {
-			openCamera();
-		}, false);
-		document.getElementById(document.getElementById('photo'));
-	});
-	
-	//打开"上一单"
-	function openPer(){
-		var url="form_1.html";
-		plus.webview.create(url).show();
-	}
-	//打开"下一单"
-	function openNext(){
-		var form_now=getForm('#form2')();
-		console.log(form_per);
-		var extras = $.extend({}, form_per, form_now);
-		var url="form_3.html";
-		var id="form3";
-		var style={};
-		plus.webview.create(url,id,style,extras).show();
-	}
-</script>
+			mui.plusReady(function() {
+				// 扩展API加载完毕后调用onPlusReady回调函数 
+				document.getElementById('photo').addEventListener('tap', function() {
+					openCamera();
+				}, false);
+				document.getElementById(document.getElementById('photo'));
+			});
+			
+			//打开"上一单"
+			function openPer(){
+				var url="form_1.html";
+				plus.webview.create(url).show();
+			}
+			//打开"下一单"
+			function openNext(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+				console.log(JSON.stringify(form_per));
+				var form_now=getForm('#form2');
+				console.log(form_per);
+				var extras = $.extend({}, form_per, form_now);
+				var url="form_4.html";
+				var id="form4";
+				var style={};
+				plus.webview.create(url,id,style,extras).show();
+			}
+		</script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
-		</header>		
+		</header>
 		<div class="mui-content">
 			<form id='form2' class="mui-input-group">
 				<div class="mui-input-row">
 					<label id="div1" class="lv-title"></label>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">二、房屋概况</label>
+					<label class="lv-title">三、鉴定依据(略)</label>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">&nbsp;房屋结构描述</label>
-				</div>
-				<div class="mui-input-row">
-					<label class="lv-title">
-						<h5>&nbsp;1.设计、施工、监理单位和相关资料</h5>
-					</label>
-				</div>
-				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea>
+					<label class="lv-title">四、现场查勘及受损情况调查</label>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5>&nbsp;2.基础和主体结构概况</h5>
+						<h5>经鉴定人员现场查勘，房屋主体结构受损情况综述如下：</h5>
 					</label>
 				</div>
 				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
-		</textarea>
+					<label class="lv-title">&nbsp;1、柱构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>中柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="zhongzhu" name="zhongzhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性中柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="zhongzhu_w" name="zhongzhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>边柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="bianzhu" name="bianzhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性边柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="bianzhu_w" name="bianzhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>角柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="jiaozhu" name="jiaozhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性角柱</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="jiaozhu_w" name="jiaozhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;2、梁构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>中间梁</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="zhongjianlaing" name="zhongjianlaing" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险中间梁</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="zhongjianlaing_w" name="zhongjianlaing_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>边梁</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="binaliang" name="binaliang" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性边梁</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="binaliang_w" name="binaliang_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;3、墙体</label>
+				</div>
+				<div class="mui-input-row">
+					<label>承重墙体</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="chenzhognqiang" name="chenzhognqiang" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险承重墙</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="chenzhognqiang_w" name="chenzhognqiang_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;4、楼板构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>楼板构件</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="loubangoujian" name="loubangoujian" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险楼板件</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="loubangoujian_w" name="loubangoujian_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;5、围护构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>围护构件</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="weihugoujian" name="weihugoujian" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险围护件</label>
+					<div class="mui-numbox" data-numbox-min="0">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="weihugoujian_w" name="weihugoujian_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5>&nbsp;3.结构现状描述</h5>
+						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num" class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade" class="result">B</span>级。</h5>
 					</label>
 				</div>
-				<div class="mui-input-row">
-					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
-						</textarea>
-				</div>
-				<div class="mui-input-row">
-					<label class="lv-title">4.测试复选框</label>
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>木梁</label>
-					<input name="checkbox" value="Item 1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>木柱</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label>木板</label>
-					<input name="checkbox" type="checkbox">
-				</div>
-				<div class="mui-input-row">
-					<label class="lv-title">照片采集</label>
-				</div>
-				<div class="mui-content-padded">
-					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
-				</div>
-
 		</div>
 		</form>
 		<div class="mui-content-padded">
