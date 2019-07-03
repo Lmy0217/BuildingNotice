@@ -30,6 +30,7 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/form.js"></script>
 		<script>
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
@@ -43,23 +44,15 @@
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
 				// ... code  
 			}
-			function getUser(){
-   //      console.log($('#form1').serializeJSON());
-   //      console.log(JSON.stringify($('#form1').serializeJSON()));
-        return ($('#form1').serializeJSON());
-    }
+			
 	
 			//打开"下一单"
 			function openNext(){
-				var extras=getUser();
-				console.log(JSON.stringify(extras)); 
+				var extras=getForm('#form1');
 				var url="form_2.html";
 				var id="form2";
 				var style={};
 				plus.webview.create(url,id,style,extras).show();
-				// plus.webview.create(url).show();
-	// var url="form_2.html";
-				// plus.webview.create(url).show();
 			}
 		</script>
 
