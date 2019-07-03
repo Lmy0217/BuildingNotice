@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
-		
+
 		<style>
 			.lv-content {
 				height: auto;
@@ -27,31 +27,40 @@
 				color: #000000;
 			}
 		</style>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
 		<script>
+			function getUser(){
+        console.log($('#form1').serializeJSON());
+		alert(JSON.stringify($('#form1').serializeJSON()));
+        console.log(JSON.stringify($('#form1').serializeJSON()));
+        return JSON.stringify($('#form1').serializeJSON());
+    }
 			//打开"下一单"
 			function openNext(){
+				json1=getUser();
+				alert()
 				var url="form_2.html";
 				plus.webview.create(url).show();
 			}
 		</script>
+
 	</head>
 
 	<body>
 		<script src="../js/mui.js"></script>
-		<script src="../js/mui.picker.js"></script>
-		<script src="../js/mui.poppicker.js"></script>
 
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
+			<form id='form1' class="mui-input-group">
 				<div class="mui-input-row">
 					<label class="lv-title">一、委托概况</label>
 				</div>
 				<div class="mui-input-row">
 					<label>委托单位</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+					<input id='account' name="account" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
 				</div>
 				<div class="mui-input-row">
 					<label>联系电话</label>
@@ -80,15 +89,15 @@
 					<label class="lv-title">房屋属性</label></div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>砖木</label>
-					<input name="radio1" type="radio">
+					<input name="radio1" type="radio" value="1">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>实木</label>
-					<input name="radio1" type="radio" checked>
+					<input name="radio1" type="radio" value="2">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>混凝土</label>
-					<input name="radio1" type="radio" checked>
+					<input name="radio1" type="radio" value="3">
 				</div>
 
 				<div class="mui-input-row">
@@ -97,7 +106,7 @@
 					<div class="mui-numbox">
 						<!-- "-"按钮，点击可减小当前数值 -->
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" id='floor' />
+						<input class="mui-numbox-input" type="number" id="floor"/>
 						<!-- "+"按钮，点击可增大当前数值 -->
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
@@ -109,7 +118,8 @@
 
 		</div>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6"
+			 onclick="getUser()">下一步</button>
 		</div>
 
 		<script type="text/javascript">
