@@ -41,6 +41,16 @@
 		}, false);
 		document.getElementById(document.getElementById('photo'));
 	});
+	//打开"上一单"
+	function openPer(){
+		var url="form_1.html";
+		plus.webview.create(url).show();
+	}
+	//打开"下一单"
+	function openNext(){
+		var url="form_3.html";
+		plus.webview.create(url).show();
+	}
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
@@ -104,8 +114,8 @@
 		</div>
 		</form>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="window.location.href='form_1.html'">上一步</button><button
-			 id='login' class="mui-btn mui-btn-primary  mui-col-xs-6">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="openPer()">上一步</button><button id='login'
+			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
 		</div>
 
 		<script type="text/javascript">
