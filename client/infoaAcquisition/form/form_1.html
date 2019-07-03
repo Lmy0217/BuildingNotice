@@ -45,7 +45,7 @@
     
   extras: {  
        name:'mui'  //自定义扩展参数，可以用来处理页面间传值  
-    }  
+    },
     show: {  
         autoShow: true, //页面loaded事件发生后自动显示，默认为true  
         aniShow: animationType, //页面显示动画，默认为”slide-in-right“；  
@@ -124,7 +124,7 @@
 				<div class="mui-input-row">
 					<label>层数</label>
 					<!-- <input id='floor' type="text" class="mui-input-clear mui-input" placeholder="请输入楼层数"> -->
-					<div class="mui-numbox">
+					<div class="mui-numbox" data-numbox-min="1" data-numbox-max="10">
 						<!-- "-"按钮，点击可减小当前数值 -->
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 						<input class="mui-numbox-input" type="number" id="floor" name="floor"/>
