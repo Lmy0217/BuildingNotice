@@ -26,8 +26,8 @@
 
 	<body>
 		<script src="../js/mui.js"></script>
-		<script src="../js/mui.picker.js"></script>
-		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
 		<script src="../js/takePhoto.js"></script>
 		<script>
 			var file_url;
@@ -35,6 +35,9 @@
 	var dataBase64;
 	mui.init();
 	mui.plusReady(function() {
+		var tmp=plus.webview.currentWebview();
+		console.log(JSON.stringify(tmp));
+		 document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp);
 		// 扩展API加载完毕后调用onPlusReady回调函数 
 		document.getElementById('photo').addEventListener('tap', function() {
 			openCamera();
@@ -54,9 +57,12 @@
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
-		</header>
+		</header>		
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">二、房屋概况</label>
 				</div>

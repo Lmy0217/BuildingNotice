@@ -44,14 +44,15 @@
 				// ... code  
 			}
 			function getUser(){
-        console.log($('#form1').serializeJSON());
-        console.log(JSON.stringify($('#form1').serializeJSON()));
+   //      console.log($('#form1').serializeJSON());
+   //      console.log(JSON.stringify($('#form1').serializeJSON()));
         return ($('#form1').serializeJSON());
     }
 	
 			//打开"下一单"
 			function openNext(){
 				var extras=getUser();
+				console.log(JSON.stringify(extras)); 
 				var url="form_2.html";
 				var id="form2";
 				var style={};
