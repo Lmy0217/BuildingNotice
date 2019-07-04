@@ -63,7 +63,7 @@
 						chenzhognqiang_w) + computeBili(loubangoujian, loubangoujian_w) + computeBili(weihugoujian, weihugoujian_w)) / 9;
 				bili=bili.toFixed(2);
 				console.log(bili);
-				$('#result').value=bili;
+				return bili;
 			}
 			//打开"上一单"
 			function openPer(){
@@ -75,11 +75,13 @@
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
 				console.log(JSON.stringify(form_per));
-				computeResult();
+				bili=computeResult();
 				
 				var form_now=getForm('#form3');
-				console.log(form_per);
+				form_now['result']=bili;
+				console.log(JSON.stringify(form_now));
 				var extras = $.extend({}, form_per, form_now);
+				console.log(JSON.stringify(extras));
 				var url="form_4.html";
 				var id="form4";
 				var style={};
