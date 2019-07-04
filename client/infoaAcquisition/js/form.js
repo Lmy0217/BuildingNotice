@@ -7,6 +7,13 @@ function getForm(name) {
 	return (froma);
 }
 
+function computeBili(a,a_w){
+	var bili=0;
+	if(a!=0){
+		var bili=a_w/a;
+	}
+	return bili;
+}
 function chuliForm(json) {
 	delete json["__view_array__"];
 	delete json["__IDENTITY__"];
