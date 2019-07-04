@@ -29,19 +29,21 @@
 	</head>
 
 	<body>
-		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.js"></script>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/jquery.serializejson.min.js"></script>
 		<script src="../js/takePhoto.js"></script>
 		<script src="../js/form.js"></script>
 		<script>
 			mui.plusReady(function() {
-				//计算结果
-				document.getElementById("compute_result").addEventListener('tap', function(event) {
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+			});
+			//计算结果
+			function computeResult() {
 				var zhongzhu = mui('#zhongzhu').numbox().getValue();
-				console.log(zhongzhu);
 				var zhongzhu_w = mui('#zhongzhu_w').numbox().getValue();
-				console.log(zhongzhu_w);
 				var bianzhu = mui('#bianzhu').numbox().getValue();
 				var bianzhu_w = mui('#bianzhu_w').numbox().getValue();
 				var jiaozhu = mui('#jiaozhu').numbox().getValue();
@@ -56,13 +58,13 @@
 				var loubangoujian_w = mui('#loubangoujian_w').numbox().getValue();
 				var weihugoujian = mui('#weihugoujian').numbox().getValue();
 				var weihugoujian_w = mui('#weihugoujian_w').numbox().getValue();
-				bili=computeBili(zhongzhu_w,zhongzhu)+computeBili(bianzhu,bianliang_w)+computeBili(jiaozhu,jiaozhu_w)+computeBili(zhongjianliang,zhongjianliang_w)+computeBili(bianliang,bianliang_w)+computeBili(chenzhognqiang,chenzhognqiang_w)+computeBili(loubangoujian,loubangoujian_w)+computeBili(weihugoujian,weihugoujian_w);
-					// mui.alert(''+bili, '当前值: ', "确定");
-					// console.log(bili);
-					
-				});
-			});
-			
+				bili = (computeBili(zhongzhu_w, zhongzhu) + computeBili(bianzhu, bianliang_w) + computeBili(jiaozhu, jiaozhu_w) +
+					computeBili(zhongjianliang, zhongjianliang_w) + computeBili(bianliang, bianliang_w) + computeBili(chenzhognqiang,
+						chenzhognqiang_w) + computeBili(loubangoujian, loubangoujian_w) + computeBili(weihugoujian, weihugoujian_w)) / 9;
+				bili=bili.toFixed(2);
+				console.log(bili);
+				$('#result').value=bili;
+			}
 			//打开"上一单"
 			function openPer(){
 				var url="form_1.html";
@@ -72,9 +74,10 @@
 			function openNext(){
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
-				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
 				console.log(JSON.stringify(form_per));
-				var form_now=getForm('#form2');
+				computeResult();
+				
+				var form_now=getForm('#form3');
 				console.log(form_per);
 				var extras = $.extend({}, form_per, form_now);
 				var url="form_4.html";
@@ -87,7 +90,7 @@
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<form id='form2' class="mui-input-group">
+			<form id='form3' class="mui-input-group">
 				<div class="mui-input-row">
 					<label id="div1" class="lv-title"></label>
 				</div>
@@ -246,14 +249,9 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">
-						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num"
-							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
-							 class="result">B</span>级。</h5>
-					</label>
-				</div>
-				<div class="mui-input-row">
-					<button id='compute_result' class="mui-btn mui-btn-primary mui-col-xs-4">生成</button>
+					<label>结果</label>
+						<input class="mui-input-clear mui-input" type="number" name="result" id="result"/>
+					</div>
 				</div>
 		</div>
 		</form>
