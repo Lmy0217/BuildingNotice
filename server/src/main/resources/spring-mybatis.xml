@@ -11,10 +11,10 @@
 <!--         <property name="locations" value="classpath:jdbc.properties"/> -->
 <!--     </bean> -->
     
-    <!-- 3.配置数据源 ，使用的alibba的数据库-->
+    <!-- 3.配置数据源 ，使用的alibaba的数据库-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 	    <!-- 基本属性 url、user、password -->
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
 	    <property name="url" value="jdbc:mysql://139.199.129.48/ssm"/>
 	    <property name="username" value="test"/>
 	    <property name="password" value="test"/>
@@ -51,7 +51,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
         <!-- 自动扫描mapping.xml文件 -->  
-        <property name="mapperLocations" value="classpath:org/cst/buildingnotice/mapper/*.xml"></property>  
+        <property name="mapperLocations" value="classpath:org/cst/buildingnotice/mapper/*.xml"></property>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
     </bean>   
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 ,自动扫描了所有的XxxxMapper.xml对应的mapper接口文件,只要Mapper接口类和Mapper映射文件对应起来就可以了-->  

@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
 <generatorConfiguration>  
 <!-- 数据库驱动-->  
-    <classPathEntry location="C:\Users\myluo\.m2\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar"/>  
+    <classPathEntry location="C:\Users\myluo\.m2\repository\org\mariadb\jdbc\mariadb-java-client\2.4.2\mariadb-java-client-2.4.2.jar"/>  
     <context id="DB2Tables" targetRuntime="MyBatis3">  
         <commentGenerator>  
             <property name="suppressDate" value="true"/>  
@@ -11,7 +11,7 @@
             <property name="suppressAllComments" value="true"/>  
         </commentGenerator>  
         <!--数据库链接URL，用户名、密码 -->  
-        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://139.199.129.48/ssm" userId="test" password="test">
+        <jdbcConnection driverClass="org.mariadb.jdbc.Driver" connectionURL="jdbc:mysql://139.199.129.48/ssm" userId="test" password="test">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <javaTypeResolver>  
