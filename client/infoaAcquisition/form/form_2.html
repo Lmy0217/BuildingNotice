@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/takePhoto.js"></script>
+		<script src="../js/form.js"></script>
+		<script>
+			var file_url;
+	var timestamp;
+	var dataBase64;
+	mui.init();
+	mui.plusReady(function() {
+		var tmp=plus.webview.currentWebview();
+		var form_per=chuliForm(tmp);
+		document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+		console.log(JSON.stringify(form_per));		
+		// 扩展API加载完毕后调用onPlusReady回调函数 
+		document.getElementById('photo').addEventListener('tap', function() {
+			openCamera();
+		}, false); 
+		document.getElementById(document.getElementById('photo'));
+	});
+	
+	//打开"上一单"
+	function openPer(){
+		var url="form_1.html";
+		plus.webview.create(url).show();
+	}
+	//打开"下一单"
+	function openNext(){
+		var tmp=plus.webview.currentWebview();
+		var form_per=chuliForm(tmp);
+		var form_now=getForm('#form2');
+		var extras = $.extend({}, form_per, form_now);
+		var url="form_3.html";
+		var id="form3";
+		var style={};
+		plus.webview.create(url,id,style,extras).show();
+	}
+</script>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>		
+		<div class="mui-content">
+			<form id='form2' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">二、房屋概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;房屋结构描述</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>&nbsp;1.设计、施工、监理单位和相关资料</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription1">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>&nbsp;2.基础和主体结构概况</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription2">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+		</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>&nbsp;3.结构现状描述</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription3">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+						</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">4.测试复选框</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木梁</label>
+					<input name="checkbox" value="1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木柱</label>
+					<input name="checkbox" value="2" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>木板</label>
+					<input name="checkbox" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">照片采集</label>
+				</div>
+				<div class="mui-content-padded">
+					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
+				</div>
+		</div>
+		</form>
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="openPer()">上一步</button><button id='login'
+			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
+		</div>
+
+		<script type="text/javascript">
+			mui.init()
+		</script>
+
+	</body>
+
+</html>

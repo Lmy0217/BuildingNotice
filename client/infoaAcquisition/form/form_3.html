@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/takePhoto.js"></script>
+		<script src="../js/form.js"></script>
+		<script>
+			mui.plusReady(function() {
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+			});
+			//计算结果
+			function computeResult() {
+				var zhongzhu = mui('#zhongzhu').numbox().getValue();
+				var zhongzhu_w = mui('#zhongzhu_w').numbox().getValue();
+				var bianzhu = mui('#bianzhu').numbox().getValue();
+				var bianzhu_w = mui('#bianzhu_w').numbox().getValue();
+				var jiaozhu = mui('#jiaozhu').numbox().getValue();
+				var jiaozhu_w = mui('#jiaozhu_w').numbox().getValue();
+				var zhongjianliang = mui('#zhongjianliang').numbox().getValue();
+				var zhongjianliang_w = mui('#zhongjianliang_w').numbox().getValue();
+				var bianliang = mui('#bianliang').numbox().getValue();
+				var bianliang_w = mui('#bianliang_w').numbox().getValue();
+				var chenzhognqiang = mui('#chenzhognqiang').numbox().getValue();
+				var chenzhognqiang_w = mui('#chenzhognqiang_w').numbox().getValue();
+				var loubangoujian = mui('#loubangoujian').numbox().getValue();
+				var loubangoujian_w = mui('#loubangoujian_w').numbox().getValue();
+				var weihugoujian = mui('#weihugoujian').numbox().getValue();
+				var weihugoujian_w = mui('#weihugoujian_w').numbox().getValue();
+				bili = (computeBili(zhongzhu_w, zhongzhu) + computeBili(bianzhu, bianliang_w) + computeBili(jiaozhu, jiaozhu_w) +
+					computeBili(zhongjianliang, zhongjianliang_w) + computeBili(bianliang, bianliang_w) + computeBili(chenzhognqiang,
+						chenzhognqiang_w) + computeBili(loubangoujian, loubangoujian_w) + computeBili(weihugoujian, weihugoujian_w)) / 9;
+				bili=bili.toFixed(2);
+				console.log(bili);
+				return bili;
+			}
+			//打开"上一单"
+			function openPer(){
+				var url="form_2.html";
+				plus.webview.create(url).show();
+			}
+			//打开"下一单"
+			function openNext(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				bili=computeResult();
+				
+				var form_now=getForm('#form3');
+				form_now['result']=bili;
+				watchJSON(form_now);
+				var extras = $.extend({}, form_per, form_now);
+				var url="form_4.html";
+				var id="form4";
+				var style={};
+				plus.webview.create(url,id,style,extras).show();
+			}
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content">
+			<form id='form3' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">三、鉴定依据(略)</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">四、现场查勘及受损情况调查</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>经鉴定人员现场查勘，房屋主体结构受损情况综述如下：</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;1、柱构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>中柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="zhongzhu">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="zhongzhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性中柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="zhongzhu_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="zhongzhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>边柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="bianzhu">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="bianzhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性边柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="bianzhu_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="bianzhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>角柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="jiaozhu">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="jiaozhu" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性角柱</label>
+					<div class="mui-numbox" data-numbox-min="0" id="jiaozhu_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="jiaozhu_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;2、梁构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>中间梁</label>
+					<div class="mui-numbox" data-numbox-min="0" id="zhongjianliang">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="zhongjianliang" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险中间梁</label>
+					<div class="mui-numbox" data-numbox-min="0" id="zhongjianliang_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="zhongjianliang_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>边梁</label>
+					<div class="mui-numbox" data-numbox-min="0" id="bianliang">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="bianliang" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性边梁</label>
+					<div class="mui-numbox" data-numbox-min="0" id="bianliang_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="bianliang_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;3、墙体</label>
+				</div>
+				<div class="mui-input-row">
+					<label>承重墙体</label>
+					<div class="mui-numbox" data-numbox-min="0" id="chenzhognqiang">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="chenzhognqiang" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险承重墙</label>
+					<div class="mui-numbox" data-numbox-min="0" id="chenzhognqiang_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="chenzhognqiang_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;4、楼板构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>楼板构件</label>
+					<div class="mui-numbox" data-numbox-min="0" id="loubangoujian">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="loubangoujian" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险楼板件</label>
+					<div class="mui-numbox" data-numbox-min="0" id="loubangoujian_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="loubangoujian_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;5、围护构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>围护构件</label>
+					<div class="mui-numbox" data-numbox-min="0" id="weihugoujian">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="weihugoujian" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险围护件</label>
+					<div class="mui-numbox" data-numbox-min="0" id="weihugoujian_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="weihugoujian_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+		</div>
+		</form>
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="openPer()">上一步</button><button id='login'
+			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
+		</div>
+
+		<script type="text/javascript">
+			mui.init()
+		</script>
+
+	</body>
+
+</html>

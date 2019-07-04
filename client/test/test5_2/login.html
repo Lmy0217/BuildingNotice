@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/mui.picker.all.css" />
+		<link href="css/mui.picker.min.css" />
+		<link href="css/mui.poppicker.css" rel="stylesheet">
+		<!-- <script type="text/javascript" src="js/myscript.js"></script> -->
+		<link href="css/mycss.css" />
+		<style>
+			.lv-content {
+				height: auto;
+			}
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.mui-input-row textarea {
+				height: auto;
+			}
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+		</style>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content lv-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label class="lv-title">一、委托概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label>委托单位</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+				</div>
+				<div class="mui-input-row">
+					<label>联系电话</label>
+					<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入联系电话">
+				</div>
+				<div class="mui-input-row">
+					<label>提供资料情况</label>
+					<input id='ziliao_info' type="text" class="mui-input-clear mui-input" placeholder="请输入">
+				</div>
+				<div class="mui-input-row">
+					<label>房屋地址</label>
+					<input id='address' type="text" class="mui-input-clear mui-input" placeholder="请输入房屋地址">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">二、房屋概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label>户主姓名</label>
+					<input id='huzhu_name' type="text" class="mui-input-clear mui-input" placeholder="请输入户主姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号</label>
+					<input id='id_number' type="text" class="mui-input-clear mui-input" placeholder="请输入身份证号">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">房屋属性</label></div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>砖木</label>
+					<input name="radio1" type="radio">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>实木</label>
+					<input name="radio1" type="radio" checked>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>混凝土</label>
+					<input name="radio1" type="radio" checked>
+				</div>
+
+				<div class="mui-input-row">
+					<label>层数</label>
+					<!-- <input id='floor' type="text" class="mui-input-clear mui-input" placeholder="请输入楼层数"> -->
+					<div class="mui-numbox">
+						<!-- "-"按钮，点击可减小当前数值 -->
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id='floor' />
+						<!-- "+"按钮，点击可增大当前数值 -->
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>鉴定时间</label>
+					<input id='time' type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">房屋结构描述</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;1.设计、施工、监理单位和相关资料</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">2.基础和主体结构概况</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；
+2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">3.结构现状描述</label>
+				</div>
+				<div class="mui-input-row">
+					<textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test">1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；2）房屋主要以砖墙和楼（屋）面板承重，楼（屋）面板为现浇钢筋混凝土板。
+				</textarea>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">4.测试复选框</label>
+				</div>
+
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>checked：false</label>
+					<input name="checkbox" value="Item 1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>checked：true</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>disabled checkbox</label>
+					<input name="checkbox" type="checkbox">
+				</div>
+
+				<!-- 				<div class="mui-content-padded">
+					<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+					<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+					</div>
+				</div> -->
+				</form>
+		</div>
+		<!-- 
+				<input name="address" type="hidden" id="address" value="">
+				<button id="showFloorPicker" class="mui-btn mui-btn-block" type="button">选择结构类型</button>
+				<input name="time" type="hidden" id="time" value="">
+				<button id="showTimePicker" class="mui-btn mui-btn-block" type="button">选择鉴定时间</button> -->
+		
+		<!-- <form class="mui-input-group">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					自动登录
+					<div id="autoLogin" class="mui-switch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+			</ul>
+		</form> -->
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+			<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+			</div>
+		</div>
+		<!-- <div class="">
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">确定</button>
+		</div> -->
+		<div class="mui-content-padded oauth-area">
+
+		</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
+
+		<script>
+			(function($, doc) {
+				$.init({
+					statusBarBackground: '#f7f7f7'
+				});
+				$.plusReady(function() {
+					plus.screen.lockOrientation("portrait-primary");
+					var settings = app.getSettings();
+					var state = app.getState();
+					var mainPage = plus.webview.getWebviewById("main");
+					var main_loaded_flag = false;
+					if (!mainPage) {
+						mainPage = $.preload({
+							"id": 'main',
+							"url": 'main.html'
+						});
+					} else {
+						main_loaded_flag = true;
+					}
+
+					mainPage.addEventListener("loaded", function() {
+						main_loaded_flag = true;
+					});
+					var toMain = function() {
+						//使用定时器的原因：
+						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+						var id = setInterval(function() {
+							if (main_loaded_flag) {
+								clearInterval(id);
+								$.fire(mainPage, 'show', null);
+								mainPage.show("pop-in");
+							}
+						}, 20);
+					};
+					//检查 "登录状态/锁屏状态" 开始
+					if (settings.autoLogin && state.token && settings.gestures) {
+						$.openWindow({
+							url: 'unlock.html',
+							id: 'unlock',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					} else if (settings.autoLogin && state.token) {
+						toMain();
+					} else {
+						app.setState(null);
+						//第三方登录
+						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+						var auths = {};
+						var oauthArea = doc.querySelector('.oauth-area');
+						plus.oauth.getServices(function(services) {
+							for (var i in services) {
+								var service = services[i];
+								auths[service.id] = service;
+								if (~authBtns.indexOf(service.id)) {
+									var isInstalled = app.isInstalled(service.id);
+									var btn = document.createElement('div');
+									//如果微信未安装，则为不启用状态
+									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+									btn.authId = service.id;
+									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+									oauthArea.appendChild(btn);
+								}
+							}
+							$(oauthArea).on('tap', '.oauth-btn', function() {
+								if (this.classList.contains('disabled')) {
+									plus.nativeUI.toast('您尚未安装微信客户端');
+									return;
+								}
+								var auth = auths[this.authId];
+								var waiting = plus.nativeUI.showWaiting();
+								auth.login(function() {
+									waiting.close();
+									plus.nativeUI.toast("登录认证成功");
+									auth.getUserInfo(function() {
+										plus.nativeUI.toast("获取用户信息成功");
+										var name = auth.userInfo.nickname || auth.userInfo.name;
+										app.createState(name, function() {
+											toMain();
+										});
+									}, function(e) {
+										plus.nativeUI.toast("获取用户信息失败：" + e.message);
+									});
+								}, function(e) {
+									waiting.close();
+									plus.nativeUI.toast("登录认证失败：" + e.message);
+								});
+							});
+						}, function(e) {
+							oauthArea.style.display = 'none';
+							plus.nativeUI.toast("获取登录认证失败：" + e.message);
+						});
+					}
+					// close splash
+					setTimeout(function() {
+						//关闭 splash
+						plus.navigator.closeSplashscreen();
+					}, 600);
+					//检查 "登录状态/锁屏状态" 结束
+					var loginButton = doc.getElementById('login');
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('password');
+					var autoLoginButton = doc.getElementById("autoLogin");
+					var regButton = doc.getElementById('reg');
+					var forgetButton = doc.getElementById('forgetPassword');
+					loginButton.addEventListener('tap', function(event) {
+						var loginInfo = {
+							account: accountBox.value,
+							password: passwordBox.value
+						};
+						app.login(loginInfo, function(err) {
+							if (err) {
+								plus.nativeUI.toast(err);
+								return;
+							}
+							toMain();
+						});
+					});
+					$.enterfocus('#login-form input', function() {
+						$.trigger(loginButton, 'tap');
+					});
+					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
+					autoLoginButton.addEventListener('toggle', function(event) {
+						setTimeout(function() {
+							var isActive = event.detail.isActive;
+							settings.autoLogin = isActive;
+							app.setSettings(settings);
+						}, 50);
+					}, false);
+					regButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: 'reg.html',
+							id: 'reg',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}, false);
+					forgetButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: 'forget_password.html',
+							id: 'forget_password',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}, false);
+					//
+					window.addEventListener('resize', function() {
+						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
+					}, false);
+					//
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
