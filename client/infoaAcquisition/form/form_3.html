@@ -74,14 +74,12 @@
 			function openNext(){
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
-				console.log(JSON.stringify(form_per));
 				bili=computeResult();
 				
 				var form_now=getForm('#form3');
 				form_now['result']=bili;
-				console.log(JSON.stringify(form_now));
+				watchJSON(form_now);
 				var extras = $.extend({}, form_per, form_now);
-				console.log(JSON.stringify(extras));
 				var url="form_4.html";
 				var id="form4";
 				var style={};
@@ -248,11 +246,6 @@
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 						<input class="mui-numbox-input" type="number" name="weihugoujian_w" />
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-					</div>
-				</div>
-				<div class="mui-input-row">
-					<label>结果</label>
-						<input class="mui-input-clear mui-input" type="number" name="result" id="result"/>
 					</div>
 				</div>
 		</div>
