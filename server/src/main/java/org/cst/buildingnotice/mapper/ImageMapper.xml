@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Image">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="path" jdbcType="VARCHAR" property="path" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="depict" jdbcType="VARCHAR" property="depict" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, path, desc
+    id, path, depict
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,12 +20,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.Image">
-    insert into image (id, path, desc
+    insert into image (id, path, depict
       )
-    values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{depict,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Image">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.Image">
     insert into image
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -34,8 +34,8 @@
       <if test="path != null">
         path,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="depict != null">
+        depict,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -45,8 +45,8 @@
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="depict != null">
+        #{depict,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -56,8 +56,8 @@
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="depict != null">
+        depict = #{depict,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -65,7 +65,7 @@
   <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Image">
     update image
     set path = #{path,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR}
+      depict = #{depict,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

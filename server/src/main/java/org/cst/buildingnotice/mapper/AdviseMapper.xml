@@ -5,13 +5,13 @@
     <id column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.cst.buildingnotice.entity.Advise">
-    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+    <result column="depict" jdbcType="LONGVARCHAR" property="depict" />
   </resultMap>
   <sql id="Base_Column_List">
     name
   </sql>
   <sql id="Blob_Column_List">
-    desc
+    depict
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
@@ -26,8 +26,8 @@
     where name = #{name,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.Advise">
-    insert into advise (name, desc)
-    values (#{name,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR})
+    insert into advise (name, depict)
+    values (#{name,jdbcType=VARCHAR}, #{depict,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Advise">
     insert into advise
@@ -35,31 +35,31 @@
       <if test="name != null">
         name,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="depict != null">
+        depict,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=LONGVARCHAR},
+      <if test="depict != null">
+        #{depict,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.Advise">
     update advise
     <set>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=LONGVARCHAR},
+      <if test="depict != null">
+        depict = #{depict,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where name = #{name,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.cst.buildingnotice.entity.Advise">
     update advise
-    set desc = #{desc,jdbcType=LONGVARCHAR}
+    set depict = #{depict,jdbcType=LONGVARCHAR}
     where name = #{name,jdbcType=VARCHAR}
   </update>
 </mapper>

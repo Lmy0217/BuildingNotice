@@ -5,7 +5,7 @@ public class Rank {
 
     private String name;
 
-    private String desc;
+    private String depict;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Rank {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDepict() {
+        return depict;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDepict(String depict) {
+        this.depict = depict == null ? null : depict.trim();
     }
 }

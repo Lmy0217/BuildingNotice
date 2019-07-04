@@ -5,7 +5,7 @@ public class Image {
 
     private String path;
 
-    private String desc;
+    private String depict;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Image {
         this.path = path == null ? null : path.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDepict() {
+        return depict;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDepict(String depict) {
+        this.depict = depict == null ? null : depict.trim();
     }
 }

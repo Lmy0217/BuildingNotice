@@ -3,7 +3,7 @@ package org.cst.buildingnotice.entity;
 public class Advise {
     private String name;
 
-    private String desc;
+    private String depict;
 
     public String getName() {
         return name;
@@ -13,11 +13,11 @@ public class Advise {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDepict() {
+        return depict;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDepict(String depict) {
+        this.depict = depict == null ? null : depict.trim();
     }
 }
