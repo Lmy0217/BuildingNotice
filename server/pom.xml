@@ -84,11 +84,11 @@
         <version>${spring.version}</version>
     </dependency>
     
-    <!-- mysql驱动包 -->
+    <!-- mariadb驱动包 -->
     <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql.version}</version>
+        <groupId>org.mariadb.jdbc</groupId>
+        <artifactId>mariadb-java-client</artifactId>
+        <version>2.4.2</version>
     </dependency>
 
     <!--mybatis依赖 -->
