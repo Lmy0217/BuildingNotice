@@ -38,52 +38,41 @@
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
+				showResult(form_per.result)
 				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
 				console.log(JSON.stringify(form_per));
 			});
 			//计算结果
-			function computeResult() {
-				var zhongzhu = mui('#zhongzhu').numbox().getValue();
-				var zhongzhu_w = mui('#zhongzhu_w').numbox().getValue();
-				var bianzhu = mui('#bianzhu').numbox().getValue();
-				var bianzhu_w = mui('#bianzhu_w').numbox().getValue();
-				var jiaozhu = mui('#jiaozhu').numbox().getValue();
-				var jiaozhu_w = mui('#jiaozhu_w').numbox().getValue();
-				var zhongjianliang = mui('#zhongjianliang').numbox().getValue();
-				var zhongjianliang_w = mui('#zhongjianliang_w').numbox().getValue();
-				var bianliang = mui('#bianliang').numbox().getValue();
-				var bianliang_w = mui('#bianliang_w').numbox().getValue();
-				var chenzhognqiang = mui('#chenzhognqiang').numbox().getValue();
-				var chenzhognqiang_w = mui('#chenzhognqiang_w').numbox().getValue();
-				var loubangoujian = mui('#loubangoujian').numbox().getValue();
-				var loubangoujian_w = mui('#loubangoujian_w').numbox().getValue();
-				var weihugoujian = mui('#weihugoujian').numbox().getValue();
-				var weihugoujian_w = mui('#weihugoujian_w').numbox().getValue();
-				bili = (computeBili(zhongzhu_w, zhongzhu) + computeBili(bianzhu, bianliang_w) + computeBili(jiaozhu, jiaozhu_w) +
-					computeBili(zhongjianliang, zhongjianliang_w) + computeBili(bianliang, bianliang_w) + computeBili(chenzhognqiang,
-						chenzhognqiang_w) + computeBili(loubangoujian, loubangoujian_w) + computeBili(weihugoujian, weihugoujian_w)) / 9;
-				// mui.alert(''+bili, '当前值: ', "确定");
+			function showResult(bili) {				
 				console.log(bili);
 				$('#result_num').text(bili);
 				if (0 < bili && bili < 0.05) {
 					console.log('jinru1');
 					$('#result_des').text('大于0但未超过5%');
 					$('#result_grade').text('B');
+					$('resultGrade').value="B";
 				} else if (0.05 <= bili && bili < 0.25) {
 					console.log('jinru2');
 					$('#result_des').text('大于5%但未超过25%');
 					$('#result_grade').text('C');
+					$('resultGrade').value="B";
 				} else if (0.25 <= bili && bili < 1) {
 					console.log('jinru3');
 					$('#result_des').text('大于25%');
-					$('#result_grade').text('D');					
+					$('#result_grade').text('D');	
+					$('resultGrade').value="B";
 				}
+				
 				return false;
 			}
 			//打开"上一单"
 			function openPer(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				var id="form3";
+				var style={};
 				var url="form_3.html";
-				plus.webview.create(url).show();
+				plus.webview.create(url,id,style,form_per).show();
 			}
 			//打开"下一单"
 			function openNext(){
@@ -117,6 +106,13 @@
 							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
 							 class="result">B</span>级。</h5>
 					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">五、鉴定结论及建议</label>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性等级</label>
+					<input id='resultGrade' name="resultGrade" type="text" class="mui-input-clear mui-input" placeholder="" value="">
 				</div>
 		</div>
 		</form>
