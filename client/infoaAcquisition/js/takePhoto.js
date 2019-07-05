@@ -37,6 +37,7 @@ function appendByCamera() {
 			$(".headimg")[indexa].style.display = "block";
 			$(".photoDes")[indexa].style.display = "block";
 			$(".headimg")[indexa].src = path;
+			$(".photoSrc")[indexa].value = path;
 		}, function(e) {
 			mui.toast("读取拍照文件错误：" + e.message);
 		});
@@ -49,6 +50,7 @@ function appendByGallery() {
 		console.log(indexa);
 		$(".headimg")[indexa].style.display = "block";
 		$(".photoDes")[indexa].style.display = "block";
+		$(".photoSrc")[indexa].value = path;
 		$(".headimg")[indexa].src = path;
 	});
 }
