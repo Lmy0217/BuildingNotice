@@ -42,9 +42,21 @@
 			// 扩展API准备完成后要执行的操作  
 			function plusReady() {
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
-				// ... code  
+				var myDate = new Date();
+				//获取当前年
+			   var year = myDate.getFullYear();
+			   //获取当前月
+			   var month = myDate.getMonth() + 1;
+				//获取当前日
+				var day = myDate.getDate();
+				var today = year + '-' + conver(month) + "-" + conver(day);
+				console.log(today);
+				$("#time").val(today);
 			}
-			
+			//日期时间处理
+			function conver(s) {
+			return s < 10 ? '0' + s : s;
+			}
 	
 			//打开"下一单"
 			function openNext(){
