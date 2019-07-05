@@ -21,6 +21,16 @@
 				min-height: 40px;
 				max-height: 100px;
 			}
+			.imageup{ width:100px; height: 50px; line-height:50px;display: inline-block;padding: 0 11px;
+            background: #02bafa;
+			color: #F3F3F3;
+            border: 1px #26bbdb solid;
+			border-radius: 10px;
+			} 
+			.button{  width:100px; height: 50px; line-height:50px;} 
+			ul li p{
+			    display: inline-block;
+			}
 		</style>
 	</head>
 
@@ -36,16 +46,21 @@
 	var dataBase64;
 	mui.init();
 	mui.plusReady(function() {
-		var tmp=plus.webview.currentWebview();
-		var form_per=chuliForm(tmp);
-		document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
-		console.log(JSON.stringify(form_per));		
+		var tmp = plus.webview.currentWebview();
+		var form_per = chuliForm(tmp);
+		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
+		console.log(JSON.stringify(form_per));
 		// 扩展API加载完毕后调用onPlusReady回调函数 
-		document.getElementById('photo').addEventListener('tap', function() {
-			openCamera();
-		}, false); 
-		document.getElementById(document.getElementById('photo'));
+		$(".list li").on("tap", ".imageup", function() {
+			alert('11');
+			var $li = $(this).parents("li");
+			console.log($($li).text())
+			$li.addClass("selectLi");
+			$li.siblings().removeClass("selectLi");
+			page.imgUp();
+		})
 	});
+		
 	
 	//打开"上一单"
 	function openPer(){
@@ -66,7 +81,7 @@
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
-		</header>		
+		</header>
 		<div class="mui-content">
 			<form id='form2' class="mui-input-group">
 				<div class="mui-input-row">
@@ -122,9 +137,26 @@
 				<div class="mui-input-row">
 					<label class="lv-title">照片采集</label>
 				</div>
-				<div class="mui-content-padded">
+				<ul class="list">
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 1">采集图片1</a></p>
+						<input id='photoDes1' name="phone" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述" style="display:none">
+					</li>
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 2">采集图片2</a> </p>
+						<p><button onclick="upload();" class='button' > 提交</button></p>
+					</li>
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200">
+						<p><a class="imageup 3">采集图片3</a> </p>
+						<p><button onclick="upload();" class='button'> 提交</button></p>
+					</li>
+				</ul>
+				<!-- <div class="mui-content-padded">
 					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
-				</div>
+				</div> -->
 		</div>
 		</form>
 		<div class="mui-content-padded">
