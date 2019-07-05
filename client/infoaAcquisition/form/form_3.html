@@ -66,6 +66,29 @@
 				console.log(bili);
 				return bili;
 			}
+			//计算结果
+			function showResult() {	
+				bili=computeResult();
+				console.log(bili);
+				$('#result_num').text(bili);
+				if (0 < bili && bili < 0.05) {
+					console.log('jinru1');
+					$('#result_des').text('大于0但未超过5%');
+					$('#result_grade').text('B');
+					$('#resultGrade').val("B");
+				} else if (0.05 <= bili && bili < 0.25) {
+					console.log('jinru2');
+					$('#result_des').text('大于5%但未超过25%');
+					$('#result_grade').text('C');
+					$('#resultGrade').val("C");
+				} else if (0.25 <= bili && bili < 1) {
+					console.log('jinru3');
+					$('#result_des').text('大于25%');
+					$('#result_grade').text('D');	
+					$('#resultGrade').val("D");
+				}
+				return false;
+			}
 			//打开"上一单"
 			function openPer(){
 				var url="form_2.html";
@@ -252,6 +275,18 @@
 				<div class="mui-input-row">
 					<label class="lv-title">
 						<h5>请前往下页查看结果→</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num"
+							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
+							 class="result">B</span>级。</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<button type="button" id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="showResult()">生成</button>
 					</label>
 				</div>
 		</div>
