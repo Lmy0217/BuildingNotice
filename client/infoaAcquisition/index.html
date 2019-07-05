@@ -6,10 +6,8 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
 		<script type="text/javascript">
+			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
 			if (window.plus) {
 				plusReady();
@@ -26,11 +24,16 @@
 				var url="form/form_1.html";
 				plus.webview.create(url).show();
 			}
-			//打开"采集信息"
-			function openTest(){
-				var url="testTakePhoto.html";
+			//打开"任务上传"
+			function openSubmit(){
+				var url="submit/listDate.html";
 				plus.webview.create(url).show();
 			}
+			// //打开"采集信息"
+			// function openTest(){
+			// 	var url="testTakePhoto.html";
+			// 	plus.webview.create(url).show();
+			// }
 		</script>
 	</head>
 	<body>
@@ -39,9 +42,9 @@
 		</header>
 		<div class="mui-content">
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openForm()">采集信息</button>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="window.location.href='https://baidu.com'">上传缓存</button>
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openSubmit()">任务上传</button>
 			<br\>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openTest()">测试相机</button>
+			<!-- <button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openTest()">测试相机</button> -->
 		</div>
 		</div>
 	</body>
