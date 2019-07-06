@@ -30,10 +30,11 @@ function insertSQL(jsonInfo){
 	openDB();
 	console.log('执行SQL语句: ');
 	
-	sqlStr="insert into database values('"+jsonInfo.danwei+"','"+jsonInfo.floor+"','"+jsonInfo.result+"')"
+	sqlStr="insert into infoDB values('"+jsonInfo.danwei+"','"+jsonInfo.floor+"','"+jsonInfo.result+"')"
+	console.log(sqlStr)
 	plus.sqlite.executeSql({
 		name: 'test',
-		sql: 'create table if not exists database("danwei" CHAR(110),"floor" INT(2),"result" FLOAT(11))',
+		sql: 'create table if not exists infoDB("danwei" CHAR(110),"floor" INT(2),"result" FLOAT(11))',
 		success: function(e){
 			console.log('executeSql success: '+JSON.stringify(e))
 			plus.sqlite.executeSql({
