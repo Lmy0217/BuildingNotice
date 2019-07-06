@@ -25,35 +25,6 @@ function chuliForm(json) {
 	return json;
 }
 
-// 关闭数据库
-function closeDB(){
-	console.log('关闭数据库: ');
-	plus.sqlite.closeDatabase({
-		name: 'test',
-		success: function(e){
-			console.log('closeDatabase success: '+JSON.stringify(e));
-		},
-		fail: function(e){
-			console.log('closeDatabase fail: '+JSON.stringify(e));
-		}
-	});
-}
-
-// 打开数据库
-function openDB(){
-	console.log('打开数据库: ');
-	plus.sqlite.openDatabase({
-		name: 'test',
-		path: '_doc/test.db',
-		success: function(e){
-			console.log('openDatabase success: '+JSON.stringify(e));
-		},
-		fail: function(e){
-			console.log('openDatabase success: '+JSON.stringify(e));
-		}
-	});
-}
-
 // 执行SQL语句
 function insertSQL(jsonInfo){
 	openDB();
