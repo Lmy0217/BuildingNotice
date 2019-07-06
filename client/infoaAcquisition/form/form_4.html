@@ -89,6 +89,8 @@
 				// var style={};
 				// plus.webview.create(url,id,style,extras).show();
 				insertSQL(extras);
+				console.log(plus.webview.getLaunchWebview().id);
+				popToTarget(plus.webview.getLaunchWebview().id);//返回首页
 			}
 		</script>
 		<header class="mui-bar mui-bar-nav">
