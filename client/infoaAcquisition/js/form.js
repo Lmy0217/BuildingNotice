@@ -56,3 +56,14 @@ function insertSQL(jsonInfo){
 }
 
 
+//打开"下一单"
+	function openNext(formNow,formNext){
+		var tmp=plus.webview.currentWebview();
+		var form_per=chuliForm(tmp);
+		var form_now=getForm('#'+formNow);
+		var extras = $.extend({}, form_per, form_now);
+		var url=formNext+".html";
+		var id=formNext;
+		var style={};
+		plus.webview.create(url,id,style,extras).show();
+	}

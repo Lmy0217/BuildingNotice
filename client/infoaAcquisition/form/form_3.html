@@ -71,17 +71,7 @@
 		var url="form_1.html";
 		plus.webview.create(url).show();
 	}
-	//打开"下一单"
-	function openNext(){
-		var tmp=plus.webview.currentWebview();
-		var form_per=chuliForm(tmp);
-		var form_now=getForm('#form2');
-		var extras = $.extend({}, form_per, form_now);
-		var url="form_3.html";
-		var id="form3";
-		var style={};
-		plus.webview.create(url,id,style,extras).show();
-	}
+	
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>

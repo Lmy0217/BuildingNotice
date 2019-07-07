@@ -62,21 +62,21 @@
 			}
 	
 			//打开"下一单"
-			function openNext(){
+			function w_openNext(){
 				var extras=getForm('#form1');
 				if(extras.type==1){
-					var url="form_2.1.html";
+					openNext('form1','form_2.1');
 				}
 				else if(extras.type==2){
-					var url="form_2.2.html";
+					openNext('form1','form_2.2');
 				}
 				else if(extras.type==3){
-					var url="form_2.3.html";
+					openNext('form1','form_2.3');
 				}
-				
-				var id="form2";
-				var style={};
-				plus.webview.create(url,id,style,extras).show();
+				// 
+				// var id="form2";
+				// var style={};
+				// plus.webview.create(url,id,style,extras).show();
 			}
 		</script>
 
@@ -139,17 +139,17 @@
 						<input class="mui-numbox-input" type="number" id="layer" name="floor" />
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
-				</div>				
+				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">结构类型</label>
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>砖木结构</label>
-					<input name="type" type="radio" value="1"  checked="">
+					<input name="type" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>木结构</label>
-					<input name="type" type="radio" value="2" >
+					<input name="type" type="radio" value="2">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>砖混结构</label>
@@ -162,8 +162,8 @@
 
 		</div>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button><button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6"
-			 onclick="openNext()">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6">上一步</button>
+			<button id='login' class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="w_openNext()">下一步</button>
 		</div>
 
 		<script type="text/javascript">
