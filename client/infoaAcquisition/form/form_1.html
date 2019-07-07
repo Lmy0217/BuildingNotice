@@ -7,7 +7,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
-
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css" />
 		<style>
 			.lv-content {
 				height: auto;
@@ -29,8 +30,10 @@
 		</style>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.min.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
 		<script src="../js/jquery.serializejson.min.js"></script>
 		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
 		<script>
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
@@ -61,7 +64,16 @@
 			//打开"下一单"
 			function openNext(){
 				var extras=getForm('#form1');
-				var url="form_2.html";
+				if(extras.type==1){
+					var url="form_2.1.html";
+				}
+				else if(extras.type==2){
+					var url="form_2.2.html";
+				}
+				else if(extras.type==3){
+					var url="form_2.3.html";
+				}
+				
 				var id="form2";
 				var style={};
 				plus.webview.create(url,id,style,extras).show();
@@ -83,60 +95,69 @@
 				</div>
 				<div class="mui-input-row">
 					<label>委托单位</label>
-					<input id='danwei' name="danwei" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+					<input id='unit' name="unit" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
 				</div>
 				<div class="mui-input-row">
 					<label>联系电话</label>
-					<input id='phone' name="phone" type="text" class="mui-input-clear mui-input" placeholder="请输入联系电话">
+					<input id='phone' name="phone" type="number" class="mui-input-clear mui-input" placeholder="请输入联系电话">
 				</div>
 				<div class="mui-input-row">
 					<label>提供资料情况</label>
-					<input id='ziliao_info' name="ziliao_info" type="text" class="mui-input-clear mui-input" placeholder="请输入">
+					<input id='material' name="material" type="text" class="mui-input-clear mui-input" placeholder="请输入">
 				</div>
 				<div class="mui-input-row">
 					<label>房屋地址</label>
-					<input id='address' name="address" type="text" class="mui-input-clear mui-input" placeholder="请输入房屋地址">
+					<input id='addr' name="addr" type="text" class="mui-input-clear mui-input" placeholder="请输入房屋地址">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">二、房屋概况</label>
 				</div>
 				<div class="mui-input-row">
 					<label>户主姓名</label>
-					<input id='huzhu_name' name="huzhu_name" type="text" class="mui-input-clear mui-input" placeholder="请输入户主姓名">
+					<input id='hold' name="hold" type="text" class="mui-input-clear mui-input" placeholder="请输入户主姓名">
 				</div>
 				<div class="mui-input-row">
 					<label>身份证号</label>
-					<input id='id_number' name="id_number" type="text" class="mui-input-clear mui-input" placeholder="请输入身份证号">
+					<input id='holdid' name="holdid" type="number" class="mui-input-clear mui-input" placeholder="请输入身份证号">
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">房屋属性</label></div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>砖木</label>
-					<input name="radio1" type="radio" value="1">
+					<label class="lv-title">房屋属性</label>
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>实木</label>
-					<input name="radio1" type="radio" value="2">
+					<label>住宅</label>
+					<input name="attr" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>混凝土</label>
-					<input name="radio1" type="radio" value="3">
+					<label>附属</label>
+					<input name="attr" type="radio" value="2">
 				</div>
 
 				<div class="mui-input-row">
 					<label>层数</label>
-					<!-- <input id='floor' type="text" class="mui-input-clear mui-input" placeholder="请输入楼层数"> -->
 					<div class="mui-numbox" data-numbox-min="1" data-numbox-max="10">
-						<!-- "-"按钮，点击可减小当前数值 -->
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" id="floor" name="floor" />
-						<!-- "+"按钮，点击可增大当前数值 -->
+						<input class="mui-numbox-input" type="number" id="layer" name="floor" />
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
+				</div>				
+				<div class="mui-input-row">
+					<label class="lv-title">结构类型</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>砖木结构</label>
+					<input name="type" type="radio" value="1"  checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木结构</label>
+					<input name="type" type="radio" value="2" >
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>砖混结构</label>
+					<input name="type" type="radio" value="3">
 				</div>
 				<div class="mui-input-row">
 					<label>鉴定时间</label>
-					<input id='time' name="time" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
+					<input id='identitytime' name="time" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
 				</div>
 
 		</div>

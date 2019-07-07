@@ -99,138 +99,92 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5 style="color: #000000;">&nbsp;3.房屋结构缺陷和问题</h5>
+						<h5 style="color: #000000;">&nbsp;1.设计、施工单位和相关文件</h5>
 					</label>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5><span class="result">提示：请选择需要添加到报告中的叙述。需要先选择大项，才能开启小项</span></h5>
+						<h5>该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</h5>
+					</label>
+					<!-- <textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription1">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea> -->
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">&nbsp;2.基础和主体结构</h5>
 					</label>
 				</div>
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label>	基础存在沉降</label>
-					<input name="type3a" value="1" type="checkbox">
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>建筑物主体为砖木结构，木柱下为石柱脚，砖墙下为砖砌条形基础，</h5>
+					</label>
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3a1" type="radio" value="1" disabled="disabled">
+					<label>房屋四面均为空斗砖砌体</label>
+					<input name="type21a" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3a1" type="radio" value="2"  disabled="disabled">
+					<label>正面为木墙，其余三面为空斗砖砌体</label>
+					<input name="type21a" type="radio" value="2">
 				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label>屋面或墙面存在渗水现象</label>
-					<input name="type3b" value="1" type="checkbox">
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>房屋主要以</h5>
+					</label>
 				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3b1" type="radio" value="1" disabled="disabled">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>砖墙</label>
+					<input name="type21b" value="1" type="checkbox" checked>
 				</div>
-				<div class="mui-input-row mui-radio mui-left" disabled>
-					<label>严重</label>
-					<input name="type3b1" type="radio" value="2" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label><span id="mutiao"></span>存在腐蚀现象</label>
-					<input name="type3c" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3c1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3c1" type="radio" value="2" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label><span id="mutiao"></span>存在开裂现象</label>
-					<input name="type3d" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3d1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3d1" type="radio" value="2" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label>纵横墙体无可靠拉接</label>
-					<input name="type3e" value="1" type="checkbox" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label>混凝土构件钢筋外露</label>
-					<input name="type3f" value="1" type="checkbox" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label>柱脚存在问题</label>
-					<input name="type3g" value="1" type="checkbox">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木柱</label>
+					<input name="type21b" value="2" type="checkbox">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left ">
-					<label>变形</label>
-					<input name="type3g1" value="1" type="checkbox" disabled="disabled">
+					<label>木屋架</label>
+					<input name="type21b" value="3" type="checkbox">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left ">
-					<label>倾斜</label>
-					<input name="type3g1" value="2" type="checkbox" disabled="disabled">
+					<label>木檩条</label>
+					<input name="type21b" value="3" type="checkbox">
 				</div>
-				<div class="mui-input-row mui-checkbox mui-left " disabled="disabled">
-					<label>破损</label>
-					<input name="type3g1" value="3" type="checkbox" disabled="disabled">
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>承重，楼面为</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁和木楼板</label>
+					<input name="type21c" type="radio" value="1" checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁无楼板</label>
+					<input name="type21c" type="radio" value="2">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>屋面为木檩条挂小青瓦。</h5>
+					</label>
 				</div>
 				
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label>墙体存在问题</label>
-					<input name="type3h" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3h1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3h1" type="radio" value="2" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>破损</label>
-					<input name="type3h2" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>开裂</label>
-					<input name="type3h2" type="radio" value="2" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label>屋面存在问题</label>
-					<input name="type3i" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3i1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3i1" type="radio" value="2" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>破损</label>
-					<input name="type3i2" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>开裂</label>
-					<input name="type3i2" type="radio" value="2" disabled="disabled">
-				</div>
 				
 				
 				<div class="mui-input-row">
-					<label class="lv-title">采集照片</label>
+					<label class="lv-title">4.测试复选框</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木梁</label>
+					<input name="checkbox" value="1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木柱</label>
+					<input name="checkbox" value="2" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>木板</label>
+					<input name="checkbox" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">照片采集</label>
 				</div>
 				<ul class="list">
 					<li class='mui-table-view-cell mui-media'>
