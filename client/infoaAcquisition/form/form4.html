@@ -36,6 +36,13 @@
 		<script src="../js/form.js"></script>
 		<script src="../js/util.js"></script>
 		<script>
+			mui.init();
+			// 扩展API是否准备好，如果没有则监听“plusready"事件  
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
@@ -71,7 +78,7 @@
 				bili=computeResult();
 				console.log(bili);
 				$('#result_num').text(bili);
-				if (0 < bili && bili < 0.05) {
+				if (0 <= bili && bili < 0.05) {
 					console.log('jinru1');
 					$('#result_des').text('大于0但未超过5%');
 					$('#result_grade').text('B');
@@ -94,21 +101,7 @@
 				var url="form_2.html";
 				plus.webview.create(url).show();
 			}
-			//打开"下一单"
-			function openNext(){
-				var tmp=plus.webview.currentWebview();
-				var form_per=chuliForm(tmp);
-				bili=computeResult();
-				
-				var form_now=getForm('#form3');
-				form_now['result']=bili;
-				watchJSON(form_now);
-				var extras = $.extend({}, form_per, form_now);
-				var url="form_4.html";
-				var id="form4";
-				var style={};
-				plus.webview.create(url,id,style,extras).show();
-			}
+			
 		</script>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">信息采集系统</h1>
@@ -287,8 +280,8 @@
 		</div>
 		</form>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="openPer()">上一步</button><button id='login'
-			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext()">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button><button id='login'
+			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext('form4','form5')">下一步</button>
 		</div>
 
 		<script type="text/javascript">

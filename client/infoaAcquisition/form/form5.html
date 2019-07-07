@@ -36,6 +36,13 @@
 		<script src="../js/form.js"></script>
 		<script src="../js/util.js"></script>
 		<script>
+			mui.init();
+			// 扩展API是否准备好，如果没有则监听“plusready"事件  
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
@@ -136,7 +143,7 @@
 		</form>
 		<div class="mui-content-padded">
 			<button id='' class="mui-btn mui-btn-primary mui-col-xs-3" onclick="goHome()">到首页</button>
-			<button id='' class="mui-btn mui-btn-primary mui-col-xs-3" onclick="openPer()">上一步</button>
+			<button id='' class="mui-btn mui-btn-primary mui-col-xs-3" onclick="mui.back()">上一步</button>
 			<button id='' class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="submitFrom()">完成表单</button>
 		</div>
 
