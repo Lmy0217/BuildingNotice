@@ -75,7 +75,21 @@
 				var url="form_3.html";
 				plus.webview.create(url,id,style,form_per).show();
 			}
-			//提交表单到本地
+			// function goHome() {
+			// 	//到首页去，关闭其他所有页面
+			// 	console.log('到首页去1，关闭其他所有页面');
+			// 	var allPage = plus.webview.all();
+			// 	watchJSON(allPage);
+			// 	homeId = plus.webview.getLaunchWebview().id;
+			// 	for (var i = 0, l = json.length; i < l; i++) {
+			// 		for (var key in json[i]) {
+			// 			alert(key + ':' + json[i][key]);
+			// 		}
+			// 	}
+			// }
+			
+			
+			//提交表单到本地			
 			function submitFrom(){
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
@@ -89,8 +103,8 @@
 				// var style={};
 				// plus.webview.create(url,id,style,extras).show();
 				insertSQL(extras);
-				console.log(plus.webview.getLaunchWebview().id);
-				popToTarget(plus.webview.getLaunchWebview().id);//返回首页
+				
+							
 			}
 		</script>
 		<header class="mui-bar mui-bar-nav">
@@ -121,8 +135,9 @@
 		</div>
 		</form>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="openPer()">上一步</button><button id='login'
-			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="submitFrom()">完成表单</button>
+			<button id='' class="mui-btn mui-btn-primary mui-col-xs-3" onclick="goHome()">到首页</button>
+			<button id='' class="mui-btn mui-btn-primary mui-col-xs-3" onclick="openPer()">上一步</button>
+			<button id='' class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="submitFrom()">完成表单</button>
 		</div>
 
 		<script type="text/javascript">

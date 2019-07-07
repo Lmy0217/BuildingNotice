@@ -97,3 +97,23 @@ function popToTarget(targetId) {
 	//没有找到目标页面
 	console.log("目标页面不是当前页面的祖先页面！");
 }
+
+
+function goHome() {
+	//到首页去，关闭其他所有页面
+	console.log('到首页去，关闭其他所有页面');
+	var allPage = plus.webview.all();
+	watchJSON(allPage);
+	homeId = plus.webview.getLaunchWebview().id;
+	console.log(homeId);
+	for (var i = 0, l = allPage.length; i < l; i++) {
+		if(allPage[i].id!=homeId||typeof(allPage[i])=='undefined'){
+			allPage[i].close('none');
+		}
+		// for (var key in allPage[i]) {
+			key='id';
+			console.log(key + ':' + allPage[i][key]);
+			
+		// }
+	}
+}
