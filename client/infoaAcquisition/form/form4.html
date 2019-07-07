@@ -274,14 +274,17 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<button type="button" id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="showResult()">生成</button>
+						<button type="button" class="mui-btn mui-btn-primary mui-col-xs-6" onclick="showResult()">生成</button>
 					</label>
 				</div>
 		</div>
 		</form>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button><button id='login'
-			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext('form4','form5')">下一步</button>
+			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form4','form5')">下一步</button>
+		</div>
+		<div class="mui-content-padded mui-row">
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
 		</div>
 
 		<script type="text/javascript">

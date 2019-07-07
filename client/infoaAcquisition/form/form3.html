@@ -44,6 +44,7 @@
 		<script src="../js/jquery.serializejson.min.js"></script>
 		<script src="../js/takePhoto.js"></script>
 		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
 		<script>
 			var file_url;
 	var timestamp;
@@ -265,8 +266,11 @@
 		</div>
 		</form>
 		<div class="mui-content-padded">
-			<button id='login' class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button><button id='login'
-			 class="mui-btn mui-btn-primary  mui-col-xs-6" onclick="openNext('form3','form4')">下一步</button>
+			<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form3','form4')">下一步</button>
+		</div>
+		<div class="mui-content-padded mui-row">
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
 		</div>
 
 		<script type="text/javascript">
