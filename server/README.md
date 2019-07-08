@@ -1,3 +1,3 @@
 # Building Notice Server
 * SSM
-* [API](api)
+* [API](api.md)
