@@ -21,7 +21,7 @@ public class Archive {
 
     private Integer layer;
 
-    private Date create;
+    private Date createyear;
 
     private Integer typeid;
 
@@ -105,12 +105,12 @@ public class Archive {
         this.layer = layer;
     }
 
-    public Date getCreate() {
-        return create;
+    public Date getCreateyear() {
+        return createyear;
     }
 
-    public void setCreate(Date create) {
-        this.create = create;
+    public void setCreateyear(Date createyear) {
+        this.createyear = createyear;
     }
 
     public Integer getTypeid() {

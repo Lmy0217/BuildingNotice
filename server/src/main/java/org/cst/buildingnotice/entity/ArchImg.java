@@ -1,6 +1,6 @@
 package org.cst.buildingnotice.entity;
 
-public class ArchImgKey {
+public class ArchImg {
     private Integer archid;
 
     private Integer imgid;
