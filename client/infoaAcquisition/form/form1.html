@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css" />
+		<style>
+			.lv-content {
+				height: auto;
+			}
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.mui-input-row textarea {
+				height: auto;
+			}
+			.mui-input-group .lv-title {
+				width: 100%;
+			}			
+			.lv-title h5{
+				color: #000000;
+			}
+		</style>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
+		<script>
+			mui.init();
+			// // 扩展API是否准备好，如果没有则监听“plusready"事件  
+			// if (window.plus) {
+			// 	plusReady();
+			// } else {
+			// 	document.addEventListener("plusready", plusReady, false);
+			// }
+			// 扩展API准备完成后要执行的操作  
+			function plusReady() {
+				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
+				var myDate = new Date();
+				//获取当前年
+			   var year = myDate.getFullYear();
+			   //获取当前月
+			   var month = myDate.getMonth() + 1;
+				//获取当前日
+				var day = myDate.getDate();
+				var today = year + '-' + conver(month) + "-" + conver(day);
+				console.log(today);
+				$("#identitytime").val(today);
+			}
+			//日期时间处理
+			function conver(s) {
+			return s < 10 ? '0' + s : s;
+			}
+	
+			//打开"下一单"
+			function w_openNext(){
+				var extras=getForm('#form1');
+				if(extras.type==1){
+					openNext('form1','form2.1');
+				}
+				else if(extras.type==2){
+					openNext('form1','form2.2');
+				}
+				else if(extras.type==3){
+					openNext('form1','form2.3');
+				}
+			}
+		</script>
+
+	</head>
+
+	<body>
+
+
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content">
+			<form id='form1' class="mui-input-group">
+				<div class="mui-input-row">
+					<label class="lv-title">一、委托概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label>委托单位</label>
+					<input id='unit' name="unit" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+				</div>
+				<div class="mui-input-row">
+					<label>联系电话</label>
+					<input id='phone' name="phone" type="number" class="mui-input-clear mui-input" placeholder="请输入联系电话">
+				</div>
+				<div class="mui-input-row">
+					<label>提供资料情况</label>
+					<input id='material' name="material" type="text" class="mui-input-clear mui-input" placeholder="请输入">
+				</div>
+				<div class="mui-input-row">
+					<label>房屋地址</label>
+					<input id='addr' name="addr" type="text" class="mui-input-clear mui-input" placeholder="请输入房屋地址">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">二、房屋概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label>户主姓名</label>
+					<input id='hold' name="hold" type="text" class="mui-input-clear mui-input" placeholder="请输入户主姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号</label>
+					<input id='holdid' name="holdid" type="number" class="mui-input-clear mui-input" placeholder="留空请输3个0">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">房屋属性</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>住宅</label>
+					<input name="attr" type="radio" value="1" checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>附属</label>
+					<input name="attr" type="radio" value="2">
+				</div>
+
+				<div class="mui-input-row">
+					<label>层数</label>
+					<div class="mui-numbox" data-numbox-min="1" data-numbox-max="10">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" id="layer" name="layer" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">结构类型</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>砖木结构</label>
+					<input name="type" type="radio" value="1" checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木结构</label>
+					<input name="type" type="radio" value="2">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>砖混结构</label>
+					<input name="type" type="radio" value="3">
+				</div>
+				<div class="mui-input-row">
+					<label>鉴定时间</label>
+					<input id='identitytime' name="identitytime" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
+				</div>
+			</form>
+		</div>
+		<div class="mui-content-padded">
+			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="w_openNext()">下一步</button>
+			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="mui.back()">回主页</button>			
+		</div>
+
+		<script type="text/javascript">
+			mui.init()
+		</script>
+
+	</body>
+
+</html>

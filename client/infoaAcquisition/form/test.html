@@ -1,0 +1,42 @@
+<html>  
+  <head>  
+      <meta charset="utf-8">
+      <title>PopPicker</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />     
+      <!--标准mui.css-->
+      <link rel="stylesheet" href="../css/mui.min.css">
+      <!--App自定义的css-->
+      <link rel="stylesheet" type="text/css" href="../css/mui.picker.css" />
+      <link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css" />
+  </head>  
+  <body>   
+    <div class="mui-content">  
+      <button id='subinvman_sel' class="mui-btn mui-btn-block" type='button'>鱼与熊掌</button> 
+    </div>  
+    
+    <!--引用js文件-->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/mui.min.js"></script>	
+    <script src="../js/mui.picker.min.js"></script>
+    <script type="text/javascript">
+      mui.init({
+        swipeBack:true //启用右滑关闭功能
+      });
+		  
+      //PopPicker选择器
+      var subinvman_sel=$("#subinvman_sel")[0];
+	  console.log('zhixin1')
+      if(subinvman_sel)
+      {				
+		  console.log('zhixin')
+        var picker=new mui.PopPicker(); 
+	picker.setData([{value:'fish',text:'鱼'},{value:'paws',text:'熊掌'}]);
+	document.querySelector("#subinvman_sel").addEventListener("tap",function(){
+	  picker.show(function(items){
+            $("#subinvman_sel")[0].innerHTML=items[0].text;
+          });
+        });			
+      }
+    </script>
+  </body>  
+</html> 

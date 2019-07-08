@@ -1,11 +1,9 @@
 package org.cst.buildingnotice.dao;
 
-import org.cst.buildingnotice.entity.ArchImgKey;
+import org.cst.buildingnotice.entity.ArchImg;
 
 public interface ArchImgMapper {
-    int deleteByPrimaryKey(ArchImgKey key);
+    int insert(ArchImg record);
 
-    int insert(ArchImgKey record);
-
-    int insertSelective(ArchImgKey record);
+    int insertSelective(ArchImg record);
 }

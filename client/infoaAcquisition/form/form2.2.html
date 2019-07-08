@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>木结构</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.imageup{ width:100px; height: 50px; line-height:50px;display: inline-block;padding: 0 11px;
+            background: #02bafa;
+			color: #F3F3F3;
+            border: 1px #26bbdb solid;
+			border-radius: 10px;
+			} 
+			.button{  width:100px; height: 50px; line-height:50px;} 
+			ul li p{
+			    display: inline-block;
+			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/takePhoto.js"></script>
+		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
+		<script>
+			mui.init();
+	// 扩展API是否准备好，如果没有则监听“plusready"事件  
+
+	mui.plusReady(function() {
+		var tmp = plus.webview.currentWebview();
+		var form_per = chuliForm(tmp);
+		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
+		console.log(JSON.stringify(form_per));
+	});
+</script>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content">
+			<form id='form2' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">二、房屋概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;房屋结构描述</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">&nbsp;1.设计、施工单位和相关文件</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</h5>
+					</label>
+					<!-- <textarea id='textarea1' rows="5" class="mui-input-clear mui-input" placeholder="test" name="structureDescription1">该房屋无正规设计图纸，无正规施工单位和监理单位，设计和施工资料缺失。</textarea> -->
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">&nbsp;2.基础和主体结构</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>建筑物主体为砖木结构，木柱下为石柱脚，房屋四面均为木墙，房屋主要以</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木柱</label>
+					<input name="type22a" value="1" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木屋架</label>
+					<input name="type22a" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>木檩条</label>
+					<input name="type22a" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>承重，楼面为</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁和木楼板</label>
+					<input name="type22b" type="radio" value="1" checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁无楼板</label>
+					<input name="type22b" type="radio" value="2">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>屋面为木檩条挂小青瓦。</h5>
+					</label>
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form2','form3')">下一步</button>
+			</div>
+			<div class="mui-content-padded mui-row">
+				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
+				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
+			</div>
+
+			<script type="text/javascript">
+				mui.init()
+			</script>
+
+	</body>
+
+</html>
