@@ -24,21 +24,75 @@ function chuliForm(json) {
 	delete json["id"];
 	return json;
 }
+//提交表单到本地			
+function submitFrom() {
+	var tmp = plus.webview.currentWebview();
+	var form_per = chuliForm(tmp);
+	var form_now = getForm('#form4');
+	watchJSON(form_per);
+	var extras = $.extend({}, form_per, form_now);
+	w_insertSQL(extras);
+}
+
+// 执行SQL语句，这里要弄三个表
+function w_insertSQL(jsonInfo) {
+	var tableName='infoDB';
+	var douhao='","'
+	creatType1="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
+	""
+	creatMain="create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
+		"'uint'	TEXT(255)," +
+		"'phone'	integer(11)," +
+		"'material'	TEXT(255) ," +
+		"'addr'	TEXT(255)," +
+		"'hold'	TEXT(255)," +
+		"'holdid' INTEGER(20)," +
+		"'attr' TEXT," +
+		"'layer' integer(2)," +
+		"'type'	integer(1) NOT NULL," +
+		"'typeId'	INTEGER," +
+		"'identitytime'	text(10)," +
+		"'rankresult'	TEXT," +
+		"'imageId'	integer(2)," +
+		"'zhongzhu'	integer(2)," +
+		"'zhongzhu_w'	integer(2)," +
+		"'bianzhu'	integer(2)," +
+		"'bianzhu_w'	integer(2)," +
+		"'jiaozhu'	integer(2)," +
+		"'jiaozhu_w'	integer(2)," +
+		"'wujia'	integer(2)," +
+		"'wujia_w'	integer(2)," +
+		"'zhongjianliang'	integer(2)," +
+		"'zhongjianliang_w'	integer(2)," +
+		"'bianliang'	integer(2)," +
+		"'bianliang_w'	integer(2)," +
+		"'qiangti'	integer(2)," +
+		"'qiangti_w'	integer(2)," +
+		"'loubangoujian'	integer(2)," +
+		"'loubangoujian_w'	integer(2)," +
+		"'weihugoujian'	integer(2)," +
+		"'weihugoujian_w'	integer(2)," +
+		"'result'	integer," +
+		"'isUp'	integer(1)," 
+	sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
+	jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
+}
 
 // 执行SQL语句
-function insertSQL(jsonInfo) {
+function insertSQL(tableName,creatTable,sqlStr) {
 	openDB();
-	console.log('执行SQL语句: ');
+	// console.log('执行SQL语句: ');
 
 	sqlStr = "insert into infoDB values('" + jsonInfo.danwei + "','" + jsonInfo.floor + "','" + jsonInfo.result + "')"
 	console.log(sqlStr)
 	plus.sqlite.executeSql({
-		name: 'test',
-		sql: 'create table if not exists infoDB("danwei" CHAR(110),"floor" INT(2),"result" FLOAT(11))',
-		success: function(e) {
+			name: tableName,
+			// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+			sql: creatTable,
+		); success: function(e) {
 			console.log('executeSql success: ' + JSON.stringify(e))
 			plus.sqlite.executeSql({
-				name: 'test',
+				name: tableName,
 				sql: sqlStr,
 				success: function(e) {
 					console.log('executeSql success: ' + JSON.stringify(e))
@@ -52,7 +106,7 @@ function insertSQL(jsonInfo) {
 			console.log('executeSql fail: ' + JSON.stringify(e))
 		}
 	});
-	closeDB()
+closeDB()
 }
 
 
@@ -112,4 +166,3 @@ function changeChild2(father, child) {
 		}
 	});
 }
-
