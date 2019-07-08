@@ -36,10 +36,19 @@ function submitFrom() {
 
 // 执行SQL语句，这里要弄三个表
 function w_insertSQL(jsonInfo) {
-	var tableName='infoDB';
+	
 	var douhao='","'
-	creatType1="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
-	""
+	var tableName='imageDB';	
+	creatImage="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
+	"'filePath'	TEXT(255),"+
+	"'depict'	TEXT(255),";
+	if(obj.hasOwnProperty("photoSrc1") ){
+		var imageSqlStr="insert into "+tableName+" values("+jsonInfo.photoSrc1+douhao+jsonInfo.photoDes1+"')"
+	}
+	
+	
+	insertSQL(tableName,creatImage)
+	var tableName='infoDB';
 	creatMain="create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
 		"'uint'	TEXT(255)," +
 		"'phone'	integer(11)," +
@@ -47,33 +56,14 @@ function w_insertSQL(jsonInfo) {
 		"'addr'	TEXT(255)," +
 		"'hold'	TEXT(255)," +
 		"'holdid' INTEGER(20)," +
-		"'attr' TEXT," +
+		"'attr' integer(2)," +
 		"'layer' integer(2)," +
-		"'type'	integer(1) NOT NULL," +
-		"'typeId'	INTEGER," +
+		"'type'	TEXT," +
 		"'identitytime'	text(10)," +
-		"'rankresult'	TEXT," +
 		"'imageId'	integer(2)," +
-		"'zhongzhu'	integer(2)," +
-		"'zhongzhu_w'	integer(2)," +
-		"'bianzhu'	integer(2)," +
-		"'bianzhu_w'	integer(2)," +
-		"'jiaozhu'	integer(2)," +
-		"'jiaozhu_w'	integer(2)," +
-		"'wujia'	integer(2)," +
-		"'wujia_w'	integer(2)," +
-		"'zhongjianliang'	integer(2)," +
-		"'zhongjianliang_w'	integer(2)," +
-		"'bianliang'	integer(2)," +
-		"'bianliang_w'	integer(2)," +
-		"'qiangti'	integer(2)," +
-		"'qiangti_w'	integer(2)," +
-		"'loubangoujian'	integer(2)," +
-		"'loubangoujian_w'	integer(2)," +
-		"'weihugoujian'	integer(2)," +
-		"'weihugoujian_w'	integer(2)," +
-		"'result'	integer," +
-		"'isUp'	integer(1)," 
+		"'damage'	TEXT," +
+		
+		"'isUp'	integer(1)" 
 	sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
 	jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
 }
@@ -92,7 +82,7 @@ function insertSQL(tableName,creatTable,sqlStr) {
 		); success: function(e) {
 			console.log('executeSql success: ' + JSON.stringify(e))
 			plus.sqlite.executeSql({
-				name: tableName,
+				name: 'infoDB',
 				sql: sqlStr,
 				success: function(e) {
 					console.log('executeSql success: ' + JSON.stringify(e))
