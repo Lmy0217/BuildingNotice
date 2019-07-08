@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>砖木结构</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.imageup{ width:100px; height: 50px; line-height:50px;display: inline-block;padding: 0 11px;
+            background: #02bafa;
+			color: #F3F3F3;
+            border: 1px #26bbdb solid;
+			border-radius: 10px;
+			} 
+			.button{  width:100px; height: 50px; line-height:50px;} 
+			ul li p{
+			    display: inline-block;
+			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/takePhoto.js"></script>
+		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
+		<script>
+			mui.init();	
+	mui.plusReady(function() {
+		var tmp = plus.webview.currentWebview();
+		var form_per = chuliForm(tmp);
+		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
+		console.log(JSON.stringify(form_per));
+		// if(form_per.type==3){
+		// 	$(".zhuanhun").style.display="block";
+		// 	$(".zhunamu").style.display="block";
+		// }else if(form_per.type==2){
+		// 	$(".mu").style.display="block";
+		// 	$(".zhunamu").style.display="block";
+		// }else if(form_per.type==1){
+		// 	$(".zhunamu").style.display="block";
+		// 	$(".mu").style.display="block";
+		// }
+		
+		changeChild('type3a','type3a1');
+		changeChild('type3b','type3b1');
+		changeChild('type3c','type3c1');
+		changeChild('type3d','type3d1');
+		changeChild2('type3g','type3g1');
+		changeChild('type3h','type3h1');
+		changeChild('type3i','type3i1');
+		// 扩展API加载完毕后调用onPlusReady回调函数 
+		$(".list li").on("tap", ".imageup", function() {
+			alert('11');
+			var $li = $(this).parents("li");
+			console.log($($li).text())
+			$li.addClass("selectLi");
+			$li.siblings().removeClass("selectLi");
+			page.imgUp();
+		})
+	});
+		
+	
+	//打开"上一单"
+	function openPer(){
+		var url="form_1.html";
+		plus.webview.create(url).show();
+	}
+	
+</script>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content">
+			<form id='form2' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">二、房屋概况</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;房屋结构描述</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">&nbsp;3.房屋结构缺陷和问题</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5><span class="result">提示：请选择需要添加到报告中的叙述。需要先选择大项，才能开启小项</span></h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label> 基础存在沉降</label>
+					<input name="type3a" value="1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>轻微</label>
+					<input name="type3a1" type="radio" value="1" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>严重</label>
+					<input name="type3a1" type="radio" value="2" disabled="disabled">
+				</div>
+
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>屋面或墙面存在渗水现象</label>
+					<input name="type3b" value="1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>轻微</label>
+					<input name="type3b1" type="radio" value="1" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left" disabled>
+					<label>严重</label>
+					<input name="type3b1" type="radio" value="2" disabled="disabled">
+				</div>
+
+				<div class="zhuanmu mu">
+					<div class="mui-input-row mui-checkbox mui-left ">
+						<label><span id="mutiao"></span>存在腐蚀现象</label>
+						<input name="type3c" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微</label>
+						<input name="type3c1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="type3c1" type="radio" value="2" disabled="disabled">
+					</div>
+
+					<div class="mui-input-row mui-checkbox mui-left ">
+						<label><span id="mutiao"></span>存在开裂现象</label>
+						<input name="type3d" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微</label>
+						<input name="type3d1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="type3d1" type="radio" value="2" disabled="disabled">
+					</div>
+				</div>
+
+				<div class="zhuanmu zhuanhun">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>纵横墙体无可靠拉接</label>
+						<input name="type3e" value="1" type="checkbox">
+					</div>
+
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>混凝土构件钢筋外露</label>
+						<input name="type3f" value="1" type="checkbox">
+					</div>
+				</div>
+
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>柱脚存在问题</label>
+					<input name="type3g" value="1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>变形</label>
+					<input name="type3g1" value="1" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>倾斜</label>
+					<input name="type3g1" value="2" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left " disabled="disabled">
+					<label>破损</label>
+					<input name="type3g1" value="3" type="checkbox" disabled="disabled">
+				</div>
+				<div class="zhuanmu zhuanhun">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>墙体存在问题</label>
+						<input name="type3h" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微破损</label>
+						<input name="type3h1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微开裂</label>
+						<input name="type3h1" type="radio" value="2" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重破损</label>
+						<input name="type3h1" type="radio" value="3" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重开裂</label>
+						<input name="type3h1" type="radio" value="4" disabled="disabled">
+					</div>
+				</div>
+				<div class="zhuanmu mu">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>屋面存在问题</label>
+						<input name="type3i" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微破损</label>
+						<input name="type3i1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微变形</label>
+						<input name="type3i1" type="radio" value="2" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重破损</label>
+						<input name="type3i1" type="radio" value="3" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重变形</label>
+						<input name="type3i1" type="radio" value="4" disabled="disabled">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">采集照片</label>
+				</div>
+				<ul class="list">
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 1">采集图片1</a></p>
+						<input id='photoSrc1' name="photoSrc1" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoDes1' name="photoDes1" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
+						 style="display:none">
+					</li>
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 2">采集图片2</a></p>
+						<input id='photoDes2' name="photoDes2" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoDes2' name="photoDes2" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
+						 style="display:none">
+					</li>
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 3">采集图片3</a></p>
+						<input id='photoDes3' name="photoDes3" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoDes3' name="photoDes3" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
+						 style="display:none">
+					</li>
+					<li class='mui-table-view-cell mui-media'>
+						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
+						<p><a class="imageup 4">采集图片4</a></p>
+						<input id='photoDes4' name="photoDes4" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoDes4' name="photoDes4" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
+						 style="display:none">
+					</li>
+				</ul>
+				<!-- <div class="mui-content-padded">
+					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
+				</div> -->
+		</div>
+		</form>
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form3','form4')">下一步</button>
+		</div>
+		<div class="mui-content-padded mui-row">
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
+		</div>
+
+		<script type="text/javascript">
+			mui.init()
+		</script>
+
+	</body>
+
+</html>

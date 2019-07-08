@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.serializejson.min.js"></script>
+		<script src="../js/takePhoto.js"></script>
+		<script src="../js/form.js"></script>
+		<script src="../js/util.js"></script>
+		<script>
+			mui.init();
+			// 扩展API是否准备好，如果没有则监听“plusready"事件  
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+			mui.plusReady(function() {
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				showResult(form_per.result)
+				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+				console.log(JSON.stringify(form_per));
+			});
+			//计算结果
+			function showResult(bili) {				
+				console.log(bili);
+				$('#result_num').text(bili);
+				if (0 < bili && bili < 0.05) {
+					console.log('jinru1');
+					$('#result_des').text('大于0但未超过5%');
+					$('#result_grade').text('B');
+					$('#resultGrade').val("B");
+				} else if (0.05 <= bili && bili < 0.25) {
+					console.log('jinru2');
+					$('#result_des').text('大于5%但未超过25%');
+					$('#result_grade').text('C');
+					$('#resultGrade').val("C");
+				} else if (0.25 <= bili && bili < 1) {
+					console.log('jinru3');
+					$('#result_des').text('大于25%');
+					$('#result_grade').text('D');	
+					$('#resultGrade').val("D");
+				}
+				
+				return false;
+			}
+			//打开"上一单"
+			function openPer(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				var id="form3";
+				var style={};
+				var url="form_3.html";
+				plus.webview.create(url,id,style,form_per).show();
+			}
+			// function goHome() {
+			// 	//到首页去，关闭其他所有页面
+			// 	console.log('到首页去1，关闭其他所有页面');
+			// 	var allPage = plus.webview.all();
+			// 	watchJSON(allPage);
+			// 	homeId = plus.webview.getLaunchWebview().id;
+			// 	for (var i = 0, l = json.length; i < l; i++) {
+			// 		for (var key in json[i]) {
+			// 			alert(key + ':' + json[i][key]);
+			// 		}
+			// 	}
+			// }
+			
+			
+			//提交表单到本地			
+			function submitFrom(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				// document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+				// console.log(JSON.stringify(form_per));
+				var form_now=getForm('#form4');
+				watchJSON(form_per);
+				var extras = $.extend({}, form_per, form_now);
+				// var url="form_4.html";
+				// var id="form4";
+				// var style={};
+				// plus.webview.create(url,id,style,extras).show();
+				insertSQL(extras);
+				
+							
+			}
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">信息采集系统</h1>
+		</header>
+		<div class="mui-content">
+			<form id='form4' class="mui-input-group">
+				<div class="mui-input-row">
+					<label id="div1" class="lv-title"></label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">四、现场查勘及受损情况调查</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num"
+							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
+							 class="result">B</span>级。</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">五、鉴定结论及建议</label>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性等级</label>
+					<input id='resultGrade' name="resultGrade" type="text" class="mui-input-clear mui-input" placeholder="" value="">
+				</div>
+		</div>
+		</form>
+		<div class="mui-content-padded">
+			<button id='' class="mui-btn mui-btn-primary mui-btn-block" onclick="submitFrom()">完成表单</button>
+		</div>
+		<div class="mui-content-padded mui-row">
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
+		</div>
+
+		<script type="text/javascript">
+			mui.init()
+		</script>
+
+	</body>
+
+</html>

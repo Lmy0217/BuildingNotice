@@ -1,38 +1,72 @@
-
-//打开手机摄像头
-function openCamera() {
-	var cmr = plus.camera.getCamera();
-	cmr.captureImage(function(p) {
-		plus.io.resolveLocalFileSystemURL(p, function(entry) {
-			plus.nativeUI.showWaiting("拍照中...", ""); //显示系统loading框
-			plus.zip.compressImage({
-				src: entry.toLocalURL(),
-				dst: '_doc/camera/' + p,
-				overwrite: true,
-				format: "jpg",
-				width: "30%"
-			}, function(zip) {
-				if (zip.size > (1 * 1024 * 1024)) {
-					return mui.toast('文件超大,请调整相机重新拍照');
+//弹出系统按钮选择框
+var page = null;
+page = {
+	imgUp: function() {
+		var m = this;
+		/* console.log(m);*/
+		plus.nativeUI.actionSheet({
+			cancel: "取消",
+			buttons: [{
+					title: "拍照"
+				},
+				{
+					title: "从相册中选择"
 				}
-				file_url = zip.target;
-				//转为base64
-				getBase64(file_url);
-				uploadToServer(file_url);
-			}, function(zipe) {
-				plus.nativeUI.closeWaiting();
-				mui.toast('压缩失败！')
-			});
-		}, function(e) {
-			plus.nativeUI.closeWaiting(); //获取图片失败,loading框取消
-			mui.toast('失败：' + e.message); //打印失败原因,或给出错误提示
+			]
+		}, function(e) { //1 是拍照  2 从相册中选择 
+			switch (e.index) {
+				case 1:
+					appendByCamera();
+					break;
+				case 2:
+					appendByGallery();
+					break;
+			}
 		});
-	}, function(e) {
-		plus.nativeUI.closeWaiting(); //开启照相机失败,关闭loading框
-		mui.toast('失败：' + e.message); //打印错误原因,给出错提示
-	}, {
-		filename: '_doc/camera/', //图片名字
-		index: 1 //摄像头id
+	}
+}
+
+// 拍照添加文件
+function appendByCamera() {
+	plus.camera.getCamera().captureImage(function(e) {
+		console.log("e is" + e);
+		plus.io.resolveLocalFileSystemURL(e, function(entry) {
+			var path = entry.toLocalURL();
+			var indexa = liIndex()
+			console.log(indexa);
+			$(".headimg")[indexa].style.display = "block";
+			$(".photoDes")[indexa].style.display = "block";//如果拍了照片,这里就显示出来
+			$(".headimg")[indexa].src = path;
+			$(".photoSrc")[indexa].value = path;
+		}, function(e) {
+			mui.toast("读取拍照文件错误：" + e.message);
+		});
 	});
 }
+// 从相册添加文件
+function appendByGallery() {
+	plus.gallery.pick(function(path) {
+		var indexa = liIndex();
+		console.log(indexa);
+		$(".headimg")[indexa].style.display = "block";
+		$(".photoDes")[indexa].style.display = "block";
+		$(".photoSrc")[indexa].value = path;
+		$(".headimg")[indexa].src = path;
+	});
+}
+
+//判断点击的是上传的第几个li             
+function liIndex() {
+	var lis = $(".list").children();
+	console.log(lis.length)
+	for (var i = 0; i < lis.length; i++) {
+		console.log($(lis[i]).attr("class"))
+		var lisClass = $(lis[i]).attr("class").split(" ");
+		if (lisClass[2] == "selectLi") {
+			console.log(i);
+			return i;
+		}
+	}
+}
+
 
