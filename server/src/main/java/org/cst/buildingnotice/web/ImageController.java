@@ -66,7 +66,7 @@ public class ImageController {
 		int imageId = imageService.create(file_name, depict);
 		
 		Map<String, Object> dict = new HashMap<String, Object>();
-		dict.put("code", HttpStatus.OK);
+		dict.put("status", HttpStatus.OK.value());
 		dict.put("imageId", imageId);
 
 		return dict;

@@ -131,7 +131,7 @@ public class ArchiveController {
 		}
 		
 		Map<String, Object> dict = new HashMap<String, Object>();
-		dict.put("code", HttpStatus.OK);
+		dict.put("status", HttpStatus.OK.value());
 		dict.put("archid", archid);
 
 		return dict;
