@@ -12,7 +12,7 @@ public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private ImageMapper imageMapper;
 
-	public int save(String path, String depict) {
+	public int create(String path, String depict) {
 		Image image = new Image();
 		image.setPath(path);
 		image.setDepict(depict);
@@ -20,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
 		return image.getId();
 	}
 
-	public Image getImageById(Integer id) {
+	public Image getImageById(int id) {
 		return imageMapper.selectByPrimaryKey(id);
 	}
 

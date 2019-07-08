@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,7 @@ public class ImageController {
 
 	@RequestMapping(value = "/upload", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String testUpload(@RequestParam("file") CommonsMultipartFile file, @RequestParam("depict") String depict, 
+	public Map<String, Object> upload(@RequestParam("file") CommonsMultipartFile file, @RequestParam("depict") String depict, 
 			HttpServletRequest request, Model model) throws IOException {
 		
 		String uploads_path = request.getServletContext().getRealPath("/uploads/images");
@@ -61,13 +63,17 @@ public class ImageController {
 		out.close();
 		in.close();
 		
-		imageService.save(file_name, depict);
+		int imageId = imageService.create(file_name, depict);
+		
+		Map<String, Object> dict = new HashMap<String, Object>();
+		dict.put("code", HttpStatus.OK);
+		dict.put("imageId", imageId);
 
-		return "success";
+		return dict;
 	}
 
 	@RequestMapping(value = "/download", method=RequestMethod.GET)
-	public ResponseEntity<byte[]> fileDownload(@RequestParam("id") int id, HttpServletRequest request, 
+	public ResponseEntity<byte[]> download(@RequestParam("id") int id, HttpServletRequest request, 
 			Model model) throws Exception {
 		
 		Image image = imageService.getImageById(id);

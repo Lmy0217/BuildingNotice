@@ -11,7 +11,7 @@
     <result column="holdid" jdbcType="VARCHAR" property="holdid" />
     <result column="attr" jdbcType="VARCHAR" property="attr" />
     <result column="layer" jdbcType="INTEGER" property="layer" />
-    <result column="create" jdbcType="DATE" property="create" />
+    <result column="createyear" jdbcType="TIMESTAMP" property="createyear" />
     <result column="typeid" jdbcType="INTEGER" property="typeid" />
     <result column="identitytime" jdbcType="TIMESTAMP" property="identitytime" />
     <result column="rankid" jdbcType="INTEGER" property="rankid" />
@@ -19,7 +19,7 @@
     <result column="userid" jdbcType="INTEGER" property="userid" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, unit, phone, material, addr, hold, holdid, attr, layer, create, typeid, identitytime, 
+    id, unit, phone, material, addr, hold, holdid, attr, layer, createyear, typeid, identitytime, 
     rankid, rankratio, userid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,17 +36,17 @@
     insert into archive (id, unit, phone, 
       material, addr, hold, 
       holdid, attr, layer, 
-      create, typeid, identitytime, 
+      createyear, typeid, identitytime, 
       rankid, rankratio, userid
       )
     values (#{id,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{material,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{hold,jdbcType=VARCHAR}, 
       #{holdid,jdbcType=VARCHAR}, #{attr,jdbcType=VARCHAR}, #{layer,jdbcType=INTEGER}, 
-      #{create,jdbcType=DATE}, #{typeid,jdbcType=INTEGER}, #{identitytime,jdbcType=TIMESTAMP}, 
+      #{createyear,jdbcType=TIMESTAMP}, #{typeid,jdbcType=INTEGER}, #{identitytime,jdbcType=TIMESTAMP}, 
       #{rankid,jdbcType=INTEGER}, #{rankratio,jdbcType=DOUBLE}, #{userid,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Archive">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.Archive">
     insert into archive
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -76,8 +76,8 @@
       <if test="layer != null">
         layer,
       </if>
-      <if test="create != null">
-        create,
+      <if test="createyear != null">
+        createyear,
       </if>
       <if test="typeid != null">
         typeid,
@@ -123,8 +123,8 @@
       <if test="layer != null">
         #{layer,jdbcType=INTEGER},
       </if>
-      <if test="create != null">
-        #{create,jdbcType=DATE},
+      <if test="createyear != null">
+        #{createyear,jdbcType=TIMESTAMP},
       </if>
       <if test="typeid != null">
         #{typeid,jdbcType=INTEGER},
@@ -170,8 +170,8 @@
       <if test="layer != null">
         layer = #{layer,jdbcType=INTEGER},
       </if>
-      <if test="create != null">
-        create = #{create,jdbcType=DATE},
+      <if test="createyear != null">
+        createyear = #{createyear,jdbcType=TIMESTAMP},
       </if>
       <if test="typeid != null">
         typeid = #{typeid,jdbcType=INTEGER},
@@ -201,7 +201,7 @@
       holdid = #{holdid,jdbcType=VARCHAR},
       attr = #{attr,jdbcType=VARCHAR},
       layer = #{layer,jdbcType=INTEGER},
-      create = #{create,jdbcType=DATE},
+      createyear = #{createyear,jdbcType=TIMESTAMP},
       typeid = #{typeid,jdbcType=INTEGER},
       identitytime = #{identitytime,jdbcType=TIMESTAMP},
       rankid = #{rankid,jdbcType=INTEGER},
