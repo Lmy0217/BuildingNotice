@@ -11,7 +11,7 @@
  Target Server Version : 100213
  File Encoding         : 65001
 
- Date: 04/07/2019 20:38:24
+ Date: 08/07/2019 18:17:05
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `archimg`;
 CREATE TABLE `archimg`  (
   `archid` int(11) NOT NULL COMMENT '报告id',
   `imgid` int(11) NOT NULL COMMENT '图片id',
-  PRIMARY KEY (`archid`, `imgid`) USING BTREE,
+  INDEX `archid`(`archid`) USING BTREE,
   INDEX `imgid`(`imgid`) USING BTREE,
   CONSTRAINT `archimg_ibfk_1` FOREIGN KEY (`archid`) REFERENCES `archive` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `archimg_ibfk_2` FOREIGN KEY (`imgid`) REFERENCES `image` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -68,7 +68,7 @@ CREATE TABLE `archimg`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `archive`;
 CREATE TABLE `archive`  (
-  `id` int(11) NOT NULL COMMENT 'id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '委托单位（人）',
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系电话',
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提供资料情况',
@@ -77,7 +77,7 @@ CREATE TABLE `archive`  (
   `holdid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '身份证号',
   `attr` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '房屋属性',
   `layer` int(4) NOT NULL COMMENT '层数',
-  `create` year NULL DEFAULT NULL COMMENT '建造时间',
+  `createyear` timestamp(0) NULL DEFAULT NULL COMMENT '建造时间',
   `typeid` int(11) NOT NULL COMMENT '结构类型id',
   `identitytime` timestamp(0) NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '鉴定时间',
   `rankid` int(11) NOT NULL COMMENT '危险性等级id',
@@ -90,7 +90,7 @@ CREATE TABLE `archive`  (
   CONSTRAINT `archive_ibfk_1` FOREIGN KEY (`typeid`) REFERENCES `type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `archive_ibfk_2` FOREIGN KEY (`rankid`) REFERENCES `rank` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `archive_ibfk_3` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '报告' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '报告' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for damage
@@ -129,7 +129,7 @@ CREATE TABLE `image`  (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路径',
   `depict` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for rank
@@ -147,20 +147,21 @@ CREATE TABLE `rank`  (
 -- ----------------------------
 INSERT INTO `rank` VALUES (2, 'B', '大于0但未超过比例5%');
 INSERT INTO `rank` VALUES (3, 'C', '大于5%但未超过比例25%');
+INSERT INTO `rank` VALUES (4, 'D', '大于比例25%');
 
 -- ----------------------------
 -- Table structure for type
 -- ----------------------------
 DROP TABLE IF EXISTS `type`;
 CREATE TABLE `type`  (
-  `id` int(11) NOT NULL COMMENT 'id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '结构类型名',
   `body2` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主体结构概况',
   `body3` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '结构现状描述',
   `tabel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '对应表名',
-  PRIMARY KEY (`id`, `tabel`) USING BTREE,
+  PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '结构类型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '结构类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of type
