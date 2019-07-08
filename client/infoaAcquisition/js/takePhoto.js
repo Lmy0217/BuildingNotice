@@ -35,7 +35,7 @@ function appendByCamera() {
 			var indexa = liIndex()
 			console.log(indexa);
 			$(".headimg")[indexa].style.display = "block";
-			$(".photoDes")[indexa].style.display = "block";
+			$(".photoDes")[indexa].style.display = "block";//如果拍了照片,这里就显示出来
 			$(".headimg")[indexa].src = path;
 			$(".photoSrc")[indexa].value = path;
 		}, function(e) {
