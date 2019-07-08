@@ -92,23 +92,7 @@
 				}
 				return false;
 			}
-			//提交表单到本地			
-			function submitFrom(){
-				var tmp=plus.webview.currentWebview();
-				var form_per=chuliForm(tmp);
-				// document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
-				// console.log(JSON.stringify(form_per));
-				var form_now=getForm('#form4');
-				watchJSON(form_per);
-				var extras = $.extend({}, form_per, form_now);
-				// var url="form_4.html";
-				// var id="form4";
-				// var style={};
-				// plus.webview.create(url,id,style,extras).show();
-				insertSQL(extras);
-				
-							
-			}
+			
 			
 		</script>
 		<header class="mui-bar mui-bar-nav">
