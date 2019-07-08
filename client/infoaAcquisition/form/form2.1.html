@@ -42,17 +42,11 @@
 		<script src="../js/mui.js"></script>
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/jquery.serializejson.min.js"></script>
-		<script src="../js/takePhoto.js"></script>
 		<script src="../js/form.js"></script>
 		<script src="../js/util.js"></script>
 		<script>
 			mui.init();
-	// 扩展API是否准备好，如果没有则监听“plusready"事件  
-	if (window.plus) {
-		plusReady();
-	} else {
-		document.addEventListener("plusready", plusReady, false);
-	}
+	
 	mui.plusReady(function() {
 		var tmp = plus.webview.currentWebview();
 		var form_per = chuliForm(tmp);
