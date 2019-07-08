@@ -42,10 +42,15 @@ function w_insertSQL(jsonInfo) {
 	creatImage="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
 	"'filePath'	TEXT(255),"+
 	"'depict'	TEXT(255),";
-	if(obj.hasOwnProperty("photoSrc1") ){
-		var imageSqlStr="insert into "+tableName+" values("+jsonInfo.photoSrc1+douhao+jsonInfo.photoDes1+"')"
+	var imageId=[];
+	for(i=1;i<=4;i++){
+		var keySrc="photoSrc"+i;
+		var keyDes="photoDes"+i
+		if(obj.hasOwnProperty(keySrc) ){
+			var imageSqlStr="insert into "+tableName+" values("jsonInfo.[keySrc]+douhao+jsonInfo.[keyDes]+")";
+			imageId=imageId+douhao+insertSQL(tableName,creatImage,imageSqlStr);
+		}		
 	}
-	
 	
 	insertSQL(tableName,creatImage)
 	var tableName='infoDB';
@@ -60,8 +65,8 @@ function w_insertSQL(jsonInfo) {
 		"'layer' integer(2)," +
 		"'type'	TEXT," +
 		"'identitytime'	text(10)," +
-		"'imageId'	integer(2)," +
-		"'damage'	TEXT," +
+		"'imageId'	TEXT(255)," +
+		"'damage'	TEXT(255)," +
 		
 		"'isUp'	integer(1)" 
 	sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
@@ -73,7 +78,7 @@ function insertSQL(tableName,creatTable,sqlStr) {
 	openDB();
 	// console.log('执行SQL语句: ');
 
-	sqlStr = "insert into infoDB values('" + jsonInfo.danwei + "','" + jsonInfo.floor + "','" + jsonInfo.result + "')"
+	sqlStr = sqlStr+"select last_insert_rowid() from " + tableName ;
 	console.log(sqlStr)
 	plus.sqlite.executeSql({
 			name: tableName,
@@ -82,18 +87,21 @@ function insertSQL(tableName,creatTable,sqlStr) {
 		); success: function(e) {
 			console.log('executeSql success: ' + JSON.stringify(e))
 			plus.sqlite.executeSql({
-				name: 'infoDB',
+				name: 'info',
 				sql: sqlStr,
 				success: function(e) {
 					console.log('executeSql success: ' + JSON.stringify(e))
+					return e;
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
+					return e;
 				}
 			})
 		},
 		fail: function(e) {
 			console.log('executeSql fail: ' + JSON.stringify(e))
+			return e;
 		}
 	});
 closeDB()
