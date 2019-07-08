@@ -52,9 +52,16 @@
 		var form_per = chuliForm(tmp);
 		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
 		console.log(JSON.stringify(form_per));
-		if(form_per.type==3){
-			
-		}
+		// if(form_per.type==3){
+		// 	$(".zhuanhun").style.display="block";
+		// 	$(".zhunamu").style.display="block";
+		// }else if(form_per.type==2){
+		// 	$(".mu").style.display="block";
+		// 	$(".zhunamu").style.display="block";
+		// }else if(form_per.type==1){
+		// 	$(".zhunamu").style.display="block";
+		// 	$(".mu").style.display="block";
+		// }
 		
 		changeChild('type3a','type3a1');
 		changeChild('type3b','type3b1');
@@ -132,40 +139,44 @@
 					<input name="type3b1" type="radio" value="2" disabled="disabled">
 				</div>
 
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label><span id="mutiao"></span>存在腐蚀现象</label>
-					<input name="type3c" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3c1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3c1" type="radio" value="2" disabled="disabled">
+				<div class="zhuanmu mu">
+					<div class="mui-input-row mui-checkbox mui-left ">
+						<label><span id="mutiao"></span>存在腐蚀现象</label>
+						<input name="type3c" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微</label>
+						<input name="type3c1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="type3c1" type="radio" value="2" disabled="disabled">
+					</div>
+
+					<div class="mui-input-row mui-checkbox mui-left ">
+						<label><span id="mutiao"></span>存在开裂现象</label>
+						<input name="type3d" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微</label>
+						<input name="type3d1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重</label>
+						<input name="type3d1" type="radio" value="2" disabled="disabled">
+					</div>
 				</div>
 
-				<div class="mui-input-row mui-checkbox mui-left ">
-					<label><span id="mutiao"></span>存在开裂现象</label>
-					<input name="type3d" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微</label>
-					<input name="type3d1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重</label>
-					<input name="type3d1" type="radio" value="2" disabled="disabled">
-				</div>
+				<div class="zhuanmu zhuanhun">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>纵横墙体无可靠拉接</label>
+						<input name="type3e" value="1" type="checkbox">
+					</div>
 
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>纵横墙体无可靠拉接</label>
-					<input name="type3e" value="1" type="checkbox" disabled="disabled">
-				</div>
-
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>混凝土构件钢筋外露</label>
-					<input name="type3f" value="1" type="checkbox" disabled="disabled">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>混凝土构件钢筋外露</label>
+						<input name="type3f" value="1" type="checkbox">
+					</div>
 				</div>
 
 				<div class="mui-input-row mui-checkbox mui-left">
@@ -184,49 +195,50 @@
 					<label>破损</label>
 					<input name="type3g1" value="3" type="checkbox" disabled="disabled">
 				</div>
-
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>墙体存在问题</label>
-					<input name="type3h" value="1" type="checkbox">
+				<div class="zhuanmu zhuanhun">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>墙体存在问题</label>
+						<input name="type3h" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微破损</label>
+						<input name="type3h1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微开裂</label>
+						<input name="type3h1" type="radio" value="2" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重破损</label>
+						<input name="type3h1" type="radio" value="3" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重开裂</label>
+						<input name="type3h1" type="radio" value="4" disabled="disabled">
+					</div>
 				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微破损</label>
-					<input name="type3h1" type="radio" value="1" disabled="disabled">
+				<div class="zhuanmu mu">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>屋面存在问题</label>
+						<input name="type3i" value="1" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微破损</label>
+						<input name="type3i1" type="radio" value="1" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>轻微变形</label>
+						<input name="type3i1" type="radio" value="2" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重破损</label>
+						<input name="type3i1" type="radio" value="3" disabled="disabled">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>严重变形</label>
+						<input name="type3i1" type="radio" value="4" disabled="disabled">
+					</div>
 				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微开裂</label>
-					<input name="type3h1" type="radio" value="2" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重破损</label>
-					<input name="type3h1" type="radio" value="3" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重开裂</label>
-					<input name="type3h1" type="radio" value="4" disabled="disabled">
-				</div>
-				
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>屋面存在问题</label>
-					<input name="type3i" value="1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微破损</label>
-					<input name="type3i1" type="radio" value="1" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>轻微变形</label>
-					<input name="type3i1" type="radio" value="2" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重破损</label>
-					<input name="type3i1" type="radio" value="3" disabled="disabled">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>严重变形</label>
-					<input name="type3i1" type="radio" value="4" disabled="disabled">
-				</div>
-
 				<div class="mui-input-row">
 					<label class="lv-title">采集照片</label>
 				</div>

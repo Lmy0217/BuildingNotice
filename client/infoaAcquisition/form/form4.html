@@ -37,12 +37,6 @@
 		<script src="../js/util.js"></script>
 		<script>
 			mui.init();
-			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			if (window.plus) {
-				plusReady();
-			} else {
-				document.addEventListener("plusready", plusReady, false);
-			}
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
@@ -56,17 +50,19 @@
 				var bianzhu_w = mui('#bianzhu_w').numbox().getValue();
 				var jiaozhu = mui('#jiaozhu').numbox().getValue();
 				var jiaozhu_w = mui('#jiaozhu_w').numbox().getValue();
+				var wujia=mui('#wujia').numbox().getValue();
+				var wujia_w=mui('#wujia_w').numbox().getValue();
 				var zhongjianliang = mui('#zhongjianliang').numbox().getValue();
 				var zhongjianliang_w = mui('#zhongjianliang_w').numbox().getValue();
 				var bianliang = mui('#bianliang').numbox().getValue();
 				var bianliang_w = mui('#bianliang_w').numbox().getValue();
-				var chenzhognqiang = mui('#chenzhognqiang').numbox().getValue();
-				var chenzhognqiang_w = mui('#chenzhognqiang_w').numbox().getValue();
+				var qiangti = mui('#qiangti').numbox().getValue();
+				var qiangti_w = mui('#qiangti_w').numbox().getValue();
 				var loubangoujian = mui('#loubangoujian').numbox().getValue();
 				var loubangoujian_w = mui('#loubangoujian_w').numbox().getValue();
 				var weihugoujian = mui('#weihugoujian').numbox().getValue();
 				var weihugoujian_w = mui('#weihugoujian_w').numbox().getValue();
-				bili = (computeBili(zhongzhu_w, zhongzhu) + computeBili(bianzhu, bianliang_w) + computeBili(jiaozhu, jiaozhu_w) +
+				bili = (computeBili(zhongzhu_w, zhongzhu) + computeBili(bianzhu, bianliang_w) + computeBili(jiaozhu, jiaozhu_w) +computeBili(wujia, wujia_w) +
 					computeBili(zhongjianliang, zhongjianliang_w) + computeBili(bianliang, bianliang_w) + computeBili(chenzhognqiang,
 						chenzhognqiang_w) + computeBili(loubangoujian, loubangoujian_w) + computeBili(weihugoujian, weihugoujian_w)) / 9;
 				bili=bili.toFixed(2);
@@ -96,10 +92,22 @@
 				}
 				return false;
 			}
-			//打开"上一单"
-			function openPer(){
-				var url="form_2.html";
-				plus.webview.create(url).show();
+			//提交表单到本地			
+			function submitFrom(){
+				var tmp=plus.webview.currentWebview();
+				var form_per=chuliForm(tmp);
+				// document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
+				// console.log(JSON.stringify(form_per));
+				var form_now=getForm('#form4');
+				watchJSON(form_per);
+				var extras = $.extend({}, form_per, form_now);
+				// var url="form_4.html";
+				// var id="form4";
+				// var style={};
+				// plus.webview.create(url,id,style,extras).show();
+				insertSQL(extras);
+				
+							
 			}
 			
 		</script>
@@ -174,7 +182,26 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">&nbsp;2、梁构件</label>
+					<label class="lv-title">&nbsp;2、屋架构件</label>
+				</div>
+				<div class="mui-input-row">
+					<label>屋架</label>
+					<div class="mui-numbox" data-numbox-min="0" id="wujia">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="wujia" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>危险性屋架</label>
+					<div class="mui-numbox" data-numbox-min="0" id="wujia_w">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="wujia_w" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">&nbsp;3、木梁（含檩条）构件</label>
 				</div>
 				<div class="mui-input-row">
 					<label>中间梁</label>
@@ -193,7 +220,7 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label>边梁</label>
+					<label>边木梁</label>
 					<div class="mui-numbox" data-numbox-min="0" id="bianliang">
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 						<input class="mui-numbox-input" type="number" name="bianliang" />
@@ -209,26 +236,26 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">&nbsp;3、墙体</label>
+					<label class="lv-title">&nbsp;4、墙体</label>
 				</div>
 				<div class="mui-input-row">
-					<label>承重墙体</label>
-					<div class="mui-numbox" data-numbox-min="0" id="chenzhognqiang">
+					<label>墙体</label>
+					<div class="mui-numbox" data-numbox-min="0" id="qiangti">
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" name="chenzhognqiang" />
+						<input class="mui-numbox-input" type="number" name="qiangti" />
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label>危险承重墙</label>
-					<div class="mui-numbox" data-numbox-min="0" id="chenzhognqiang_w">
+					<label>危险墙体</label>
+					<div class="mui-numbox" data-numbox-min="0" id="qiangti_w">
 						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" name="chenzhognqiang_w" />
+						<input class="mui-numbox-input" type="number" name="qiangti_w" />
 						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">&nbsp;4、楼板构件</label>
+					<label class="lv-title">&nbsp;5、楼板构件</label>
 				</div>
 				<div class="mui-input-row">
 					<label>楼板构件</label>
@@ -247,7 +274,7 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
-					<label class="lv-title">&nbsp;5、围护构件</label>
+					<label class="lv-title">&nbsp;6、围护构件</label>
 				</div>
 				<div class="mui-input-row">
 					<label>围护构件</label>
@@ -277,10 +304,19 @@
 						<button type="button" class="mui-btn mui-btn-primary mui-col-xs-6" onclick="showResult()">生成</button>
 					</label>
 				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">六、鉴定结论及建议</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">恭喜！您已经基本完成表单。这一部分将由系统根据之前填写的情况自动生成。请到后台下载Word后再修改。</h5>
+					</label>
+				</div>
+			</form>
 		</div>
-		</form>
+
 		<div class="mui-content-padded">
-			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form4','form5')">下一步</button>
+			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="submitFrom()">完成表单</button>
 		</div>
 		<div class="mui-content-padded mui-row">
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
