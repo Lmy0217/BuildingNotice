@@ -50,7 +50,7 @@
 	mui.plusReady(function() {
 		var tmp = plus.webview.currentWebview();
 		var form_per = chuliForm(tmp);
-		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
+		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
 		console.log(JSON.stringify(form_per));
 		// if(form_per.type==3){
 		// 	$(".zhuanhun").style.display="block";
@@ -70,15 +70,7 @@
 		changeChild2('type3g','type3g1');
 		changeChild('type3h','type3h1');
 		changeChild('type3i','type3i1');
-		// 扩展API加载完毕后调用onPlusReady回调函数 
-		$(".list li").on("tap", ".imageup", function() {
-			alert('11');
-			var $li = $(this).parents("li");
-			console.log($($li).text())
-			$li.addClass("selectLi");
-			$li.siblings().removeClass("selectLi");
-			page.imgUp();
-		})
+		 
 	});
 		
 	
@@ -243,6 +235,7 @@
 					<label class="lv-title">采集照片</label>
 				</div>
 				<ul class="list">
+					
 					<li class='mui-table-view-cell mui-media'>
 						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
 						<p><a class="imageup 1">采集图片1</a></p>
