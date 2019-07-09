@@ -33,19 +33,19 @@ function openDB() {
 
 // 查询SQL语句
 function selectSQL(sqlStr) {
+	openDB();
 	console.log('查询SQL语句: ' + sqlStr);
 	plus.sqlite.selectSql({
 		name: 'info',
 		sql: sqlStr,
 		success: function(e) {
 			console.log('selectSql success: ' + JSON.stringify(e));
-			return e;
 		},
 		fail: function(e) {
 			console.log('selectSql fail: ' + JSON.stringify(e));
-			return e;
 		}
 	});
+	closeDB();
 }
 
 // 检查数据库是否打开

@@ -52,10 +52,15 @@
 		var form_per = chuliForm(tmp);
 		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
 		console.log(JSON.stringify(form_per));
-		 // 弹出系统选择按钮框  
-                mui("body").on("tap",".imageup",function(){  
-                    page.imgUp();  
-                })  
+		//给选中的li增加判别class
+		$(".list li").on("tap",".imageup",function(){
+		// alert('11');
+		var $li = $(this).parents("li");
+		 console.log($($li).text())                
+		$li.addClass("selectLi");
+		$li.siblings().removeClass("selectLi");              
+		 page.imgUp();
+		 })
 		
 		changeChild('type3a','type3a1');
 		changeChild('type3b','type3b1');
@@ -79,7 +84,7 @@
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<form id='form2' class="mui-input-group">
+			<form id='form3' class="mui-input-group">
 				<div class="mui-input-row">
 					<label id="div1" class="lv-title"></label>
 				</div>
@@ -261,8 +266,9 @@
 				<!-- <div class="mui-content-padded">
 					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
 				</div> -->
+			</form>
 		</div>
-		</form>
+
 		<div class="mui-content-padded">
 			<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form3','form4')">下一步</button>
 		</div>
