@@ -50,18 +50,17 @@
 	mui.plusReady(function() {
 		var tmp = plus.webview.currentWebview();
 		var form_per = chuliForm(tmp);
-		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.time);
+		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
 		console.log(JSON.stringify(form_per));
-		// if(form_per.type==3){
-		// 	$(".zhuanhun").style.display="block";
-		// 	$(".zhunamu").style.display="block";
-		// }else if(form_per.type==2){
-		// 	$(".mu").style.display="block";
-		// 	$(".zhunamu").style.display="block";
-		// }else if(form_per.type==1){
-		// 	$(".zhunamu").style.display="block";
-		// 	$(".mu").style.display="block";
-		// }
+		//给选中的li增加判别class
+		$(".list li").on("tap",".imageup",function(){
+		// alert('11');
+		var $li = $(this).parents("li");
+		 console.log($($li).text())                
+		$li.addClass("selectLi");
+		$li.siblings().removeClass("selectLi");              
+		 page.imgUp();
+		 })
 		
 		changeChild('type3a','type3a1');
 		changeChild('type3b','type3b1');
@@ -70,15 +69,7 @@
 		changeChild2('type3g','type3g1');
 		changeChild('type3h','type3h1');
 		changeChild('type3i','type3i1');
-		// 扩展API加载完毕后调用onPlusReady回调函数 
-		$(".list li").on("tap", ".imageup", function() {
-			alert('11');
-			var $li = $(this).parents("li");
-			console.log($($li).text())
-			$li.addClass("selectLi");
-			$li.siblings().removeClass("selectLi");
-			page.imgUp();
-		})
+		 
 	});
 		
 	
@@ -93,7 +84,7 @@
 			<h1 class="mui-title">信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<form id='form2' class="mui-input-group">
+			<form id='form3' class="mui-input-group">
 				<div class="mui-input-row">
 					<label id="div1" class="lv-title"></label>
 				</div>
@@ -275,8 +266,9 @@
 				<!-- <div class="mui-content-padded">
 					<button id='photo' class="mui-btn mui-btn-block mui-btn-primary">采集照片</button>
 				</div> -->
+			</form>
 		</div>
-		</form>
+
 		<div class="mui-content-padded">
 			<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form3','form4')">下一步</button>
 		</div>

@@ -3,7 +3,7 @@ var page = null;
 page = {
 	imgUp: function() {
 		var m = this;
-		/* console.log(m);*/
+		// console.log(m);
 		plus.nativeUI.actionSheet({
 			cancel: "取消",
 			buttons: [{

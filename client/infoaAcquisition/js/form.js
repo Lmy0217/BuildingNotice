@@ -36,66 +36,72 @@ function submitFrom() {
 
 // 执行SQL语句，这里要弄三个表
 function w_insertSQL(jsonInfo) {
-	var tableName='infoDB';
-	var douhao='","'
-	creatType1="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
-	""
-	creatMain="create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
+	var douhao = "','"
+	console.log(douhao);
+	var tableName = 'imageDB';
+	var creatImage = "create table if not exists imageDB(" + // 'id' integer PRIMARY KEY,
+		"'filePath'	TEXT(255)," +
+		"'depict'	TEXT(255)" + ")";
+	// console.log(creatImage);
+	openDB();
+	//第一张图片------------------------
+	var keySrc = "photoSrc1";
+	var keyDes = "photoDes1";
+	if (jsonInfo.hasOwnProperty(keySrc)) {
+		// console.log(imageId);
+		var imageSqlStr = "insert into " + tableName + " values('" + jsonInfo.photoSrc1 + "','" + jsonInfo.photoDes1 + "')";
+
+		console.log(creatImage);
+		console.log(imageSqlStr)
+		var imageId = addPhoto(creatImage, imageSqlStr);
+		console.log(imageId);
+		// closeDB();	
+
+	}
+	//------------------------
+
+	zhenliDamage(jsonInfo);
+	// insertSQL(tableName,creatImage)
+	var tableName = 'infoDB';
+	creatMain = "create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
 		"'uint'	TEXT(255)," +
 		"'phone'	integer(11)," +
 		"'material'	TEXT(255) ," +
 		"'addr'	TEXT(255)," +
 		"'hold'	TEXT(255)," +
 		"'holdid' INTEGER(20)," +
-		"'attr' TEXT," +
+		"'attr' integer(2)," +
 		"'layer' integer(2)," +
-		"'type'	integer(1) NOT NULL," +
-		"'typeId'	INTEGER," +
+		"'type'	TEXT," +
 		"'identitytime'	text(10)," +
-		"'rankresult'	TEXT," +
-		"'imageId'	integer(2)," +
-		"'zhongzhu'	integer(2)," +
-		"'zhongzhu_w'	integer(2)," +
-		"'bianzhu'	integer(2)," +
-		"'bianzhu_w'	integer(2)," +
-		"'jiaozhu'	integer(2)," +
-		"'jiaozhu_w'	integer(2)," +
-		"'wujia'	integer(2)," +
-		"'wujia_w'	integer(2)," +
-		"'zhongjianliang'	integer(2)," +
-		"'zhongjianliang_w'	integer(2)," +
-		"'bianliang'	integer(2)," +
-		"'bianliang_w'	integer(2)," +
-		"'qiangti'	integer(2)," +
-		"'qiangti_w'	integer(2)," +
-		"'loubangoujian'	integer(2)," +
-		"'loubangoujian_w'	integer(2)," +
-		"'weihugoujian'	integer(2)," +
-		"'weihugoujian_w'	integer(2)," +
-		"'result'	integer," +
-		"'isUp'	integer(1)," 
-	sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
-	jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
+		"'imageId'	TEXT(255)," +
+		"'damage'	TEXT(255)," +
+
+		"'isUp'	integer(1)" + "')";
+
+	// sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
+	// jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
 }
 
 // 执行SQL语句
-function insertSQL(tableName,creatTable,sqlStr) {
+function insertSQL(tableName, creatTable, sqlStr) {
 	openDB();
+	// isOpenDB();
 	// console.log('执行SQL语句: ');
 
-	sqlStr = "insert into infoDB values('" + jsonInfo.danwei + "','" + jsonInfo.floor + "','" + jsonInfo.result + "')"
-	console.log(sqlStr)
+	// sqlStr = sqlStr + " select last_insert_rowid() from " + tableName;
+	console.log(creatTable);
+	console.log(sqlStr);
 	plus.sqlite.executeSql({
-			name: tableName,
-			// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
-			sql: creatTable,
-		); success: function(e) {
-			console.log('executeSql success: ' + JSON.stringify(e))
+		name: 'info',
+		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+		sql: creatTable,
+		success: function(e) {
 			plus.sqlite.executeSql({
-				name: tableName,
+				name: 'info',
 				sql: sqlStr,
 				success: function(e) {
-					console.log('executeSql success: ' + JSON.stringify(e))
+					console.log('insertSQL success: ' + JSON.stringify(e))
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -104,9 +110,10 @@ function insertSQL(tableName,creatTable,sqlStr) {
 		},
 		fail: function(e) {
 			console.log('executeSql fail: ' + JSON.stringify(e))
+			return e;
 		}
 	});
-closeDB()
+	closeDB();
 }
 
 
@@ -115,7 +122,9 @@ function openNext(formNow, formNext) {
 	var tmp = plus.webview.currentWebview();
 	var form_per = chuliForm(tmp);
 	var form_now = getForm('#' + formNow);
+	watchJSON(form_now);
 	var extras = $.extend({}, form_per, form_now);
+
 	var url = formNext + ".html";
 	var id = formNext;
 	var style = {};
@@ -124,20 +133,26 @@ function openNext(formNow, formNext) {
 
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
 function changeChild(father, child) {
-	console.log(child);
 	var father_str = 'input[type=checkbox][name=' + father + ']';
 	var child_str = 'input[type=radio][name=' + child + ']';
-	console.log(child);
+
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; $(child_str).length; i++) {
-				$(child_str)[i].disabled = "";
+			for (i = 0; i < $(child_str).length; i++) {
+				try {
+					$(child_str)[i].disabled = "";
+				} catch (err) {
+					console.log(child_str);
+					console.log(i);
+					$(child_str)[i].disabled = "";
+				}
+
 			}
 		} else {
 			// alert("未启用"); 
 			$(child_str).disabled = "disabled";
-			for (i = 0; $(child_str).length; i++) {
+			for (i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "disabled";
 				$(child_str)[i].checked = "";
 			}
@@ -146,23 +161,102 @@ function changeChild(father, child) {
 }
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
 function changeChild2(father, child) {
-	console.log(child);
 	var father_str = 'input[type=checkbox][name=' + father + ']';
 	var child_str = 'input[type=checkbox][name=' + child + ']';
-	console.log(child);
+	// console.log(child);
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; $(child_str).length; i++) {
+			for (i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "";
 			}
 		} else {
 			// alert("未启用"); 
 			$(child_str).disabled = "disabled";
-			for (i = 0; $(child_str).length; i++) {
+			for (i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "disabled";
 				$(child_str)[i].checked = "";
 			}
 		}
 	});
+}
+
+//整理承重墙的部分统计,返回一个18位长的数组
+function zhenliDamage(jsonInfo) {
+	var damageArr = new Array(18)
+	damageArr[0] = jsonInfo.zhongzhu;
+	damageArr[1] = jsonInfo.zhongzhu_w;
+	damageArr[2] = jsonInfo.bianzhu;
+	damageArr[3] = jsonInfo.bianzhu_w;
+	damageArr[4] = jsonInfo.jiaozhu;
+	damageArr[5] = jsonInfo.jiaozhu_w;
+	damageArr[6] = jsonInfo.wujia;
+	damageArr[7] = jsonInfo.wujia_w;
+	damageArr[8] = jsonInfo.zhongjianliang;
+	damageArr[9] = jsonInfo.zhongjianliang_w;
+	damageArr[10] = jsonInfo.bianliang;
+	damageArr[11] = jsonInfo.bianliang_w;
+	damageArr[12] = jsonInfo.bianliang_w;
+	damageArr[13] = jsonInfo.qiangti;
+	damageArr[14] = jsonInfo.qiangti_w;
+	damageArr[15] = jsonInfo.loubangoujian;
+	damageArr[16] = jsonInfo.loubangoujian_w;
+	damageArr[17] = jsonInfo.weihugoujian;
+	damageArr[18] = jsonInfo.weihugoujian_w;
+	return damageArr;
+}
+
+function addPhoto(creatImage, imageSqlStr) {
+	var isOk = false;
+	var imageId = "";
+	plus.sqlite.executeSql({
+		name: 'info',
+		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+		sql: creatImage,
+		success: function(e) {
+			// isOpenDB();
+			console.log('表存在');
+			plus.sqlite.executeSql({
+				name: 'info',
+				sql: imageSqlStr,
+				success: function(e) {
+					console.log('executeSql success: ' + JSON.stringify(e));
+					a = plus.sqlite.selectSql({
+						name: 'info',
+						sql: 'select rowid from imageDB',
+						success: function(e) {
+							console.log('selectSql success: ' + JSON.stringify(e));
+							var tempid = e.rowid;
+							// console.log(e.length)
+							imageId = e[e.length - 1].rowid;
+							isOk = true;
+							console.log(imageId)
+							return imageId;
+						},
+						fail: function(e) {
+							console.log('selectSql fail: ' + JSON.stringify(e));
+						}
+					});
+					console.log(a);
+
+				},
+				fail: function(e) {
+					console.log('executeSql fail: ' + JSON.stringify(e));
+					isOk = false;
+				}
+			})
+		},
+		fail: function(e) {
+			isOk = false;
+			console.log('executeSql fail: ' + JSON.stringify(e));
+		}
+	});
+	if (isOk) {
+		// closeDB();
+		console.log(imageId);
+		return imageId;
+	} else {
+		console.log('失败了' + isOk)
+		return null;
+	}
 }

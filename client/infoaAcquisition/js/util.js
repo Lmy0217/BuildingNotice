@@ -6,7 +6,7 @@ function watchJSON(json) {
 function closeDB() {
 	console.log('关闭数据库: ');
 	plus.sqlite.closeDatabase({
-		name: 'test',
+		name: 'info',
 		success: function(e) {
 			console.log('closeDatabase success: ' + JSON.stringify(e));
 		},
@@ -20,8 +20,8 @@ function closeDB() {
 function openDB() {
 	console.log('打开数据库: ');
 	plus.sqlite.openDatabase({
-		name: 'test',
-		path: '_doc/test.db',
+		name: 'info',
+		path: '_doc/info.db',
 		success: function(e) {
 			console.log('openDatabase success: ' + JSON.stringify(e));
 		},
@@ -33,26 +33,26 @@ function openDB() {
 
 // 查询SQL语句
 function selectSQL(sqlStr) {
+	openDB();
 	console.log('查询SQL语句: ' + sqlStr);
 	plus.sqlite.selectSql({
-		name: 'test',
+		name: 'info',
 		sql: sqlStr,
 		success: function(e) {
 			console.log('selectSql success: ' + JSON.stringify(e));
-			return e;
 		},
 		fail: function(e) {
 			console.log('selectSql fail: ' + JSON.stringify(e));
-			return e;
 		}
 	});
+	closeDB();
 }
 
 // 检查数据库是否打开
 function isOpenDB() {
 	if (plus.sqlite.isOpenDatabase({
-			name: 'test',
-			path: '_doc/test.db',
+			name: 'info',
+			path: '_doc/info.db',
 		})) {
 		plus.nativeUI.alert('Opened!');
 		return true;

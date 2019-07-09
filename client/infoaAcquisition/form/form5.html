@@ -46,7 +46,7 @@
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
-				showResult(form_per.result)
+				// showResult(form_per.result)
 				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.time);
 				console.log(JSON.stringify(form_per));
 			});
@@ -109,9 +109,7 @@
 				// var id="form4";
 				// var style={};
 				// plus.webview.create(url,id,style,extras).show();
-				insertSQL(extras);
-				
-							
+				insertSQL(extras);		
 			}
 		</script>
 		<header class="mui-bar mui-bar-nav">
@@ -121,16 +119,6 @@
 			<form id='form4' class="mui-input-group">
 				<div class="mui-input-row">
 					<label id="div1" class="lv-title"></label>
-				</div>
-				<div class="mui-input-row">
-					<label class="lv-title">四、现场查勘及受损情况调查</label>
-				</div>
-				<div class="mui-input-row">
-					<label class="lv-title">
-						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num"
-							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
-							 class="result">B</span>级。</h5>
-					</label>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">五、鉴定结论及建议</label>
