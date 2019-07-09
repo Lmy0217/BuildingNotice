@@ -38,17 +38,21 @@ function submitFrom() {
 function w_insertSQL(jsonInfo) {
 	
 	var douhao='","'
+	console.log(douhao);
 	var tableName='imageDB';	
-	creatImage="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
+	var creatImage="create table if not exists type('id' integer PRIMARY KEY AUTOINCREMENT," +
 	"'filePath'	TEXT(255),"+
 	"'depict'	TEXT(255),";
+	console.log(creatImage);
 	var imageId=[];
 	for(i=1;i<=4;i++){
 		var keySrc="photoSrc"+i;
-		var keyDes="photoDes"+i
+		
+		var keyDes="photoDes"+i;
 		if(obj.hasOwnProperty(keySrc) ){
-			var imageSqlStr="insert into "+tableName+" values("jsonInfo.[keySrc]+douhao+jsonInfo.[keyDes]+")";
-			imageId=imageId+douhao+insertSQL(tableName,creatImage,imageSqlStr);
+			console.log(keySrc);
+			// var imageSqlStr="insert into "+tableName+" values("+jsonInfo.[keySrc]+douhao+jsonInfo.[keyDes]+")";
+			// imageId=imageId+douhao+insertSQL(tableName,creatImage,imageSqlStr);
 		}		
 	}
 	
@@ -69,8 +73,8 @@ function w_insertSQL(jsonInfo) {
 		"'damage'	TEXT(255)," +
 		
 		"'isUp'	integer(1)" 
-	sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
-	jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
+	// sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
+	// jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
 }
 
 // 执行SQL语句
@@ -79,12 +83,13 @@ function insertSQL(tableName,creatTable,sqlStr) {
 	// console.log('执行SQL语句: ');
 
 	sqlStr = sqlStr+"select last_insert_rowid() from " + tableName ;
-	console.log(sqlStr)
+	console.log(creatTable);
+	console.log(sqlStr);
 	plus.sqlite.executeSql({
 			name: tableName,
 			// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
 			sql: creatTable,
-		); success: function(e) {
+			success: function(e) {
 			console.log('executeSql success: ' + JSON.stringify(e))
 			plus.sqlite.executeSql({
 				name: 'info',
@@ -125,12 +130,20 @@ function changeChild(father, child) {
 	console.log(child);
 	var father_str = 'input[type=checkbox][name=' + father + ']';
 	var child_str = 'input[type=radio][name=' + child + ']';
-	console.log(child);
+	
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; $(child_str).length; i++) {
-				$(child_str)[i].disabled = "";
+			for (i = 0; i<$(child_str).length; i++) {
+				try{
+					$(child_str)[i].disabled = "";
+				}
+				catch(err){
+					console.log(child_str);
+					console.log(i);
+					$(child_str)[i].disabled = "";
+				}
+				
 			}
 		} else {
 			// alert("未启用"); 
