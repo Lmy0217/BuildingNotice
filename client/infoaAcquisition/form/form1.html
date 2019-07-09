@@ -43,8 +43,9 @@
 			// 	document.addEventListener("plusready", plusReady, false);
 			// }
 			// 扩展API准备完成后要执行的操作  
-			function plusReady() {
+			mui.plusReady(function() {
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
+				// watchJSON(ws);
 				var myDate = new Date();
 				//获取当前年
 			   var year = myDate.getFullYear();
@@ -55,7 +56,7 @@
 				var today = year + '-' + conver(month) + "-" + conver(day);
 				console.log(today);
 				$("#identitytime").val(today);
-			}
+			});
 			//日期时间处理
 			function conver(s) {
 			return s < 10 ? '0' + s : s;
@@ -129,7 +130,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>建造年份</label>
-					<input id='createyear' name="createyear" type="text" class="mui-input-clear mui-input" placeholder="请输入户主姓名">
+					<input id='createyear' name="createyear" type="text" class="mui-input-clear mui-input" placeholder="格式:2019-01-01或2019-01">
 				</div>
 
 				<div class="mui-input-row">
@@ -157,7 +158,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>鉴定时间</label>
-					<input id='identitytime' name="identitytime" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
+					<input id="identitytime" name="identitytime" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
 				</div>
 			</form>
 		</div>
