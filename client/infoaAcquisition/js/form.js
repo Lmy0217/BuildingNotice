@@ -43,66 +43,23 @@ function w_insertSQL(jsonInfo) {
 		"'filePath'	TEXT(255)," +
 		"'depict'	TEXT(255)" + ")";
 	// console.log(creatImage);
+	openDB();
+	//第一张图片------------------------
 	var keySrc = "photoSrc1";
 	var keyDes = "photoDes1";
 	if (jsonInfo.hasOwnProperty(keySrc)) {
 		// console.log(imageId);
 		var imageSqlStr = "insert into " + tableName + " values('" + jsonInfo.photoSrc1 + "','" + jsonInfo.photoDes1 + "')";
-		// imageId=insertSQL(tableName,creatImage,imageSqlStr);
-		// console.log(imageId);
-	}
-	openDB();
-	var isOk = false;
-	console.log(creatImage);
-	console.log(imageSqlStr)
-	plus.sqlite.executeSql({
-		name: 'info',
-		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
-		sql: creatImage,
-		success: function(e) {
-			// isOpenDB();
-			console.log('表存在');
-			plus.sqlite.executeSql({
-				name: 'info',
-				sql: imageSqlStr,
-				success: function(e) {
-					console.log('executeSql success: ' + JSON.stringify(e));
-					plus.sqlite.selectSql({
-						name: 'info',
-						sql: 'select rowid from imageDB',
-						success: function(e) {
-							console.log('selectSql success: ' + JSON.stringify(e));
-							var tempid=e.rowid;
-							// console.log(e.length)
-							var imageId=e[e.length-1].rowid;
-							isOk = true;
-							closeDB();
-						},
-						fail: function(e) {
-							console.log('selectSql fail: ' + JSON.stringify(e));
-						}
-					});
-				},
-				fail: function(e) {
-					console.log('executeSql fail: ' + JSON.stringify(e));
-					isOk = false;
-				}
-			})
-		},
-		fail: function(e) {
-			isOk = false;
-			console.log('executeSql fail: ' + JSON.stringify(e));
-		}
-	});
-	// closeDB();	
-	if (isOk) {
+		
+		console.log(creatImage);
+		console.log(imageSqlStr)
+		var imageId=addPhoto(creatImage,imageSqlStr);
 		console.log(imageId);
-	} else {
-		console.log('失败了' + isOk)
+		// closeDB();	
+		
 	}
-
-
-
+	//------------------------
+	
 
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
@@ -120,7 +77,7 @@ function w_insertSQL(jsonInfo) {
 		"'imageId'	TEXT(255)," +
 		"'damage'	TEXT(255)," +
 
-		"'isUp'	integer(1)"
+		"'isUp'	integer(1)"+ "')";
 	// sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
 	// jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
 }
@@ -221,4 +178,60 @@ function changeChild2(father, child) {
 			}
 		}
 	});
+}
+
+
+function addPhoto(creatImage,imageSqlStr){
+	var isOk = false;
+	var imageId="";
+	plus.sqlite.executeSql({
+		name: 'info',
+		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+		sql: creatImage,
+		success: function(e) {
+			// isOpenDB();
+			console.log('表存在');
+			plus.sqlite.executeSql({
+				name: 'info',
+				sql: imageSqlStr,
+				success: function(e) {
+					console.log('executeSql success: ' + JSON.stringify(e));
+					a=plus.sqlite.selectSql({
+						name: 'info',
+						sql: 'select rowid from imageDB',
+						success: function(e) {
+							console.log('selectSql success: ' + JSON.stringify(e));
+							var tempid=e.rowid;
+							// console.log(e.length)
+							imageId=e[e.length-1].rowid;
+							isOk = true;
+							console.log(imageId)
+							return imageId;
+						},
+						fail: function(e) {
+							console.log('selectSql fail: ' + JSON.stringify(e));
+						}
+					});
+					console.log(a);
+					
+				},
+				fail: function(e) {
+					console.log('executeSql fail: ' + JSON.stringify(e));
+					isOk = false;
+				}
+			})
+		},
+		fail: function(e) {
+			isOk = false;
+			console.log('executeSql fail: ' + JSON.stringify(e));
+		}
+	});
+	if (isOk) {
+		// closeDB();
+		console.log(imageId);
+		return imageId;
+	} else {
+		console.log('失败了' + isOk)
+		return null;
+	}
 }
