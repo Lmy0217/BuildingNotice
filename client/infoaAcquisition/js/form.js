@@ -50,17 +50,17 @@ function w_insertSQL(jsonInfo) {
 	if (jsonInfo.hasOwnProperty(keySrc)) {
 		// console.log(imageId);
 		var imageSqlStr = "insert into " + tableName + " values('" + jsonInfo.photoSrc1 + "','" + jsonInfo.photoDes1 + "')";
-		
+
 		console.log(creatImage);
 		console.log(imageSqlStr)
-		var imageId=addPhoto(creatImage,imageSqlStr);
+		var imageId = addPhoto(creatImage, imageSqlStr);
 		console.log(imageId);
 		// closeDB();	
-		
+
 	}
 	//------------------------
-	
 
+	zhenliDamage(jsonInfo);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
@@ -77,7 +77,8 @@ function w_insertSQL(jsonInfo) {
 		"'imageId'	TEXT(255)," +
 		"'damage'	TEXT(255)," +
 
-		"'isUp'	integer(1)"+ "')";
+		"'isUp'	integer(1)" + "')";
+
 	// sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
 	// jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
 }
@@ -180,10 +181,34 @@ function changeChild2(father, child) {
 	});
 }
 
+//整理承重墙的部分统计,返回一个18位长的数组
+function zhenliDamage(jsonInfo) {
+	var damageArr = new Array(18)
+	damageArr[0] = jsonInfo.zhongzhu;
+	damageArr[1] = jsonInfo.zhongzhu_w;
+	damageArr[2] = jsonInfo.bianzhu;
+	damageArr[3] = jsonInfo.bianzhu_w;
+	damageArr[4] = jsonInfo.jiaozhu;
+	damageArr[5] = jsonInfo.jiaozhu_w;
+	damageArr[6] = jsonInfo.wujia;
+	damageArr[7] = jsonInfo.wujia_w;
+	damageArr[8] = jsonInfo.zhongjianliang;
+	damageArr[9] = jsonInfo.zhongjianliang_w;
+	damageArr[10] = jsonInfo.bianliang;
+	damageArr[11] = jsonInfo.bianliang_w;
+	damageArr[12] = jsonInfo.bianliang_w;
+	damageArr[13] = jsonInfo.qiangti;
+	damageArr[14] = jsonInfo.qiangti_w;
+	damageArr[15] = jsonInfo.loubangoujian;
+	damageArr[16] = jsonInfo.loubangoujian_w;
+	damageArr[17] = jsonInfo.weihugoujian;
+	damageArr[18] = jsonInfo.weihugoujian_w;
+	return damageArr;
+}
 
-function addPhoto(creatImage,imageSqlStr){
+function addPhoto(creatImage, imageSqlStr) {
 	var isOk = false;
-	var imageId="";
+	var imageId = "";
 	plus.sqlite.executeSql({
 		name: 'info',
 		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
@@ -196,14 +221,14 @@ function addPhoto(creatImage,imageSqlStr){
 				sql: imageSqlStr,
 				success: function(e) {
 					console.log('executeSql success: ' + JSON.stringify(e));
-					a=plus.sqlite.selectSql({
+					a = plus.sqlite.selectSql({
 						name: 'info',
 						sql: 'select rowid from imageDB',
 						success: function(e) {
 							console.log('selectSql success: ' + JSON.stringify(e));
-							var tempid=e.rowid;
+							var tempid = e.rowid;
 							// console.log(e.length)
-							imageId=e[e.length-1].rowid;
+							imageId = e[e.length - 1].rowid;
 							isOk = true;
 							console.log(imageId)
 							return imageId;
@@ -213,7 +238,7 @@ function addPhoto(creatImage,imageSqlStr){
 						}
 					});
 					console.log(a);
-					
+
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e));
