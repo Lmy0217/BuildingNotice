@@ -167,6 +167,12 @@
         <version>2.4.0</version>
     </dependency>
     
+    <dependency>
+        <groupId>com.deepoove</groupId>
+        <artifactId>poi-tl</artifactId>
+        <version>1.6.0-beta1</version>
+    </dependency>
+    
     <!-- logback start -->
 <!--     <dependency> -->
 <!--         <groupId>log4j</groupId> -->
