@@ -52,16 +52,10 @@
 		var form_per = chuliForm(tmp);
 		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
 		console.log(JSON.stringify(form_per));
-		// if(form_per.type==3){
-		// 	$(".zhuanhun").style.display="block";
-		// 	$(".zhunamu").style.display="block";
-		// }else if(form_per.type==2){
-		// 	$(".mu").style.display="block";
-		// 	$(".zhunamu").style.display="block";
-		// }else if(form_per.type==1){
-		// 	$(".zhunamu").style.display="block";
-		// 	$(".mu").style.display="block";
-		// }
+		 // 弹出系统选择按钮框  
+                mui("body").on("tap",".imageup",function(){  
+                    page.imgUp();  
+                })  
 		
 		changeChild('type3a','type3a1');
 		changeChild('type3b','type3b1');
@@ -235,7 +229,6 @@
 					<label class="lv-title">采集照片</label>
 				</div>
 				<ul class="list">
-					
 					<li class='mui-table-view-cell mui-media'>
 						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
 						<p><a class="imageup 1">采集图片1</a></p>
