@@ -117,3 +117,9 @@ function goHome() {
 		// }
 	}
 }
+var oldBack = mui.back;
+//重写返回上一页，方式页面丢失的问题
+mui.back = function(pageId){
+    var webview = plus.webview.getWebviewById(pageId); //假设第一个Webview的id是home
+    webview.show();
+}; 

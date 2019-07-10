@@ -96,9 +96,9 @@ function w_insertSQL(jsonInfo) {
 		type + "','" +
 		question + "','" +
 		0 + "')";
-	// openDB();
-	// // insertSQL(tableName, creatMain, sqlStr);
-	// closeDB();
+	openDB();
+	insertSQL(tableName, creatMain, sqlStr);
+	closeDB();
 	// goHome();
 }
 
