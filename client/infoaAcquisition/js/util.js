@@ -54,10 +54,10 @@ function isOpenDB() {
 			name: 'info',
 			path: '_doc/info.db',
 		})) {
-		plus.nativeUI.alert('Opened!');
+		// plus.nativeUI.alert('Opened!');
 		return true;
 	} else {
-		plus.nativeUI.alert('Unopened!');
+		// plus.nativeUI.alert('Unopened!');
 		return false;
 	}
 }

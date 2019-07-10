@@ -49,30 +49,30 @@ function w_insertSQL(jsonInfo) {
 	// console.log(question);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
-	creatMain = "create table if not exists main(" +
-		"'unit'	TEXT(255)," +
-		"'phone'	integer(11)," +
-		"'material'	TEXT(255) ," +
-		"'addr'	TEXT(255)," +
-		"'hold'	TEXT(255)," +
-		"'holdid' INTEGER(20)," +
-		"'attr' integer(2)," +
-		"'layer' integer(2)," +
-		"'typeid'	integer(1)," +
-		"'identitytime'	text(10)," +
-		"'photoSrc1'	TEXT(255)," +
-		"'photoDes1'	TEXT(255)," +
-		"'photoSrc2'	TEXT(255)," +
-		"'photoDes2'	TEXT(255)," +
-		"'photoSrc3'	TEXT(255)," +
-		"'photoDes3'	TEXT(255)," +
-		"'photoSrc4'	TEXT(255)," +
-		"'photoDes4'	TEXT(255)," +
-		"'damage'	TEXT(255)," +
-		"'type'	TEXT(255)," +
-		"'question'	TEXT(255)," +
+	creatMain = "create table if not exists "+tableName+"(" +
+		"'unit'	char," +
+		"'phone'	int(11)," +
+		"'material'	char ," +
+		"'addr'	char," +
+		"'hold'	char," +
+		"'holdid' int(20)," +
+		"'attr' int(2)," +
+		"'layer' int(2)," +
+		"'typeid'	int(1)," +
+		"'identitytime'	char(10)," +
+		"'photoSrc1'	char," +
+		"'photoDes1'	char," +
+		"'photoSrc2'	char," +
+		"'photoDes2'	char," +
+		"'photoSrc3'	char," +
+		"'photoDes3'	char," +
+		"'photoSrc4'	char," +
+		"'photoDes4'	char," +
+		"'damage'	char," +
+		"'type'	char," +
+		"'question'	char," +
 
-		"'isUp'	integer(1)" + "')";
+		"'isUp'	int(1)" + ")";
 	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
 		jsonInfo.phone + ",'" +
 		jsonInfo.material + "','" +
@@ -91,9 +91,9 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.photoDes3 + "','" +
 		jsonInfo.photoSrc4 + "','" +
 		jsonInfo.photoDes4 + "','" +
-		damage + "','" +
-		type + "','" +
-		question + "'," +
+		damage.toString() + "','" +
+		type.toString() + "','" +
+		question.toString() + "'," +
 		0 + ")";
 	openDB();
 	// insertSQL(tableName, creatMain, sqlStr);
@@ -110,9 +110,12 @@ function w_insertSQL(jsonInfo) {
 				sql: sqlStr,
 				success: function(e) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
+					closeDB();
+					goHome();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
+					
 				}
 			})
 		},
@@ -121,9 +124,13 @@ function w_insertSQL(jsonInfo) {
 			return e;
 		}
 	});
-
-	// closeDB();
-	// goHome();
+	// console.log(isOpenDB());
+	if(!isOpenDB()){
+		goHome();
+	}else{
+		plus.nativeUI.alert('插入失败，请重试！多次失败请联系管理员');
+	}
+	
 }
 
 // 执行SQL语句，这里要弄三个表
@@ -132,7 +139,7 @@ function w_insertSQL_todo(jsonInfo) {
 	console.log(douhao);
 	var tableName = 'imageDB';
 	var creatImage = "create table if not exists imageDB(" + // 'id' integer PRIMARY KEY,
-		"'filePath'	TEXT(255)," +
+		"'filePath'	TEXT," +
 		"'depict'	TEXT(255)" + ")";
 	// console.log(creatImage);
 	openDB();
