@@ -40,9 +40,13 @@ function w_insertSQL(jsonInfo) {
 	console.log(douhao);
 	//------------------------
 	jsonInfo = zhenliPhoto(jsonInfo);
+	watchJSON(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
+	console.log(damage);
 	type = zhenliType(jsonInfo);
-	que = zhenliQuestion(jsonInfo);
+	console.log(type);
+	question = zhenliQuestion(jsonInfo);
+	console.log(question);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists main(" +
@@ -90,7 +94,12 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.imageDes4 + "','" +
 		damage + "','" +
 		type + "','" +
-		question + "','" + "')";
+		question + "','" +
+		0 + "')";
+	// openDB();
+	// // insertSQL(tableName, creatMain, sqlStr);
+	// closeDB();
+	// goHome();
 }
 
 // 执行SQL语句，这里要弄三个表
@@ -144,7 +153,6 @@ function w_insertSQL_todo(jsonInfo) {
 
 // 执行SQL语句
 function insertSQL(tableName, creatTable, sqlStr) {
-	openDB();
 	// isOpenDB();
 	// console.log('执行SQL语句: ');
 
@@ -172,7 +180,6 @@ function insertSQL(tableName, creatTable, sqlStr) {
 			return e;
 		}
 	});
-	closeDB();
 }
 
 
@@ -243,12 +250,13 @@ function changeChild2(father, child) {
 //整理form3 
 function zhenliQuestion(jsonInfo) {
 	queArr = new Array(16);
+	queArr = initArr(queArr, 0);
 	for (i = 0; i < 16; i++) {
 		var keySrc = "type31" + i;
 		if (jsonInfo.hasOwnProperty(keySrc)) {
 			queArr[i] = jsonInfo[keySrc];
 		} else {
-			queArr[i] = "";
+			queArr[i] = 0;
 		}
 	}
 	return queArr;
@@ -256,34 +264,37 @@ function zhenliQuestion(jsonInfo) {
 
 //整理form2
 function zhenliType(jsonInfo) {
-	switch (jsonInfo.type) {
-		case 1:
-			// 砖木结构
-			var typeArr = new Array(6);
-			var flag = 0;
-			for (i = 0; i < 3; i++) {
-				var keySrc = "type21" + i;
-				if (jsonInfo.hasOwnProperty(keySrc)) {
-					var temp = jsonInfo[keySrc];
-				} else {
-					var temp = NaN;
-				}
-				if (i == 2) {
-					for (j = 0; j < temp.length; j++) {
-						if (typeof(temp) != "NaN") {
-							typeArr[flag + temp] = 1;
-						}
-					}
-					flag = flag + 4;
-				} else if {
-					typeArr[flag] = temp;
-					flag = flag + 1;
-				}
+	if (jsonInfo.type == 1) {
+		// 砖木结构
+		var typeArr = new Array(6);
+		typeArr = initArr(typeArr, 0);		
+		var flag = 0;
+		for (i = 0; i < 3; i++) {
+			console.log(i);
+			var keySrc = "type21" + i;
+			if (jsonInfo.hasOwnProperty(keySrc)) {
+				var temp = jsonInfo[keySrc];
+			} else {
+				var temp = NaN;
 			}
-			return typeArr;
-			break;
-		case 2:
-		case 3:
+			if (i == 1) {
+				for (j = 0; j < temp.length; j++) {
+					if (typeof(temp) != "NaN") {
+						typeArr[parseInt(flag) + parseInt(temp)-1] = 1;
+					}
+				}
+				flag=flag+4;
+			} else {
+				console.log(flag+','+temp);
+				typeArr[flag] = temp;
+				flag = flag + 1;
+			}
+		}
+		return typeArr;
+	} else if (jsonInfo.type == 2) {
+
+	} else if (jsonInfo.type == 3) {
+
 	}
 }
 
@@ -321,6 +332,13 @@ function zhenliDamage(jsonInfo) {
 	damageArr[17] = jsonInfo.weihugoujian;
 	damageArr[18] = jsonInfo.weihugoujian_w;
 	return damageArr;
+}
+
+function initArr(arr, q) {
+	for (i = 0; i < arr.length; i++) {
+		arr[i] = q;
+	}
+	return arr;
 }
 
 function addPhoto(creatImage, imageSqlStr) {
