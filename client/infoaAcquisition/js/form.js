@@ -42,15 +42,15 @@ function w_insertSQL(jsonInfo) {
 	jsonInfo = zhenliPhoto(jsonInfo);
 	watchJSON(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
-	console.log(damage);
+	// console.log(damage);
 	type = zhenliType(jsonInfo);
-	console.log(type);
+	// console.log(type);
 	question = zhenliQuestion(jsonInfo);
-	console.log(question);
+	// console.log(question);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists main(" +
-		"'uint'	TEXT(255)," +
+		"'unit'	TEXT(255)," +
 		"'phone'	integer(11)," +
 		"'material'	TEXT(255) ," +
 		"'addr'	TEXT(255)," +
@@ -60,45 +60,69 @@ function w_insertSQL(jsonInfo) {
 		"'layer' integer(2)," +
 		"'typeid'	integer(1)," +
 		"'identitytime'	text(10)," +
-		"'imageSrc1'	TEXT(255)," +
-		"'imageDes1'	TEXT(255)," +
-		"'imageSrc2'	TEXT(255)," +
-		"'imageDes2'	TEXT(255)," +
-		"'imageSrc3'	TEXT(255)," +
-		"'imageDes3'	TEXT(255)," +
-		"'imageSrc4'	TEXT(255)," +
-		"'imageDes4'	TEXT(255)," +
+		"'photoSrc1'	TEXT(255)," +
+		"'photoDes1'	TEXT(255)," +
+		"'photoSrc2'	TEXT(255)," +
+		"'photoDes2'	TEXT(255)," +
+		"'photoSrc3'	TEXT(255)," +
+		"'photoDes3'	TEXT(255)," +
+		"'photoSrc4'	TEXT(255)," +
+		"'photoDes4'	TEXT(255)," +
 		"'damage'	TEXT(255)," +
 		"'type'	TEXT(255)," +
 		"'question'	TEXT(255)," +
 
 		"'isUp'	integer(1)" + "')";
-
-	sqlStr = "insert into " + tableName + " values(" + jsonInfo.uint + "','" +
-		jsonInfo.phone + "','" +
+	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
+		jsonInfo.phone + ",'" +
 		jsonInfo.material + "','" +
 		jsonInfo.addr + "','" +
-		jsonInfo.hold + "','" +
-		jsonInfo.holdid + "','" +
-		jsonInfo.attr + "','" +
-		jsonInfo.layer + "','" +
-		jsonInfo.type + "','" +
+		jsonInfo.hold + "'," +
+		jsonInfo.holdid + "," +
+		jsonInfo.attr + "," +
+		jsonInfo.layer + "," +
+		jsonInfo.type + ",'" +
 		jsonInfo.identitytime + "','" +
-		jsonInfo.imageSrc1 + "','" +
-		jsonInfo.imageDes1 + "','" +
-		jsonInfo.imageSrc2 + "','" +
-		jsonInfo.imageDes2 + "','" +
-		jsonInfo.imageSrc3 + "','" +
-		jsonInfo.imageDes3 + "','" +
-		jsonInfo.imageSrc4 + "','" +
-		jsonInfo.imageDes4 + "','" +
+		jsonInfo.photoSrc1 + "','" +
+		jsonInfo.photoDes1 + "','" +
+		jsonInfo.photoSrc2 + "','" +
+		jsonInfo.photoDes2 + "','" +
+		jsonInfo.photoSrc3 + "','" +
+		jsonInfo.photoDes3 + "','" +
+		jsonInfo.photoSrc4 + "','" +
+		jsonInfo.photoDes4 + "','" +
 		damage + "','" +
 		type + "','" +
-		question + "','" +
-		0 + "')";
+		question + "'," +
+		0 + ")";
 	openDB();
-	insertSQL(tableName, creatMain, sqlStr);
-	closeDB();
+	// insertSQL(tableName, creatMain, sqlStr);
+	console.log(creatMain);
+	console.log(sqlStr);
+	plus.sqlite.executeSql({
+		name: 'info',
+		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+		sql: creatMain,
+		success: function(e) {
+			console.log('creatTable success: ' + JSON.stringify(e))
+			plus.sqlite.executeSql({
+				name: 'info',
+				sql: sqlStr,
+				success: function(e) {
+					console.log('insertSQL success: ' + JSON.stringify(e))
+				},
+				fail: function(e) {
+					console.log('executeSql fail: ' + JSON.stringify(e))
+				}
+			})
+		},
+		fail: function(e) {
+			console.log('executeSql fail: ' + JSON.stringify(e))
+			return e;
+		}
+	});
+
+	// closeDB();
 	// goHome();
 }
 
@@ -270,7 +294,6 @@ function zhenliType(jsonInfo) {
 		typeArr = initArr(typeArr, 0);		
 		var flag = 0;
 		for (i = 0; i < 3; i++) {
-			console.log(i);
 			var keySrc = "type21" + i;
 			if (jsonInfo.hasOwnProperty(keySrc)) {
 				var temp = jsonInfo[keySrc];
@@ -285,7 +308,7 @@ function zhenliType(jsonInfo) {
 				}
 				flag=flag+4;
 			} else {
-				console.log(flag+','+temp);
+				// console.log(flag+','+temp);
 				typeArr[flag] = temp;
 				flag = flag + 1;
 			}
