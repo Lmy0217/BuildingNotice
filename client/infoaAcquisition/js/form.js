@@ -38,6 +38,65 @@ function submitFrom() {
 function w_insertSQL(jsonInfo) {
 	var douhao = "','"
 	console.log(douhao);
+	//------------------------
+	jsonInfo = zhenliPhoto(jsonInfo);
+	damage = zhenliDamage(jsonInfo);
+	type = zhenliType(jsonInfo);
+	que = zhenliQuestion(jsonInfo);
+	// insertSQL(tableName,creatImage)
+	var tableName = 'infoDB';
+	creatMain = "create table if not exists main(" +
+		"'uint'	TEXT(255)," +
+		"'phone'	integer(11)," +
+		"'material'	TEXT(255) ," +
+		"'addr'	TEXT(255)," +
+		"'hold'	TEXT(255)," +
+		"'holdid' INTEGER(20)," +
+		"'attr' integer(2)," +
+		"'layer' integer(2)," +
+		"'typeid'	integer(1)," +
+		"'identitytime'	text(10)," +
+		"'imageSrc1'	TEXT(255)," +
+		"'imageDes1'	TEXT(255)," +
+		"'imageSrc2'	TEXT(255)," +
+		"'imageDes2'	TEXT(255)," +
+		"'imageSrc3'	TEXT(255)," +
+		"'imageDes3'	TEXT(255)," +
+		"'imageSrc4'	TEXT(255)," +
+		"'imageDes4'	TEXT(255)," +
+		"'damage'	TEXT(255)," +
+		"'type'	TEXT(255)," +
+		"'question'	TEXT(255)," +
+
+		"'isUp'	integer(1)" + "')";
+
+	sqlStr = "insert into " + tableName + " values(" + jsonInfo.uint + "','" +
+		jsonInfo.phone + "','" +
+		jsonInfo.material + "','" +
+		jsonInfo.addr + "','" +
+		jsonInfo.hold + "','" +
+		jsonInfo.holdid + "','" +
+		jsonInfo.attr + "','" +
+		jsonInfo.layer + "','" +
+		jsonInfo.type + "','" +
+		jsonInfo.identitytime + "','" +
+		jsonInfo.imageSrc1 + "','" +
+		jsonInfo.imageDes1 + "','" +
+		jsonInfo.imageSrc2 + "','" +
+		jsonInfo.imageDes2 + "','" +
+		jsonInfo.imageSrc3 + "','" +
+		jsonInfo.imageDes3 + "','" +
+		jsonInfo.imageSrc4 + "','" +
+		jsonInfo.imageDes4 + "','" +
+		damage + "','" +
+		type + "','" +
+		question + "','" + "')";
+}
+
+// 执行SQL语句，这里要弄三个表
+function w_insertSQL_todo(jsonInfo) {
+	var douhao = "','"
+	console.log(douhao);
 	var tableName = 'imageDB';
 	var creatImage = "create table if not exists imageDB(" + // 'id' integer PRIMARY KEY,
 		"'filePath'	TEXT(255)," +
@@ -179,6 +238,64 @@ function changeChild2(father, child) {
 			}
 		}
 	});
+}
+
+//整理form3 
+function zhenliQuestion(jsonInfo) {
+	queArr = new Array(16);
+	for (i = 0; i < 16; i++) {
+		var keySrc = "type31" + i;
+		if (jsonInfo.hasOwnProperty(keySrc)) {
+			queArr[i] = jsonInfo[keySrc];
+		} else {
+			queArr[i] = "";
+		}
+	}
+	return queArr;
+}
+
+//整理form2
+function zhenliType(jsonInfo) {
+	switch (jsonInfo.type) {
+		case 1:
+			// 砖木结构
+			var typeArr = new Array(6);
+			var flag = 0;
+			for (i = 0; i < 3; i++) {
+				var keySrc = "type21" + i;
+				if (jsonInfo.hasOwnProperty(keySrc)) {
+					var temp = jsonInfo[keySrc];
+				} else {
+					var temp = NaN;
+				}
+				if (i == 2) {
+					for (j = 0; j < temp.length; j++) {
+						if (typeof(temp) != "NaN") {
+							typeArr[flag + temp] = 1;
+						}
+					}
+					flag = flag + 4;
+				} else if {
+					typeArr[flag] = temp;
+					flag = flag + 1;
+				}
+			}
+			return typeArr;
+			break;
+		case 2:
+		case 3:
+	}
+}
+
+// 补全json字段，补全缺少的photo字段
+function zhenliPhoto(jsonInfo) {
+	for (i = 1; i <= 4; i++) {
+		var keySrc = "photoSrc" + i;
+		if (!jsonInfo.hasOwnProperty(keySrc)) {
+			jsonInfo[keySrc] = "";
+		}
+	}
+	return jsonInfo;
 }
 
 //整理承重墙的部分统计,返回一个18位长的数组
