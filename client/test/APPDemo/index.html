@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/comment.css" rel="stylesheet"/>
+</head>
+
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">杰瑞教育APPDemo</h1>
+	</header>
+	
+	<div class="mui-content">
+		
+	    <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    1、页面加载子页&列表跳转详情页并传参
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    2、 底部选项卡切换(Div模式)
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    3、底部选项卡切换(WebView模式)
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    4、底部选项卡切换(自定义)
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    5、图片轮播组件
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    6、HTML5+摄像头使用
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    7、下拉刷新&上拉加载更多&Ajax
+                </a>
+            </li>
+        </ul>
+        
+	</div>
+	
+	
+</body>
+
+<script type="text/javascript" charset="utf-8">
+	// 初始化页面中的MUI控件
+  	mui.init({
+  		/*设置各种手势操作的开关*/
+  		gestureConfig:{
+		   tap: true, //默认为true
+		   doubletap: true, //默认为false
+		   longtap: true, //默认为false
+		   swipe: true, //默认为true
+		   drag: true, //默认为true
+		   hold:false,//默认为false，不监听
+		   release:false//默认为false，不监听
+		}
+  	});
+  	
+  	// 当MUI的页面DOM加载完成后，执行的函数。 但是，基本都使用mui.plusReady
+  	mui.ready(function(){
+  		//console.log("我在plusReady之前调用！");
+  	})
+  	
+  	//页面中HTML5+相关的内容加载完毕后，执行的函数。  类似于window.onload = function(){}
+  	mui.plusReady(function(){
+  		var page = ["01-jiazaiziyemian.html","02-tabbarDiv.html","03-tabbarWebView.html","04-tabbarMy.html","05-imglunbo.html","06-Camera.html","07-fullPush.html"];
+  		
+  		var arr = document.getElementsByTagName("a");
+  		for(var i=0; i<arr.length; i++){
+  			!function(i){
+  				// 在手机APP中，事件绑定推荐使用DOM2模型。 用tap事件取代click事件。
+	  			arr[i].addEventListener("tap",function(){
+	  				mui.openWindow({
+	  					url:page[i],
+	  					id:page[i],
+	  				})
+	  			})
+  			}(i);
+  		}
+  	})
+</script>
+</html>

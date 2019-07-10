@@ -1,0 +1,10 @@
+.mui-bar-nav,.mui-title{
+	background-color:#C9302C;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	letter-spacing: 1px;
+}
+.mui-bar-nav a{
+	color: white;
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		这是第<span id="num"></span>条新闻的详情页！
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack:true,
+//				keyEventBind: {
+//					backbutton: false  //关闭back按键监听
+//				}
+			})
+			mui.plusReady(function(){
+				// 取到当前的webview
+				//var slef = plus.webview.currentWebview();
+				
+				// 通过webview的id，获取指定的webview
+				var slef = plus.webview.getWebviewById("0102-detail.html");
+				
+				document.getElementById("num").innerText = slef.newsId+1;
+			})
+		</script>
+	</body>
+
+</html>
