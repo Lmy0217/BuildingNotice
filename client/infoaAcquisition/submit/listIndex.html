@@ -40,10 +40,23 @@
 			document.addEventListener('touchstart', function() {
 				return false;
 			}, true);
-			mui.init();
+			mui.init({
+				/* 在页面的指定位置，加载子页面，实现卡头卡尾的效果 */
+				subpages: [{
+					url: "listInfo.html", //子页面HTML地址，支持本地地址和网络地址
+					id: "listInfo.html", //子页面标志
+					styles: {
+						top: "45px", //子页面顶部位置(顶部选项卡默认高度45px)
+						bottom: "51px", //子页面底部位置(顶部导航栏默认高度51px)
+						//width:100%,//子页面宽度，默认为100%
+						//height:100%,//子页面高度，默认为100%
+					},
+					//			      extras:{}//额外扩展参数,页面传值时使用
+				}],
+			});
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
 			if (window.plus) {
-				plusReady();				
+				plusReady();
 			} else {
 				document.addEventListener("plusready", plusReady, false);
 			}
@@ -54,7 +67,7 @@
 				openDB();
 				var sqlStr = 'select * from infoDB'
 				console.log('run pr2')
-				var aaa=selectSQL(sqlStr);
+				var aaa = selectSQL(sqlStr);
 				watchJSON(aaa);
 				closeDB();
 				isOpenDB();
@@ -69,23 +82,18 @@
 				var url = "testTakePhoto.html";
 				plus.webview.create(url).show();
 			}
-			
-			
-			
 		</script>
 	</head>
 	<body onselectstart="return false;">
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">采集信息浏览</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">信息预览与上传</h1>
 		</header>
-		<div class="mui-content">
-			<ul id="plist" style="list-style:none;margin:0;padding:0;text-align:left;">
-				<li id="plus/accelerometer.html" onclick="clicked(this.id, 'Accelerometer')">
-					<span class="item">Accelerometer
-						<!-- <div class="chs">加速度传感器</div> -->
-					</span>
-				</li>
-			</ul>
-		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<div class="mui-content-padded mui-row">
+				<button class="mui-btn mui-btn-primary mui-col-xs-5" onclick="goHome()">全选</button>
+				<button class="mui-btn mui-btn-primary mui-col-xs-5" onclick="mui.back('form1')">提交</button>
+			</div>
+		</nav>
 	</body>
 </html>
