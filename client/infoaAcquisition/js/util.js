@@ -108,7 +108,7 @@ function goHome() {
 	console.log(homeId);
 	
 	for (var i = 0, l = allPage.length; i < l; i++) {
-		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined'||typeof(allPage[i][key])=='undefined') {
+		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined'||typeof(allPage[i]['id'])=='undefined') {
 			allPage[i].close('none');
 		}
 		// for (var key in allPage[i]) {
