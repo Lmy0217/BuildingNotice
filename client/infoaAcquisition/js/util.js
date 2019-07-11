@@ -106,14 +106,18 @@ function goHome() {
 	watchJSON(allPage);
 	homeId = plus.webview.getLaunchWebview().id;
 	console.log(homeId);
+	
 	for (var i = 0, l = allPage.length; i < l; i++) {
-		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined') {
+		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined'||typeof(allPage[i][key])=='undefined') {
 			allPage[i].close('none');
 		}
 		// for (var key in allPage[i]) {
 		key = 'id';
 		console.log(key + ':' + allPage[i][key]);
-
+		if(typeof(allPage[i][key])=='undefined'){
+			var webview = plus.webview.getWebviewById(homeId); //假设第一个Webview的id是home
+			webview.show();
+		}
 		// }
 	}
 }

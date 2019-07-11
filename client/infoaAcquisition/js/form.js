@@ -111,11 +111,12 @@ function w_insertSQL(jsonInfo) {
 				success: function(e) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
-					goHome();
+					plus.nativeUI.alert('缓存成功，表单已完成！');
+					mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
-					
+					plus.nativeUI.alert('插入失败，请重试！多次失败请联系管理员');
 				}
 			})
 		},
@@ -125,11 +126,11 @@ function w_insertSQL(jsonInfo) {
 		}
 	});
 	// console.log(isOpenDB());
-	if(!isOpenDB()){
-		goHome();
-	}else{
-		plus.nativeUI.alert('插入失败，请重试！多次失败请联系管理员');
-	}
+	// if(!isOpenDB()){
+	// 	goHome();
+	// }else{
+	// 	
+	// }
 	
 }
 
