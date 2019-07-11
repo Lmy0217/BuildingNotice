@@ -6,11 +6,11 @@
 		<meta name="misapplication-tap-highlight" content="no" />
 		<meta name="HandheldFriendly" content="true" />
 		<meta name="MobileOptimized" content="320" />
-		<title>某天的内容信息</title>
+		<title>采集信息浏览</title>
 		<link rel="stylesheet" href="../css/mui.min.css" type="text/css" />
 		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 		<style type="text/css">
-/* 			li {
+			/* 			li {
 				padding: 0.8em;
 				border-bottom: 1px solid #eaeaea;
 			}
@@ -30,8 +30,34 @@
 				font-size: 0.8em;
 				color: #838383;
 			} */
-			.mui-input-row{
+			.mui-input-row {
 				text-align: left;
+			}
+
+			nav {
+				background: #fff
+			}
+
+			nav {
+				height: 50px;
+				top: inherit;
+				text-align: center
+			}
+
+			nav .mui-btn {
+
+				position：fixed;
+
+				top: 0px;
+
+				left: font-size: 20px;
+
+				height: 36px;
+				background-color: #FCB406;
+				width: 100%;
+				color: #fff;
+				height: 50px;
+				font-family: "微软雅黑";
 			}
 		</style>
 		<script type="text/javascript" src="../js/mui.min.js"></script>
@@ -40,33 +66,8 @@
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
 			mui.plusReady(function() {
-				openDB();
-				plus.sqlite.selectSql({
-					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==0',
-					success: function(e){
-						console.log('selectSql success: '+JSON.stringify(e));
-						showInfo(e);
-					},
-					fail: function(e){
-						console.log('selectSql fail: '+JSON.stringify(e));
-					}
-				});
+
 			});
-			
-			function showInfo(result){
-				watchJSON(result);
-				var mainList=document.getElementById("mainList");
-				for(i=0;i<result.length;i++){
-					var temp="<li class=>"+
-						"<div class='mui-input-row mui-checkbox mui-left'>"+
-							"<label>"+result[i].hold+"</label>"+
-							"<input name='"+result[i].rowid+"' value='"+result[i].rowid+"' type='checkbox'>"+
-						"</div>"+
-					"</li>"
-					mainList.innerHTML+=temp;
-				}
-			}
 		</script>
 	</head>
 	<body onselectstart="return false;">
@@ -76,6 +77,9 @@
 					<label>木柱</label>
 					<input name="type212" value="2" type="checkbox">
 				</div>
-			</li>	 -->		
+			</li>	 -->
 		</ul>
+		<nav class="mui-fullscreen">
+			<button class="mui-btn active" v-href="{name:'填写报名信息'}">立即报名</button>
+		</nav>
 </html>

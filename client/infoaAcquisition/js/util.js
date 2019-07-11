@@ -107,19 +107,23 @@ function goHome() {
 	homeId = plus.webview.getLaunchWebview().id;
 	console.log(homeId);
 	for (var i = 0, l = allPage.length; i < l; i++) {
-		if(allPage[i].id!=homeId||typeof(allPage[i])=='undefined'){
+		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined') {
 			allPage[i].close('none');
 		}
 		// for (var key in allPage[i]) {
-			key='id';
-			console.log(key + ':' + allPage[i][key]);
-			
+		key = 'id';
+		console.log(key + ':' + allPage[i][key]);
+
 		// }
 	}
 }
 var oldBack = mui.back;
 //重写返回上一页，方式页面丢失的问题
-mui.back = function(pageId){
-    var webview = plus.webview.getWebviewById(pageId); //假设第一个Webview的id是home
-    webview.show();
-}; 
+mui.back = function(pageId) {
+	console.log(pageId);
+	if(typeof(pageId)=="undefined"){
+		goHome();
+	}else{
+	var webview = plus.webview.getWebviewById(pageId); //假设第一个Webview的id是home
+	webview.show();}
+};
