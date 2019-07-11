@@ -13,6 +13,7 @@
 			li {
 				padding: 0.3em;
 				border-bottom: 1px solid #eaeaea;
+				text-align: left;
 			}
 
 			li:active {
@@ -74,9 +75,9 @@
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
 				for (i = 0; i < result.length; i++) {
-					var temp = "<li class=>" +
+					var temp = "<li class='mui-table-view-cell'>" +
 						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label>" + result[i].hold + "</label>" +
+						"<label>户主：" + result[i].hold + "</label>" +
 						"<input name='perChk' value='" + result[i].rowid + "' type='checkbox' >" +
 						"</div>" +
 						"</li>"
@@ -110,10 +111,10 @@
 			<a id="goHome" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">信息预览与上传</h1>
 		</header>
-		<div class="line mui-bar-nav" style="text-indent: 10px; height: 40px; line-height: 40px; margin-top: 40px;padding-top: 5px;">
+		<!-- <div class="line mui-bar-nav" style="text-indent: 10px; height: 40px; line-height: 40px; margin-top: 40px;padding-top: 10px;">
 			<div class="line" style="width:20%; float: left;">选择</div>
-			<div class="line" style="width:80%; float: right; font-weight: bold; text-align:center;"><label id="lbLightName">户主姓名</label></div>
-		</div>
+			<div class="line" style="width:80%; float: right; font-weight: bold; text-align:center;">户主姓名</div>
+		</div> -->
 		<div class="mui-content">
 			<div id="scroll1" class="mui-scroll-wrapper" style="top: 84px; bottom: 50px;">
 				<!--MUI默认是position是absolute-->
@@ -125,15 +126,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="line mui-row" style="position: absolute;bottom: -50px; z-index: -10px;width:100%;margin: 0px;">
+		<div class="line mui-row" style="position: absolute;bottom: -50px; z-index: 10px;width:100%;margin: 0px;">
 			<!--需要固定在底部，所以需要用到绝对定位，另外，由于MUI本身的组件的z-index要高于我们自己的div，所以，这里需要自定义z-index，一般10就足够。-->
 			<!-- <div id="btnCtrl" class="mui-btn mui-btn-primary mui-btn-block">
 				应用设置
 			</div> -->
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 40px;margin: 5px 0 ; padding: 5px 5px;">全选</button>
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 40px;margin: 5px 0 ;padding: 5px 5px">反选</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 40px;margin-top: 5px; ">全选</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 40px;margin-top: 5px ;">反选</button>
 
-			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="" style="margin: 0;height: 40px;padding: 5px 5px;">提交</button>
+			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="" style="margin: 0;margin-top: 5px;">提交</button>
 		</div>
 		<!-- </div> -->
 	</body>
