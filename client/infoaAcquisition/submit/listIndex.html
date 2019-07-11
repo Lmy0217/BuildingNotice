@@ -54,24 +54,20 @@
 					//			      extras:{}//额外扩展参数,页面传值时使用
 				}],
 			});
-			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			if (window.plus) {
-				plusReady();
-			} else {
-				document.addEventListener("plusready", plusReady, false);
-			}
-			// 扩展API准备完成后要执行的操作  
-			function plusReady() {
-				console.log('run pr')
-				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
-				openDB();
-				var sqlStr = 'select * from infoDB'
-				console.log('run pr2')
-				var aaa = selectSQL(sqlStr);
-				watchJSON(aaa);
-				closeDB();
-				isOpenDB();
-			}
+			mui.plusReady(function() {
+				
+				
+				// 扩展API加载完毕后调用onPlusReady回调函数 
+				// $(".list li").on("tap", ".imageup", function() {
+				// 	alert('11');
+				// 	var $li = $(this).parents("li");
+				// 	console.log($($li).text())
+				// 	$li.addClass("selectLi");
+				// 	$li.siblings().removeClass("selectLi");
+				// 	page.imgUp();
+				// })
+			});
+			
 			//打开"采集信息"
 			function openForm() {
 				var url = "form/form_1.html";

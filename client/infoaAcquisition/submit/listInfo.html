@@ -35,38 +35,47 @@
 			}
 		</style>
 		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			if (window.plus) {
-				plusReady();
-			} else {
-				document.addEventListener("plusready", plusReady, false);
-			}
-			// 扩展API准备完成后要执行的操作  
-			function plusReady() {
-				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
-				// ... code  
-			}
-			//打开"采集信息"
-			function openForm() {
-				var url = "form/form_1.html";
-				plus.webview.create(url).show();
-			}
-			//打开"任务上传"
-			function openSubmit() {
-				var url = "testTakePhoto.html";
-				plus.webview.create(url).show();
+			mui.plusReady(function() {
+				openDB();
+				plus.sqlite.selectSql({
+					name: 'info',
+					sql: 'select rowid, * from infoDB where isUp==0',
+					success: function(e){
+						console.log('selectSql success: '+JSON.stringify(e));
+						showInfo(e);
+					},
+					fail: function(e){
+						console.log('selectSql fail: '+JSON.stringify(e));
+					}
+				});
+			});
+			
+			function showInfo(result){
+				watchJSON(result);
+				var mainList=document.getElementById("mainList");
+				for(i=0;i<result.length;i++){
+					var temp="<li class=>"+
+						"<div class='mui-input-row mui-checkbox mui-left'>"+
+							"<label>"+result[i].hold+"</label>"+
+							"<input name='"+result[i].rowid+"' value='"+result[i].rowid+"' type='checkbox'>"+
+						"</div>"+
+					"</li>"
+					mainList.innerHTML+=temp;
+				}
 			}
 		</script>
 	</head>
 	<body onselectstart="return false;">
-		<ul class="mui-table-view">
-			<li class="mui-table-view-cell">
+		<ul id="mainList" class="mui-table-view">
+			<!-- <li class="mui-table-view-cell">
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木柱</label>
 					<input name="type212" value="2" type="checkbox">
 				</div>
-			</li>			
+			</li>	 -->		
 		</ul>
 </html>
