@@ -37,6 +37,7 @@
 		<script src="../js/util.js"></script>
 		<script>
 			mui.init();
+			
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
@@ -303,13 +304,9 @@
 			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="submitFrom()">完成表单</button>
 		</div>
 		<div class="mui-content-padded mui-row">
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="" disabled="disabled">回主页</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back('form3')">上一步</button>
 		</div>
-
-		<script type="text/javascript">
-			mui.init()
-		</script>
 
 	</body>
 

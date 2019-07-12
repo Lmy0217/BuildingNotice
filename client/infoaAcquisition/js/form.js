@@ -38,9 +38,109 @@ function submitFrom() {
 function w_insertSQL(jsonInfo) {
 	var douhao = "','"
 	console.log(douhao);
+	//------------------------
+	jsonInfo = zhenliPhoto(jsonInfo);
+	watchJSON(jsonInfo);
+	damage = zhenliDamage(jsonInfo);
+	// console.log(damage);
+	type = zhenliType(jsonInfo);
+	// console.log(type);
+	question = zhenliQuestion(jsonInfo);
+	// console.log(question);
+	// insertSQL(tableName,creatImage)
+	var tableName = 'infoDB';
+	creatMain = "create table if not exists "+tableName+"(" +
+		"'unit'	char," +
+		"'phone'	int(11)," +
+		"'material'	char ," +
+		"'addr'	char," +
+		"'hold'	char," +
+		"'holdid' int(20)," +
+		"'attr' int(2)," +
+		"'layer' int(2)," +
+		"'typeid'	int(1)," +
+		"'identitytime'	char(10)," +
+		"'photoSrc1'	char," +
+		"'photoDes1'	char," +
+		"'photoSrc2'	char," +
+		"'photoDes2'	char," +
+		"'photoSrc3'	char," +
+		"'photoDes3'	char," +
+		"'photoSrc4'	char," +
+		"'photoDes4'	char," +
+		"'damage'	char," +
+		"'type'	char," +
+		"'question'	char," +
+
+		"'isUp'	int(1)" + ")";
+	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
+		jsonInfo.phone + ",'" +
+		jsonInfo.material + "','" +
+		jsonInfo.addr + "','" +
+		jsonInfo.hold + "'," +
+		jsonInfo.holdid + "," +
+		jsonInfo.attr + "," +
+		jsonInfo.layer + "," +
+		jsonInfo.type + ",'" +
+		jsonInfo.identitytime + "','" +
+		jsonInfo.photoSrc1 + "','" +
+		jsonInfo.photoDes1 + "','" +
+		jsonInfo.photoSrc2 + "','" +
+		jsonInfo.photoDes2 + "','" +
+		jsonInfo.photoSrc3 + "','" +
+		jsonInfo.photoDes3 + "','" +
+		jsonInfo.photoSrc4 + "','" +
+		jsonInfo.photoDes4 + "','" +
+		damage.toString() + "','" +
+		type.toString() + "','" +
+		question.toString() + "'," +
+		0 + ")";
+	openDB();
+	// insertSQL(tableName, creatMain, sqlStr);
+	console.log(creatMain);
+	console.log(sqlStr);
+	plus.sqlite.executeSql({
+		name: 'info',
+		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
+		sql: creatMain,
+		success: function(e) {
+			console.log('creatTable success: ' + JSON.stringify(e))
+			plus.sqlite.executeSql({
+				name: 'info',
+				sql: sqlStr,
+				success: function(e) {
+					console.log('insertSQL success: ' + JSON.stringify(e))
+					closeDB();
+					plus.nativeUI.alert('缓存成功，表单已完成！');
+					mui.back();
+				},
+				fail: function(e) {
+					console.log('executeSql fail: ' + JSON.stringify(e))
+					plus.nativeUI.alert('插入失败，请重试！多次失败请联系管理员');
+				}
+			})
+		},
+		fail: function(e) {
+			console.log('executeSql fail: ' + JSON.stringify(e))
+			return e;
+		}
+	});
+	// console.log(isOpenDB());
+	// if(!isOpenDB()){
+	// 	goHome();
+	// }else{
+	// 	
+	// }
+	
+}
+
+// 执行SQL语句，这里要弄三个表
+function w_insertSQL_todo(jsonInfo) {
+	var douhao = "','"
+	console.log(douhao);
 	var tableName = 'imageDB';
 	var creatImage = "create table if not exists imageDB(" + // 'id' integer PRIMARY KEY,
-		"'filePath'	TEXT(255)," +
+		"'filePath'	TEXT," +
 		"'depict'	TEXT(255)" + ")";
 	// console.log(creatImage);
 	openDB();
@@ -85,7 +185,6 @@ function w_insertSQL(jsonInfo) {
 
 // 执行SQL语句
 function insertSQL(tableName, creatTable, sqlStr) {
-	openDB();
 	// isOpenDB();
 	// console.log('执行SQL语句: ');
 
@@ -113,7 +212,6 @@ function insertSQL(tableName, creatTable, sqlStr) {
 			return e;
 		}
 	});
-	closeDB();
 }
 
 
@@ -181,6 +279,67 @@ function changeChild2(father, child) {
 	});
 }
 
+//整理form3 
+function zhenliQuestion(jsonInfo) {
+	queArr = new Array(16);
+	queArr = initArr(queArr, 0);
+	for (i = 0; i < 16; i++) {
+		var keySrc = "type31" + i;
+		if (jsonInfo.hasOwnProperty(keySrc)) {
+			queArr[i] = jsonInfo[keySrc];
+		} else {
+			queArr[i] = 0;
+		}
+	}
+	return queArr;
+}
+
+//整理form2
+function zhenliType(jsonInfo) {
+	if (jsonInfo.type == 1) {
+		// 砖木结构
+		var typeArr = new Array(6);
+		typeArr = initArr(typeArr, 0);		
+		var flag = 0;
+		for (i = 0; i < 3; i++) {
+			var keySrc = "type21" + i;
+			if (jsonInfo.hasOwnProperty(keySrc)) {
+				var temp = jsonInfo[keySrc];
+			} else {
+				var temp = NaN;
+			}
+			if (i == 1) {
+				for (j = 0; j < temp.length; j++) {
+					if (typeof(temp) != "NaN") {
+						typeArr[parseInt(flag) + parseInt(temp)-1] = 1;
+					}
+				}
+				flag=flag+4;
+			} else {
+				// console.log(flag+','+temp);
+				typeArr[flag] = temp;
+				flag = flag + 1;
+			}
+		}
+		return typeArr;
+	} else if (jsonInfo.type == 2) {
+
+	} else if (jsonInfo.type == 3) {
+
+	}
+}
+
+// 补全json字段，补全缺少的photo字段
+function zhenliPhoto(jsonInfo) {
+	for (i = 1; i <= 4; i++) {
+		var keySrc = "photoSrc" + i;
+		if (!jsonInfo.hasOwnProperty(keySrc)) {
+			jsonInfo[keySrc] = "";
+		}
+	}
+	return jsonInfo;
+}
+
 //整理承重墙的部分统计,返回一个18位长的数组
 function zhenliDamage(jsonInfo) {
 	var damageArr = new Array(18)
@@ -204,6 +363,13 @@ function zhenliDamage(jsonInfo) {
 	damageArr[17] = jsonInfo.weihugoujian;
 	damageArr[18] = jsonInfo.weihugoujian_w;
 	return damageArr;
+}
+
+function initArr(arr, q) {
+	for (i = 0; i < arr.length; i++) {
+		arr[i] = q;
+	}
+	return arr;
 }
 
 function addPhoto(creatImage, imageSqlStr) {

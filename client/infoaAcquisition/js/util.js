@@ -54,10 +54,10 @@ function isOpenDB() {
 			name: 'info',
 			path: '_doc/info.db',
 		})) {
-		plus.nativeUI.alert('Opened!');
+		// plus.nativeUI.alert('Opened!');
 		return true;
 	} else {
-		plus.nativeUI.alert('Unopened!');
+		// plus.nativeUI.alert('Unopened!');
 		return false;
 	}
 }
@@ -106,14 +106,53 @@ function goHome() {
 	watchJSON(allPage);
 	homeId = plus.webview.getLaunchWebview().id;
 	console.log(homeId);
+
 	for (var i = 0, l = allPage.length; i < l; i++) {
-		if(allPage[i].id!=homeId||typeof(allPage[i])=='undefined'){
+		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined' || typeof(allPage[i]['id']) == 'undefined') {
 			allPage[i].close('none');
 		}
 		// for (var key in allPage[i]) {
-			key='id';
-			console.log(key + ':' + allPage[i][key]);
-			
+		key = 'id';
+		console.log(key + ':' + allPage[i][key]);
+		if (typeof(allPage[i][key]) == 'undefined') {
+			var webview = plus.webview.getWebviewById(homeId); //假设第一个Webview的id是home
+			webview.show();
+		}
 		// }
 	}
+}
+var oldBack = mui.back;
+//重写返回上一页，方式页面丢失的问题
+mui.back = function(pageId) {
+	console.log(pageId);
+	if (typeof(pageId) == "undefined") {
+		goHome();
+	} else {
+		var webview = plus.webview.getWebviewById(pageId); //假设第一个Webview的id是home
+		webview.show();
+	}
+};
+
+//将图片压缩并转成base64 
+function getBase64Image(img) {
+	var canvas = document.createElement("canvas");
+	var width = img.width;
+	var height = img.height;
+	// calculate the width and height, constraining the proportions 
+	if (width > 1000) {
+		height = height / 1.5;
+		width = width / 1.5;
+	}
+
+	if (height > 1000) {
+		height = height / 1.5;
+		width = width / 1.5;
+	}
+
+	canvas.width = width; /*设置新的图片的宽度*/
+	canvas.height = height; /*设置新的图片的长度*/
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+	var dataURL = canvas.toDataURL("image/png", 1);
+	return dataURL.replace("data:image/png;base64,", "");
 }

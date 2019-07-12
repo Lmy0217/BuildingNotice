@@ -1,10 +1,10 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
     "id" : "H5DEB6BA3", /*应用的标识，创建应用时自动生成，勿手动修改*/
-    "name" : "infoaAcquisition", /*应用名称，程序桌面图标名称*/
+    "name" : "信息采集助手", /*应用名称，程序桌面图标名称*/
     "version" : {
-        "name" : "0.19", /*应用版本名称*/
-        "code" : 8
+        "name" : "0.32", /*应用版本名称*/
+        "code" : 15
     },
     "description" : "赣安鉴定信息采集系统,@luov.top,@myluo.cn", /*应用描述信息*/
     "icons" : {

@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<ul class="mui-table-view">
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                Item 1
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 2
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell">
+	            <a class="mui-navigate-right">
+	                 Item 3
+	            </a>
+	        </li>
+	    </ul>
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				/*开启右滑关闭页面，默认不开启*/
+				swipeBack:true,
+				/*默认效果一层层返回，关闭监听后，在任意页面点击返回首页，再点击退出系统*/
+//				keyEventBind: {
+//					backbutton: false  //关闭back按键监听
+//				}
+			});
+			
+			mui.plusReady(function(){
+				var arr = document.getElementsByTagName("a");
+				for(var i=0; i<arr.length; i++){
+					!function(i){
+						arr[i].addEventListener("tap",function(){
+							mui.openWindowWithTitle({
+								url:"0102-detail.html",
+								id:"0102-detail.html",
+								styles:{
+									
+								},
+								extras:{
+									// 打开页面的同时，向新页面传递数据。
+									newsId : i
+								}
+							},{
+								backgroundColor:"#C9302C",
+								//bottomBorderColor:"#00ff00",
+								title:{
+									text:"新闻详情"+(i+1),
+									styles:{
+							            color:"#FFFFFF",
+							            align:"center",
+							            family:"'Helvetica Neue',Helvetica,sans-serif",
+							            size:"20px",
+							            style:"normal",
+							            weight:"bold",
+							        }
+								},
+								back:{
+									image:{
+									/*返回箭头图片可以使用imgSrc，也可以使用base64编码*/
+										//imgSrc:"img/back.png"
+										base64Data:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA+klEQVQ4T62U4VHCQBBG39eBHThUgHaAHUAFSAVqB3YAHQgd0AGUABVoCXTwOTtjZs5Ickvi/s3k3dtv9078c2kIz/YcWEpatP+/GWj7GfgAzpIeRgEL2A54lXQZDLS9jTaBnaSwvFqplrOwOKEXaPsOWANhtJIUlr3VCfyBHYAIPgXrNCxgk7CTtK+ZNd+vGtr+AqLdmaRTFtZnGJB74C2TW3lgl2HYHYHpLfllptzs3rihlC0UO7iVtKrlmV3sDfACVKEpYFgV9zhWKCL4c4+rGbbbK6CxBU+jHocGbnsGhOWnpMfBr01rUHEd3yXFQ/ur0hnWptt8/wZtbFsVRI2hrAAAAABJRU5ErkJggg=="
+									}
+								}
+							})
+						})
+					}(i);
+				}
+				
+				
+				
+//			var oldBack = mui.back;
+//			mui.back = function(){
+//				alert("我要返回啦！");
+//				oldBack();
+//			}
+				
+				
+			})
+			
+			
+		</script>
+	</body>
+
+</html>

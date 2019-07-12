@@ -50,7 +50,7 @@
 	mui.plusReady(function() {
 		var tmp = plus.webview.currentWebview();
 		var form_per = chuliForm(tmp);
-		document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
+		document.getElementById("div1").innerText = '户主：' + JSON.stringify(tmp.hold);
 		console.log(JSON.stringify(form_per));
 	});
 </script>
@@ -91,11 +91,11 @@
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>房屋四面均为空斗砖砌体</label>
-					<input name="type21a" type="radio" value="1" checked="">
+					<input name="type211" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>正面为木墙，其余三面为空斗砖砌体</label>
-					<input name="type21a" type="radio" value="2">
+					<input name="type211" type="radio" value="2">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
@@ -104,19 +104,19 @@
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>砖墙</label>
-					<input name="type21b" value="1" type="checkbox" checked>
+					<input name="type212" value="1" type="checkbox" checked>
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木柱</label>
-					<input name="type21b" value="2" type="checkbox">
+					<input name="type212" value="2" type="checkbox">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>木屋架</label>
-					<input name="type21b" value="3" type="checkbox">
+					<input name="type212" value="3" type="checkbox">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>木檩条</label>
-					<input name="type21b" value="4" type="checkbox">
+					<input name="type212" value="4" type="checkbox">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
@@ -125,11 +125,11 @@
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>木梁和木楼板</label>
-					<input name="type21c" type="radio" value="1" checked="">
+					<input name="type213" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>木梁无楼板</label>
-					<input name="type21c" type="radio" value="2">
+					<input name="type213" type="radio" value="2">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
@@ -142,7 +142,7 @@
 			</div>
 			<div class="mui-content-padded mui-row">
 				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
-				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back()">上一步</button>
+				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back('form1')">上一步</button>
 			</div>
 
 			<script type="text/javascript">
