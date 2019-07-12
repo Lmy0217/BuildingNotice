@@ -90,9 +90,10 @@
 
 			function upData(data) {
 				var upUrl = website + '/archive/create';
-				var sendData = {
-					'data': data,
-				}
+				var sendData = data
+				// {
+				// 	'data': data,
+				// }
 				var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
 				var USER_KEY = myStorage.getItem('USER_KEY');
 				mui.ajax(imgUrl, {
