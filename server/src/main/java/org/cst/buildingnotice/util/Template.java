@@ -50,13 +50,19 @@ public class Template {
 	}
 	
 	public static String simpleRender(String template, String data) {
+		
 		List<Character> operator = new ArrayList<Character>();
 		List<Integer> choose = new ArrayList<Integer>();
+		List<Character> separator = new ArrayList<Character>();
 		StringBuilder stringBuilder = new StringBuilder();
+		
 		boolean read = true;
 		int chooseData = -1;
 		int chooseDataIdx = 0;
 		int layer = 0;
+		
+		boolean separ = false;
+		char separate = '\u0000';
 		
 		int dataIdx = data.indexOf(';');
 		int dataWidth = Integer.parseInt(data.substring(0, dataIdx++));
@@ -77,7 +83,12 @@ public class Template {
 			case '}':
 				operator.remove(operator.size() - 1);
 				layer--;
-				if (layer == 0) read = true;
+				if (layer == 0) {
+					if (read && separate != '\u0000') {
+						stringBuilder.append(separate);
+					}
+					read = true;
+				}
 				break;
 			case '[':
 				operator.add(c);
@@ -93,28 +104,49 @@ public class Template {
 						choose.add(chooseData);
 						choose.add(chooseDataIdx);
 						choose.add(layer);
+						separator.add(separate);
 					}
 					chooseData = Integer.parseInt(data.substring(dataIdx, 
 							dataIdx + dataWidth));
 					dataIdx += dataWidth;
 					chooseDataIdx = 0;
 					layer = 0;
+					separate = '\u0000';
 				}
 				break;
 			case ']':
 				operator.remove(operator.size() - 1);
+				if (read && separate != '\u0000') {
+					stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+				}
 				if (read) {
 					if (choose.size() > 0) {
+						separate = separator.remove(separator.size() - 1);
 						layer = choose.remove(choose.size() - 1);
 						chooseDataIdx = choose.remove(choose.size() - 1);
 						chooseData = choose.remove(choose.size() - 1);
 					}
 				}
 				layer--;
-				if (layer == 0) read = true;
+				if (layer == 0) {
+					if (read && separate != '\u0000') {
+						stringBuilder.append(separate);
+					}
+					read = true;
+				}
+				break;
+			case '(':
+				separ = true;
+				break;
+			case ')':
+				separ = false;
 				break;
 			default:
-				if (read) stringBuilder.append(c);
+				if (separ) {
+					separate = c;
+				} else {
+					if (read) stringBuilder.append(c);
+				}
 			}
 		}
 		
