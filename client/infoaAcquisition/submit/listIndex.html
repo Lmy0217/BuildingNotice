@@ -21,14 +21,17 @@
 			}
 		</style>
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/util.js"></script>
+		<script type="text/javascript" src="../js/form.js"></script>
 		<script type="text/javascript" src="../js/common.js"></script>
 		<script type="text/javascript">
 			//取消浏览器的所有事件，使得active的样式在手机上正常生效
 			document.addEventListener('touchstart', function() {
 				return false;
 			}, true);
+			var website = '';
 			mui.init({
 				/* 在页面的指定位置，加载子页面，实现卡头卡尾的效果 */
 				// subpages: [{
@@ -57,20 +60,105 @@
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						showInfo(e);
+						closeDB();
 					},
 					fail: function(e) {
 						console.log('selectSql fail: ' + JSON.stringify(e));
 					}
 				});
-				var backa=document.getElementById('goHome');
+				var backa = document.getElementById('goHome');
 				backa.addEventListener("tap", function() {
 					mui.back();
 					goHome();
 				})
 
+				document.getElementById('submit').addEventListener("tap", function() {
+					info = getForm('#' + 'infoForm');
+					var perChk = info.perChk;
+					for (i = 0; i < perChk.length; i++) {
+						openDB();
+						// console.log(perChk[i]);
+						plus.sqlite.selectSql({
+							name: 'info',
+							sql: 'select rowid, * from infoDB where rowid==' + perChk[i],
+							success: function(e) {
+								console.log('selectSql success: ' + JSON.stringify(e));
+								upPhoto(e);
+								closeDB();
+							},
+							fail: function(e) {
+								console.log('selectSql fail: ' + JSON.stringify(e));
+							}
+						});
+					}
+				})
+
 				// 扩展API加载完毕后调用onPlusReady回调函数 
 
 			});
+
+			function upPhoto(result) {
+				var imgUrl = website + '/image/upload';
+				var photoId = new Array();
+				watchJSON(result);
+				console.log(result.photoSrc1)
+				for (i = 1; i <= 4; i++) {
+					var photoSrc = photoSrc + "i";
+					var photoDes = photoDes + "i";
+					if (!typeof(result[photoSrc] == 'underfind')) {
+						var image = new Image();
+						image.src = photoSrc;
+						image.onload = function() {
+							var imgData = getBase64Image(image);
+							var sendData = {
+								'file': imgData,
+								'depict': result[photoDes],
+							}
+							var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+							var USER_KEY = myStorage.getItem('USER_KEY');
+							showLoading();
+							mui.ajax(imgUrl, {
+								type: 'POST',
+								dataType: 'json',
+								data: sendData,
+								async: true,
+								timeout: 100000, //超时时间设置为10秒；
+								success: function(res) {
+									if (typeof res == 'string') {
+										var res = JSON.parse(res);
+									}
+
+									//如果登陆失效
+									if (res.code == '-1' || res.code == '-2') {
+										mui.toast(res.msg);
+										clearUserInfoCache(myStorage)
+										mui.openWindow({
+											url: '/view/login.html'
+										})
+									} else if (res.code == '-3') {
+										mui.toast(res.msg);
+										hideLoading();
+										return false;
+									}
+									if (res.code != '1') {
+										mui.toast(res.msg);
+									}
+									photoId.push(res.id) //上传成功
+									hideLoading();
+								},
+								error: function(xhr, type, errorThrown) {
+									vm.uploadImgArr[k].status = -1;
+									hideLoading();
+								},
+								headers: {
+									'access_token': AUTH_TOKEN,
+									'user_key': USER_KEY,
+								}
+							});
+						}
+					}
+				}
+			}
 
 			function showInfo(result) {
 				watchJSON(result);
@@ -79,16 +167,17 @@
 					var temp = "<li class='mui-table-view-cell'>" +
 						"<div class='mui-input-row mui-checkbox mui-left'>" +
 						"<label>" + result[i].hold + "</label>" +
-						"<input name='perChk' value='" + result[i].rowid + "' type='checkbox' >" +
+						"<input name='perChk[]' value='" + result[i].rowid + "' type='checkbox' >" +
 						"</div>" +
 						"</li>"
+					// console.log(temp);
 					mainList.innerHTML += temp;
 				}
 			}
 			//打开"采集信息"
 			function allChk(iNum) {
 				// var aForm = document.getElementById("mainList");
-				var mychk = document.getElementsByName("perChk");
+				var mychk = document.getElementsByName("perChk[]");
 				for (var i = 0; i < mychk.length; i++) {
 					if (iNum <= 0) {
 						mychk[i].checked = !mychk[i].checked;
@@ -120,8 +209,9 @@
 			<div id="scroll1" class="mui-scroll-wrapper" style="top: 84px; bottom: 102px;">
 				<!--MUI默认是position是absolute-->
 				<div class="mui-scroll">
-					<form name="myForm">
+					<form id='infoForm' class="">
 						<ul id="mainList" class="mui-table-view">
+							<!-- <li class='mui-table-view-cell'><div class='mui-input-row mui-checkbox mui-left'><label>很少说话</label><input name='perChk' value='14' type='checkbox' ></div></li> -->
 						</ul>
 					</form>
 				</div>
@@ -135,7 +225,7 @@
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 40px;margin-top: 5px; ">全选</button>
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 40px;margin-top: 5px ;">反选</button>
 
-			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="" style="margin: 0;margin-top: 5px;">提交</button>
+			<button id="submit" class="mui-btn mui-btn-primary mui-btn-block" onclick="" style="margin: 0;margin-top: 5px;">提交</button>
 		</div>
 		<!-- </div> -->
 	</body>
