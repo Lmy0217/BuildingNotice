@@ -53,19 +53,7 @@
 				mui('.mui-scroll-wrapper').scroll({
 					deceleration: 0.0005
 				}); //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
-				openDB();
-				plus.sqlite.selectSql({
-					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==0',
-					success: function(e) {
-						console.log('selectSql success: ' + JSON.stringify(e));
-						showInfo(e);
-						closeDB();
-					},
-					fail: function(e) {
-						console.log('selectSql fail: ' + JSON.stringify(e));
-					}
-				});
+				w_showInfo();
 				var backa = document.getElementById('goHome');
 				backa.addEventListener("tap", function() {
 					mui.back();
@@ -75,27 +63,91 @@
 				document.getElementById('submit').addEventListener("tap", function() {
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
+					openDB();
 					for (i = 0; i < perChk.length; i++) {
-						openDB();
 						// console.log(perChk[i]);
 						plus.sqlite.selectSql({
 							name: 'info',
 							sql: 'select rowid, * from infoDB where rowid==' + perChk[i],
 							success: function(e) {
 								console.log('selectSql success: ' + JSON.stringify(e));
-								upPhoto(e);
-								closeDB();
+								photoId = upPhoto(e);
+								data = zhenliJson(e, photoId);
+								upData(data);
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
 							}
 						});
 					}
+					closeDB();
+
 				})
 
 				// 扩展API加载完毕后调用onPlusReady回调函数 
 
 			});
+
+			function upData(data) {
+				var upUrl = website + '/archive/create';
+				var sendData = {
+					'data': data,
+				}
+				var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+				var USER_KEY = myStorage.getItem('USER_KEY');
+				mui.ajax(imgUrl, {
+					type: 'POST',
+					dataType: 'json',
+					data: sendData,
+					async: true,
+					timeout: 100000, //超时时间设置为10秒；
+					success: function(res) {
+						if (typeof res == 'string') {
+							var res = JSON.parse(res);
+						}
+						//如果登陆失效
+						if (res.code == '-1' || res.code == '-2') {
+							mui.toast(res.msg);
+							clearUserInfoCache(myStorage)
+							mui.openWindow({
+								url: '/view/login.html'
+							})
+						} else if (res.code == '-3') {
+							mui.toast(res.msg);
+							hideLoading();
+							return false;
+						}
+						if (res.code != '1') {
+							mui.toast(res.msg);
+						}
+						hideLoading();
+						plus.sqlite.selectSql({
+							name: 'info',
+							sql: 'updata infoDB set isUp = 1 where rowid = ' + data.rowid,
+							success: function(e) {
+								console.log('selectSql success: ' + JSON.stringify(e));
+								return true;
+							},
+							fail: function(e) {
+								console.log('selectSql fail: ' + JSON.stringify(e));
+							}
+						});
+					},
+					error: function(xhr, type, errorThrown) {
+						vm.uploadImgArr[k].status = -1;
+						hideLoading();
+					},
+					headers: {
+						'access_token': AUTH_TOKEN,
+						'user_key': USER_KEY,
+					}
+				});
+			}
+
+			function zhenliJson(res, photoId) {
+				res['photoId'] = photoId;
+				return res;
+			}
 
 			function upPhoto(result) {
 				var imgUrl = website + '/image/upload';
@@ -145,6 +197,7 @@
 									}
 									photoId.push(res.id) //上传成功
 									hideLoading();
+									return photoId;
 								},
 								error: function(xhr, type, errorThrown) {
 									vm.uploadImgArr[k].status = -1;
@@ -158,6 +211,24 @@
 						}
 					}
 				}
+
+			}
+
+			function w_showInfo() {
+				openDB();
+				plus.sqlite.selectSql({
+					name: 'info',
+					sql: 'select rowid, * from infoDB where isUp==0',
+					success: function(e) {
+						console.log('selectSql success: ' + JSON.stringify(e));
+						showInfo(e);
+						closeDB();
+					},
+					fail: function(e) {
+						console.log('selectSql fail: ' + JSON.stringify(e));
+						closeDB();
+					}
+				});
 			}
 
 			function showInfo(result) {
