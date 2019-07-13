@@ -65,15 +65,8 @@
 			//打开"下一单"
 			function w_openNext(){
 				var extras=getForm('#form1');
-				if(extras.type==1){
-					openNext('form1','form2.1');
-				}
-				else if(extras.type==2){
-					openNext('form1','form2.2');
-				}
-				else if(extras.type==3){
-					openNext('form1','form2.3');
-				}
+				var mubiao='form2.'+extras.type;
+				openNext('form1',mubiao);
 			}
 		</script>
 
@@ -83,7 +76,7 @@
 
 
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">信息采集系统</h1>
+			<h1 class="mui-title">信息采集助手</h1>
 		</header>
 		<div class="mui-content">
 			<form id='form1' class="mui-input-group">
@@ -149,13 +142,22 @@
 					<input name="type" type="radio" value="1" checked="">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>木结构</label>
+					<label>砖混结构</label>
 					<input name="type" type="radio" value="2">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label>砖混结构</label>
+					<label>底框结构</label>
 					<input name="type" type="radio" value="3">
 				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>框架结构</label>
+					<input name="type" type="radio" value="4">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木结构</label>
+					<input name="type" type="radio" value="5">
+				</div>
+				
 				<div class="mui-input-row">
 					<label>鉴定时间</label>
 					<input id="identitytime" name="identitytime" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">

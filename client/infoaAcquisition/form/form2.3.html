@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>砖混结构</title>
+		<title>底框结构</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
@@ -54,10 +54,14 @@
 				var form_per = chuliForm(tmp);
 				document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
 				console.log(JSON.stringify(form_per));
+				document.getElementById('goBack').addEventListener("tap", function() {
+					mui.back('form1');
+				})
 			});
 </script>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">信息采集系统</h1>
+			<a id="goBack" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">信息采集助手</h1>
 		</header>
 		<div class="mui-content">
 			<form id='form2' class="mui-input-group">
@@ -88,7 +92,46 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5>建筑物主体为砖混结构，砖墙下为砖砌条形基础，房屋墙体均为空斗砖砌体，房屋主要以砖墙和现浇钢筋混凝土楼（屋）面板承重。</h5>
+						<h5>1）结构主体结构为底部框架上部砖混结构，基础为柱下独立基础；</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>2) 框架部分以</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>框架梁</label>
+					<input name="type21" value="1" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>框架柱</label>
+					<input name="type21" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>楼面板</label>
+					<input name="type21" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>承重，砖混部分以</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>框架梁</label>
+					<input name="type22" value="1" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>承重墙</label>
+					<input name="type22" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>楼面板</label>
+					<input name="type22" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>承重，楼面板为现浇钢筋混凝土板。</h5>
 					</label>
 				</div>
 			</form>
