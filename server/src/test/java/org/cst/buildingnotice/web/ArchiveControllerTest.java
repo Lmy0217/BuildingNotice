@@ -66,12 +66,6 @@ public class ArchiveControllerTest {
 		requestBodyJSON.put("imgs", imgs);
 		List<Integer> damage = Arrays.asList(10, 5, 9, 2, 7, 0, 16, 2, 13, 1, 23, 2, 5, 2, 7, 1, 6, 1);
 		requestBodyJSON.put("damage", damage);
-		
-//	    mockMvc.perform(MockMvcRequestBuilders.post("/archive/create")
-//	            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
-//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)) //执行请求
-//	            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //验证响应contentType
-//	            .andExpect(MockMvcResultMatchers.jsonPath("$.archid").value(1));
 	    
 	    MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/create")
 	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
@@ -81,14 +75,23 @@ public class ArchiveControllerTest {
         resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
         resultActions.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	public void downloadTest() throws Exception {
+		
+		JSONObject requestBodyJSON = new JSONObject();
+		
+		List<Integer> ids = Arrays.asList(16, 17);
+		requestBodyJSON.put("ids", ids);
+		
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/archive/download")
+	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
 	    
-//	    String errorBody = "{id:1, name:zhang}";
-//	    MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/archive/create")
-//	            .contentType(MediaType.APPLICATION_JSON).content(errorBody)
-//	            .accept(MediaType.APPLICATION_JSON)) //执行请求
-//	            .andExpect(MockMvcResultMatchers.status().isBadRequest()) //400错误请求
-//	            .andReturn();
-//	    
-//	    Assert.assertTrue(HttpMessageNotReadableException.class.isAssignableFrom(result.getResolvedException().getClass()));//错误的请求内容体
+	    ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions.andDo(MockMvcResultHandlers.print());
 	}
 }
