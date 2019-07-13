@@ -31,7 +31,7 @@
 			document.addEventListener('touchstart', function() {
 				return false;
 			}, true);
-			var website = '';
+			var website = 'http://222.204.60.85:8080/buildingnotice/';
 			mui.init({
 				/* 在页面的指定位置，加载子页面，实现卡头卡尾的效果 */
 				// subpages: [{
@@ -90,12 +90,13 @@
 
 			function upData(data) {
 				var upUrl = website + '/archive/create';
-				var sendData = {
-					'data': data,
-				}
-				var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
-				var USER_KEY = myStorage.getItem('USER_KEY');
-				mui.ajax(imgUrl, {
+				var sendData = data
+				// {
+				// 	'data': data,
+				// }
+				// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+				// var USER_KEY = myStorage.getItem('USER_KEY');
+				mui.ajax(upUrl, {
 					type: 'POST',
 					dataType: 'json',
 					data: sendData,
@@ -121,10 +122,12 @@
 							mui.toast(res.msg);
 						}
 						hideLoading();
+						alert('ok');
 						plus.sqlite.selectSql({
 							name: 'info',
 							sql: 'updata infoDB set isUp = 1 where rowid = ' + data.rowid,
 							success: function(e) {
+								
 								console.log('selectSql success: ' + JSON.stringify(e));
 								return true;
 							},
@@ -134,18 +137,22 @@
 						});
 					},
 					error: function(xhr, type, errorThrown) {
-						vm.uploadImgArr[k].status = -1;
-						hideLoading();
+						console.log(xhr);
+						watchJSON(xhr);
+						console.log(type);
+						console.log(errorThrown);
+						// vm.uploadImgArr[k].status = -1;
+						// hideLoading();
 					},
 					headers: {
-						'access_token': AUTH_TOKEN,
-						'user_key': USER_KEY,
+						// 'access_token': AUTH_TOKEN,
+						// 'user_key': USER_KEY,
 					}
 				});
 			}
 
 			function zhenliJson(res, photoId) {
-				res['photoId'] = photoId;
+				res['imags'] = photoId;
 				return res;
 			}
 
@@ -166,8 +173,8 @@
 								'file': imgData,
 								'depict': result[photoDes],
 							}
-							var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
-							var USER_KEY = myStorage.getItem('USER_KEY');
+							// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+							// var USER_KEY = myStorage.getItem('USER_KEY');
 							showLoading();
 							mui.ajax(imgUrl, {
 								type: 'POST',
@@ -204,8 +211,8 @@
 									hideLoading();
 								},
 								headers: {
-									'access_token': AUTH_TOKEN,
-									'user_key': USER_KEY,
+									// 'access_token': AUTH_TOKEN,
+									// 'user_key': USER_KEY,
 								}
 							});
 						}
