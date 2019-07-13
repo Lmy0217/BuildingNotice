@@ -1,5 +1,8 @@
 package org.cst.buildingnotice.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cst.buildingnotice.dao.ImageMapper;
 import org.cst.buildingnotice.entity.Image;
 import org.cst.buildingnotice.service.ImageService;
@@ -24,4 +27,9 @@ public class ImageServiceImpl implements ImageService {
 		return imageMapper.selectByPrimaryKey(id);
 	}
 
+	public List<Image> getImagesByIdList(List<Integer> ids) {
+		if (ids == null) return null;
+		if (ids.isEmpty()) new ArrayList<Image>();
+		return imageMapper.selectByIdList(ids);
+	}
 }
