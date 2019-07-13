@@ -136,15 +136,18 @@ mui.back = function(pageId) {
 //将图片压缩并转成base64 
 function getBase64Image(img) {
 	var canvas = document.createElement("canvas");
+	// console.log(img);
+	// var img = document.getElementById('image');
 	var width = img.width;
 	var height = img.height;
+	console.log(width);
 	// calculate the width and height, constraining the proportions 
-	if (width > 1000) {
+	if (width > 500) {
 		height = height / 1.5;
 		width = width / 1.5;
 	}
 
-	if (height > 1000) {
+	if (height > 500) {
 		height = height / 1.5;
 		width = width / 1.5;
 	}
@@ -154,7 +157,9 @@ function getBase64Image(img) {
 	var ctx = canvas.getContext("2d");
 	ctx.drawImage(img, 0, 0, width, height); /*绘图*/
 	var dataURL = canvas.toDataURL("image/png", 1);
-	return dataURL.replace("data:image/png;base64,", "");
+	// console.log(dataURL);
+	return dataURL;
+	// return dataURL.replace("data:image/png;base64,", "");
 }
 
 //将账号与密码保存到Localstore 
@@ -173,3 +178,15 @@ function remPwd() {
 	    localStorage.removeItem("password");
 	}
 }
+
+function dataURLtoBlob(dataurl) {
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
