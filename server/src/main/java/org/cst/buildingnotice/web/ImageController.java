@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/image")
 @Controller
@@ -35,7 +35,7 @@ public class ImageController {
 
 	@RequestMapping(value = "/upload", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> upload(@RequestParam("file") CommonsMultipartFile file, @RequestParam("depict") String depict, 
+	public Map<String, Object> upload(@RequestParam("file") MultipartFile file, @RequestParam("depict") String depict, 
 			HttpServletRequest request, Model model) throws IOException {
 		
 		String uploads_path = request.getServletContext().getRealPath("/uploads/images");
@@ -43,8 +43,7 @@ public class ImageController {
 		
 		File uploads_path_file = new File(uploads_path);
 		if (!uploads_path_file.exists()) {
-			// TODO mkdir false
-			System.out.println(uploads_path_file.mkdir());
+			System.out.println(uploads_path_file.mkdirs());
 		}
 		
 		String file_name = UUID.randomUUID().toString().replace("-", "") + "_" + file.getOriginalFilename();

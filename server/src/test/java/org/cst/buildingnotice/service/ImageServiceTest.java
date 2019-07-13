@@ -15,8 +15,8 @@ public class ImageServiceTest {
 	
 	@Test
 	public void saveTest() {
-		System.out.println(imageService.create("path1", "depict1"));
-		System.out.println(imageService.create("path2", "depict2"));
+		//System.out.println(imageService.create("path1", "depict1"));
+		//System.out.println(imageService.create("path2", "depict2"));
 	}
 
 }
