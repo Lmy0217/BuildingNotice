@@ -62,7 +62,7 @@
 从服务器下载报告压缩包。下载时，请使用 HTTP GET 方式
 #### API地址
 [GET] /archive/download
-#### POST参数 (Json)
+#### GEt参数 (Json)
 |参数|类型|说明|
 |-|-|-|
 |ids|List (Integer)|报告 Id|
