@@ -1,7 +1,6 @@
 package org.cst.buildingnotice.service.impl;
 
 import org.cst.buildingnotice.dao.TypeMapper;
-import org.cst.buildingnotice.entity.Type;
 import org.cst.buildingnotice.entity.TypeWithBLOBs;
 import org.cst.buildingnotice.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class TypeServiceImpl implements TypeService {
 		return typeWithBLOBs.getId();
 	}
 
-	public Type getTypeById(int id) {
+	public TypeWithBLOBs getTypeById(int id) {
 		return typeMapper.selectByPrimaryKey(id);
 	}
 

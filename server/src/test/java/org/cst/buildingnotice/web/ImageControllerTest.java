@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml", "classpath:spring-mvc.xml"})
 @WebAppConfiguration
-@Rollback(value=false)
+@Rollback(value=true)
 @Transactional(transactionManager = "transactionManager")
 public class ImageControllerTest {
 

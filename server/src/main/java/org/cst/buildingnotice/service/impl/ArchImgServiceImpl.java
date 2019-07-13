@@ -1,5 +1,7 @@
 package org.cst.buildingnotice.service.impl;
 
+import java.util.List;
+
 import org.cst.buildingnotice.dao.ArchImgMapper;
 import org.cst.buildingnotice.entity.ArchImg;
 import org.cst.buildingnotice.service.ArchImgService;
@@ -17,5 +19,9 @@ public class ArchImgServiceImpl implements ArchImgService {
 		archImg.setArchid(archid);
 		archImg.setImgid(imgid);
 		return archImgMapper.insertSelective(archImg);
+	}
+
+	public List<Integer> getImgsByArchid(int archid) {
+		return archImgMapper.selectByArchid(archid);
 	}
 }

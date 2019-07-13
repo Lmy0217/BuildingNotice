@@ -1,5 +1,7 @@
 package org.cst.buildingnotice.dao;
 
+import java.util.List;
+
 import org.cst.buildingnotice.entity.Image;
 
 public interface ImageMapper {
@@ -14,4 +16,6 @@ public interface ImageMapper {
     int updateByPrimaryKeySelective(Image record);
 
     int updateByPrimaryKey(Image record);
+    
+    List<Image> selectByIdList(List<Integer> ids);
 }
