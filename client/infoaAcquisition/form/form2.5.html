@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>砖混结构</title>
+		<title>木结构</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
@@ -47,17 +47,16 @@
 		<script src="../js/util.js"></script>
 		<script>
 			mui.init();
-			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			
-			mui.plusReady(function() {
-				var tmp = plus.webview.currentWebview();
-				var form_per = chuliForm(tmp);
-				document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
-				console.log(JSON.stringify(form_per));
-				document.getElementById('goBack').addEventListener("tap", function() {
-					mui.back('form1');
-				})
-			});
+	// 扩展API是否准备好，如果没有则监听“plusready"事件  
+
+	mui.plusReady(function() {
+		var tmp = plus.webview.currentWebview();
+		var form_per = chuliForm(tmp);
+		document.getElementById("div1").innerText = '户主：' + JSON.stringify(tmp.hold);
+		console.log(JSON.stringify(form_per));
+		document.getElementById('goBack').addEventListener("tap", function() {
+			mui.back('form1');
+	});
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<a id="goBack" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -92,12 +91,46 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5>1）建筑物上部主体结构为砖混结构，砖墙下为砖砌条形基础；</h5>
+						<h5>建筑物主体为砖木结构，木柱下为石柱脚</h5>
 					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>房屋四面均为木墙</label>
+					<input name="type21" value="1" type="checkbox" checked>
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">
-						<h5>2）房屋主要以砖墙和楼面板承重，楼面板为现浇钢筋混凝土板。</h5>
+						<h5>，房屋主要以</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木柱</label>
+					<input name="type22" value="1" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>木屋架</label>
+					<input name="type22" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>木檩条</label>
+					<input name="type22" value="3" type="checkbox">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>承重，楼面为</h5>
+					</label>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁和木楼板</label>
+					<input name="type23" type="radio" value="1" checked="">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>木梁无楼板</label>
+					<input name="type23" type="radio" value="2">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5>屋面为木檩条挂小青瓦。</h5>
 					</label>
 				</div>
 			</form>
@@ -108,6 +141,11 @@
 				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
 				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back('form1')">上一步</button>
 			</div>
+
+			<script type="text/javascript">
+				mui.init()
+			</script>
+
 	</body>
 
 </html>
