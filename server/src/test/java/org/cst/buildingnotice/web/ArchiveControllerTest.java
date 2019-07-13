@@ -56,15 +56,16 @@ public class ArchiveControllerTest {
 		requestBodyJSON.put("holdid", "36010518450296756x");
 		requestBodyJSON.put("attr", "住宅");
 		requestBodyJSON.put("layer", 1);
-		requestBodyJSON.put("createyear", 1995);
-		requestBodyJSON.put("typeid", 1);
+		requestBodyJSON.put("createyear", "1995-02-07");
+		requestBodyJSON.put("typeid", 2);
+		requestBodyJSON.put("body2", "2;150101");
+		requestBodyJSON.put("body3", "2;151501150101070103");
+		requestBodyJSON.put("remark", "砖木结构");
 		
 		List<Integer> imgs = Arrays.asList(1, 2);
 		requestBodyJSON.put("imgs", imgs);
 		List<Integer> damage = Arrays.asList(10, 5, 9, 2, 7, 0, 16, 2, 13, 1, 23, 2, 5, 2, 7, 1, 6, 1);
 		requestBodyJSON.put("damage", damage);
-		List<Integer> type = Arrays.asList(11, 11, 111, 11);
-		requestBodyJSON.put("type", type);
 		
 //	    mockMvc.perform(MockMvcRequestBuilders.post("/archive/create")
 //	            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
