@@ -8,46 +8,46 @@ import com.alibaba.fastjson.JSONObject;
 
 public class Template {
 
-	public static String render(JSONObject template, List<Integer> data, 
-			int idx) {
-		
-		int mode = template.getInteger("m");
-		if (mode != 1 && mode != 2) return template.getString("d");
-		
-		StringBuilder stringBuilder = new StringBuilder();
-		JSONArray patch = template.getJSONArray("d");
-		String separator = template.getString("s");
-		String eof = template.getString("e");
-		
-		for (int i = 0; i < patch.size(); i++) {
-			JSONObject jsonPatch = patch.getJSONObject(i);
-			switch (mode) {
-			case 1:
-				stringBuilder.append(render(jsonPatch, data, idx));
-				break;
-			case 2:
-				if ((data.get(i) & (1 << i)) == 1) {
-					stringBuilder.append(render(jsonPatch, data, idx + 1));
-				}
-				break;
-			}
-			if (i < patch.size() - 1) stringBuilder.append(separator);
-			else if (i == patch.size() - 1) stringBuilder.append(eof);
-		}
-		
-		return stringBuilder.toString();
-	}
-	
-	public static String render(JSONObject template, List<Integer> data) {
-		
-		return render(template, data, 0);
-	}
-	
-	public static String render(String template, String data) {
-		
-		return render(JSONObject.parseObject(template), 
-				JSONArray.parseArray(data).toJavaList(Integer.class));
-	}
+//	public static String render(JSONObject template, List<Integer> data, 
+//			int idx) {
+//		
+//		int mode = template.getInteger("m");
+//		if (mode != 1 && mode != 2) return template.getString("d");
+//		
+//		StringBuilder stringBuilder = new StringBuilder();
+//		JSONArray patch = template.getJSONArray("d");
+//		String separator = template.getString("s");
+//		String eof = template.getString("e");
+//		
+//		for (int i = 0; i < patch.size(); i++) {
+//			JSONObject jsonPatch = patch.getJSONObject(i);
+//			switch (mode) {
+//			case 1:
+//				stringBuilder.append(render(jsonPatch, data, idx));
+//				break;
+//			case 2:
+//				if ((data.get(i) & (1 << i)) == 1) {
+//					stringBuilder.append(render(jsonPatch, data, idx + 1));
+//				}
+//				break;
+//			}
+//			if (i < patch.size() - 1) stringBuilder.append(separator);
+//			else if (i == patch.size() - 1) stringBuilder.append(eof);
+//		}
+//		
+//		return stringBuilder.toString();
+//	}
+//	
+//	public static String render(JSONObject template, List<Integer> data) {
+//		
+//		return render(template, data, 0);
+//	}
+//	
+//	public static String render(String template, String data) {
+//		
+//		return render(JSONObject.parseObject(template), 
+//				JSONArray.parseArray(data).toJavaList(Integer.class));
+//	}
 	
 	public static String simpleRender(String template, String data) {
 		
