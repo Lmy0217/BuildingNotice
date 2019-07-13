@@ -156,3 +156,20 @@ function getBase64Image(img) {
 	var dataURL = canvas.toDataURL("image/png", 1);
 	return dataURL.replace("data:image/png;base64,", "");
 }
+
+//将账号与密码保存到Localstore 
+function remPwd() {
+	var autoLoginButton = document.getElementById("autoLogin");
+	var accountBox = document.getElementById('account');
+	var passwordBox = document.getElementById('password');
+	gender=autoLoginButton.classList.contains('mui-active');
+	console.log(gender)//ture/false
+	
+	if(gender==true){
+	    localStorage.setItem("account", accountBox.value);
+		localStorage.setItem("password", passwordBox.value);
+	}else{
+	    localStorage.removeItem("account");
+	    localStorage.removeItem("password");
+	}
+}
