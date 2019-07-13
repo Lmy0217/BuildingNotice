@@ -4,17 +4,18 @@
   <resultMap id="BaseResultMap" type="org.cst.buildingnotice.entity.Type">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="tabel" jdbcType="VARCHAR" property="tabel" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.cst.buildingnotice.entity.TypeWithBLOBs">
+    <result column="body1" jdbcType="LONGVARCHAR" property="body1" />
     <result column="body2" jdbcType="LONGVARCHAR" property="body2" />
     <result column="body3" jdbcType="LONGVARCHAR" property="body3" />
+    <result column="advise" jdbcType="LONGVARCHAR" property="advise" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, tabel
+    id, name
   </sql>
   <sql id="Blob_Column_List">
-    body2, body3
+    body1, body2, body3, advise
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -29,10 +30,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
-    insert into type (id, name, tabel, 
-      body2, body3)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{tabel,jdbcType=VARCHAR}, 
-      #{body2,jdbcType=LONGVARCHAR}, #{body3,jdbcType=LONGVARCHAR})
+    insert into type (id, name, body1, 
+      body2, body3, advise
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{body1,jdbcType=LONGVARCHAR}, 
+      #{body2,jdbcType=LONGVARCHAR}, #{body3,jdbcType=LONGVARCHAR}, #{advise,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
     insert into type
@@ -43,14 +46,17 @@
       <if test="name != null">
         name,
       </if>
-      <if test="tabel != null">
-        tabel,
+      <if test="body1 != null">
+        body1,
       </if>
       <if test="body2 != null">
         body2,
       </if>
       <if test="body3 != null">
         body3,
+      </if>
+      <if test="advise != null">
+        advise,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -60,14 +66,17 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="tabel != null">
-        #{tabel,jdbcType=VARCHAR},
+      <if test="body1 != null">
+        #{body1,jdbcType=LONGVARCHAR},
       </if>
       <if test="body2 != null">
         #{body2,jdbcType=LONGVARCHAR},
       </if>
       <if test="body3 != null">
         #{body3,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="advise != null">
+        #{advise,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -77,8 +86,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="tabel != null">
-        tabel = #{tabel,jdbcType=VARCHAR},
+      <if test="body1 != null">
+        body1 = #{body1,jdbcType=LONGVARCHAR},
       </if>
       <if test="body2 != null">
         body2 = #{body2,jdbcType=LONGVARCHAR},
@@ -86,21 +95,24 @@
       <if test="body3 != null">
         body3 = #{body3,jdbcType=LONGVARCHAR},
       </if>
+      <if test="advise != null">
+        advise = #{advise,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.cst.buildingnotice.entity.TypeWithBLOBs">
     update type
     set name = #{name,jdbcType=VARCHAR},
-      tabel = #{tabel,jdbcType=VARCHAR},
+      body1 = #{body1,jdbcType=LONGVARCHAR},
       body2 = #{body2,jdbcType=LONGVARCHAR},
-      body3 = #{body3,jdbcType=LONGVARCHAR}
+      body3 = #{body3,jdbcType=LONGVARCHAR},
+      advise = #{advise,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Type">
     update type
-    set name = #{name,jdbcType=VARCHAR},
-      tabel = #{tabel,jdbcType=VARCHAR}
+    set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

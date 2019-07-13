@@ -9,6 +9,8 @@ public class User {
 
     private String token;
 
+    private String device;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token == null ? null : token.trim();
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device == null ? null : device.trim();
     }
 }

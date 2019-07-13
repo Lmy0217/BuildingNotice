@@ -25,11 +25,11 @@ public class Archive {
 
     private Integer typeid;
 
-    private Date identitytime;
-
     private Integer rankid;
 
     private Double rankratio;
+
+    private Date identitytime;
 
     private Integer userid;
 
@@ -121,14 +121,6 @@ public class Archive {
         this.typeid = typeid;
     }
 
-    public Date getIdentitytime() {
-        return identitytime;
-    }
-
-    public void setIdentitytime(Date identitytime) {
-        this.identitytime = identitytime;
-    }
-
     public Integer getRankid() {
         return rankid;
     }
@@ -143,6 +135,14 @@ public class Archive {
 
     public void setRankratio(Double rankratio) {
         this.rankratio = rankratio;
+    }
+
+    public Date getIdentitytime() {
+        return identitytime;
+    }
+
+    public void setIdentitytime(Date identitytime) {
+        this.identitytime = identitytime;
     }
 
     public Integer getUserid() {

@@ -5,8 +5,6 @@ public class Type {
 
     private String name;
 
-    private String tabel;
-
     public Integer getId() {
         return id;
     }
@@ -21,13 +19,5 @@ public class Type {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public String getTabel() {
-        return tabel;
-    }
-
-    public void setTabel(String tabel) {
-        this.tabel = tabel == null ? null : tabel.trim();
     }
 }

@@ -1,6 +1,6 @@
 package org.cst.buildingnotice.entity;
 
-public class TypeWithBLOBs extends Type {
+public class ArchiveWithBLOBs extends Archive {
     private String body1;
 
     private String body2;
@@ -8,6 +8,8 @@ public class TypeWithBLOBs extends Type {
     private String body3;
 
     private String advise;
+
+    private String remark;
 
     public String getBody1() {
         return body1;
@@ -39,5 +41,13 @@ public class TypeWithBLOBs extends Type {
 
     public void setAdvise(String advise) {
         this.advise = advise == null ? null : advise.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

@@ -13,18 +13,30 @@
     <result column="layer" jdbcType="INTEGER" property="layer" />
     <result column="createyear" jdbcType="TIMESTAMP" property="createyear" />
     <result column="typeid" jdbcType="INTEGER" property="typeid" />
-    <result column="identitytime" jdbcType="TIMESTAMP" property="identitytime" />
     <result column="rankid" jdbcType="INTEGER" property="rankid" />
     <result column="rankratio" jdbcType="DOUBLE" property="rankratio" />
+    <result column="identitytime" jdbcType="TIMESTAMP" property="identitytime" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
+    <result column="body1" jdbcType="LONGVARCHAR" property="body1" />
+    <result column="body2" jdbcType="LONGVARCHAR" property="body2" />
+    <result column="body3" jdbcType="LONGVARCHAR" property="body3" />
+    <result column="advise" jdbcType="LONGVARCHAR" property="advise" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, unit, phone, material, addr, hold, holdid, attr, layer, createyear, typeid, identitytime, 
-    rankid, rankratio, userid
+    id, unit, phone, material, addr, hold, holdid, attr, layer, createyear, typeid, rankid, 
+    rankratio, identitytime, userid
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    body1, body2, body3, advise, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from archive
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -32,21 +44,23 @@
     delete from archive
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.cst.buildingnotice.entity.Archive">
+  <insert id="insert" parameterType="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
     insert into archive (id, unit, phone, 
       material, addr, hold, 
       holdid, attr, layer, 
-      createyear, typeid, identitytime, 
-      rankid, rankratio, userid
-      )
+      createyear, typeid, rankid, 
+      rankratio, identitytime, userid, 
+      body1, body2, body3, 
+      advise, remark)
     values (#{id,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{material,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{hold,jdbcType=VARCHAR}, 
       #{holdid,jdbcType=VARCHAR}, #{attr,jdbcType=VARCHAR}, #{layer,jdbcType=INTEGER}, 
-      #{createyear,jdbcType=TIMESTAMP}, #{typeid,jdbcType=INTEGER}, #{identitytime,jdbcType=TIMESTAMP}, 
-      #{rankid,jdbcType=INTEGER}, #{rankratio,jdbcType=DOUBLE}, #{userid,jdbcType=INTEGER}
-      )
+      #{createyear,jdbcType=TIMESTAMP}, #{typeid,jdbcType=INTEGER}, #{rankid,jdbcType=INTEGER}, 
+      #{rankratio,jdbcType=DOUBLE}, #{identitytime,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, 
+      #{body1,jdbcType=LONGVARCHAR}, #{body2,jdbcType=LONGVARCHAR}, #{body3,jdbcType=LONGVARCHAR}, 
+      #{advise,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.Archive">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
     insert into archive
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -82,17 +96,32 @@
       <if test="typeid != null">
         typeid,
       </if>
-      <if test="identitytime != null">
-        identitytime,
-      </if>
       <if test="rankid != null">
         rankid,
       </if>
       <if test="rankratio != null">
         rankratio,
       </if>
+      <if test="identitytime != null">
+        identitytime,
+      </if>
       <if test="userid != null">
         userid,
+      </if>
+      <if test="body1 != null">
+        body1,
+      </if>
+      <if test="body2 != null">
+        body2,
+      </if>
+      <if test="body3 != null">
+        body3,
+      </if>
+      <if test="advise != null">
+        advise,
+      </if>
+      <if test="remark != null">
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -129,21 +158,36 @@
       <if test="typeid != null">
         #{typeid,jdbcType=INTEGER},
       </if>
-      <if test="identitytime != null">
-        #{identitytime,jdbcType=TIMESTAMP},
-      </if>
       <if test="rankid != null">
         #{rankid,jdbcType=INTEGER},
       </if>
       <if test="rankratio != null">
         #{rankratio,jdbcType=DOUBLE},
       </if>
+      <if test="identitytime != null">
+        #{identitytime,jdbcType=TIMESTAMP},
+      </if>
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
+      <if test="body1 != null">
+        #{body1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body2 != null">
+        #{body2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body3 != null">
+        #{body3,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="advise != null">
+        #{advise,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.Archive">
+  <update id="updateByPrimaryKeySelective" parameterType="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
     update archive
     <set>
       <if test="unit != null">
@@ -176,19 +220,57 @@
       <if test="typeid != null">
         typeid = #{typeid,jdbcType=INTEGER},
       </if>
-      <if test="identitytime != null">
-        identitytime = #{identitytime,jdbcType=TIMESTAMP},
-      </if>
       <if test="rankid != null">
         rankid = #{rankid,jdbcType=INTEGER},
       </if>
       <if test="rankratio != null">
         rankratio = #{rankratio,jdbcType=DOUBLE},
       </if>
+      <if test="identitytime != null">
+        identitytime = #{identitytime,jdbcType=TIMESTAMP},
+      </if>
       <if test="userid != null">
         userid = #{userid,jdbcType=INTEGER},
       </if>
+      <if test="body1 != null">
+        body1 = #{body1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body2 != null">
+        body2 = #{body2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body3 != null">
+        body3 = #{body3,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="advise != null">
+        advise = #{advise,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
+    update archive
+    set unit = #{unit,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      hold = #{hold,jdbcType=VARCHAR},
+      holdid = #{holdid,jdbcType=VARCHAR},
+      attr = #{attr,jdbcType=VARCHAR},
+      layer = #{layer,jdbcType=INTEGER},
+      createyear = #{createyear,jdbcType=TIMESTAMP},
+      typeid = #{typeid,jdbcType=INTEGER},
+      rankid = #{rankid,jdbcType=INTEGER},
+      rankratio = #{rankratio,jdbcType=DOUBLE},
+      identitytime = #{identitytime,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=INTEGER},
+      body1 = #{body1,jdbcType=LONGVARCHAR},
+      body2 = #{body2,jdbcType=LONGVARCHAR},
+      body3 = #{body3,jdbcType=LONGVARCHAR},
+      advise = #{advise,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.cst.buildingnotice.entity.Archive">
@@ -203,9 +285,9 @@
       layer = #{layer,jdbcType=INTEGER},
       createyear = #{createyear,jdbcType=TIMESTAMP},
       typeid = #{typeid,jdbcType=INTEGER},
-      identitytime = #{identitytime,jdbcType=TIMESTAMP},
       rankid = #{rankid,jdbcType=INTEGER},
       rankratio = #{rankratio,jdbcType=DOUBLE},
+      identitytime = #{identitytime,jdbcType=TIMESTAMP},
       userid = #{userid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

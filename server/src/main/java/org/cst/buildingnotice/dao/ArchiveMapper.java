@@ -1,17 +1,20 @@
 package org.cst.buildingnotice.dao;
 
 import org.cst.buildingnotice.entity.Archive;
+import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 
 public interface ArchiveMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Archive record);
+    int insert(ArchiveWithBLOBs record);
 
-    int insertSelective(Archive record);
+    int insertSelective(ArchiveWithBLOBs record);
 
-    Archive selectByPrimaryKey(Integer id);
+    ArchiveWithBLOBs selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Archive record);
+    int updateByPrimaryKeySelective(ArchiveWithBLOBs record);
+
+    int updateByPrimaryKeyWithBLOBs(ArchiveWithBLOBs record);
 
     int updateByPrimaryKey(Archive record);
 }

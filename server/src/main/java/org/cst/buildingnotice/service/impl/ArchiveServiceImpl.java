@@ -3,39 +3,45 @@ package org.cst.buildingnotice.service.impl;
 import java.util.Date;
 
 import org.cst.buildingnotice.dao.ArchiveMapper;
-import org.cst.buildingnotice.entity.Archive;
+import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 import org.cst.buildingnotice.service.ArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("ArchiveService")
 public class ArchiveServiceImpl implements ArchiveService {
-	
+
 	@Autowired
 	private ArchiveMapper archiveMapper;
 
 	public int create(String unit, String phone, String material, String addr, String hold, String holdid, String attr,
-			int layer, Date createyear, int typeid, Date identitytime, int rankid, double rankratio, int userid) {
-		Archive archive = new Archive();
-		archive.setUnit(unit);
-		archive.setPhone(phone != null ? phone : "");
-		archive.setMaterial(material != null ? material : "");
-		archive.setAddr(addr);
-		archive.setHold(hold);
-		archive.setHoldid(holdid);
-		archive.setAttr(attr);
-		archive.setLayer(layer);
-		archive.setCreateyear(createyear);
-		archive.setTypeid(typeid);
-		archive.setIdentitytime(identitytime);
-		archive.setRankid(rankid);
-		archive.setRankratio(rankratio);
-		archive.setUserid(userid);
-		archiveMapper.insertSelective(archive);
-		return archive.getId();
+			Integer layer, Date createyear, int typeid, String body1, String body2, String body3, int rankid,
+			double rankratio, String advise, Date identitytime, String remark, int userid) {
+		ArchiveWithBLOBs archiveWithBLOBs = new ArchiveWithBLOBs();
+		archiveWithBLOBs.setUnit(unit != null ? unit : "");
+		archiveWithBLOBs.setPhone(phone != null ? phone : "");
+		archiveWithBLOBs.setMaterial(material != null ? material : "");
+		archiveWithBLOBs.setAddr(addr != null ? addr : "");
+		archiveWithBLOBs.setHold(hold != null ? hold : "");
+		archiveWithBLOBs.setHoldid(holdid != null ? holdid : "");
+		archiveWithBLOBs.setAttr(attr != null ? attr : "");
+		archiveWithBLOBs.setLayer(layer);
+		archiveWithBLOBs.setCreateyear(createyear);
+		archiveWithBLOBs.setTypeid(typeid);
+		archiveWithBLOBs.setBody1(body1 != null ? body1 : "");
+		archiveWithBLOBs.setBody2(body2 != null ? body2 : "");
+		archiveWithBLOBs.setBody3(body3 != null ? body3 : "");
+		archiveWithBLOBs.setRankid(rankid);
+		archiveWithBLOBs.setRankratio(rankratio);
+		archiveWithBLOBs.setAdvise(advise != null ? advise : "");
+		archiveWithBLOBs.setIdentitytime(identitytime);
+		archiveWithBLOBs.setRemark(remark != null ? remark : "");
+		archiveWithBLOBs.setUserid(userid);
+		archiveMapper.insertSelective(archiveWithBLOBs);
+		return archiveWithBLOBs.getId();
 	}
 
-	public Archive getArchiveById(Integer id) {
+	public ArchiveWithBLOBs getArchiveById(Integer id) {
 		return archiveMapper.selectByPrimaryKey(id);
 	}
 }
