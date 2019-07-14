@@ -167,26 +167,32 @@ function remPwd() {
 	var autoLoginButton = document.getElementById("autoLogin");
 	var accountBox = document.getElementById('account');
 	var passwordBox = document.getElementById('password');
-	gender=autoLoginButton.classList.contains('mui-active');
-	console.log(gender)//ture/false
-	
-	if(gender==true){
-	    localStorage.setItem("account", accountBox.value);
+	gender = autoLoginButton.classList.contains('mui-active');
+	console.log(gender) //ture/false
+
+	if (gender == true) {
+		localStorage.setItem("account", accountBox.value);
 		localStorage.setItem("password", passwordBox.value);
-	}else{
-	    localStorage.removeItem("account");
-	    localStorage.removeItem("password");
+	} else {
+		localStorage.removeItem("account");
+		localStorage.removeItem("password");
 	}
 }
 
 function dataURLtoBlob(dataurl) {
-        var arr = dataurl.split(','),
-            mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]),
-            n = bstr.length,
-            u8arr = new Uint8Array(n);
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new Blob([u8arr], { type: mime });
-    }
+	var arr = dataurl.split(','),
+		mime = arr[0].match(/:(.*?);/)[1],
+		bstr = atob(arr[1]),
+		n = bstr.length,
+		u8arr = new Uint8Array(n);
+	while (n--) {
+		u8arr[n] = bstr.charCodeAt(n);
+	}
+	return new Blob([u8arr], {
+		type: mime
+	});
+}
+
+function fixInteger(num, n) {
+	return (Array(n).join(0) + num).slice(-n);
+}

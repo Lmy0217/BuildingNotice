@@ -44,7 +44,7 @@ function w_insertSQL(jsonInfo) {
 	// console.log(damage);
 	typeb = zhenliType(jsonInfo);
 	// alert('typeb!');
-	// console.log(type);
+	console.log(typeb);
 	typec = zhenliQuestion(jsonInfo);
 	// console.log(question);
 	// insertSQL(tableName,creatImage)
@@ -103,6 +103,7 @@ function w_insertSQL(jsonInfo) {
 	// insertSQL(tableName, creatMain, sqlStr);
 	console.log(creatMain);
 	console.log(sqlStr);
+	alert('zuzhi!');
 	plus.sqlite.executeSql({
 		name: 'info',
 		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
@@ -116,7 +117,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					mui.back();
+					// mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -234,21 +235,22 @@ function openNext(formNow, formNext) {
 }
 
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
-function changeChild(father, child1, child2) {
-	var father_str = "input[type=checkbox][name="+ father + "]";
+function changeChild2(father, child1, child2) {
+	var father_str = "input[type=checkbox][name=" + father + "]";
 	var child_str1 = "input[type=radio][name=" + child1 + "]";
 	// var child_str2 = "input[type=checkbox][name=" + child2 + "]";
-	var child2=document.getElementsByName(child2);
-	console.log(child2);
+	var child2 = document.getElementsByName(child2);
+	// console.log(child2);
 	// console.log($(child2));
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
 			for (i = 0; i < $(child_str1).length; i++) {
-					$(child_str1)[i].disabled = "";
+				$(child_str1)[i].disabled = "";
 			}
+			$(child_str1)[0].checked = "checked";
 			for (i = 0; i < child2.length; i++) {
-					child2[i].disabled = "";
+				child2[i].disabled = "";
 			}
 		} else {
 			// alert("未启用"); 
@@ -257,7 +259,7 @@ function changeChild(father, child1, child2) {
 				$(child_str1)[i].disabled = "disabled";
 				$(child_str1)[i].checked = "";
 			}
-			for (i = 0; i <child2.length; i++) {
+			for (i = 0; i < child2.length; i++) {
 				child2[i].disabled = "disabled";
 				child2[i].checked = "";
 			}
@@ -265,9 +267,9 @@ function changeChild(father, child1, child2) {
 	});
 }
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
-function changeChild2(father, child) {
+function changeChild(father, child) {
 	var father_str = 'input[type=checkbox][name=' + father + ']';
-	var child_str = 'input[type=checkbox][name=' + child + ']';
+	var child_str = 'input[type=radio][name=' + child + ']';
 	// console.log(child);
 	$(father_str).change(function() {
 		if (this.checked) {
@@ -275,6 +277,7 @@ function changeChild2(father, child) {
 			for (i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "";
 			}
+			$(child_str)[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
 			$(child_str).disabled = "disabled";
@@ -288,47 +291,29 @@ function changeChild2(father, child) {
 
 //整理form3 
 function zhenliQuestion(jsonInfo) {
-	queArr = new Array(16);
-	queArr = initArr(queArr, 0);
-	for (i = 0; i < 16; i++) {
-		var keySrc = "type31" + i;
-		if (jsonInfo.hasOwnProperty(keySrc)) {
-			queArr[i] = jsonInfo[keySrc];
-		} else {
-			queArr[i] = 0;
-		}
-	}
-	return queArr;
-}
-
-//整理form2
-function zhenliType(jsonInfo) {
+	console.log(jsonInfo);
+	var lenq = 2;
+	alert('pause!');
+	var key = 'type3'
+	var result = '';
 	if (jsonInfo.type == 1) {
-		// 砖木结构
-		var typeArr = new Array(6);
-		typeArr = initArr(typeArr, 0);
-		var flag = 0;
-		for (i = 0; i < 3; i++) {
-			var keySrc = "type21" + i;
-			if (jsonInfo.hasOwnProperty(keySrc)) {
-				var temp = jsonInfo[keySrc];
-			} else {
-				var temp = NaN;
-			}
-			if (i == 1) {
-				for (j = 0; j < temp.length; j++) {
-					if (typeof(temp) != "NaN") {
-						typeArr[parseInt(flag) + parseInt(temp) - 1] = 1;
-					}
-				}
-				flag = flag + 4;
-			} else {
-				// console.log(flag+','+temp);
-				typeArr[flag] = temp;
-				flag = flag + 1;
-			}
+		// 砖木结构		
+		var head = ''
+		head = creatHead(key, 4, jsonInfo)
+		if (head[0] == 1) {
+			result = result + fixInteger(jsonInfo.type311, lenq);
+		} else if (head[1] == 1) {
+			result = result + fixInteger(jsonInfo.type321, lenq);
+			var type322=creatHead('type321', 4, jsonInfo);
 		}
-		return typeArr;
+		// ---------------
+		for (i = 0; i < jsonInfo.type31.length - 1; i++) {
+			result = result + jsonInfo.type21[0] + "、"
+		}
+		result = result + jsonInfo.type21.length[0];
+		// ---------------
+		result = result + jsonInfo.type22
+		return result;
 	} else if (jsonInfo.type == 2) {
 
 	} else if (jsonInfo.type == 3) {
@@ -336,6 +321,75 @@ function zhenliType(jsonInfo) {
 	}
 }
 
+//整理form2
+function zhenliType(jsonInfo) {
+	console.log(jsonInfo);
+	alert('pause!');
+	var key = 'type2'
+	var result = '';
+	console.log(jsonInfo.type21);
+	if (jsonInfo.type == 1) {
+		// 砖木结构	
+		// ---------------
+		var type21=creatHead2('type21',4,jsonInfo)
+		var type21_x=parseInt(type21.join(''),2);
+		console.log(type21_x)
+		// ---------------
+		result = type21_x +''+jsonInfo.type22
+		return result;
+	} else if (jsonInfo.type == 2) {
+
+	} else if (jsonInfo.type == 3) {
+
+	}
+}
+
+// 
+function creatHead2(key, len, jsonInfo) {
+	var head = new Array(len);
+	for (i = 0; i <= jsonInfo[key].length; i++) {
+		if(typeof(jsonInfo[key][i])=='underfind'){
+			head[i]=0;
+		}else{
+			head[i]=1;
+		}
+	}
+	console.log(head);
+	// head=parseInt(head,2);
+	// console.log(head);
+	return head;
+}
+
+function creatHead(key, len, jsonInfo) {
+	var head = new Array(len);
+	for (i = 1; i <= len; i++) {
+		var keyName = key + i;
+		if (jsonInfo.hasOwnProperty(keyName)) {
+			head[len - i] = 1;
+		} else {
+			head[len - i] = 0;
+		}
+	}
+	console.log(head);
+	// head=parseInt(head,2);
+	// console.log(head);
+	return head;
+}
+
+//规则化
+function regularization(len, head, type) {
+	var typeArr = new Array(len);
+	typeArr = initArr(typeArr, 0);
+	for (i = 0; i < len; i++) {
+		var keySrc = type + i;
+		if (jsonInfo.hasOwnProperty(keySrc)) {
+			queArr[i] = jsonInfo[keySrc];
+		} else {
+			queArr[i] = 0;
+		}
+	}
+
+}
 // 补全json字段，补全缺少的photo字段
 function zhenliPhoto(jsonInfo) {
 	for (i = 1; i <= 4; i++) {
