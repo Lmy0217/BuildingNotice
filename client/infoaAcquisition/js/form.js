@@ -37,19 +37,19 @@ function submitFrom() {
 // 执行SQL语句，这里要弄三个表
 function w_insertSQL(jsonInfo) {
 	var douhao = "','"
-	console.log(douhao);
+	console.log(jsonInfo);
 	//------------------------
 	jsonInfo = zhenliPhoto(jsonInfo);
-	watchJSON(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
 	// console.log(damage);
 	typeb = zhenliType(jsonInfo);
+	alert('pause!');
 	// console.log(type);
 	typec = zhenliQuestion(jsonInfo);
 	// console.log(question);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
-	creatMain = "create table if not exists "+tableName+"(" +
+	creatMain = "create table if not exists " + tableName + "(" +
 		"'unit'	text," +
 		"'phone'	int(11)," +
 		"'material'	text ," +
@@ -69,7 +69,7 @@ function w_insertSQL(jsonInfo) {
 		"'photoSrc4'	text," +
 		"'photoDes4'	text," +
 		"'damage'	text," +
-		"'typea'	text,"+
+		"'typea'	text," +
 		"'typeb'	text," +
 		"'typec'	text," +
 		"'remark'	text," +
@@ -94,7 +94,7 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.photoSrc4 + "','" +
 		jsonInfo.photoDes4 + "','" +
 		damage.toString() + "','" +
-		""+"','" +
+		"" + "','" +
 		typeb.toString() + "','" +
 		typec.toString() + "','" +
 		jsonInfo.remark + "'," +
@@ -135,7 +135,7 @@ function w_insertSQL(jsonInfo) {
 	// }else{
 	// 	
 	// }
-	
+
 }
 
 // 执行SQL语句，这里要弄三个表
@@ -234,29 +234,32 @@ function openNext(formNow, formNext) {
 }
 
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
-function changeChild(father, child) {
-	var father_str = 'input[type=checkbox][name=' + father + ']';
-	var child_str = 'input[type=radio][name=' + child + ']';
-
+function changeChild(father, child1, child2) {
+	var father_str = "input[type=checkbox][name="+ father + "]";
+	var child_str1 = "input[type=radio][name=" + child1 + "]";
+	// var child_str2 = "input[type=checkbox][name=" + child2 + "]";
+	var child2=document.getElementsByName(child2);
+	console.log(child2);
+	// console.log($(child2));
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; i < $(child_str).length; i++) {
-				try {
-					$(child_str)[i].disabled = "";
-				} catch (err) {
-					console.log(child_str);
-					console.log(i);
-					$(child_str)[i].disabled = "";
-				}
-
+			for (i = 0; i < $(child_str1).length; i++) {
+					$(child_str1)[i].disabled = "";
+			}
+			for (i = 0; i < child2.length; i++) {
+					child2[i].disabled = "";
 			}
 		} else {
 			// alert("未启用"); 
-			$(child_str).disabled = "disabled";
-			for (i = 0; i < $(child_str).length; i++) {
-				$(child_str)[i].disabled = "disabled";
-				$(child_str)[i].checked = "";
+			// $(child_str1).disabled = "disabled";
+			for (i = 0; i < $(child_str1).length; i++) {
+				$(child_str1)[i].disabled = "disabled";
+				$(child_str1)[i].checked = "";
+			}
+			for (i = 0; i <child2.length; i++) {
+				child2[i].disabled = "disabled";
+				child2[i].checked = "";
 			}
 		}
 	});
@@ -303,7 +306,7 @@ function zhenliType(jsonInfo) {
 	if (jsonInfo.type == 1) {
 		// 砖木结构
 		var typeArr = new Array(6);
-		typeArr = initArr(typeArr, 0);		
+		typeArr = initArr(typeArr, 0);
 		var flag = 0;
 		for (i = 0; i < 3; i++) {
 			var keySrc = "type21" + i;
@@ -315,10 +318,10 @@ function zhenliType(jsonInfo) {
 			if (i == 1) {
 				for (j = 0; j < temp.length; j++) {
 					if (typeof(temp) != "NaN") {
-						typeArr[parseInt(flag) + parseInt(temp)-1] = 1;
+						typeArr[parseInt(flag) + parseInt(temp) - 1] = 1;
 					}
 				}
-				flag=flag+4;
+				flag = flag + 4;
 			} else {
 				// console.log(flag+','+temp);
 				typeArr[flag] = temp;

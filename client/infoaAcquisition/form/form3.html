@@ -54,7 +54,7 @@
 		console.log(JSON.stringify(form_per));		
 		var mubiao='form2.'+form_per.type;
 		document.getElementById('goBack').addEventListener("tap", function() {
-			mui.back(mubiao);
+			mui.back(mubiao);})
 		//给选中的li增加判别class
 		$(".list li").on("tap",".imageup",function(){
 		// alert('11');
@@ -64,15 +64,11 @@
 		$li.siblings().removeClass("selectLi");              
 		 page.imgUp();
 		 })
+		changeChild('type32','type33','type34[]');
+		changeChild('type36','type37','type38[]');
+		changeChild('type39','type310','type311[]');
+		changeChild('type312','type313','type314[]');
 		
-		changeChild('type31','type32');
-		changeChild('type33','type34[]');
-		changeChild('type35','type36');
-		changeChild('type37','type38[]');
-		changeChild2('type311[]','type312');
-		changeChild('type313','type314[]');
-		changeChild('type315','type316');
-		 
 	});
 		
 	
@@ -161,8 +157,8 @@
 				<div class="mui-input-row mui-radio mui-left ">
 					<label>严重破损</label>
 					<input name="type35" value="3" type="radio">
-				</div>				
-				
+				</div>
+
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>3. 存在开裂现象</label>
 					<input name="type36" value="1" type="checkbox">
@@ -194,7 +190,7 @@
 					<label>木檩条</label>
 					<input name="type38[]" type="checkbox" value="4" disabled="disabled">
 				</div>
-				
+
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>4. 存在腐蚀现象</label>
 					<input name="type39" value="1" type="checkbox">
@@ -216,7 +212,7 @@
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木柱/label>
-					<input name="type311[]" type="checkbox" value="2" disabled="disabled">
+						<input name="type311[]" type="checkbox" value="2" disabled="disabled">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木屋架</label>
@@ -226,7 +222,7 @@
 					<label>木檩条</label>
 					<input name="type311[]" type="checkbox" value="4" disabled="disabled">
 				</div>
-				
+
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>5. 柱脚存在问题</label>
 					<input name="type312" value="1" type="checkbox">
@@ -251,7 +247,7 @@
 					<label>破损</label>
 					<input name="type314[]" value="3" type="checkbox" disabled="disabled">
 				</div>
-					
+
 				<div class="mui-input-row">
 					<label class="lv-title">采集照片</label>
 				</div>
