@@ -95,8 +95,8 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.photoDes4 + "','" +
 		damage.toString() + "','" +
 		"" + "','" +
-		typeb.toString() + "','" +
-		typec.toString() + "','" +
+		typeb + "','" +
+		typec + "','" +
 		jsonInfo.remark + "'," +
 		0 + ")";
 	openDB();
@@ -300,39 +300,30 @@ function zhenliQuestion(jsonInfo) {
 		// 砖木结构		
 		var head = ''
 		head = creatHead(key, 4, jsonInfo)
+		console.log(head);
 		if (head[0] == 1) {
-			result = result + fixInteger(jsonInfo.type311, lenq);
-		} else if (head[1] == 1) {
+			result = result +""+ fixInteger(jsonInfo.type311, lenq);
+		}
+		if (head[1] == 1) {
 			result = result + fixInteger(jsonInfo.type321, lenq);
-			var type322=creatHead2('type322', 4, jsonInfo);
-			console.log('type322='+type322);
-			var type322_x=parseInt(type322.join(''),2);
-			console.log(type322_x);
-			result = result + fixInteger(type322_x, lenq);
-		}else if (head[2] == 1) {
-			result = result + fixInteger(jsonInfo.type331, lenq);
-			var type332=creatHead2('type332', 3, jsonInfo);
-			console.log('type332='+type332);
-			var type332_x=parseInt(type332.join(''),2);
-			console.log(type332_x);
-			result = result + fixInteger(type332_x, lenq);
+			var type322 = creatHead2('type322', 4, jsonInfo);
+			var type322_x=two2x(type322);
+			result = result +""+ fixInteger(type322_x, lenq);
 		}
-		else if (head[3] == 1) {
-			result = result + fixInteger(jsonInfo.type321, lenq);
-			var type342=creatHead('type342', 2, jsonInfo);
-			console.log('type342='+type342);
-			var type342_x=parseInt(type342.join(''),2);
-			console.log(type342_x);
-			result = result + fixInteger(type342_x, lenq);
+		if (head[2] == 1) {
+			result = result +""+ fixInteger(jsonInfo.type331, lenq);
+			var type332 = creatHead2('type332', 3, jsonInfo);
+			var type332_x=two2x(type332);
+			result = result +""+ fixInteger(type332_x, lenq);
 		}
-		// ---------------
-		for (i = 0; i < jsonInfo.type31.length - 1; i++) {
-			result = result + jsonInfo.type21[0] + "、"
+		if (head[3] == 1) {
+			result = result +""+ fixInteger(jsonInfo.type321, lenq);
+			var type342 = creatHead('type342', 2, jsonInfo);
+			var type342_x=two2x(type342);
+			result = result +""+ fixInteger(type342_x, lenq);
 		}
-		result = result + jsonInfo.type21.length[0];
-		// ---------------
-		result = result + jsonInfo.type22
-		return result;
+		// console.log('typec='+result);
+		return fixInteger(two2x(head), lenq)+result;
 	} else if (jsonInfo.type == 2) {
 
 	} else if (jsonInfo.type == 3) {
@@ -340,6 +331,13 @@ function zhenliQuestion(jsonInfo) {
 	}
 }
 
+//把一个表示二进制的数组转化为十进制
+function two2x(arr){
+	console.log('arr=' + arr);
+	var arr_x = parseInt(arr.join(''), 2);
+	console.log(arr_x);
+	return arr_x;
+}
 //整理form2
 function zhenliType(jsonInfo) {
 	console.log(jsonInfo);
@@ -350,11 +348,11 @@ function zhenliType(jsonInfo) {
 	if (jsonInfo.type == 1) {
 		// 砖木结构	
 		// ---------------
-		var type21=creatHead2('type21',4,jsonInfo)
-		var type21_x=parseInt(type21.join(''),2);
+		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21_x = parseInt(type21.join(''), 2);
 		console.log(type21_x)
 		// ---------------
-		result = fixInteger(type21_x,2) +''+fixInteger(jsonInfo.type22,2);
+		result = fixInteger(type21_x, 2) + '' + fixInteger(jsonInfo.type22, 2);
 		return result;
 	} else if (jsonInfo.type == 2) {
 
@@ -366,11 +364,12 @@ function zhenliType(jsonInfo) {
 // 
 function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
-	for (i = 0; i <= jsonInfo[key].length; i++) {
-		if(typeof(jsonInfo[key][i])=='underfind'){
-			head[i]=0;
-		}else{
-			head[i]=1;
+	head=initArr(head,0);
+	for (i = 0; i < jsonInfo[key].length; i++) {
+		if (typeof(jsonInfo[key][i]) == 'underfind') {
+			head[i] = 0;
+		} else {
+			head[i] = 1;
 		}
 	}
 	console.log(head);
