@@ -163,8 +163,9 @@
 				for (i = 1; i <= 4; i++) {
 					var photoSrc = 'photoSrc' + i;
 					var photoDes = 'photoDes' + i;
-					// console.log(typeof(result[photoSrc])+'_'+photoSrc)
+					
 					if (!result[photoSrc] == '') {
+						console.log(typeof(result[photoSrc])+'_'+photoSrc)
 						var image = new Image();
 						image.style.width = "60px";
 						image.style.height = "60px";
@@ -179,21 +180,23 @@
 						console.log(image.src);
 						// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
 						var token = localStorage.getItem('TOKEN_TOKEN');
-						image.onload = function() {
+						
+						 // image.onload = function() {
 							var imgData = getBase64Image(image);
-							// console.log(imgData);
+							// 
 							var imgBlob = dataURLtoBlob(imgData);
-							var data = {
-								'token': token
-								'file': imgBlob,
-								'depict': result[photoDes],
-							}
-						}
+							console.log(imgBlob);
+						 // }
 						
 						// console.log(JSON.stringify(data));
 						var wd = plus.nativeUI.showWaiting();
 
 						// 调用ajax  
+						var data = {
+							'token': token,
+							'file': imgBlob,
+							'depict': result[photoDes],
+						}
 						console.log(imgUrl);
 						postData(imgUrl, //服务端的URL  
 							data, // json 数据  

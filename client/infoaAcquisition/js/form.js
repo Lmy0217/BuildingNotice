@@ -43,7 +43,7 @@ function w_insertSQL(jsonInfo) {
 	damage = zhenliDamage(jsonInfo);
 	// console.log(damage);
 	typeb = zhenliType(jsonInfo);
-	alert('pause!');
+	// alert('typeb!');
 	// console.log(type);
 	typec = zhenliQuestion(jsonInfo);
 	// console.log(question);
