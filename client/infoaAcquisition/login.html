@@ -43,7 +43,7 @@
 				padding: 10px;
 			}
 			
-			.link-area {
+			/* .link-area {
 				display: block;
 				margin-top: 25px;
 				text-align: center;
@@ -52,7 +52,7 @@
 			.spliter {
 				color: #bbb;
 				padding: 0px 8px;
-			}
+			} */
 			
 		</style>
 
@@ -95,24 +95,21 @@
 		<script>
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-
+			var website = '';
+			var loginUrl = website + '';
 			mui.plusReady(function() {
 				var autoLoginButton = document.getElementById("autoLogin");
 				var accountBox = document.getElementById('account');
 				var passwordBox = document.getElementById('password');
 				var account = localStorage.getItem("account");
+				var imei = plus.device.imei; // IMEI 设备的国际移动设备身份码
 				if (account != null) //如果缓存中有数据，则加载出来 
 				{
 					accountBox.value = account;
 					passwordBox.value = localStorage.getItem("password");
 					autoLoginButton.classList.add('mui-active');
 				}
-
-				// autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-
-				// autoLoginButton.addEventListener('tap',function(){
-				// 	
-				//         })
+				// 
 				document.getElementById("login").addEventListener('tap', function() {
 					// 处理内容；当然肯定是ajax 了。  
 					remPwd();
@@ -124,21 +121,25 @@
 					// 内容就是 return document.getElementById();  
 					var data = {
 						"account": $id('account').value,
-						"password": md5Hash($id('password').value)
+						"password": $id('password').value,
+						"imei": imei,
 					};
 					// 调用ajax  
-					postData(SERVER_HOST + MODULE_LOGIN, //服务端的URL  
+					postData(loginUrl, //服务端的URL  
 						data, // json 数据  
 						function(data) {
 							wd.close(); // 调用成功，先关闭等待的对话框  
-							if (data.result != "checkOK") {
+							if (data.status == "403") {
 								// 如果密码错误，提示一下信息  
 								mui.alert("用户名或密码错误", "登录错误", "关闭");
 								return;
+							} else if (data.status != "200") {
+								mui.alert(data.msg);
+								return
 							}
 							// 保存token，以便于下次自动登录  
-							localStorage.setItem(TOKEN_USER, $id('account').value);
-							localStorage.setItem(TOKEN_LOGIN, data.token);
+							localStorage.setItem(TOKEN_ACCOUNT, $id('account').value);
+							localStorage.setItem(TOKEN_TOKEN, data.token);
 							// 清空用户名，密码  
 							$id('account').value = "";
 							$id("password").value = "";

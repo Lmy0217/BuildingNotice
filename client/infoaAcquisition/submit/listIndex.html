@@ -104,7 +104,7 @@
 					type: 'POST',
 					dataType: 'json',
 					data: sendData[0],
-					contentType : "application/json; charset=UTF-8",
+					contentType: "application/json; charset=UTF-8",
 					async: true,
 					timeout: 100000, //超时时间设置为10秒；
 					success: function(res) {
@@ -112,22 +112,21 @@
 							var res = JSON.parse(res);
 						}
 						//如果登陆失效
-						if (res.code == '-1' || res.code == '-2') {
+						if (res.status == '401') {
 							mui.toast(res.msg);
 							clearUserInfoCache(myStorage)
 							mui.openWindow({
-								url: '/view/login.html'
+								url: 'login.html'
 							})
-						} else if (res.code == '-3') {
+						} else if (res.code == '403') {
 							mui.toast(res.msg);
 							hideLoading();
 							return false;
 						}
-						if (res.code != '1') {
+						if (res.code != '200') {
 							mui.toast(res.msg);
 						}
 						hideLoading();
-						alert('ok');
 						plus.sqlite.selectSql({
 							name: 'info',
 							sql: 'updata infoDB set isUp = 1 where rowid = ' + data.rowid,
@@ -181,42 +180,45 @@
 						image.onload = function() {
 							var imgData = getBase64Image(image);
 							// console.log(imgData);
-						var imgBlob=dataURLtoBlob(imgData);
-						var data = {
-							'file': imgBlob,
-							'depict': result[photoDes],
-						}
-						
-						// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
-						// var USER_KEY = myStorage.getItem('USER_KEY');
-						// console.log(JSON.stringify(data));
-						var wd = plus.nativeUI.showWaiting();
+							var imgBlob = dataURLtoBlob(imgData);
+							var data = {
+								'file': imgBlob,
+								'depict': result[photoDes],
+							}
 
-						// 调用ajax  
-						console.log(imgUrl);
-						postData(imgUrl, //服务端的URL  
-							data, // json 数据  
-							function(data) {
-								wd.close(); // 调用成功，先关闭等待的对话框  
-								if (data.result != "checkOK") {
-									// 如果密码错误，提示一下信息  
-									mui.alert("用户名或密码错误", "登录错误", "关闭");
-									return;
-								}
-								// 保存token，以便于下次自动登录  
-								localStorage.setItem(TOKEN_USER, $id('account').value);
-								localStorage.setItem(TOKEN_LOGIN, data.token);
-								// 清空用户名，密码  
-								$id('account').value = "";
-								$id("password").value = "";
-								// 打开下一个画面  
-								mui.openWindow({
-									url: 'index.html',
-									id: 'index',
-								});
-							},
-							wd //传递给postData的最后一个参数，失败的时候关闭等待对话框  
-						);}
+							var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+							var USER_KEY = myStorage.getItem('USER_KEY');
+							// console.log(JSON.stringify(data));
+							var wd = plus.nativeUI.showWaiting();
+
+							// 调用ajax  
+							console.log(imgUrl);
+							postData(imgUrl, //服务端的URL  
+								data, // json 数据  
+								function(data) {
+									wd.close(); // 调用成功，先关闭等待的对话框  
+									if (data.status == "401") {
+										// 如果密码错误，提示一下信息  
+										mui.alert(data.msg);
+										clearUserInfoCache(myStorage)
+										mui.openWindow({
+											url: 'login.html'
+										})
+									}else if(data.status != "200"){
+										// 如果密码错误，提示一下信息  
+										mui.alert(data.msg);
+										return false;										
+									}else{
+										return data.imageid;
+									}
+									// // 保存token，以便于下次自动登录  
+									// localStorage.setItem(TOKEN_USER, $id('account').value);
+									// localStorage.setItem(TOKEN_LOGIN, data.token);
+									// 清空用户名，密码  
+								},
+								wd //传递给postData的最后一个参数，失败的时候关闭等待对话框  
+							);
+						}
 
 						// 						mui.ajax(imgUrl, {
 						// 							type: 'POST',
@@ -252,17 +254,14 @@
 						// 								vm.uploadImgArr[k].status = -1;
 						// 								hideLoading();
 						// 							},
-						// 							headers: {
-						// 								// 'access_token': AUTH_TOKEN,
-						// 								// 'user_key': USER_KEY,
-						// 							}
+						// 							
 						// 						});
 					}
 				}
 
 			}
 
-			function uploadPictuer(files, depict,server) {
+			function uploadPictuer(files, depict, server) {
 				var wt = plus.nativeUI.showWaiting();
 				var task = plus.uploader.createUpload(server, {
 						method: "POST"
@@ -286,6 +285,7 @@
 			}
 
 			function postData(url, data, callback, waitingDialog) {
+				console.log()
 				console.log(data);
 				console.log(url);
 				// var formData = new FormData();
@@ -313,6 +313,10 @@
 						console.log(JSON.stringify(errorThrown));
 						mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
 
+					},
+					headers: {
+					// 'access_token': AUTH_TOKEN,
+					'user_key': USER_KEY,
 					}
 				});
 			}
