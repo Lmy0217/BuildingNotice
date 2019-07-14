@@ -138,7 +138,7 @@
 								return
 							}
 							// 保存token，以便于下次自动登录  
-							localStorage.setItem(TOKEN_ACCOUNT, $id('account').value);
+							localStorage.setItem(TOKEN_USER,$id('account').value);
 							localStorage.setItem(TOKEN_TOKEN, data.token);
 							// 清空用户名，密码  
 							$id('account').value = "";

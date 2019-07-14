@@ -169,93 +169,57 @@
 						image.style.width = "60px";
 						image.style.height = "60px";
 						image.src = result[photoSrc];
-						var files = document.getElementById('image');
+						// var files = document.getElementById('image');
 						// 上传文件
 						// --------------
 						console.log(image);
 						// uploadPictuer(image,imgUrl);
 						// --------------
-						console.log(image);
+						// console.log(image);
 						console.log(image.src);
+						// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
+						var token = localStorage.getItem('TOKEN_TOKEN');
 						image.onload = function() {
 							var imgData = getBase64Image(image);
 							// console.log(imgData);
 							var imgBlob = dataURLtoBlob(imgData);
 							var data = {
+								'token': token
 								'file': imgBlob,
 								'depict': result[photoDes],
 							}
-
-							var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
-							var USER_KEY = myStorage.getItem('USER_KEY');
-							// console.log(JSON.stringify(data));
-							var wd = plus.nativeUI.showWaiting();
-
-							// 调用ajax  
-							console.log(imgUrl);
-							postData(imgUrl, //服务端的URL  
-								data, // json 数据  
-								function(data) {
-									wd.close(); // 调用成功，先关闭等待的对话框  
-									if (data.status == "401") {
-										// 如果密码错误，提示一下信息  
-										mui.alert(data.msg);
-										clearUserInfoCache(myStorage)
-										mui.openWindow({
-											url: 'login.html'
-										})
-									}else if(data.status != "200"){
-										// 如果密码错误，提示一下信息  
-										mui.alert(data.msg);
-										return false;										
-									}else{
-										return data.imageid;
-									}
-									// // 保存token，以便于下次自动登录  
-									// localStorage.setItem(TOKEN_USER, $id('account').value);
-									// localStorage.setItem(TOKEN_LOGIN, data.token);
-									// 清空用户名，密码  
-								},
-								wd //传递给postData的最后一个参数，失败的时候关闭等待对话框  
-							);
 						}
+						
+						// console.log(JSON.stringify(data));
+						var wd = plus.nativeUI.showWaiting();
 
-						// 						mui.ajax(imgUrl, {
-						// 							type: 'POST',
-						// 							dataType: 'json',
-						// 							data: sendData,
-						// 							async: true,
-						// 							timeout: 100000, //超时时间设置为10秒；
-						// 							success: function(res) {
-						// 								if (typeof res == 'string') {
-						// 									var res = JSON.parse(res);
-						// 								}
-						// 
-						// 								//如果登陆失效
-						// 								if (res.code == '-1' || res.code == '-2') {
-						// 									mui.toast(res.msg);
-						// 									clearUserInfoCache(myStorage)
-						// 									mui.openWindow({
-						// 										url: '/view/login.html'
-						// 									})
-						// 								} else if (res.code == '-3') {
-						// 									mui.toast(res.msg);
-						// 									hideLoading();
-						// 									return false;
-						// 								}
-						// 								if (res.code != '1') {
-						// 									mui.toast(res.msg);
-						// 								}
-						// 								photoId.push(res.id) //上传成功
-						// 								hideLoading();
-						// 								return photoId;
-						// 							},
-						// 							error: function(xhr, type, errorThrown) {
-						// 								vm.uploadImgArr[k].status = -1;
-						// 								hideLoading();
-						// 							},
-						// 							
-						// 						});
+						// 调用ajax  
+						console.log(imgUrl);
+						postData(imgUrl, //服务端的URL  
+							data, // json 数据  
+							function(data) {
+								wd.close(); // 调用成功，先关闭等待的对话框  
+								if (data.status == "401") {
+									// 如果密码错误，提示一下信息  
+									mui.alert(data.msg);
+									clearUserInfoCache(myStorage)
+									mui.openWindow({
+										url: 'login.html'
+									})
+								} else if (data.status != "200") {
+									// 如果密码错误，提示一下信息  
+									mui.alert(data.msg);
+									return false;
+								} else {
+									return data.imageid;
+								}
+								// // 保存token，以便于下次自动登录  
+								// localStorage.setItem(TOKEN_USER, $id('account').value);
+								// localStorage.setItem(TOKEN_LOGIN, data.token);
+								// 清空用户名，密码  
+							},
+							wd //传递给postData的最后一个参数，失败的时候关闭等待对话框  
+						);
 					}
 				}
 
@@ -315,8 +279,8 @@
 
 					},
 					headers: {
-					// 'access_token': AUTH_TOKEN,
-					'user_key': USER_KEY,
+						// 'access_token': AUTH_TOKEN,
+						// 'user_key': USER_KEY,
 					}
 				});
 			}
