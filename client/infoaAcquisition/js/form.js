@@ -46,7 +46,7 @@ function w_insertSQL(jsonInfo) {
 	// alert('typeb!');
 	console.log(typeb);
 	typec = zhenliQuestion(jsonInfo);
-	// console.log(question);
+	console.log(typec);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists " + tableName + "(" +
@@ -304,7 +304,26 @@ function zhenliQuestion(jsonInfo) {
 			result = result + fixInteger(jsonInfo.type311, lenq);
 		} else if (head[1] == 1) {
 			result = result + fixInteger(jsonInfo.type321, lenq);
-			var type322=creatHead('type321', 4, jsonInfo);
+			var type322=creatHead2('type322', 4, jsonInfo);
+			console.log('type322='+type322);
+			var type322_x=parseInt(type322.join(''),2);
+			console.log(type322_x);
+			result = result + fixInteger(type322_x, lenq);
+		}else if (head[2] == 1) {
+			result = result + fixInteger(jsonInfo.type331, lenq);
+			var type332=creatHead2('type332', 3, jsonInfo);
+			console.log('type332='+type332);
+			var type332_x=parseInt(type332.join(''),2);
+			console.log(type332_x);
+			result = result + fixInteger(type332_x, lenq);
+		}
+		else if (head[3] == 1) {
+			result = result + fixInteger(jsonInfo.type321, lenq);
+			var type342=creatHead('type342', 2, jsonInfo);
+			console.log('type342='+type342);
+			var type342_x=parseInt(type342.join(''),2);
+			console.log(type342_x);
+			result = result + fixInteger(type342_x, lenq);
 		}
 		// ---------------
 		for (i = 0; i < jsonInfo.type31.length - 1; i++) {
@@ -335,7 +354,7 @@ function zhenliType(jsonInfo) {
 		var type21_x=parseInt(type21.join(''),2);
 		console.log(type21_x)
 		// ---------------
-		result = type21_x +''+jsonInfo.type22
+		result = fixInteger(type21_x,2) +''+fixInteger(jsonInfo.type22,2);
 		return result;
 	} else if (jsonInfo.type == 2) {
 
