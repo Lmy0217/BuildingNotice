@@ -27,12 +27,13 @@
 		<script type="text/javascript" src="../js/form.js"></script>
 		<script type="text/javascript" src="../js/common.js"></script>
 		<script type="text/javascript" src="../js/loading.js"></script>
+		<script type="text/javascript" src="../js/config.js"></script>
 		<script type="text/javascript">
 			//取消浏览器的所有事件，使得active的样式在手机上正常生效
 			document.addEventListener('touchstart', function() {
 				return false;
 			}, true);
-			var website = 'http://111.73.197.144:8080/buildingnotice';
+
 			mui.init({
 				/* 在页面的指定位置，加载子页面，实现卡头卡尾的效果 */
 				// subpages: [{
@@ -74,9 +75,19 @@
 								console.log('selectSql success: ' + JSON.stringify(e));
 								// console.log(JSON.stringify(e));
 								photoId = upPhoto(e[0]);
+								var pi=document.getElementById('imgid1').value;
+								console.log(pi);
+								var  obj = document.getElementsByName("imgid[]");
+								console.log(obj);
+		 var photoId=[];
+		 for(var i in obj){
+			 if(obj[i].checked){
+				 photoId.push(obj[i].value);
+			 }
+		 }
 								console.log(photoId);
 								data = zhenliJson(e, photoId);
-								upData(e);
+								// upData(e);
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
@@ -92,7 +103,7 @@
 			});
 
 			function upData(data) {
-				var upUrl = website + '/archive/create';
+
 				var sendData = data;
 				console.log(data)
 				// {
@@ -157,15 +168,16 @@
 			}
 
 			function upPhoto(result) {
-				var imgUrl = website + '/image/upload';
 				var photoId = new Array();
+				// var photoId = new Array();
 				watchJSON(result);
+				var flag = 0;
 				for (i = 1; i <= 4; i++) {
 					var photoSrc = 'photoSrc' + i;
 					var photoDes = 'photoDes' + i;
-					
+					var tempId = "imgid" + i;
 					if (!result[photoSrc] == '') {
-						console.log(typeof(result[photoSrc])+'_'+photoSrc)
+						console.log(typeof(result[photoSrc]) + '_' + photoSrc)
 						var image = new Image();
 						image.style.width = "60px";
 						image.style.height = "60px";
@@ -180,14 +192,15 @@
 						console.log(image.src);
 						// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
 						var token = localStorage.getItem('TOKEN_TOKEN');
-						
-						 // image.onload = function() {
+
+						image.onload = function() {
 							var imgData = getBase64Image(image);
 							// 
 							var imgBlob = dataURLtoBlob(imgData);
-							console.log(imgBlob);
-						 // }
-						
+							document.getElementById("imgBlob").value = imgBlob;
+						}
+
+						var imgBlob = document.getElementById("imgBlob").value
 						// console.log(JSON.stringify(data));
 						var wd = plus.nativeUI.showWaiting();
 
@@ -198,9 +211,28 @@
 							'depict': result[photoDes],
 						}
 						console.log(imgUrl);
-						postData(imgUrl, //服务端的URL  
-							data, // json 数据  
-							function(data) {
+						var formData = new FormData();
+						// formData.append("accountnum", 123456); 
+						formData.append('depict', data.depict);
+
+						formData.append('file', new File([data.file], '12345.png'));
+						// formData.append('new', data.file);
+						// Object.keys(data).forEach((key) => {
+						//   formData.append(key, data[key]);
+						// });
+						console.log(formData);
+						var temp = null;
+						mui.ajax(imgUrl, {
+							data: formData,
+							cache: false,
+							processData: false,
+							contentType: false,
+							async : false,
+							type: 'post',
+							// contentType: "multipart/form-data",
+							timeout: 50000,
+							success: function(data) {
+								console.log(data);
 								wd.close(); // 调用成功，先关闭等待的对话框  
 								if (data.status == "401") {
 									// 如果密码错误，提示一下信息  
@@ -214,18 +246,37 @@
 									mui.alert(data.msg);
 									return false;
 								} else {
-									return data.imageid;
+									mui.alert('图片上传成功！');
+									// console.log(data.imageid);
+									var tempInput = document.getElementById(tempId);
+									console.log(tempId)
+									tempInput.value = data.imageid;
+									tempInput.checked = "checked";
+									console.log(tempInput.checked)
+									var pi=document.getElementById('imgid1').value;
+									console.log(pi)
+									var temp = data.imageid;
+									console.log(temp);
+									// return data.imageid;
 								}
 								// // 保存token，以便于下次自动登录  
 								// localStorage.setItem(TOKEN_USER, $id('account').value);
 								// localStorage.setItem(TOKEN_LOGIN, data.token);
 								// 清空用户名，密码  
 							},
-							wd //传递给postData的最后一个参数，失败的时候关闭等待对话框  
-						);
-					}
-				}
+							error: function(xhr, type, errorThrown) {
+								waitingDialog.close();
+								console.log(JSON.stringify(errorThrown));
+								mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
 
+							},
+						});
+						photoId[flag] = temp;
+						flag++;
+					}
+					
+				}
+				return photoId;
 			}
 
 			function uploadPictuer(files, depict, server) {
@@ -251,42 +302,7 @@
 				task.start();
 			}
 
-			function postData(url, data, callback, waitingDialog) {
-				console.log()
-				console.log(data);
-				console.log(url);
-				// var formData = new FormData();
-				var formData = new FormData();
-				// formData.append("accountnum", 123456); 
-				formData.append('depict', data.depict);
 
-				formData.append('file', new File([data.file], '12345.png'));
-				// formData.append('new', data.file);
-				// Object.keys(data).forEach((key) => {
-				//   formData.append(key, data[key]);
-				// });
-				console.log(formData);
-				mui.ajax(url, {
-					data: formData,
-					// cache: false,
-					processData: false,
-					contentType: false,
-					type: 'post',
-					// contentType: "multipart/form-data",
-					timeout: 50000,
-					success: callback,
-					error: function(xhr, type, errorThrown) {
-						waitingDialog.close();
-						console.log(JSON.stringify(errorThrown));
-						mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
-
-					},
-					headers: {
-						// 'access_token': AUTH_TOKEN,
-						// 'user_key': USER_KEY,
-					}
-				});
-			}
 
 			function w_showInfo() {
 				openDB();
@@ -360,6 +376,26 @@
 						</ul>
 					</form>
 				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>图片1</label>
+				<input id="imgid1" name="imgid[]" value="1" >
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>图片2</label>
+				<input id="imgid2" name="imgid[]" value="2">
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left ">
+				<label>图片3</label>
+				<input id="imgid3" name="imgid[]" value="3">
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left ">
+				<label>图片4</label>
+				<input id="imgid4" name="imgid[]" value="4">
+			</div>
+			<div class="mui-input-row">
+				<label>图片</label>
+				<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
 			</div>
 		</div>
 		<div class="line mui-row" style="position: fixed;bottom: 0px; z-index: 10px;width:100%;margin: 0px;">

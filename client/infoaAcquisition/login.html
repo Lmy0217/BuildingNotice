@@ -92,11 +92,11 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/util.js"></script>
+		<script src="js/config.js"></script>
 		<script>
 			mui.init();
 			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			var website = '';
-			var loginUrl = website + '';
+			
 			mui.plusReady(function() {
 				var autoLoginButton = document.getElementById("autoLogin");
 				var accountBox = document.getElementById('account');
@@ -113,15 +113,15 @@
 				document.getElementById("login").addEventListener('tap', function() {
 					// 处理内容；当然肯定是ajax 了。  
 					remPwd();
-					alert("点击了登录按钮");
+					// alert("点击了登录按钮");
 					// 显示一个等待的对话框  
 					var wd = plus.nativeUI.showWaiting();
 					// 构造要传递的json数据  
 					// $id 是一个通过 id 取得对象的方法，  
 					// 内容就是 return document.getElementById();  
 					var data = {
-						"account": $id('account').value,
-						"password": $id('password').value,
+						"name": accountBox.value,
+						"pwd": passwordBox.value,
 						"imei": imei,
 					};
 					// 调用ajax  
@@ -138,11 +138,11 @@
 								return
 							}
 							// 保存token，以便于下次自动登录  
-							localStorage.setItem(TOKEN_USER,$id('account').value);
-							localStorage.setItem(TOKEN_TOKEN, data.token);
+							localStorage.setItem('TOKEN_USER',accountBox.value);
+							localStorage.setItem('TOKEN_TOKEN', data.token);
 							// 清空用户名，密码  
-							$id('account').value = "";
-							$id("password").value = "";
+							accountBox.value = "";
+							passwordBox.value = "";
 							// 打开下一个画面  
 							mui.openWindow({
 								url: 'index.html',

@@ -196,3 +196,71 @@ function dataURLtoBlob(dataurl) {
 function fixInteger(num, n) {
 	return (Array(n).join(0) + num).slice(-n);
 }
+
+function postData(url, data, callback, waitingDialog) {
+	console.log()
+	console.log(data);
+	console.log(url);
+	// formData.append('new', data.file);
+	// Object.keys(data).forEach((key) => {
+	//   formData.append(key, data[key]);
+	// });
+	// console.log(formData);
+	mui.ajax(url, {
+		data: data,
+		// cache: false,
+		// processData: false,
+		contentType: 'application/json; charset=UTF-8',
+		type: 'post',
+		// contentType: "multipart/form-data",
+		timeout: 5000,
+		success: callback,
+		error: function(xhr, type, errorThrown) {
+			waitingDialog.close();
+			console.log(JSON.stringify(errorThrown));
+			mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
+
+		},
+		headers: {
+			// 'access_token': AUTH_TOKEN,
+			// 'user_key': USER_KEY,
+		}
+	});
+}
+
+function postImage(url, data, callback, waitingDialog) {
+	console.log()
+	console.log(data);
+	console.log(url);
+	// var formData = new FormData();
+	var formData = new FormData();
+	// formData.append("accountnum", 123456); 
+	formData.append('depict', data.depict);
+
+	formData.append('file', new File([data.file], '12345.png'));
+	// formData.append('new', data.file);
+	// Object.keys(data).forEach((key) => {
+	//   formData.append(key, data[key]);
+	// });
+	console.log(formData);
+	mui.ajax(url, {
+		data: formData,
+		// cache: false,
+		processData: false,
+		contentType: false,
+		type: 'post',
+		// contentType: "multipart/form-data",
+		timeout: 50000,
+		success: callback,
+		error: function(xhr, type, errorThrown) {
+			waitingDialog.close();
+			console.log(JSON.stringify(errorThrown));
+			mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
+
+		},
+		headers: {
+			// 'access_token': AUTH_TOKEN,
+			// 'user_key': USER_KEY,
+		}
+	});
+}
