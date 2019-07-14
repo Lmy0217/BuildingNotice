@@ -103,7 +103,7 @@ function w_insertSQL(jsonInfo) {
 	// insertSQL(tableName, creatMain, sqlStr);
 	console.log(creatMain);
 	console.log(sqlStr);
-	alert('zuzhi!');
+	// alert('zuzhi!');
 	plus.sqlite.executeSql({
 		name: 'info',
 		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
@@ -117,7 +117,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					// mui.back();
+					mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -293,7 +293,6 @@ function changeChild(father, child) {
 function zhenliQuestion(jsonInfo) {
 	console.log(jsonInfo);
 	var lenq = 2;
-	alert('pause!');
 	var key = 'type3'
 	var result = '';
 	if (jsonInfo.type == 1) {
@@ -340,8 +339,7 @@ function two2x(arr){
 }
 //整理form2
 function zhenliType(jsonInfo) {
-	console.log(jsonInfo);
-	alert('pause!');
+	
 	var key = 'type2'
 	var result = '';
 	console.log(jsonInfo.type21);
@@ -365,6 +363,8 @@ function zhenliType(jsonInfo) {
 function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
 	head=initArr(head,0);
+	console.log(key);
+	console.log(jsonInfo[key])
 	for (i = 0; i < jsonInfo[key].length; i++) {
 		if (typeof(jsonInfo[key][i]) == 'underfind') {
 			head[i] = 0;
@@ -383,10 +383,13 @@ function creatHead(key, len, jsonInfo) {
 	for (i = 1; i <= len; i++) {
 		var keyName = key + i;
 		if (jsonInfo.hasOwnProperty(keyName)) {
-			head[len - i] = 1;
+			console.log(i)
+			head[i-1] = 1;
 		} else {
-			head[len - i] = 0;
+			console.log(i)
+			head[i-1] = 0;
 		}
+		console.log(head)
 	}
 	console.log(head);
 	// head=parseInt(head,2);
