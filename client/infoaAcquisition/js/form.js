@@ -43,34 +43,36 @@ function w_insertSQL(jsonInfo) {
 	watchJSON(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
 	// console.log(damage);
-	type = zhenliType(jsonInfo);
+	typeb = zhenliType(jsonInfo);
 	// console.log(type);
-	question = zhenliQuestion(jsonInfo);
+	typec = zhenliQuestion(jsonInfo);
 	// console.log(question);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists "+tableName+"(" +
-		"'unit'	char," +
+		"'unit'	text," +
 		"'phone'	int(11)," +
-		"'material'	char ," +
-		"'addr'	char," +
-		"'hold'	char," +
+		"'material'	text ," +
+		"'addr'	text," +
+		"'hold'	text," +
 		"'holdid' int(20)," +
 		"'attr' int(2)," +
 		"'layer' int(2)," +
 		"'typeid'	int(1)," +
-		"'identitytime'	char(10)," +
-		"'photoSrc1'	char," +
-		"'photoDes1'	char," +
-		"'photoSrc2'	char," +
-		"'photoDes2'	char," +
-		"'photoSrc3'	char," +
-		"'photoDes3'	char," +
-		"'photoSrc4'	char," +
-		"'photoDes4'	char," +
-		"'damage'	char," +
-		"'type'	char," +
-		"'question'	char," +
+		"'identitytime'	text(10)," +
+		"'photoSrc1'	text," +
+		"'photoDes1'	text," +
+		"'photoSrc2'	text," +
+		"'photoDes2'	text," +
+		"'photoSrc3'	text," +
+		"'photoDes3'	text," +
+		"'photoSrc4'	text," +
+		"'photoDes4'	text," +
+		"'damage'	text," +
+		"'typea'	text,"+
+		"'typeb'	text," +
+		"'typec'	text," +
+		"'remark'	text," +
 
 		"'isUp'	int(1)" + ")";
 	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
@@ -92,8 +94,10 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.photoSrc4 + "','" +
 		jsonInfo.photoDes4 + "','" +
 		damage.toString() + "','" +
-		type.toString() + "','" +
-		question.toString() + "'," +
+		""+"','" +
+		typeb.toString() + "','" +
+		typec.toString() + "','" +
+		jsonInfo.remark + "'," +
 		0 + ")";
 	openDB();
 	// insertSQL(tableName, creatMain, sqlStr);
