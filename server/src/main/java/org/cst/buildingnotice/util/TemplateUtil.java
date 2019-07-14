@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.deepoove.poi.XWPFTemplate;
 
-public class Template {
+public class TemplateUtil {
 	
 	public static String stringRender(String template, String data) {
 		

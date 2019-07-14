@@ -25,8 +25,8 @@ import org.cst.buildingnotice.service.DamageService;
 import org.cst.buildingnotice.service.ImageService;
 import org.cst.buildingnotice.service.RankService;
 import org.cst.buildingnotice.service.TypeService;
-import org.cst.buildingnotice.util.Template;
-import org.cst.buildingnotice.util.Zip;
+import org.cst.buildingnotice.util.TemplateUtil;
+import org.cst.buildingnotice.util.ZipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -181,9 +181,9 @@ public class ArchiveController {
 					dateformat.format(archiveWithBLOBs.getCreateyear()) : "");
 			data.put("typename", typeWithBLOBs.getName());
 			data.put("identitytime", identityTime);
-			data.put("body1", Template.stringRender(typeWithBLOBs.getBody1(), "1;"));
-			data.put("body2", Template.stringRender(typeWithBLOBs.getBody2(), archiveWithBLOBs.getBody2()));
-			data.put("body3", Template.stringRender(typeWithBLOBs.getBody3(), archiveWithBLOBs.getBody3()));
+			data.put("body1", TemplateUtil.stringRender(typeWithBLOBs.getBody1(), "1;"));
+			data.put("body2", TemplateUtil.stringRender(typeWithBLOBs.getBody2(), archiveWithBLOBs.getBody2()));
+			data.put("body3", TemplateUtil.stringRender(typeWithBLOBs.getBody3(), archiveWithBLOBs.getBody3()));
 			
 			for (int j = 0; j < 1; j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
@@ -215,10 +215,10 @@ public class ArchiveController {
 			data.put("rankdepict", rank.getDepict());
 			data.put("rankname", rank.getName());
 			
-			data.put("advise", Template.stringRender(typeWithBLOBs.getAdvise(), 
+			data.put("advise", TemplateUtil.stringRender(typeWithBLOBs.getAdvise(), 
 					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), archiveWithBLOBs.getBody3())));
 			System.out.println("data complete");
-			Template.render(template_file, data, file);
+			TemplateUtil.render(template_file, data, file);
 			files.add(file);
 		}
 		
@@ -232,7 +232,7 @@ public class ArchiveController {
 		String zip_file_name = dateformatHms.format(new Date()) + "_" + "1" + ".zip";
 		String zip_file = zip_path + File.separator + zip_file_name;
 		System.out.println(zip_file);
-		Zip.zip(files, zip_file);
+		ZipUtil.zip(files, zip_file);
 		
 		
 		Map<String, Object> dict = new HashMap<String, Object>();

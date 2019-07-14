@@ -16,7 +16,7 @@ import java.util.zip.ZipOutputStream;
  * @version        v0.1, 17/09/04
  * @author         Kiwi Liu
  */
-public class Zip {
+public class ZipUtil {
  
     /** 缓冲器大小 */
     private static final int BUFFER = 512;
