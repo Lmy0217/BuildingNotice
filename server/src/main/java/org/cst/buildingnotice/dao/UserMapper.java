@@ -1,5 +1,7 @@
 package org.cst.buildingnotice.dao;
 
+import java.util.List;
+
 import org.cst.buildingnotice.entity.User;
 
 public interface UserMapper {
@@ -14,4 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    List<User> selectByName(String name);
 }
