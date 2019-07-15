@@ -15,7 +15,7 @@ public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private ImageMapper imageMapper;
 
-	public int create(String path, String depict) {
+	public Integer create(String path, String depict) {
 		Image image = new Image();
 		image.setPath(path);
 		image.setDepict(depict);
