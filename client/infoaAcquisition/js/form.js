@@ -255,6 +255,7 @@ function changeChild2(father, child1, child2) {
 			for (i = 0; i < child2.length; i++) {
 				child2[i].disabled = "";
 			}
+			child2[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
 			// $(child_str1).disabled = "disabled";
