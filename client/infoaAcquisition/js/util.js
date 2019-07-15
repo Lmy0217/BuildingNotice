@@ -1,7 +1,10 @@
 function watchJSON(json) {
 	console.log(JSON.stringify(json));
 }
-
+function sleep(d){
+	// sleep(5000); //当前方法暂停5秒
+  for(var t = Date.now();Date.now() - t <= d;);
+}
 // 关闭数据库
 function closeDB() {
 	console.log('关闭数据库: ');

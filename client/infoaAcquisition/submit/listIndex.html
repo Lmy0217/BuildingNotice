@@ -65,9 +65,12 @@
 				document.getElementById('submit').addEventListener("tap", function() {
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
+					var wait=document.getElementById("wait");
 					openDB();
 					for (i = 0; i < perChk.length; i++) {
-						// console.log(perChk[i]);
+						wait.value=0;
+						var wa = plus.nativeUI.showWaiting("正在上传" + (i + 1) + "/" + perChk.length + ".."); 
+						// mui.showLoading("正在上传" + (i + 1) + "/" + perChk.length + "..", "div");
 						plus.sqlite.selectSql({
 							name: 'info',
 							sql: 'select rowid, * from infoDB where rowid==' + perChk[i],
@@ -83,17 +86,26 @@
 								for (var i in obj) {
 									if (obj[i].checked) {
 										photoId.push(parseInt(obj[i].value));
+										obj[i].checked="";
 									}
+									obj[i].value="0";
 								}
 								console.log(photoId);
 								data = zhenliJson(e[0], photoId);
 								upData(data);
-
+								while(wait==0){
+									console.log(wait);
+									sleep(1000);
+								}	
+								wa.close();
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
+								wa.close();
 							}
 						});
+						wa.close();
+						// mui.hideLoading();
 					}
 				})
 
@@ -129,12 +141,14 @@
 							})
 						} else if (res.status == '403') {
 							mui.toast(res.msg);
-							hideLoading();
+							// hideLoading();
 							return false;
 						} else if (res.status != '200') {
 							mui.toast(res.msg);
 						} else {
 							console.log('成功了！')
+							console.log(res);
+							document.getElementById('wait').value=1;
 							// plus.sqlite.selectSql({
 							// 	name: 'info',
 							// 	sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
@@ -145,12 +159,13 @@
 							// 	fail: function(e) {
 							// 		console.log('runSql fail: ' + JSON.stringify(e));
 							// 	}
-							// });
+							// });  
 						}
-						// hideLoading();
+						// mui.hideLoading();
 					},
 					error: function(xhr, type, errorThrown) {
 						console.log(JSON.stringify(xhr));
+						mui.hideLoading();
 					},
 					headers: {
 						// 'access_token': AUTH_TOKEN,
@@ -170,16 +185,15 @@
 
 			function upPhoto(result) {
 				var photoId = new Array();
-				// var photoId = new Array();
 				watchJSON(result);
 				var flag = 0;
 				for (i = 1; i <= 4; i++) {
 					var photoSrc = 'photoSrc' + i;
 					var photoDes = 'photoDes' + i;
 					var tempId = "imgid" + i;
-					console.log('wai' +typeof(result[photoSrc]) + '_' + photoSrc)
+					console.log('wai' + typeof(result[photoSrc]) + '_' + photoSrc)
 					if (!result[photoSrc] == '') {
-						console.log('nei' +typeof(result[photoSrc]) + '_' + photoSrc)
+						console.log('nei' + typeof(result[photoSrc]) + '_' + photoSrc)
 						var image = new Image();
 						image.style.width = "60px";
 						image.style.height = "60px";
@@ -202,7 +216,7 @@
 							document.getElementById("imgBlob").value = imgBlob;
 						}
 
-						var imgBlob = document.getElementById("imgBlob").value
+						// var imgBlob = document.getElementById("imgBlob").value
 						// console.log(JSON.stringify(data));
 						var wd = plus.nativeUI.showWaiting();
 
@@ -393,25 +407,35 @@
 					</form>
 				</div>
 			</div>
-			<div class="mui-input-row mui-checkbox mui-left">
-				<label>图片1</label>
-				<input id="imgid1" name="imgid[]" value="1">
-			</div>
-			<div class="mui-input-row mui-checkbox mui-left">
-				<label>图片2</label>
-				<input id="imgid2" name="imgid[]" value="2">
-			</div>
-			<div class="mui-input-row mui-checkbox mui-left ">
-				<label>图片3</label>
-				<input id="imgid3" name="imgid[]" value="3">
-			</div>
-			<div class="mui-input-row mui-checkbox mui-left ">
-				<label>图片4</label>
-				<input id="imgid4" name="imgid[]" value="4">
-			</div>
-			<div class="mui-input-row">
-				<label>图片</label>
-				<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
+			<div class="temp" style="display: none;">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>图片1</label>
+					<input id="imgid1" name="imgid[]" value="1">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>图片2</label>
+					<input id="imgid2" name="imgid[]" value="2">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>图片3</label>
+					<input id="imgid3" name="imgid[]" value="3">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>图片4</label>
+					<input id="imgid4" name="imgid[]" value="4">
+				</div>
+				<div class="mui-input-row">
+					<label>图片</label>
+					<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>图片</label>
+					<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>一个周期</label>
+					<input id='wait' name="wait" type="text" class="mui-input-clear mui-input" placeholder="" value="0">
+				</div>
 			</div>
 		</div>
 		<div class="line mui-row" style="position: fixed;bottom: 0px; z-index: 10px;width:100%;margin: 0px;">
