@@ -59,6 +59,7 @@ function w_insertSQL(jsonInfo) {
 		"'attr' int(2)," +
 		"'layer' int(2)," +
 		"'typeid'	int(1)," +
+		"'createyear'	text(10)," +
 		"'identitytime'	text(10)," +
 		"'photoSrc1'	text," +
 		"'photoDes1'	text," +
@@ -84,6 +85,7 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.attr + "," +
 		jsonInfo.layer + "," +
 		jsonInfo.type + ",'" +
+		jsonInfo.createyear + "','" +
 		jsonInfo.identitytime + "','" +
 		jsonInfo.photoSrc1 + "','" +
 		jsonInfo.photoDes1 + "','" +
