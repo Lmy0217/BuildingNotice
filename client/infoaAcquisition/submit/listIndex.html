@@ -135,17 +135,17 @@
 							mui.toast(res.msg);
 						} else {
 							console.log('成功了！')
-							plus.sqlite.selectSql({
-								name: 'info',
-								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
-								success: function(e) {
-									console.log(e);
-									console.log('runSql success: ' + JSON.stringify(e));
-								},
-								fail: function(e) {
-									console.log('runSql fail: ' + JSON.stringify(e));
-								}
-							});
+							// plus.sqlite.selectSql({
+							// 	name: 'info',
+							// 	sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
+							// 	success: function(e) {
+							// 		console.log(e);
+							// 		console.log('runSql success: ' + JSON.stringify(e));
+							// 	},
+							// 	fail: function(e) {
+							// 		console.log('runSql fail: ' + JSON.stringify(e));
+							// 	}
+							// });
 						}
 						// hideLoading();
 					},
@@ -177,8 +177,9 @@
 					var photoSrc = 'photoSrc' + i;
 					var photoDes = 'photoDes' + i;
 					var tempId = "imgid" + i;
+					console.log('wai' +typeof(result[photoSrc]) + '_' + photoSrc)
 					if (!result[photoSrc] == '') {
-						console.log(typeof(result[photoSrc]) + '_' + photoSrc)
+						console.log('nei' +typeof(result[photoSrc]) + '_' + photoSrc)
 						var image = new Image();
 						image.style.width = "60px";
 						image.style.height = "60px";
