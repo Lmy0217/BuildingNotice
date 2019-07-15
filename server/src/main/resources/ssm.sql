@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 139.199.129.48_3306
+ Source Server         : agekt.com_3306
  Source Server Type    : MariaDB
  Source Server Version : 100213
- Source Host           : 139.199.129.48:3306
+ Source Host           : agekt.com:3306
  Source Schema         : ssm
 
  Target Server Type    : MariaDB
  Target Server Version : 100213
  File Encoding         : 65001
 
- Date: 12/07/2019 23:06:44
+ Date: 14/07/2019 15:26:31
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `archive`  (
   `body2` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主体结构概况',
   `body3` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '结构现状描述',
   `rankid` int(11) NULL DEFAULT NULL COMMENT '危险性等级id',
-  `rankratio` double(2, 2) NULL DEFAULT NULL COMMENT '危险构件比例',
+  `rankratio` double(25, 20) NULL DEFAULT NULL COMMENT '危险构件比例',
   `advise` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '建议',
   `identitytime` timestamp(0) NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '鉴定时间',
   `remark` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
@@ -158,7 +158,9 @@ CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `pwd` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+  `salt` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '盐',
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '令牌',
+  `role` int(11) NOT NULL DEFAULT 0 COMMENT '权限',
   `device` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备号',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
@@ -166,6 +168,6 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', 'admin', NULL, NULL);
+INSERT INTO `user` VALUES (1, 'admin', 'admin', 'admin', NULL, 0, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
