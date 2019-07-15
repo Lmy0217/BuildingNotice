@@ -7,7 +7,11 @@ public class User {
 
     private String pwd;
 
+    private String salt;
+
     private String token;
+
+    private Integer role;
 
     private String device;
 
@@ -35,12 +39,28 @@ public class User {
         this.pwd = pwd == null ? null : pwd.trim();
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token == null ? null : token.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public String getDevice() {
