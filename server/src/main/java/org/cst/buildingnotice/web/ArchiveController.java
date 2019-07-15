@@ -12,19 +12,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
 
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 import org.cst.buildingnotice.entity.Damage;
 import org.cst.buildingnotice.entity.Image;
 import org.cst.buildingnotice.entity.Rank;
 import org.cst.buildingnotice.entity.TypeWithBLOBs;
+import org.cst.buildingnotice.entity.User;
 import org.cst.buildingnotice.service.ArchImgService;
 import org.cst.buildingnotice.service.ArchiveService;
 import org.cst.buildingnotice.service.DamageService;
 import org.cst.buildingnotice.service.ImageService;
 import org.cst.buildingnotice.service.RankService;
 import org.cst.buildingnotice.service.TypeService;
+import org.cst.buildingnotice.service.UserService;
+import org.cst.buildingnotice.util.ExceptionUtil;
+import org.cst.buildingnotice.util.FileUtil;
+import org.cst.buildingnotice.util.SecurityUtil;
+import org.cst.buildingnotice.util.StringUtil;
 import org.cst.buildingnotice.util.TemplateUtil;
 import org.cst.buildingnotice.util.ZipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +41,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.deepoove.poi.data.PictureRenderData;
 
@@ -60,35 +67,72 @@ public class ArchiveController {
 	
 	@Autowired
 	private TypeService typeService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/create", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> create(@RequestBody String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
-		System.out.println(jsonstring);
+System.out.println(jsonstring);
 		
-		JSONObject archive = JSONObject.parseObject(jsonstring);
-		String unit = archive.getString("unit");
-		String phone = archive.getString("phone");
-		String material = archive.getString("material");
-		String addr = archive.getString("addr");
-		String hold = archive.getString("hold");
-		String holdid = archive.getString("holdid");
-		String attr = archive.getString("attr");
-		Integer layer = archive.getIntValue("layer");
-		String createyear = archive.getString("createyear");
-		int typeid = archive.getIntValue("typeid");
-		String body1 = archive.getString("body1");
-		String body2 = archive.getString("body2");
-		String body3 = archive.getString("body3");
-		String remark = archive.getString("remark");
-		List<Integer> imgs = archive.getJSONArray("imgs").toJavaList(Integer.class);
-		List<Integer> damage = archive.getJSONArray("damage").toJavaList(Integer.class);
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String hexToken = json.getString("token");
+		String unit = json.getString("unit");
+		String phone = json.getString("phone");
+		String material = json.getString("material");
+		String addr = json.getString("addr");
+		String hold = json.getString("hold");
+		String holdid = json.getString("holdid");
+		String attr = json.getString("attr");
+		Integer layer = json.getIntValue("layer");
+		String createyear = json.getString("createyear");
+		Integer typeid = json.getInteger("typeid");
+		String body1 = json.getString("body1");
+		String body2 = json.getString("body2");
+		String body3 = json.getString("body3");
+		String remark = json.getString("remark");
+		JSONArray imgsJSON = json.getJSONArray("imgs");
+		JSONArray damageJSON = json.getJSONArray("damage");
+		if (hexToken == null || typeid == null || imgsJSON == null || damageJSON == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		if (user.getRole() < 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+		}
+		
+		List<Integer> imgs = imgsJSON.toJavaList(Integer.class);
+		List<Integer> damage = damageJSON.toJavaList(Integer.class);
 		
 		double rankratio = damageService.ratio(damage);
 		int rankid = rankService.getIdByRatio(rankratio);
-		
 		String advise = typeService.getAdviseByIdAndBody3(typeid, body3);
 		
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,27 +140,36 @@ public class ArchiveController {
 		try {
 			date = createyear != null ? dateformat.parse(createyear) : null;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "参数错误！");
 		}
 		
-		// TODO userid
-		int archid = archiveService.create(unit, phone, material, addr, hold, 
+		Integer archid = archiveService.create(unit, phone, material, addr, hold, 
 				holdid, attr, layer, date, typeid, body1, body2, body3, rankid, 
-				rankratio, advise, null, remark, 1);
-				//(Integer) model.asMap().get("userid"));
-		
-		for (int i = 0; i < imgs.size(); i++) {
-			archImgService.create(archid, imgs.get(i));
+				rankratio, advise, null, remark, userId);
+		if (archid == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 		}
 		
-		damageService.create(archid, damage);
+		int flag = -1;
+		for (int i = 0; i < imgs.size(); i++) {
+			flag = archImgService.create(archid, imgs.get(i));
+			if (flag != 1) {
+				return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+			}
+		}
 		
-		Map<String, Object> dict = new HashMap<String, Object>();
-		dict.put("status", HttpStatus.OK.value());
-		dict.put("archid", archid);
+		flag = damageService.create(archid, damage);
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
 
-		return dict;
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+				put("archid", archid);
+			}
+		};
 	}
 	
 	@RequestMapping(value = "/download", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.GET)
@@ -129,25 +182,10 @@ public class ArchiveController {
 		JSONObject json = JSONObject.parseObject(jsonstring);
 		List<Integer> ids = json.getJSONArray("ids").toJavaList(Integer.class);
 		
-		String archive_path = request.getServletContext().getRealPath("/downloads/archive");
-		System.out.println("archive_path :" + archive_path);
-		File archive_path_file = new File(archive_path);
-		if (!archive_path_file.exists()) {
-			System.out.println(archive_path_file.mkdirs());
-		}
-		
-		String imgs_path = request.getServletContext().getRealPath("/uploads/images");
-		System.out.println("imgs_path :" + imgs_path);
-		
-		String template_path = request.getServletContext().getRealPath("/uploads/template");
-		System.out.println("template_path :" + template_path);
-		// TODO
-		File template_path_file = new File(template_path);
-		if (!template_path_file.exists()) {
-			System.out.println(template_path_file.mkdirs());
-		}
+		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
+		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
+		String template_path = FileUtil.getRealPath(request, "/uploads/template");
 		String template_file = template_path + File.separator + "template_2.docx";
-		System.out.println("template_file :" + template_file);
 		
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -181,9 +219,12 @@ public class ArchiveController {
 					dateformat.format(archiveWithBLOBs.getCreateyear()) : "");
 			data.put("typename", typeWithBLOBs.getName());
 			data.put("identitytime", identityTime);
-			data.put("body1", TemplateUtil.stringRender(typeWithBLOBs.getBody1(), "1;"));
-			data.put("body2", TemplateUtil.stringRender(typeWithBLOBs.getBody2(), archiveWithBLOBs.getBody2()));
-			data.put("body3", TemplateUtil.stringRender(typeWithBLOBs.getBody3(), archiveWithBLOBs.getBody3()));
+			data.put("body1", TemplateUtil.stringRender(
+					typeWithBLOBs.getBody1(), "1;"));
+			data.put("body2", TemplateUtil.stringRender(
+					typeWithBLOBs.getBody2(), archiveWithBLOBs.getBody2()));
+			data.put("body3", TemplateUtil.stringRender(
+					typeWithBLOBs.getBody3(), archiveWithBLOBs.getBody3()));
 			
 			for (int j = 0; j < 1; j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
@@ -215,25 +256,21 @@ public class ArchiveController {
 			data.put("rankdepict", rank.getDepict());
 			data.put("rankname", rank.getName());
 			
-			data.put("advise", TemplateUtil.stringRender(typeWithBLOBs.getAdvise(), 
-					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), archiveWithBLOBs.getBody3())));
+			data.put("advise", TemplateUtil.stringRender(
+					typeWithBLOBs.getAdvise(), 
+					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), 
+							archiveWithBLOBs.getBody3())));
 			System.out.println("data complete");
 			TemplateUtil.render(template_file, data, file);
 			files.add(file);
 		}
 		
-		String zip_path = request.getServletContext().getRealPath("/downloads/zip");
-		System.out.println("zip_path :" + zip_path);
-		File zip_path_file = new File(zip_path);
-		if (!zip_path_file.exists()) {
-			System.out.println(zip_path_file.mkdirs());
-		}
-		DateFormat dateformatHms = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		String zip_file_name = dateformatHms.format(new Date()) + "_" + "1" + ".zip";
+		String zip_file_name = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+				.format(new Date()) + "_" + "1" + ".zip";
+		String zip_path = FileUtil.getRealPath(request, "/downloads/zip");
 		String zip_file = zip_path + File.separator + zip_file_name;
-		System.out.println(zip_file);
-		ZipUtil.zip(files, zip_file);
 		
+		ZipUtil.zip(files, zip_file);	
 		
 		Map<String, Object> dict = new HashMap<String, Object>();
 		dict.put("status", HttpStatus.OK.value());

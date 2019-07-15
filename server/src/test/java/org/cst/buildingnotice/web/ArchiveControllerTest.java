@@ -30,7 +30,7 @@ import com.alibaba.fastjson.JSONObject;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:applicationContext.xml", "classpath:spring-mvc.xml"})
 @WebAppConfiguration
-@Rollback(value=true)
+@Rollback(value=false)
 @Transactional(transactionManager = "transactionManager")
 public class ArchiveControllerTest {
 
@@ -44,10 +44,11 @@ public class ArchiveControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 	
-	@Test
+	//@Test
 	public void createTest() throws Exception {
 		
 		JSONObject requestBodyJSON = new JSONObject();
+		requestBodyJSON.put("token", "363b736e3206180a4265e4becb0ac4caba706053e8a6384ee226e60c77c7a1fd48e7");
 		requestBodyJSON.put("unit", "江西省南昌市");
 		requestBodyJSON.put("phone", "19568725565");
 		requestBodyJSON.put("material", "无");
@@ -77,7 +78,7 @@ public class ArchiveControllerTest {
         resultActions.andDo(MockMvcResultHandlers.print());
 	}
 	
-	@Test
+	//@Test
 	public void downloadTest() throws Exception {
 		
 		JSONObject requestBodyJSON = new JSONObject();
