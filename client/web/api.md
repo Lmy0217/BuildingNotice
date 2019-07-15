@@ -17,6 +17,8 @@ post {website}
 {
     status:200;//成功登陆
     token:(str);
+	over:(num),//已经提交的任务
+	undown:(num),//还未下载的任务总数
 }
 //其他失败同APP api
 
