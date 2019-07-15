@@ -75,16 +75,16 @@
 								console.log('selectSql success: ' + JSON.stringify(e));
 								// console.log(JSON.stringify(e));
 								photoId = upPhoto(e[0]);
-								var pi=document.getElementById('imgid1').value;
+								var pi = document.getElementById('imgid1').value;
 								console.log(pi);
-								var  obj = document.getElementsByName("imgid[]");
+								var obj = document.getElementsByName("imgid[]");
 								console.log(obj);
-		 var photoId=[];
-		 for(var i in obj){
-			 if(obj[i].checked){
-				 photoId.push(obj[i].value);
-			 }
-		 }
+								var photoId = [];
+								for (var i in obj) {
+									if (obj[i].checked) {
+										photoId.push(obj[i].value);
+									}
+								}
 								console.log(photoId);
 								data = zhenliJson(e, photoId);
 								// upData(e);
@@ -227,7 +227,7 @@
 							cache: false,
 							processData: false,
 							contentType: false,
-							async : false,
+							async: false,
 							type: 'post',
 							// contentType: "multipart/form-data",
 							timeout: 50000,
@@ -253,7 +253,7 @@
 									tempInput.value = data.imageid;
 									tempInput.checked = "checked";
 									console.log(tempInput.checked)
-									var pi=document.getElementById('imgid1').value;
+									var pi = document.getElementById('imgid1').value;
 									console.log(pi)
 									var temp = data.imageid;
 									console.log(temp);
@@ -274,7 +274,7 @@
 						photoId[flag] = temp;
 						flag++;
 					}
-					
+
 				}
 				return photoId;
 			}
@@ -316,9 +316,23 @@
 					},
 					fail: function(e) {
 						console.log('selectSql fail: ' + JSON.stringify(e));
+						showInfoFail(e);
 						closeDB();
 					}
 				});
+			}
+			
+			function showInfoFail(result) {
+				watchJSON(result);
+				var mainList = document.getElementById("mainList");
+					var temp = "<li class='mui-table-view-cell'>" +
+						"<div class='mui-input-row mui-checkbox mui-left'>" +
+						"<label> 数据库没有数据 </label>" +
+						"<input name='perChk[]' value='" + 'result[i].rowid' + "' type='checkbox' disabled='disabled' >" +
+						"</div>" +
+						"</li>"
+					// console.log(temp);
+					mainList.innerHTML += temp;
 			}
 
 			function showInfo(result) {
@@ -379,7 +393,7 @@
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>图片1</label>
-				<input id="imgid1" name="imgid[]" value="1" >
+				<input id="imgid1" name="imgid[]" value="1">
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>图片2</label>

@@ -102,10 +102,25 @@ function popToTarget(targetId) {
 function goHome() {
 	//到首页去，关闭其他所有页面
 	console.log('到首页去，关闭其他所有页面');
+	// 	var btnArray = ['否', '是']; //注意这里的顺序是先否再是
+	// 
+	// 	mui.confirm("MUI是个好框架，确认？", 'Hello MUI', btnArray, function(e) {
+	// 
+	// 			if (e.index == 1) { //索引是1的就是选择的是
+	// 
+	// 				info.innerText = '你刚确认MUI是个好框架';
+	// 
+	// 			} else {
+	// 
+	// 				info.innerText = 'MUI没有得到你的认可，继续加油'
+	// 
+	// 			}
+	// 		}
 	var allPage = plus.webview.all();
 	watchJSON(allPage);
 	homeId = plus.webview.getLaunchWebview().id;
-	console.log(homeId);
+	console.log(
+		homeId);
 
 	for (var i = 0, l = allPage.length; i < l; i++) {
 		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined' || typeof(allPage[i]['id']) == 'undefined') {
