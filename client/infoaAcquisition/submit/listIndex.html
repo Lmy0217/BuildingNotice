@@ -65,6 +65,7 @@
 				document.getElementById('submit').addEventListener("tap", function() {
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
+					console.log(perChk);
 					var wait=document.getElementById("wait");
 					openDB();
 					for (i = 0; i < perChk.length; i++) {
@@ -83,21 +84,25 @@
 								var obj = document.getElementsByName("imgid[]");
 								console.log(obj);
 								var photoId = [];
-								for (var i in obj) {
-									if (obj[i].checked) {
-										photoId.push(parseInt(obj[i].value));
-										obj[i].checked="";
+								for (var j in obj) {
+									if (obj[j].checked) {
+										photoId.push(parseInt(obj[j].value));
+										obj[j].checked="";
 									}
-									obj[i].value="0";
+									obj[j].value="0";
 								}
 								console.log(photoId);
 								data = zhenliJson(e[0], photoId);
 								upData(data);
-								while(wait==0){
-									console.log(wait);
-									sleep(1000);
-								}	
 								wa.close();
+								console.log(i);
+								w_showInfo();
+								console.log(i);
+								// while(wait==0){
+								// 	console.log(wait);
+								// 	sleep(1000);
+								// }	
+								
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
@@ -105,7 +110,6 @@
 							}
 						});
 						wa.close();
-						// mui.hideLoading();
 					}
 				})
 
@@ -149,17 +153,17 @@
 							console.log('成功了！')
 							console.log(res);
 							document.getElementById('wait').value=1;
-							// plus.sqlite.selectSql({
-							// 	name: 'info',
-							// 	sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
-							// 	success: function(e) {
-							// 		console.log(e);
-							// 		console.log('runSql success: ' + JSON.stringify(e));
-							// 	},
-							// 	fail: function(e) {
-							// 		console.log('runSql fail: ' + JSON.stringify(e));
-							// 	}
-							// });  
+							plus.sqlite.selectSql({
+								name: 'info',
+								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
+								success: function(e) {
+									console.log(e);
+									console.log('runSql success: ' + JSON.stringify(e));
+								},
+								fail: function(e) {
+									console.log('runSql fail: ' + JSON.stringify(e));
+								}
+							});  
 						}
 						// mui.hideLoading();
 					},
@@ -354,10 +358,11 @@
 			function showInfo(result) {
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
-				for (i = 0; i < result.length; i++) {
+				mainList.innerHTML="";
+				for (i = result.length-1; i >= 0; i--) {
 					var temp = "<li class='mui-table-view-cell'>" +
 						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label>" + result[i].hold + "</label>" +
+						"<label>" +(result.length-i)+"."+ result[i].hold + "</label>" +
 						"<input name='perChk[]' value='" + result[i].rowid + "' type='checkbox' >" +
 						"</div>" +
 						"</li>"
