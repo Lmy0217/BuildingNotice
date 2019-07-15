@@ -41,7 +41,10 @@
 			mui.plusReady(function() {
 				var tmp=plus.webview.currentWebview();
 				var form_per=chuliForm(tmp);
-				document.getElementById("div1").innerText='hi,'+JSON.stringify(tmp.hold);
+				document.getElementById("div1").innerText='户主：'+JSON.stringify(tmp.hold);
+				document.getElementById('goBack').addEventListener("tap", function() {
+					mui.back('form3');
+				})
 			});
 			//计算结果
 			function computeResult() {
@@ -97,6 +100,7 @@
 			
 		</script>
 		<header class="mui-bar mui-bar-nav">
+			<a id="goBack" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">信息采集助手</h1>
 		</header>
 		<div class="mui-content">
@@ -278,6 +282,14 @@
 					</div>
 				</div>
 				<div class="mui-input-row">
+					<label>围护构件</label>
+					<div class="mui-numbox" data-numbox-min="0" id="weihugoujian">
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="weihugoujian" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</div>
+				<div class="mui-input-row">
 					<label class="lv-title">
 						<h5>根据现场查勘及受损情况调查结果，依据《危险房屋鉴定标准》（JGJ125-2016）公式6.3.2，鉴定人员对房屋危险构件百分比进行了计算。计算结果表明：主体结构危险构件综合比例为<span id="result_num"
 							 class="result">0</span>%，<span id="result_des" class="result">大于0但未超过比例5%</span>，故该栋房屋的危险性等级为<span id="result_grade"
@@ -297,16 +309,20 @@
 						<h5 style="color: #000000;">恭喜！您已经基本完成表单。这一部分将由系统根据之前填写的情况自动生成。请到后台下载Word后再修改。</h5>
 					</label>
 				</div>
+				<div class="mui-input-row">
+					<label>备注</label>
+					<input id='remark' name="remark" type="text" class="mui-input-clear mui-input" placeholder="请如果有其他信息,可以备注.">
+				</div>
 			</form>
 		</div>
 
 		<div class="mui-content-padded">
 			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="submitFrom()">完成表单</button>
 		</div>
-		<div class="mui-content-padded mui-row">
+		<!-- <div class="mui-content-padded mui-row">
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="" disabled="disabled">回主页</button>
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back('form3')">上一步</button>
-		</div>
+		</div> -->
 
 	</body>
 

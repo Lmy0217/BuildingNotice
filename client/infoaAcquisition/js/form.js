@@ -37,40 +37,43 @@ function submitFrom() {
 // 执行SQL语句，这里要弄三个表
 function w_insertSQL(jsonInfo) {
 	var douhao = "','"
-	console.log(douhao);
+	console.log(jsonInfo);
 	//------------------------
 	jsonInfo = zhenliPhoto(jsonInfo);
-	watchJSON(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
 	// console.log(damage);
-	type = zhenliType(jsonInfo);
-	// console.log(type);
-	question = zhenliQuestion(jsonInfo);
-	// console.log(question);
+	typeb = zhenliType(jsonInfo);
+	// alert('typeb!');
+	console.log(typeb);
+	typec = zhenliQuestion(jsonInfo);
+	console.log(typec);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
-	creatMain = "create table if not exists "+tableName+"(" +
-		"'unit'	char," +
+	creatMain = "create table if not exists " + tableName + "(" +
+		"'unit'	text," +
 		"'phone'	int(11)," +
-		"'material'	char ," +
-		"'addr'	char," +
-		"'hold'	char," +
+		"'material'	text ," +
+		"'addr'	text," +
+		"'hold'	text," +
 		"'holdid' int(20)," +
 		"'attr' int(2)," +
 		"'layer' int(2)," +
 		"'typeid'	int(1)," +
-		"'identitytime'	char(10)," +
-		"'photoSrc1'	char," +
-		"'photoDes1'	char," +
-		"'photoSrc2'	char," +
-		"'photoDes2'	char," +
-		"'photoSrc3'	char," +
-		"'photoDes3'	char," +
-		"'photoSrc4'	char," +
-		"'photoDes4'	char," +
-		"'damage'	char," +
-		"'type'	char," +
-		"'question'	char," +
+		"'createyear'	text(10)," +
+		"'identitytime'	text(10)," +
+		"'photoSrc1'	text," +
+		"'photoDes1'	text," +
+		"'photoSrc2'	text," +
+		"'photoDes2'	text," +
+		"'photoSrc3'	text," +
+		"'photoDes3'	text," +
+		"'photoSrc4'	text," +
+		"'photoDes4'	text," +
+		"'damage'	text," +
+		"'typea'	text," +
+		"'typeb'	text," +
+		"'typec'	text," +
+		"'remark'	text," +
 
 		"'isUp'	int(1)" + ")";
 	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
@@ -82,6 +85,7 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.attr + "," +
 		jsonInfo.layer + "," +
 		jsonInfo.type + ",'" +
+		jsonInfo.createyear + "','" +
 		jsonInfo.identitytime + "','" +
 		jsonInfo.photoSrc1 + "','" +
 		jsonInfo.photoDes1 + "','" +
@@ -92,13 +96,16 @@ function w_insertSQL(jsonInfo) {
 		jsonInfo.photoSrc4 + "','" +
 		jsonInfo.photoDes4 + "','" +
 		damage.toString() + "','" +
-		type.toString() + "','" +
-		question.toString() + "'," +
+		"" + "','" +
+		typeb + "','" +
+		typec + "','" +
+		jsonInfo.remark + "'," +
 		0 + ")";
 	openDB();
 	// insertSQL(tableName, creatMain, sqlStr);
 	console.log(creatMain);
 	console.log(sqlStr);
+	// alert('zuzhi!');
 	plus.sqlite.executeSql({
 		name: 'info',
 		// "create table if not exists infoDB('danwei' CHAR(110),'floor' INT(2),'result' FLOAT(11))",
@@ -131,7 +138,7 @@ function w_insertSQL(jsonInfo) {
 	// }else{
 	// 	
 	// }
-	
+
 }
 
 // 执行SQL语句，这里要弄三个表
@@ -220,7 +227,8 @@ function openNext(formNow, formNext) {
 	var tmp = plus.webview.currentWebview();
 	var form_per = chuliForm(tmp);
 	var form_now = getForm('#' + formNow);
-	watchJSON(form_now);
+	console.log(form_now);
+	
 	var extras = $.extend({}, form_per, form_now);
 
 	var url = formNext + ".html";
@@ -230,37 +238,42 @@ function openNext(formNow, formNext) {
 }
 
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
-function changeChild(father, child) {
-	var father_str = 'input[type=checkbox][name=' + father + ']';
-	var child_str = 'input[type=radio][name=' + child + ']';
-
+function changeChild2(father, child1, child2) {
+	var father_str = "input[type=checkbox][name=" + father + "]";
+	var child_str1 = "input[type=radio][name=" + child1 + "]";
+	// var child_str2 = "input[type=checkbox][name=" + child2 + "]";
+	var child2 = document.getElementsByName(child2);
+	// console.log(child2);
+	// console.log($(child2));
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; i < $(child_str).length; i++) {
-				try {
-					$(child_str)[i].disabled = "";
-				} catch (err) {
-					console.log(child_str);
-					console.log(i);
-					$(child_str)[i].disabled = "";
-				}
-
+			for (i = 0; i < $(child_str1).length; i++) {
+				$(child_str1)[i].disabled = "";
 			}
+			$(child_str1)[0].checked = "checked";
+			for (i = 0; i < child2.length; i++) {
+				child2[i].disabled = "";
+			}
+			child2[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
-			$(child_str).disabled = "disabled";
-			for (i = 0; i < $(child_str).length; i++) {
-				$(child_str)[i].disabled = "disabled";
-				$(child_str)[i].checked = "";
+			// $(child_str1).disabled = "disabled";
+			for (i = 0; i < $(child_str1).length; i++) {
+				$(child_str1)[i].disabled = "disabled";
+				$(child_str1)[i].checked = "";
+			}
+			for (i = 0; i < child2.length; i++) {
+				child2[i].disabled = "disabled";
+				child2[i].checked = "";
 			}
 		}
 	});
 }
 // 输入获取父元素的字段与子元素的字段，改变子元素的可选状态
-function changeChild2(father, child) {
+function changeChild(father, child) {
 	var father_str = 'input[type=checkbox][name=' + father + ']';
-	var child_str = 'input[type=checkbox][name=' + child + ']';
+	var child_str = 'input[type=radio][name=' + child + ']';
 	// console.log(child);
 	$(father_str).change(function() {
 		if (this.checked) {
@@ -268,6 +281,7 @@ function changeChild2(father, child) {
 			for (i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "";
 			}
+			$(child_str)[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
 			$(child_str).disabled = "disabled";
@@ -281,54 +295,142 @@ function changeChild2(father, child) {
 
 //整理form3 
 function zhenliQuestion(jsonInfo) {
-	queArr = new Array(16);
-	queArr = initArr(queArr, 0);
-	for (i = 0; i < 16; i++) {
-		var keySrc = "type31" + i;
+	console.log(jsonInfo);
+	var lenq = 2;
+	var key = 'type3'
+	var result = '';
+	var head = ''
+	if (jsonInfo.type == 1) {
+		// 砖木结构		
+		head = creatHead(key, 4, jsonInfo)
+		console.log(head);
+		if (head[0] == 1) {
+			result = result + "" + fixInteger(jsonInfo.type311, lenq);
+		}
+		if (head[1] == 1) {
+			var type322 = creatHead2('type322', 4, jsonInfo);
+			var type322_x = two2x(type322);
+			result = result + "" + fixInteger(type322_x, lenq);
+			result = result + fixInteger(jsonInfo.type321, lenq);
+		}
+		if (head[2] == 1) {
+			var type332 = creatHead2('type332', 3, jsonInfo);
+			var type332_x = two2x(type332);
+			result = result + "" + fixInteger(type332_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type331, lenq);
+		}
+		if (head[3] == 1) {
+			var type342 = creatHead('type342', 2, jsonInfo);
+			var type342_x = two2x(type342);
+			result = result + "" + fixInteger(type342_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type341, lenq);
+		}
+		// console.log('typec='+result);
+	} else if (jsonInfo.type == 2) {
+		head = creatHead(key, 4, jsonInfo);
+		console.log(head);
+		if (head[0] == 1) {
+			result = result + "" + fixInteger(jsonInfo.type311, lenq);
+		}
+		if (head[1] == 1) {
+			result = result + fixInteger(jsonInfo.type321, lenq);
+		}
+		if (head[2] == 1) {
+			var type332 = creatHead2('type332', 3, jsonInfo);
+			var type332_x = two2x(type332);
+			result = result + "" + fixInteger(type332_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type331, lenq);
+		}
+		if (head[3] == 1) {
+			result = result + "" + fixInteger(jsonInfo.type341, lenq);
+		}
+	} else if (jsonInfo.type == 3) {
+
+	}
+	return fixInteger(two2x(head), lenq) + result;
+}
+
+//把一个表示二进制的数组转化为十进制
+function two2x(arr) {
+	console.log('arr=' + arr);
+	var arr_x = parseInt(arr.join(''), 2);
+	console.log(arr_x);
+	return arr_x;
+}
+//整理form2
+function zhenliType(jsonInfo) {
+
+	var key = 'type2'
+	var result = '';
+	console.log(jsonInfo.type21);
+	if (jsonInfo.type == 1) {
+		// 砖木结构	
+		// ---------------
+		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21_x = parseInt(type21.join(''), 2);
+		console.log(type21_x)
+		// ---------------
+		result = fixInteger(type21_x, 2) + '' + fixInteger(jsonInfo.type22, 2);
+		return result;
+	} else if (jsonInfo.type == 2) {
+		return '00';
+	} else if (jsonInfo.type == 3) {
+
+	}
+}
+
+// 
+function creatHead2(key, len, jsonInfo) {
+	var head = new Array(len);
+	head = initArr(head, 0);
+	console.log(key);
+	console.log(jsonInfo[key])
+	for (i = 0; i < jsonInfo[key].length; i++) {
+		if (typeof(jsonInfo[key][i]) == 'underfind') {
+			head[i] = 0;
+		} else {
+			head[i] = 1;
+		}
+	}
+	console.log(head);
+	// head=parseInt(head,2);
+	// console.log(head);
+	return head;
+}
+
+function creatHead(key, len, jsonInfo) {
+	var head = new Array(len);
+	for (i = 1; i <= len; i++) {
+		var keyName = key + i;
+		if (jsonInfo.hasOwnProperty(keyName)) {
+			console.log(i)
+			head[i - 1] = 1;
+		} else {
+			console.log(i)
+			head[i - 1] = 0;
+		}
+		console.log(head)
+	}
+	console.log(head);
+	// head=parseInt(head,2);
+	// console.log(head);
+	return head;
+}
+
+//规则化
+function regularization(len, head, type) {
+	var typeArr = new Array(len);
+	typeArr = initArr(typeArr, 0);
+	for (i = 0; i < len; i++) {
+		var keySrc = type + i;
 		if (jsonInfo.hasOwnProperty(keySrc)) {
 			queArr[i] = jsonInfo[keySrc];
 		} else {
 			queArr[i] = 0;
 		}
 	}
-	return queArr;
+
 }
-
-//整理form2
-function zhenliType(jsonInfo) {
-	if (jsonInfo.type == 1) {
-		// 砖木结构
-		var typeArr = new Array(6);
-		typeArr = initArr(typeArr, 0);		
-		var flag = 0;
-		for (i = 0; i < 3; i++) {
-			var keySrc = "type21" + i;
-			if (jsonInfo.hasOwnProperty(keySrc)) {
-				var temp = jsonInfo[keySrc];
-			} else {
-				var temp = NaN;
-			}
-			if (i == 1) {
-				for (j = 0; j < temp.length; j++) {
-					if (typeof(temp) != "NaN") {
-						typeArr[parseInt(flag) + parseInt(temp)-1] = 1;
-					}
-				}
-				flag=flag+4;
-			} else {
-				// console.log(flag+','+temp);
-				typeArr[flag] = temp;
-				flag = flag + 1;
-			}
-		}
-		return typeArr;
-	} else if (jsonInfo.type == 2) {
-
-	} else if (jsonInfo.type == 3) {
-
-	}
-}
-
 // 补全json字段，补全缺少的photo字段
 function zhenliPhoto(jsonInfo) {
 	for (i = 1; i <= 4; i++) {
@@ -355,13 +457,12 @@ function zhenliDamage(jsonInfo) {
 	damageArr[9] = jsonInfo.zhongjianliang_w;
 	damageArr[10] = jsonInfo.bianliang;
 	damageArr[11] = jsonInfo.bianliang_w;
-	damageArr[12] = jsonInfo.bianliang_w;
-	damageArr[13] = jsonInfo.qiangti;
-	damageArr[14] = jsonInfo.qiangti_w;
-	damageArr[15] = jsonInfo.loubangoujian;
-	damageArr[16] = jsonInfo.loubangoujian_w;
-	damageArr[17] = jsonInfo.weihugoujian;
-	damageArr[18] = jsonInfo.weihugoujian_w;
+	damageArr[12] = jsonInfo.qiangti;
+	damageArr[13] = jsonInfo.qiangti_w;
+	damageArr[14] = jsonInfo.loubangoujian;
+	damageArr[15] = jsonInfo.loubangoujian_w;
+	damageArr[16] = jsonInfo.weihugoujian;
+	damageArr[17] = jsonInfo.weihugoujian_w;
 	return damageArr;
 }
 

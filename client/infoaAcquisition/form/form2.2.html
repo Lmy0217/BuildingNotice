@@ -12,6 +12,11 @@
 				width: 100%;
 			}
 			
+			.mui-input-group .lv-c{
+				width: 100%;
+				padding-left: 15%;
+			}
+			
 			.lv-content {
 				height: auto;
 			}
@@ -57,6 +62,11 @@
 				document.getElementById('goBack').addEventListener("tap", function() {
 					mui.back('form1');
 				})
+				
+				changeChild('type31','type311');
+				changeChild('type32','type321');
+				changeChild2('type33','type331','type332[]');
+				changeChild('type34','type341');
 			});
 </script>
 		<header class="mui-bar mui-bar-nav">
@@ -100,6 +110,81 @@
 						<h5>2）房屋主要以砖墙和楼面板承重，楼面板为现浇钢筋混凝土板。</h5>
 					</label>
 				</div>
+				
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5 style="color: #000000;">&nbsp;3.房屋结构缺陷和问题</h5>
+					</label>
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-title">
+						<h5><span class="result">提示：请选择需要添加到报告中的叙述。需要先选择大项，才能开启小项</span></h5>
+					</label>
+				</div>
+				
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>1. 地面基础存在沉降</label>
+					<input name="type31" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>轻微沉降</label>
+					<input name="type311" type="radio" value="4" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>严重沉降</label>
+					<input name="type311" type="radio" value="8" disabled="disabled">
+				</div>
+				
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>2. 墙体存在开裂现象</label>
+					<input name="type32" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>轻微</label>
+					<input name="type321" value="4" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>严重</label>
+					<input name="type321" value="8" type="radio" disabled="disabled">
+				</div>
+				
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>3. 存在渗水现象</label>
+					<input name="type33" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>轻微</label>
+					<input name="type331" value="4" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>严重</label>
+					<input name="type331" value="8" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<label class="lv-c">3.1. 存在渗水的构件</label>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>墙体</label>
+					<input name="type332[]" value="1" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>楼面板</label>
+					<input name="type332[]" value="2" type="checkbox" disabled="disabled">
+				</div>
+				
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>4. 混凝土构件露筋并锈蚀</label>
+					<input name="type34" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>轻微</label>
+					<input name="type341" value="4" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>严重</label>
+					<input name="type341" value="8" type="radio" disabled="disabled">
+				</div>
+				
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form2','form3')">下一步</button>

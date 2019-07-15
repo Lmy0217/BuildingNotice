@@ -1,7 +1,10 @@
 function watchJSON(json) {
 	console.log(JSON.stringify(json));
 }
-
+function sleep(d){
+	// sleep(5000); //当前方法暂停5秒
+  for(var t = Date.now();Date.now() - t <= d;);
+}
 // 关闭数据库
 function closeDB() {
 	console.log('关闭数据库: ');
@@ -102,10 +105,25 @@ function popToTarget(targetId) {
 function goHome() {
 	//到首页去，关闭其他所有页面
 	console.log('到首页去，关闭其他所有页面');
+	// 	var btnArray = ['否', '是']; //注意这里的顺序是先否再是
+	// 
+	// 	mui.confirm("MUI是个好框架，确认？", 'Hello MUI', btnArray, function(e) {
+	// 
+	// 			if (e.index == 1) { //索引是1的就是选择的是
+	// 
+	// 				info.innerText = '你刚确认MUI是个好框架';
+	// 
+	// 			} else {
+	// 
+	// 				info.innerText = 'MUI没有得到你的认可，继续加油'
+	// 
+	// 			}
+	// 		}
 	var allPage = plus.webview.all();
 	watchJSON(allPage);
 	homeId = plus.webview.getLaunchWebview().id;
-	console.log(homeId);
+	console.log(
+		homeId);
 
 	for (var i = 0, l = allPage.length; i < l; i++) {
 		if (allPage[i].id != homeId || typeof(allPage[i]) == 'undefined' || typeof(allPage[i]['id']) == 'undefined') {
@@ -167,26 +185,100 @@ function remPwd() {
 	var autoLoginButton = document.getElementById("autoLogin");
 	var accountBox = document.getElementById('account');
 	var passwordBox = document.getElementById('password');
-	gender=autoLoginButton.classList.contains('mui-active');
-	console.log(gender)//ture/false
-	
-	if(gender==true){
-	    localStorage.setItem("account", accountBox.value);
+	gender = autoLoginButton.classList.contains('mui-active');
+	console.log(gender) //ture/false
+
+	if (gender == true) {
+		localStorage.setItem("account", accountBox.value);
 		localStorage.setItem("password", passwordBox.value);
-	}else{
-	    localStorage.removeItem("account");
-	    localStorage.removeItem("password");
+	} else {
+		localStorage.removeItem("account");
+		localStorage.removeItem("password");
 	}
 }
 
 function dataURLtoBlob(dataurl) {
-        var arr = dataurl.split(','),
-            mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]),
-            n = bstr.length,
-            u8arr = new Uint8Array(n);
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new Blob([u8arr], { type: mime });
-    }
+	var arr = dataurl.split(','),
+		mime = arr[0].match(/:(.*?);/)[1],
+		bstr = atob(arr[1]),
+		n = bstr.length,
+		u8arr = new Uint8Array(n);
+	while (n--) {
+		u8arr[n] = bstr.charCodeAt(n);
+	}
+	return new Blob([u8arr], {
+		type: mime
+	});
+}
+
+function fixInteger(num, n) {
+	return (Array(n).join(0) + num).slice(-n);
+}
+
+function postData(url, data, callback, waitingDialog) {
+	console.log()
+	console.log(data);
+	console.log(url);
+	// formData.append('new', data.file);
+	// Object.keys(data).forEach((key) => {
+	//   formData.append(key, data[key]);
+	// });
+	// console.log(formData);
+	mui.ajax(url, {
+		data: data,
+		// cache: false,
+		// processData: false,
+		contentType: 'application/json; charset=UTF-8',
+		type: 'post',
+		// contentType: "multipart/form-data",
+		timeout: 5000,
+		success: callback,
+		error: function(xhr, type, errorThrown) {
+			waitingDialog.close();
+			console.log(JSON.stringify(errorThrown));
+			mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
+
+		},
+		headers: {
+			// 'access_token': AUTH_TOKEN,
+			// 'user_key': USER_KEY,
+		}
+	});
+}
+
+function postImage(url, data, callback, waitingDialog) {
+	console.log()
+	console.log(data);
+	console.log(url);
+	// var formData = new FormData();
+	var formData = new FormData();
+	// formData.append("accountnum", 123456); 
+	formData.append('depict', data.depict);
+
+	formData.append('file', new File([data.file], '12345.png'));
+	// formData.append('new', data.file);
+	// Object.keys(data).forEach((key) => {
+	//   formData.append(key, data[key]);
+	// });
+	console.log(formData);
+	mui.ajax(url, {
+		data: formData,
+		// cache: false,
+		processData: false,
+		contentType: false,
+		type: 'post',
+		// contentType: "multipart/form-data",
+		timeout: 50000,
+		success: callback,
+		error: function(xhr, type, errorThrown) {
+			waitingDialog.close();
+			console.log(JSON.stringify(errorThrown));
+			mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
+
+		},
+		headers: {
+			// 'access_token': AUTH_TOKEN,
+			// 'user_key': USER_KEY,
+		}
+	});
+}

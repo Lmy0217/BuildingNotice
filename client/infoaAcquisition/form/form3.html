@@ -54,7 +54,7 @@
 		console.log(JSON.stringify(form_per));		
 		var mubiao='form2.'+form_per.type;
 		document.getElementById('goBack').addEventListener("tap", function() {
-			mui.back(mubiao);
+			mui.back(mubiao);})
 		//给选中的li增加判别class
 		$(".list li").on("tap",".imageup",function(){
 		// alert('11');
@@ -64,15 +64,11 @@
 		$li.siblings().removeClass("selectLi");              
 		 page.imgUp();
 		 })
+		changeChild('type32','type33','type34[]');
+		changeChild('type36','type37','type38[]');
+		changeChild('type39','type310','type311[]');
+		changeChild('type312','type313','type314[]');
 		
-		changeChild('type31','type32');
-		changeChild('type33','type34[]');
-		changeChild('type35','type36');
-		changeChild('type37','type38[]');
-		changeChild2('type311[]','type312');
-		changeChild('type313','type314[]');
-		changeChild('type315','type316');
-		 
 	});
 		
 	
@@ -99,7 +95,7 @@
 				<div class="mui-input-row">
 					<label class="lv-title">&nbsp;房屋结构描述</label>
 				</div>
-				<div class="mui-input-row">
+			<!-- 	<div class="mui-input-row">
 					<label class="lv-title">
 						<h5 style="color: #000000;">&nbsp;3.房屋结构缺陷和问题</h5>
 					</label>
@@ -161,8 +157,8 @@
 				<div class="mui-input-row mui-radio mui-left ">
 					<label>严重破损</label>
 					<input name="type35" value="3" type="radio">
-				</div>				
-				
+				</div>
+
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>3. 存在开裂现象</label>
 					<input name="type36" value="1" type="checkbox">
@@ -194,7 +190,7 @@
 					<label>木檩条</label>
 					<input name="type38[]" type="checkbox" value="4" disabled="disabled">
 				</div>
-				
+
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>4. 存在腐蚀现象</label>
 					<input name="type39" value="1" type="checkbox">
@@ -215,8 +211,8 @@
 					<input name="type311[]" type="checkbox" value="1" disabled="disabled">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
-					<label>木柱/label>
-					<input name="type311[]" type="checkbox" value="2" disabled="disabled">
+					<label>木柱</label>
+						<input name="type311[]" type="checkbox" value="2" disabled="disabled">
 				</div>
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>木屋架</label>
@@ -226,7 +222,7 @@
 					<label>木檩条</label>
 					<input name="type311[]" type="checkbox" value="4" disabled="disabled">
 				</div>
-				
+
 				<div class="mui-input-row mui-checkbox mui-left">
 					<label>5. 柱脚存在问题</label>
 					<input name="type312" value="1" type="checkbox">
@@ -251,7 +247,7 @@
 					<label>破损</label>
 					<input name="type314[]" value="3" type="checkbox" disabled="disabled">
 				</div>
-					
+ -->
 				<div class="mui-input-row">
 					<label class="lv-title">采集照片</label>
 				</div>
@@ -266,21 +262,21 @@
 					<li class='mui-table-view-cell mui-media'>
 						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
 						<p><a class="imageup 2">采集图片2</a></p>
-						<input id='photoDes2' name="photoDes2" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoSrc2' name="photoSrc2" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
 						<input id='photoDes2' name="photoDes2" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
 						 style="display:none">
 					</li>
 					<li class='mui-table-view-cell mui-media'>
 						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
 						<p><a class="imageup 3">采集图片3</a></p>
-						<input id='photoDes3' name="photoDes3" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoSrc3' name="photoSrc3" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
 						<input id='photoDes3' name="photoDes3" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
 						 style="display:none">
 					</li>
 					<li class='mui-table-view-cell mui-media'>
 						<img id="headimg" class="headimg" src='' height="200" width="200" style="display:none">
 						<p><a class="imageup 4">采集图片4</a></p>
-						<input id='photoDes4' name="photoDes4" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
+						<input id='photoSrc4' name="photoSrc4" type="text" class="mui-input-clear mui-input photoSrc" value="" style="display:none">
 						<input id='photoDes4' name="photoDes4" type="text" class="mui-input-clear mui-input photoDes" placeholder="请输入图片描述"
 						 style="display:none">
 					</li>
@@ -293,11 +289,12 @@
 
 		<div class="mui-content-padded">
 			<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form3','form4')">下一步</button>
+			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>		
 		</div>
-		<div class="mui-content-padded mui-row">
+		<!-- <div class="mui-content-padded mui-row">
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="w_goBack('')">上一步</button>
-		</div>
+		</div> -->
 
 		<script type="text/javascript">
 			mui.init()
