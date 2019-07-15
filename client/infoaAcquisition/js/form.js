@@ -297,43 +297,59 @@ function zhenliQuestion(jsonInfo) {
 	var lenq = 2;
 	var key = 'type3'
 	var result = '';
+	var head = ''
 	if (jsonInfo.type == 1) {
 		// 砖木结构		
-		var head = ''
 		head = creatHead(key, 4, jsonInfo)
 		console.log(head);
 		if (head[0] == 1) {
-			result = result +""+ fixInteger(jsonInfo.type311, lenq);
+			result = result + "" + fixInteger(jsonInfo.type311, lenq);
+		}
+		if (head[1] == 1) {
+			var type322 = creatHead2('type322', 4, jsonInfo);
+			var type322_x = two2x(type322);
+			result = result + "" + fixInteger(type322_x, lenq);
+			result = result + fixInteger(jsonInfo.type321, lenq);
+		}
+		if (head[2] == 1) {
+			var type332 = creatHead2('type332', 3, jsonInfo);
+			var type332_x = two2x(type332);
+			result = result + "" + fixInteger(type332_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type331, lenq);
+		}
+		if (head[3] == 1) {
+			var type342 = creatHead('type342', 2, jsonInfo);
+			var type342_x = two2x(type342);
+			result = result + "" + fixInteger(type342_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type341, lenq);
+		}
+		// console.log('typec='+result);
+	} else if (jsonInfo.type == 2) {
+		head = creatHead(key, 4, jsonInfo);
+		console.log(head);
+		if (head[0] == 1) {
+			result = result + "" + fixInteger(jsonInfo.type311, lenq);
 		}
 		if (head[1] == 1) {
 			result = result + fixInteger(jsonInfo.type321, lenq);
-			var type322 = creatHead2('type322', 4, jsonInfo);
-			var type322_x=two2x(type322);
-			result = result +""+ fixInteger(type322_x, lenq);
 		}
 		if (head[2] == 1) {
-			result = result +""+ fixInteger(jsonInfo.type331, lenq);
 			var type332 = creatHead2('type332', 3, jsonInfo);
-			var type332_x=two2x(type332);
-			result = result +""+ fixInteger(type332_x, lenq);
+			var type332_x = two2x(type332);
+			result = result + "" + fixInteger(type332_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type331, lenq);
 		}
 		if (head[3] == 1) {
-			result = result +""+ fixInteger(jsonInfo.type321, lenq);
-			var type342 = creatHead('type342', 2, jsonInfo);
-			var type342_x=two2x(type342);
-			result = result +""+ fixInteger(type342_x, lenq);
+			result = result + "" + fixInteger(jsonInfo.type341, lenq);
 		}
-		// console.log('typec='+result);
-		return fixInteger(two2x(head), lenq)+result;
-	} else if (jsonInfo.type == 2) {
-
 	} else if (jsonInfo.type == 3) {
 
 	}
+	return fixInteger(two2x(head), lenq) + result;
 }
 
 //把一个表示二进制的数组转化为十进制
-function two2x(arr){
+function two2x(arr) {
 	console.log('arr=' + arr);
 	var arr_x = parseInt(arr.join(''), 2);
 	console.log(arr_x);
@@ -341,7 +357,7 @@ function two2x(arr){
 }
 //整理form2
 function zhenliType(jsonInfo) {
-	
+
 	var key = 'type2'
 	var result = '';
 	console.log(jsonInfo.type21);
@@ -355,7 +371,7 @@ function zhenliType(jsonInfo) {
 		result = fixInteger(type21_x, 2) + '' + fixInteger(jsonInfo.type22, 2);
 		return result;
 	} else if (jsonInfo.type == 2) {
-
+		return '00';
 	} else if (jsonInfo.type == 3) {
 
 	}
@@ -364,7 +380,7 @@ function zhenliType(jsonInfo) {
 // 
 function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
-	head=initArr(head,0);
+	head = initArr(head, 0);
 	console.log(key);
 	console.log(jsonInfo[key])
 	for (i = 0; i < jsonInfo[key].length; i++) {
@@ -386,10 +402,10 @@ function creatHead(key, len, jsonInfo) {
 		var keyName = key + i;
 		if (jsonInfo.hasOwnProperty(keyName)) {
 			console.log(i)
-			head[i-1] = 1;
+			head[i - 1] = 1;
 		} else {
 			console.log(i)
-			head[i-1] = 0;
+			head[i - 1] = 0;
 		}
 		console.log(head)
 	}
@@ -439,13 +455,12 @@ function zhenliDamage(jsonInfo) {
 	damageArr[9] = jsonInfo.zhongjianliang_w;
 	damageArr[10] = jsonInfo.bianliang;
 	damageArr[11] = jsonInfo.bianliang_w;
-	damageArr[12] = jsonInfo.bianliang_w;
-	damageArr[13] = jsonInfo.qiangti;
-	damageArr[14] = jsonInfo.qiangti_w;
-	damageArr[15] = jsonInfo.loubangoujian;
-	damageArr[16] = jsonInfo.loubangoujian_w;
-	damageArr[17] = jsonInfo.weihugoujian;
-	damageArr[18] = jsonInfo.weihugoujian_w;
+	damageArr[12] = jsonInfo.qiangti;
+	damageArr[13] = jsonInfo.qiangti_w;
+	damageArr[14] = jsonInfo.loubangoujian;
+	damageArr[15] = jsonInfo.loubangoujian_w;
+	damageArr[16] = jsonInfo.weihugoujian;
+	damageArr[17] = jsonInfo.weihugoujian_w;
 	return damageArr;
 }
 

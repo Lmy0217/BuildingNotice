@@ -82,20 +82,19 @@
 								var photoId = [];
 								for (var i in obj) {
 									if (obj[i].checked) {
-										photoId.push(obj[i].value);
+										photoId.push(parseInt(obj[i].value));
 									}
 								}
 								console.log(photoId);
-								data = zhenliJson(e, photoId);
-								// upData(e);
+								data = zhenliJson(e[0], photoId);
+								upData(data);
+
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
 							}
 						});
 					}
-					closeDB();
-
 				})
 
 				// 扩展API加载完毕后调用onPlusReady回调函数 
@@ -103,8 +102,6 @@
 			});
 
 			function upData(data) {
-
-				var sendData = data;
 				console.log(data)
 				// {
 				// 	'data': data,
@@ -114,10 +111,11 @@
 				mui.ajax(upUrl, {
 					type: 'POST',
 					dataType: 'json',
-					data: sendData[0],
+					cache: false,
+					data: data,
 					contentType: "application/json; charset=UTF-8",
-					async: true,
-					timeout: 100000, //超时时间设置为10秒；
+					async: false,
+					timeout: 1000, //超时时间设置为10秒；
 					success: function(res) {
 						if (typeof res == 'string') {
 							var res = JSON.parse(res);
@@ -129,31 +127,30 @@
 							mui.openWindow({
 								url: 'login.html'
 							})
-						} else if (res.code == '403') {
+						} else if (res.status == '403') {
 							mui.toast(res.msg);
 							hideLoading();
 							return false;
-						}
-						if (res.code != '200') {
+						} else if (res.status != '200') {
 							mui.toast(res.msg);
+						} else {
+							console.log('成功了！')
+							plus.sqlite.selectSql({
+								name: 'info',
+								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
+								success: function(e) {
+									console.log(e);
+									console.log('runSql success: ' + JSON.stringify(e));
+								},
+								fail: function(e) {
+									console.log('runSql fail: ' + JSON.stringify(e));
+								}
+							});
 						}
-						hideLoading();
-						plus.sqlite.selectSql({
-							name: 'info',
-							sql: 'updata infoDB set isUp = 1 where rowid = ' + data.rowid,
-							success: function(e) {
-								console.log('selectSql success: ' + JSON.stringify(e));
-								return true;
-							},
-							fail: function(e) {
-								console.log('selectSql fail: ' + JSON.stringify(e));
-							}
-						});
+						// hideLoading();
 					},
 					error: function(xhr, type, errorThrown) {
 						console.log(JSON.stringify(xhr));
-						// vm.uploadImgArr[k].status = -1;
-						// hideLoading();
 					},
 					headers: {
 						// 'access_token': AUTH_TOKEN,
@@ -163,7 +160,11 @@
 			}
 
 			function zhenliJson(res, photoId) {
-				res['imags'] = photoId;
+				res['imgs'] = photoId;
+				res.damage = res.damage.split(',').map(Number);
+				res.body1 = res.typea;
+				res.body2 = res.typeb;
+				res.body3 = res.typec;
 				return res;
 			}
 
@@ -246,7 +247,7 @@
 									mui.alert(data.msg);
 									return false;
 								} else {
-									mui.alert('图片上传成功！');
+									// mui.alert('图片上传成功！');
 									// console.log(data.imageid);
 									var tempInput = document.getElementById(tempId);
 									console.log(tempId)
@@ -321,18 +322,18 @@
 					}
 				});
 			}
-			
+
 			function showInfoFail(result) {
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
-					var temp = "<li class='mui-table-view-cell'>" +
-						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label> 数据库没有数据 </label>" +
-						"<input name='perChk[]' value='" + 'result[i].rowid' + "' type='checkbox' disabled='disabled' >" +
-						"</div>" +
-						"</li>"
-					// console.log(temp);
-					mainList.innerHTML += temp;
+				var temp = "<li class='mui-table-view-cell'>" +
+					"<div class='mui-input-row mui-checkbox mui-left'>" +
+					"<label> 数据库没有数据 </label>" +
+					"<input name='perChk[]' value='" + 'result[i].rowid' + "' type='checkbox' disabled='disabled' >" +
+					"</div>" +
+					"</li>"
+				// console.log(temp);
+				mainList.innerHTML += temp;
 			}
 
 			function showInfo(result) {
