@@ -60,9 +60,18 @@
 				plus.webview.create(url).show();
 			}
 			// //打开"采集信息"
-			function openTest(){
-				var url="login.html";
-				plus.webview.create(url).show();
+			function openUser(){
+				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
+				if (TOKEN_TOKEN == null) //如果缓存中有数据，则加载出来 
+				{
+					var url="login.html";
+					plus.webview.create(url,'login').show();
+				}else{
+					var url="user/userInfo.html";
+					plus.webview.create(url,'userinfo').show();
+				}
+				
+				
 			}
 		</script>
 	</head>
@@ -74,7 +83,7 @@
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openForm()">采集信息</button>
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openSubmit()">任务上传</button>
 			<br\>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openTest()">我的账户</button>
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openUser()">我的账户</button>
 		</div>
 		</div>
 	</body>
