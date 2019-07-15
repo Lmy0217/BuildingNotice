@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>基本信息采集</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
@@ -87,9 +87,44 @@
 	
 			//打开"下一单"
 			function w_openNext(){
-				var extras=getForm('#form1');
-				var mubiao='form2.'+extras.type;
-				openNext('form1',mubiao);
+				var flag=1;var q=0;
+				var form_now=getForm('#form1');
+				var mubiao='form2.'+form_now.type;
+				var id = mubiao;var style = {};
+				var url = mubiao + ".html";
+				var identitytimeReg=new RegExp("^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$");//2019-01-01,支持闰年检测
+				if(!identitytimeReg.test(form_now.identitytime)){
+					alert("请按照‘2019-01-01’格式输入时间");
+					flag=0;
+				}else{
+				}
+				var createyearYReg=new RegExp("(?!0000)[0-9]{4}$");
+				var createyearMReg=new RegExp("(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$");
+				var createyearDReg=identitytimeReg;
+				if(createyearYReg.test(form_now.createyear)){
+					q=1;
+				}else if(createyearMReg.test(form_now.createyear)){
+					q=2;
+				}else if(createyearDReg.test(form_now.createyear)){
+					
+				}else{
+					alert("请按照‘2019-01-01’格式输入时间");
+					flag=0;
+				}
+				if(flag==1){
+					if(q==1){
+						form_now.createyear=form_now.createyear+"-01-01";
+						console.log(form_now);
+						plus.webview.create(url, id, style, form_now).show();
+					}else if(q==2){
+						form_now.createyear=form_now.createyear+"-01";
+						console.log(form_now);
+						plus.webview.create(url, id, style, form_now).show();
+					}else{
+						openNext('form1',mubiao);
+					}					
+				}
+				
 			}
 		</script>
 
@@ -148,6 +183,7 @@
 				<div class="mui-input-row">
 					<label>建造年份</label>
 					<input id='createyear' name="createyear" type="text" class="mui-input-clear mui-input" placeholder="格式:2019-01-01或2019-01">
+					<div class="remind alert-danger" id="createyear_rmd"></div>
 				</div>
 
 				<div class="mui-input-row">
@@ -181,16 +217,17 @@
 					<label>木结构</label>
 					<input name="type" type="radio" value="5">
 				</div>
-				
+
 				<div class="mui-input-row">
 					<label>鉴定时间</label>
-					<input id="identitytime" name="identitytime" type="text" class="mui-input-clear mui-input" placeholder="请输入鉴定时间">
+					<input id="identitytime" name="identitytime" type="text" class="mui-input-clear mui-input"
+					 placeholder="请输入鉴定时间">
 				</div>
 			</form>
 		</div>
 		<div class="mui-content-padded">
 			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="w_openNext()">下一步</button>
-			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>			
+			<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>
 		</div>
 
 		<script type="text/javascript">

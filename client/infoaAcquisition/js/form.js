@@ -227,7 +227,8 @@ function openNext(formNow, formNext) {
 	var tmp = plus.webview.currentWebview();
 	var form_per = chuliForm(tmp);
 	var form_now = getForm('#' + formNow);
-	watchJSON(form_now);
+	console.log(form_now);
+	
 	var extras = $.extend({}, form_per, form_now);
 
 	var url = formNext + ".html";
