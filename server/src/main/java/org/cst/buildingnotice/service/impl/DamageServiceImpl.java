@@ -57,7 +57,7 @@ public class DamageServiceImpl implements DamageService {
 
 	public double ratio(List<Integer> damage) {
 		int danger = 0, all = 0;
-		for (int i = 0; i < damage.size(); i += 2) {
+		for (int i = 0; i < damage.size() - damage.size() % 2; i += 2) {
 			all += damage.get(i);
 			danger += damage.get(i + 1);
 		}
