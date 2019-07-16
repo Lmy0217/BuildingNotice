@@ -120,7 +120,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					mui.back();
+					// mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -316,12 +316,12 @@ function zhenliQuestion(jsonInfo, lenq) {
 	} else if (jsonInfo.type == 3) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
-		var relu = [1, 2, 2, 1, 1];
+		var relu = [1, 2, 2, 1, 0];
 		var relu2 = [0, 2, 2, 0, 0];
 	} else if (jsonInfo.type == 4) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
-		var relu = [1, 2, 1, 1];
+		var relu = [1, 2, 1, 0];
 		var relu2 = [0, 2, 0, 0];
 	} else if (jsonInfo.type == 5) {
 		head = creatHead(key, 5, jsonInfo);
@@ -367,7 +367,7 @@ function zhenliType(jsonInfo, lenq) {
 		result = result + fixInteger(type21_x, lenq);
 	} else if (jsonInfo.type == 5) {
 		result = result + fixInteger(jsonInfo.type21, lenq);
-		var type22 = creatHead2('type22', 4, jsonInfo)
+		var type22 = creatHead2('type22', 3, jsonInfo)
 		var type22_x = parseInt(type22.join(''), lenq);
 		result = result + fixInteger(type22_x, lenq);
 		result = result + fixInteger(jsonInfo.type23, lenq);
@@ -380,13 +380,11 @@ function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
 	head = initArr(head, 0);
 	console.log(key);
-	console.log(jsonInfo[key])
-	for (i = 0; i < jsonInfo[key].length; i++) {
-		if (typeof(jsonInfo[key][i]) == 'underfind') {
-			head[i] = 0;
-		} else {
-			head[i] = 1;
-		}
+	console.log('head2=' +head);
+	var a=jsonInfo[key];
+	console.log(a)
+	for (i = 0; i < a.length; i++) {
+		head[a[i]-1] = 1;
 	}
 	console.log('head2=' + head);
 	// head=parseInt(head,2);
