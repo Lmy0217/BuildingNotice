@@ -1,11 +1,11 @@
 # 后台相关API
 
-说明：{website} 是向后端请求的链接，请补齐。
+
 
 ## 1. 登录
 
 ```json
-post {website}
+post /user/login
 //发送json
 //contentType: "application/x-www-form-urlencoded;charset=utf-8",
 {
@@ -15,10 +15,9 @@ post {website}
 }
 //返回
 {
-    status:200;//成功登陆
-    token:(str);
-	over:(num),//已经提交的任务
-	undown:(num),//还未下载的任务总数
+    status:200,//成功登陆
+    token:(str),
+	perm:(num),//账户权限：1，普通用户；2，管理员
 }
 //其他失败同APP api
 
@@ -26,7 +25,7 @@ post {website}
 ## 2. 获取后台展示列表
 
 ```json
-get {website}?type=1&page=1
+get /archive/page?type=1&page=1
 
 //发送
 //contentType:  'application/json; charset=UTF-8'
@@ -59,7 +58,7 @@ type:(num)，  //
 ## 3 下载请求
 
 ```json
-get {website}
+get /archive/download
 //说明：
 //type: 0,所有类别；1，未下载的文件；2，已下载的文件
 //page:(页数，一页15条记录，从最后开始算)
