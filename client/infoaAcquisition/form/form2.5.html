@@ -58,14 +58,14 @@
 		var form_per = chuliForm(tmp);
 		document.getElementById("div1").innerText = '户主：' + JSON.stringify(tmp.hold);
 		console.log(form_per);
+		
 		changeChild('type31','type311');
 		changeChild2('type32','type321','type322[]');
 		changeChild2('type33','type331','type332[]');
 		changeChild2('type34','type341','type342[]');
 		changeChild2('type35','type351','type352[]');
-		
 		document.getElementById('goBack').addEventListener("tap", function() {
-			mui.back('form1');
+			mui.back('form1');})
 	});
 </script>
 		<header class="mui-bar mui-bar-nav">
