@@ -10,6 +10,7 @@ public class FileUtil {
 		
 		String realPath = request.getServletContext().getRealPath(path);
 		System.out.println("realPath :" + realPath);
+		if (realPath == null) return null;
 		
 		File realPathFile = new File(realPath);
 		if (!realPathFile.exists()) realPathFile.mkdirs();
