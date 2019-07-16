@@ -154,7 +154,7 @@
 						//如果登陆失效
 						if (res.status == '401' || data.status == "400") {
 							mui.toast(res.msg);
-							clearUserInfoCache(myStorage)
+							localStorage.removeItem("TOKEN_TOKEN");
 							mui.openWindow({
 								url: 'login.html'
 							})
@@ -274,7 +274,7 @@
 								if (data.status == "401" || data.status == "400") {
 									// 如果密码错误，提示一下信息  
 									mui.alert(data.msg);
-									clearUserInfoCache(loaclStorage)
+									localStorage.removeItem("TOKEN_TOKEN");
 									tempInput.value = -i;
 									mui.openWindow({
 										url: 'login.html'
