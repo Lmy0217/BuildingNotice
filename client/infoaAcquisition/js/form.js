@@ -120,7 +120,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					// mui.back();
+					mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))

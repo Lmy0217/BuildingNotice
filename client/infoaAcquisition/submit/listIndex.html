@@ -346,7 +346,7 @@ formData.append('token', data.token);
 				openDB();
 				plus.sqlite.selectSql({
 					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==1',
+					sql: 'select rowid, * from infoDB where isUp==0',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						showInfo(e);
@@ -363,6 +363,7 @@ formData.append('token', data.token);
 			function showInfoFail(result) {
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
+				mainList.innerHTML="";
 				var temp = "<li class='mui-table-view-cell'>" +
 					"<div class='mui-input-row mui-checkbox mui-left'>" +
 					"<label> 数据库没有数据 </label>" +
