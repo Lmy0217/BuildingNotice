@@ -1,7 +1,9 @@
 package org.cst.buildingnotice.web;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Template;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 import org.cst.buildingnotice.entity.Damage;
 import org.cst.buildingnotice.entity.Image;
@@ -33,7 +36,10 @@ import org.cst.buildingnotice.util.StringUtil;
 import org.cst.buildingnotice.util.TemplateUtil;
 import org.cst.buildingnotice.util.ZipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,7 +82,7 @@ public class ArchiveController {
 	public Map<String, Object> create(@RequestBody String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
-System.out.println(jsonstring);
+		System.out.println(jsonstring);
 		
 		JSONObject json = null;
 		try {
@@ -172,37 +178,81 @@ System.out.println(jsonstring);
 		};
 	}
 	
-	@RequestMapping(value = "/download", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> download(@RequestBody String jsonstring,
-			HttpServletRequest request, Model model) throws IOException {
+	@RequestMapping(value = "/download", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.POST)
+	public ResponseEntity<byte[]> download(@RequestBody String jsonstring,
+			HttpServletRequest request, Model model) {
 		
 		System.out.println(jsonstring);
 		
-		JSONObject json = JSONObject.parseObject(jsonstring);
-		List<Integer> ids = json.getJSONArray("ids").toJavaList(Integer.class);
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return null;
+		}
+		
+		JSONArray idsJson = json.getJSONArray("ids");
+		String hexToken = json.getString("token");
+		if (idsJson == null || hexToken == null) {
+			return null;
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return null;
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return null;
+		}
+		
+		if (user.getToken() == null) {
+			return null;
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return null;
+		}
+		
+		if (user.getRole() < 1) {
+			return null;
+		}
+		
+		List<Integer> ids = idsJson.toJavaList(Integer.class);
 		
 		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
 		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
 		String template_path = FileUtil.getRealPath(request, "/uploads/template");
+		if (archive_path == null || imgs_path == null || template_path == null) {
+			return null;
+		}
 		String template_file = template_path + File.separator + "template_2.docx";
 		
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		
 		List<String> files = new ArrayList<String>();
 		
 		for (int i = 0; i < ids.size(); i++) {
+			
 			int id = ids.get(i);
+			
 			ArchiveWithBLOBs archiveWithBLOBs = archiveService.getArchiveById(id);
-			List<Image> imgs = imageService.getImagesByIdList(
-					archImgService.getImgsByArchid(id));
+			if (archiveWithBLOBs == null || archiveWithBLOBs.getUserid() != userId) {
+				return null;
+			}
 			Damage damage = damageService.getDamageByArchid(id);
-			TypeWithBLOBs typeWithBLOBs = typeService.getTypeById(
-					archiveWithBLOBs.getTypeid());
+			if (damage == null) {
+				return null;
+			}
+			TypeWithBLOBs typeWithBLOBs = typeService.getTypeById(archiveWithBLOBs.getTypeid());
 			Rank rank = rankService.getRankById(archiveWithBLOBs.getRankid());
+			if (typeWithBLOBs == null || rank == null) {
+				return null;
+			}
+			List<Image> imgs = imageService.getImagesByIdList(archImgService.getImgsByArchid(id));
 			
 			String identityTime = dateformat.format(archiveWithBLOBs.getIdentitytime());
-			String file_name = identityTime + '_' + String.format("%s", id) + ".docx";
+			String file_name = String.format("%08d", id) + '_' + identityTime + ".docx";
 			String file = archive_path + File.separator + file_name;
 			System.out.println("file :" + file);
 			
@@ -216,21 +266,21 @@ System.out.println(jsonstring);
 			data.put("attr", archiveWithBLOBs.getAttr());
 			data.put("layer", archiveWithBLOBs.getLayer());
 			data.put("createyear", archiveWithBLOBs.getCreateyear() != null ? 
-					dateformat.format(archiveWithBLOBs.getCreateyear()) : "");
+					dateformat.format(archiveWithBLOBs.getCreateyear()) : null);
 			data.put("typename", typeWithBLOBs.getName());
 			data.put("identitytime", identityTime);
 			data.put("body1", TemplateUtil.stringRender(
-					typeWithBLOBs.getBody1(), "1;"));
+					typeWithBLOBs.getBody1(), archiveWithBLOBs.getBody1()));
 			data.put("body2", TemplateUtil.stringRender(
 					typeWithBLOBs.getBody2(), archiveWithBLOBs.getBody2()));
 			data.put("body3", TemplateUtil.stringRender(
 					typeWithBLOBs.getBody3(), archiveWithBLOBs.getBody3()));
 			
-			for (int j = 0; j < 1; j++) {
+			for (int j = 0; j < imgs.size(); j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
-				data.put("image", new PictureRenderData(560, 310, img_path));
-				data.put("imagedepict", imgs.get(i).getDepict());
+				data.put("image" + j, new PictureRenderData(560, 310, img_path));
+				data.put("imagedepict" + j, imgs.get(i).getDepict());
 			}
 			
 			data.put("a111", damage.getA111());
@@ -260,22 +310,50 @@ System.out.println(jsonstring);
 					typeWithBLOBs.getAdvise(), 
 					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), 
 							archiveWithBLOBs.getBody3())));
+			
+			data = Template.defaultValue(data);
+			
 			System.out.println("data complete");
-			TemplateUtil.render(template_file, data, file);
+			
+			if (!TemplateUtil.render(template_file, data, file)) {
+				return null;
+			}
 			files.add(file);
 		}
 		
 		String zip_file_name = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
-				.format(new Date()) + "_" + "1" + ".zip";
+				.format(new Date()) + "_" + String.format("%08d", userId) + ".zip";
 		String zip_path = FileUtil.getRealPath(request, "/downloads/zip");
+		if (zip_path == null) {
+			return null;
+		}
 		String zip_file = zip_path + File.separator + zip_file_name;
 		
-		ZipUtil.zip(files, zip_file);	
+		if (!ZipUtil.zip(files, zip_file)) {
+			return null;
+		}
 		
-		Map<String, Object> dict = new HashMap<String, Object>();
-		dict.put("status", HttpStatus.OK.value());
-		dict.put("zip", zip_file);
+		InputStream in = null;;
+		byte[] body = null;
+		try {
+			in = new FileInputStream(new File(zip_file));
+			body = new byte[in.available()];
+			in.read(body);
+		} catch (Exception e) {
+			return null;
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException e) {
+				return null;
+			}
+		}
 
-		return dict;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment;filename=" + zip_file_name);
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(body, headers, HttpStatus.OK);
+		
+		return response;
 	}
 }

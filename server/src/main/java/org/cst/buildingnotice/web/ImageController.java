@@ -8,13 +8,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.entity.Archive;
 import org.cst.buildingnotice.entity.Image;
 import org.cst.buildingnotice.entity.User;
+import org.cst.buildingnotice.service.ArchImgService;
+import org.cst.buildingnotice.service.ArchiveService;
 import org.cst.buildingnotice.service.ImageService;
 import org.cst.buildingnotice.service.UserService;
 import org.cst.buildingnotice.util.ExceptionUtil;
@@ -47,6 +51,11 @@ public class ImageController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ArchImgService archImgService;
+	
+	private ArchiveService archiveService;
 
 	@RequestMapping(value = "/upload", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
@@ -124,7 +133,7 @@ public class ImageController {
 	}
 
 	// TODO test download type
-	@RequestMapping(value = "/download", method=RequestMethod.POST)
+	@RequestMapping(value = "/download", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	public ResponseEntity<byte[]> download(@RequestBody String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
@@ -162,6 +171,18 @@ public class ImageController {
 		}
 		
 		if (user.getRole() < 1) {
+			return null;
+		}
+		
+		List<Integer> archids = archImgService.getArchsByImgid(id);
+		if (archids.size() != 1) {
+			return null;
+		}
+		Archive archive = archiveService.getArchiveById(archids.get(0));
+		if (archive == null) {
+			return null;
+		}
+		if (archive.getUserid() != userId) {
 			return null;
 		}
 		
