@@ -10,4 +10,6 @@ public interface ArchImgMapper {
     int insertSelective(ArchImg record);
     
     List<Integer> selectByArchid(int archid);
+    
+    List<Integer> selectByImgid(int imgid);
 }

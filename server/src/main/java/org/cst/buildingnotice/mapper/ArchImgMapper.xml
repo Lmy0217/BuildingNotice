@@ -4,11 +4,20 @@
   <resultMap id="BaseResultMap" type="java.lang.Integer">
     <result column="imgid" jdbcType="INTEGER" property="imgid" />
   </resultMap>
+  <resultMap id="FindResultMap" type="java.lang.Integer">
+    <result column="archid" jdbcType="INTEGER" property="archid" />
+  </resultMap>
   <select id="selectByArchid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
         imgid
     from archimg
     where archid = #{archid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByImgid" parameterType="java.lang.Integer" resultMap="FindResultMap">
+    select 
+        archid
+    from archimg
+    where imgid = #{imgid,jdbcType=INTEGER}
   </select>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.ArchImg">
     insert into archimg (archid, imgid)
