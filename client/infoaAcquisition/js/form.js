@@ -353,7 +353,9 @@ function zhenliType(jsonInfo, lenq) {
 		console.log(type21_x)
 		result = fixInteger(type21_x, lenq) + '' + fixInteger(jsonInfo.type22, lenq);
 	} else if (jsonInfo.type == 2) {
-
+		var type21 = creatHead2('type21', 2, jsonInfo)
+		var type21_x = parseInt(type21.join(''), lenq);
+		result = fixInteger(type21_x, lenq);
 	} else if (jsonInfo.type == 3) {
 		var type21 = creatHead2('type21', 4, jsonInfo)
 		var type21_x = parseInt(type21.join(''), lenq);
@@ -380,11 +382,11 @@ function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
 	head = initArr(head, 0);
 	console.log(key);
-	console.log('head2=' +head);
-	var a=jsonInfo[key];
+	console.log('head2=' + head);
+	var a = jsonInfo[key];
 	console.log(a)
 	for (i = 0; i < a.length; i++) {
-		head[a[i]-1] = 1;
+		head[a[i] - 1] = 1;
 	}
 	console.log('head2=' + head);
 	// head=parseInt(head,2);
