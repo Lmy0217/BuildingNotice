@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>测试文件下载</title>
+		<script type="text/javascript" src="js.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript">
+			function exportRecord() {
+				// var searchData = getData();
+				var q = getCookie('token');
+				var json = {
+					"token": q,
+					"id": 5,
+				};
+				var form = $("<form>");
+				form.attr('style', 'display:none');
+				form.attr('target', '');
+				form.attr('method', 'post'); //请求方式
+				form.attr('action', downUrl); //请求地址
+
+				var input1 = $('<input>'); //将你请求的数据模仿成一个input表单
+				input1.attr('type', 'hidden');
+				input1.attr('name', 'json'); //该输入框的name
+				input1.attr('value', JSON.stringify(json)); //该输入框的值
+
+				$('body').append(form);
+				form.append(input1);
+
+				form.submit();
+				form.remove();
+			}
+		</script>
+	</head>
+	<body>
+		<input type="button" value="下载文件" onclick="exportRecord" />
+	</body>
+</html>
