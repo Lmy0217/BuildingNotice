@@ -1,9 +1,10 @@
 function watchJSON(json) {
 	console.log(JSON.stringify(json));
 }
-function sleep(d){
+
+function sleep(d) {
 	// sleep(5000); //当前方法暂停5秒
-  for(var t = Date.now();Date.now() - t <= d;);
+	for (var t = Date.now(); Date.now() - t <= d;);
 }
 // 关闭数据库
 function closeDB() {
@@ -197,6 +198,11 @@ function remPwd() {
 	}
 }
 
+//日期时间处理
+function conver(s) {
+	return s < 10 ? '0' + s : s;
+}
+
 function dataURLtoBlob(dataurl) {
 	var arr = dataurl.split(','),
 		mime = arr[0].match(/:(.*?);/)[1],
@@ -282,3 +288,32 @@ function postImage(url, data, callback, waitingDialog) {
 		}
 	});
 }
+
+function getBase64Image2(img) { //传入图片路径，返回base64
+	function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+		var canvas = document.createElement("canvas");
+		canvas.width = width ? width : img.width;
+		canvas.height = height ? height : img.height;
+
+		var ctx = canvas.getContext("2d");
+		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+		var dataURL = canvas.toDataURL();
+		return dataURL;
+	}
+	var image = new Image();
+	image.crossOrigin = '';
+	image.src = img;
+	var deferred = $.Deferred();
+	if (img) {
+		image.onload = function() {
+			deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
+		}
+		return deferred.promise(); //问题要让onload完成后再return sessionStorage['imgTest']
+	}
+}
+// getBase64(imgSrc)
+// 	.then(function(base64) {
+// 		console.log(base64);
+// 	}, function(err) {
+// 		console.log(err);
+// 	});
