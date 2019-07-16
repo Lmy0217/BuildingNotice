@@ -302,10 +302,10 @@ function zhenliQuestion(jsonInfo, lenq) {
 	var head = ''
 	if (jsonInfo.type == 1) {
 		// 砖木结构		
-		head = creatHead(key, 4, jsonInfo)
+		head = creatHead(key, 5, jsonInfo)
 		console.log(head);
-		var relu = [1, 2, 2, 2];
-		var relu2 = [0, 2,3, 2];
+		var relu = [1, 2, 2, 2,2];
+		var relu2 = [0,4,4,3, 2];
 	} else if (jsonInfo.type == 2) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
@@ -319,8 +319,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 	} else if (jsonInfo.type == 4) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
-		var relu = [1, 2, 1, 0];
-		var relu2 = [0, 2, 0, 0];
+		var relu = [1, 1, 2, 1,0];
+		var relu2 = [0, 0,2, 0, 0];
 	} else if (jsonInfo.type == 5) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
@@ -330,8 +330,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 	console.log(head);
 	console.log(relu);
 	console.log(relu2);
-	console.log(key)
-	alert('go on!');
+	console.log(key);
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	console.log(result);
 	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
@@ -439,7 +438,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 		console.log(ir);
 		if (head[ir] == 1) {
 			if (relu[ir] == 1) {
-				alert(keym+' '+ir+' '+relu[ir] );
+				// alert(keym+' '+ir+' '+relu[ir] );
 				var keya = keym + 1;
 				result = result + "" + fixInteger(jsonInfo[keya], len);
 			} else if (relu[ir] == 2) {
