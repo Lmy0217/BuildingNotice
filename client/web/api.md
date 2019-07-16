@@ -25,7 +25,7 @@ post /user/login
 ## 2. 获取后台展示列表
 
 ```json
-get /archive/page?type=1&page=1
+get /archive/list?type=1&page=1
 
 //发送
 //contentType:  'application/json; charset=UTF-8'
@@ -45,6 +45,7 @@ type:(num)，  //
       	    id:(num),//文件id，用于向后台请求文件的依据
       		title:(str),//文件名字，建议用  “采集时间-户主”命名
       		date:(str) //(可以是文件完成转换的时间，或者文件上传的时间)
+            author:(str)//文件采集人，采集的账号
       		},
 			...]	
 			

@@ -1,5 +1,4 @@
 var q = getCookie('token');
-var website = 'http://47.100.192.151:5555/';
 console.log(document.cookie);
 console.log(q);
 var u = getCookie('user');

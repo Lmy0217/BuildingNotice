@@ -3,10 +3,10 @@ var listType = GetUrlParam("type");
 var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
-var listList = ["全部分类", "公司简介", "公告发布", "政策法规", "新闻动态"];
+var listList = ["全部分类", "已下文件", "未下文件"];
 var q = getCookie('token');
 $.ajax({
-	url: "http://47.100.192.151:5555/list",
+	url: listUrl,
 	data: {
 		type: listType,
 		page: listPage,

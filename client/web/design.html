@@ -7,11 +7,12 @@
 		<link rel="icon" href="favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="css/common.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/js.js"></script>
 		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
 		<script type="text/javascript" src="js/designAjax.js"></script>
 		<script type="text/javascript" src="js/jump.js"></script>
-		<script type="text/javascript" src="js/check.js"></script>
+		<!-- <script type="text/javascript" src="js/check.js"></script> -->
 	</head>
 
 	<body>
@@ -55,21 +56,21 @@
 							<a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
 							<ul class="sub-menu">
 								<li>
-									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe008;</i>作品管理</a>
+									<a href="design.html?type=2&page=1"><i class="icon-font">&#xe045;</i>批量下载</a>
 								</li>
-								<li>
+								<!-- <li>
 									<a href="insert.html?id=0.html"><i class="icon-font">&#xe005;</i>新增文章</a>
-								</li>
+								</li> -->
 							</ul>
 						</li>
 						<li>
-							<a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
+							<a href="#"><i class="icon-font">&#xe018;</i>文件管理</a>
 							<ul class="sub-menu">
 								<li>
-									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe017;</i>文件管理（未下载）</a>
+									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe017;</i>查看文件</a>
 								</li>
 								<li>
-									<a href="design.html?type=2&page=1"><i class="icon-font">&#xe037;</i>文件管理（已下载）</a>
+									<a href="design.html?type=2&page=1"><i class="icon-font">&#xe045;</i>批量下载</a>
 								</li>
 								<!--<li>
 									<a href="index.html"><i class="icon-font">&#xe045;</i>修改招聘启事</a>
@@ -94,14 +95,9 @@
 									<th width="120">选择分类:</th>
 									<td>
 										<select name="search-sort" id="searchSort" onchange="javascript:window.location=this.options[this.selectedIndex].value;">
-											<option value="design.html?type=0&page=1">全部分类</option>
-											<option value="design.html?type=5&page=1">公告发布</option>
-											<option value="design.html?type=2&page=1">政策法规</option>
-											<option value="design.html?type=3&page=1">公司新闻</option>
-											<option value="design.html?type=8&page=1">行业动态</option>
-											<option value="design.html?type=1&page=1">公司简介</option>
-											<option value="design.html?type=6&page=1">人才招聘</option>
-											<option value="design.html?type=7&page=1">联系我们</option>
+											<option value="design.html?type=1&page=1">已下文件</option>
+											<option value="design.html?type=2&page=1">未下文件</option>
+											<option value="design.html?type=0&page=1">全部文件</option>
 										</select>
 									</td>
 									<!--<th width="70">关键字:</th>
@@ -116,24 +112,32 @@
 					<form name="myform" id="myform" method="post">
 						<div class="result-title">
 							<div class="result-list">
-								<a href="insert.html"><i class="icon-font"></i>新增作品</a>
-								<!--<a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量删除</a>
-								<a id="updateOrd" href="javascript:void(0)"><i class="icon-font"></i>更新排序</a>-->
+								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a> -->
+								<a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量下载</a>
+								<a id="updateOrd" href="javascript:void(0)"><i class="icon-font"></i>更新排序</a>
 							</div>
 						</div>
 						<div class="result-content">
 							<table class="result-tab" width="100%" id="result_info">
 								<tr>
 									<th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
-									<th>排序</th>
-									<th>ID</th>
 									<th>标题</th>
-									<th>点击</th>
-									<th>发布人</th>
 									<th>更新时间</th>
+									<th>采集人</th>
 									<th>操作</th>
 								</tr>
+								<tr>
+									<td class='tc'><input name='id[]' value='" + list.id + "' type='checkbox'></td>
 
+									<td>
+										<a target='_blank' href='" + newsUrl + list.id + "' title='" + list.title + "'> title</a>
+									</td>
+									<td> author + </td>
+									<td> list.date + </td>
+									<td>
+										<a class='link-update' href='" + updateUrl + list.id + "'>下载</a> "
+									</td>
+								</tr>;
 							</table>
 							<div class="list-page" id="list_page">
 								<!--2 条 1/1 页-->
