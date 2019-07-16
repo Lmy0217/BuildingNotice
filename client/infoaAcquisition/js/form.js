@@ -304,10 +304,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 		// 砖木结构		
 		head = creatHead(key, 4, jsonInfo)
 		console.log(head);
-		var relu = [1, 1, 2, 1];
-		var relu2 = [0, 0, 4, 0]
-
-
+		var relu = [1, 2, 2, 2];
+		var relu2 = [0, 2,3, 2];
 	} else if (jsonInfo.type == 2) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
@@ -329,6 +327,11 @@ function zhenliQuestion(jsonInfo, lenq) {
 		var relu = [1, 2, 2, 2, 2];
 		var relu2 = [0, 4, 4, 3, 2];
 	}
+	console.log(head);
+	console.log(relu);
+	console.log(relu2);
+	console.log(key)
+	alert('go on!');
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	console.log(result);
 	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
@@ -345,10 +348,11 @@ function two2x(arr) {
 function zhenliType(jsonInfo, lenq) {
 	var key = 'type2'
 	var result = '';
-	console.log(jsonInfo.type21);
+	// console.log(jsonInfo.type21);
 	if (jsonInfo.type == 1) {
 		// 砖木结构	
 		var type21 = creatHead2('type21', 4, jsonInfo)
+		console.log(type21);
 		var type21_x = parseInt(type21.join(''), lenq);
 		console.log(type21_x)
 		result = fixInteger(type21_x, lenq) + '' + fixInteger(jsonInfo.type22, lenq);
@@ -382,8 +386,10 @@ function creatHead2(key, len, jsonInfo) {
 	var head = new Array(len);
 	head = initArr(head, 0);
 	console.log(key);
+	console.log(len);
 	console.log('head2=' + head);
 	var a = jsonInfo[key];
+	// console.log(jsonInfo['type21[]'])
 	console.log(a)
 	for (i = 0; i < a.length; i++) {
 		head[a[i] - 1] = 1;
@@ -423,22 +429,32 @@ function creatHead(key, len, jsonInfo) {
  */
 function regularization(jsonInfo, head, relu, relu2, key, len) {
 	var result = '';
-	console.log('regularization' + head)
-	for (i = 0; i < 4; i++) {
-		keym = key + (i + 1);
-		if (head[i] == 1) {
-			if (relu[i] == 1) {
+	console.log(head);
+	console.log(relu);
+	console.log(relu2);
+	watchJSON(jsonInfo);
+	console.log('regularizati:' + head)
+	for (ir = 0; ir < head.length; ir++) {
+		keym = key + (ir + 1);
+		console.log(ir);
+		if (head[ir] == 1) {
+			if (relu[ir] == 1) {
+				alert(keym+' '+ir+' '+relu[ir] );
 				var keya = keym + 1;
 				result = result + "" + fixInteger(jsonInfo[keya], len);
-			} else if (relu[i] == 2) {
+			} else if (relu[ir] == 2) {
+				alert(keym+' '+ir+' '+relu[ir] );
 				var keya = keym + 1;
 				var keyb = keym + 2;
 				console.log(keya);
 				console.log(keyb);
-				var keyb = creatHead2(keyb, relu2[i], jsonInfo);
+				watchJSON(jsonInfo);
+				var keyb = creatHead2(keyb, relu2[ir], jsonInfo);
 				var keyb_x = two2x(keyb);
 				result = result + "" + fixInteger(keyb_x, len);
 				result = result + fixInteger(jsonInfo[keya], len);
+				console.log(result)
+				console.log(ir)
 			}
 		}
 	}
