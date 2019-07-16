@@ -109,6 +109,7 @@
 					passwordBox.value = localStorage.getItem("password");
 					autoLoginButton.classList.add('mui-active');
 				}
+				
 				// 
 				document.getElementById("login").addEventListener('tap', function() {
 					// 处理内容；当然肯定是ajax 了。  
@@ -132,10 +133,10 @@
 							wd.close(); // 调用成功，先关闭等待的对话框  
 							if (data.status == "403") {
 								// 如果密码错误，提示一下信息  
-								mui.alert("用户名或密码错误", "登录错误", "关闭");
+								mui.alert("err#403用户名或密码错误", "登录错误", "关闭");
 								return;
 							} else if (data.status != "200") {
-								mui.alert(data.msg);
+								mui.alert('err#'+data.status+':'+data.msg);
 							} else {
 								// 保存token，以便于下次自动登录  
 								localStorage.setItem('account', accountBox.value);

@@ -198,6 +198,11 @@ function remPwd() {
 	}
 }
 
+//日期时间处理
+function conver(s) {
+	return s < 10 ? '0' + s : s;
+}
+
 function dataURLtoBlob(dataurl) {
 	var arr = dataurl.split(','),
 		mime = arr[0].match(/:(.*?);/)[1],

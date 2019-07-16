@@ -66,11 +66,11 @@
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
 					console.log(perChk);
-					var wait=document.getElementById("wait");
+					var wait = document.getElementById("wait");
 					openDB();
 					for (i = 0; i < perChk.length; i++) {
-						wait.value=0;
-						var wa = plus.nativeUI.showWaiting("正在上传" + (i + 1) + "/" + perChk.length + ".."); 
+						wait.value = 0;
+						var wa = plus.nativeUI.showWaiting("正在上传" + (i + 1) + "/" + perChk.length + "..");
 						// mui.showLoading("正在上传" + (i + 1) + "/" + perChk.length + "..", "div");
 						plus.sqlite.selectSql({
 							name: 'info',
@@ -84,26 +84,27 @@
 								var obj = document.getElementsByName("imgid[]");
 								console.log(obj);
 								var photoId = [];
-								var testPhoto=[];
-								for (var j=0;j<obj.length;j++) {
+								var testPhoto = [];
+								for (var j = 0; j < obj.length; j++) {
 									testPhoto.push(parseInt(obj[j].value));
 									if (obj[j].checked) {
 										photoId.push(parseInt(obj[j].value));
-										obj[j].checked="";
+										obj[j].checked = "";
 									}
-									obj[j].value="0";
+									obj[j].value = "0";
 								}
-								console.log(photoId);console.log(testPhoto);
-								min0=Math.min.apply(Math,testPhoto);
+								console.log(photoId);
+								console.log(testPhoto);
+								min0 = Math.min.apply(Math, testPhoto);
 								console.log(min0);
-								if(min0<0){
-									mui.alert('图片上传失败，中断！','信息助手','确定',function (e) {
-									   e.index
-									},'div');
-									closeDB() 
+								if (min0 < 0) {
+									mui.alert('图片上传失败，中断！', '信息助手', '确定', function(e) {
+										e.index
+									}, 'div');
+									closeDB()
 									return false;
 								}
-								
+
 								data = zhenliJson(e[0], photoId);
 								upData(data);
 								wa.close();
@@ -114,7 +115,7 @@
 								// 	console.log(wait);
 								// 	sleep(1000);
 								// }	
-								
+
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
@@ -132,7 +133,7 @@
 			function upData(data) {
 				console.log(data)
 				var token = localStorage.getItem('TOKEN_TOKEN');
-				data['token']=token;
+				data['token'] = token;
 				// {
 				// 	'data': data,
 				// }
@@ -151,7 +152,7 @@
 							var res = JSON.parse(res);
 						}
 						//如果登陆失效
-						if (res.status == '401') {
+						if (res.status == '401' || data.status == "400") {
 							mui.toast(res.msg);
 							clearUserInfoCache(myStorage)
 							mui.openWindow({
@@ -162,11 +163,11 @@
 							// hideLoading();
 							return false;
 						} else if (res.status != '200') {
-							mui.toast('err#'+res.status+':'+res.msg);
+							mui.toast('err#' + res.status + ':' + res.msg);
 						} else {
 							console.log('成功了！')
 							console.log(res);
-							document.getElementById('wait').value=1;
+							document.getElementById('wait').value = 1;
 							plus.sqlite.selectSql({
 								name: 'info',
 								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
@@ -177,7 +178,7 @@
 								fail: function(e) {
 									console.log('runSql fail: ' + JSON.stringify(e));
 								}
-							});  
+							});
 						}
 						// mui.hideLoading();
 					},
@@ -249,7 +250,7 @@
 						var formData = new FormData();
 						// formData.append("accountnum", 123456); 
 						formData.append('depict', data.depict);
-formData.append('token', data.token);
+						formData.append('token', data.token);
 						formData.append('file', new File([data.file], '12345.png'));
 						// formData.append('new', data.file);
 						// Object.keys(data).forEach((key) => {
@@ -270,7 +271,7 @@ formData.append('token', data.token);
 							success: function(data) {
 								console.log(data);
 								wd.close(); // 调用成功，先关闭等待的对话框  
-								if (data.status == "401") {
+								if (data.status == "401" || data.status == "400") {
 									// 如果密码错误，提示一下信息  
 									mui.alert(data.msg);
 									clearUserInfoCache(loaclStorage)
@@ -280,7 +281,7 @@ formData.append('token', data.token);
 									})
 								} else if (data.status != "200") {
 									// 如果密码错误，提示一下信息  
-									mui.alert('err#'+data.status+':'+data.msg);
+									mui.alert('err#' + data.status + ':' + data.msg);
 									console.log(tempId)
 									tempInput.value = -i;
 									return false;
@@ -363,7 +364,7 @@ formData.append('token', data.token);
 			function showInfoFail(result) {
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
-				mainList.innerHTML="";
+				mainList.innerHTML = "";
 				var temp = "<li class='mui-table-view-cell'>" +
 					"<div class='mui-input-row mui-checkbox mui-left'>" +
 					"<label> 数据库没有数据 </label>" +
@@ -377,11 +378,11 @@ formData.append('token', data.token);
 			function showInfo(result) {
 				watchJSON(result);
 				var mainList = document.getElementById("mainList");
-				mainList.innerHTML="";
-				for (i = result.length-1; i >= 0; i--) {
+				mainList.innerHTML = "";
+				for (i = result.length - 1; i >= 0; i--) {
 					var temp = "<li class='mui-table-view-cell'>" +
 						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label>" +(result.length-i)+"."+ result[i].hold + "</label>" +
+						"<label>" + (result.length - i) + "." + result[i].hold + "</label>" +
 						"<input name='perChk[]' value='" + result[i].rowid + "' type='checkbox' >" +
 						"</div>" +
 						"</li>"

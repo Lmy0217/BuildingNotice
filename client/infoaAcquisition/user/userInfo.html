@@ -6,13 +6,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/mycss.css" />
-		<script src="js/mui.min.js"></script>
-		<script src="js/util.js"></script>
-		<script src="js/config.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/util.js"></script>
+		<script src="../js/config.js"></script>
 		<script>
 			mui.init();
-			// 扩展API是否准备好，如果没有则监听“plusready"事件  
-			
 			mui.plusReady(function() {
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
 				var account = localStorage.getItem("account");
@@ -24,10 +22,19 @@
 								var day = myDate.getDate();
 								var today = year + '-' + conver(month) + "-" + conver(day);
 								// console.log(today);
-								document.getElementById('today').val(today);
-				
-				
-				})
+								document.getElementById('today').value=today;
+				document.getElementById("logout").addEventListener('tap', function() {
+					 var btnArray = ['否', '是'];
+                mui.confirm('确定要退出吗？', '用户账户', btnArray, function(e) {
+                    if (e.index == 1) {
+                        localStorage.removeItem("TOKEN_TOKEN");
+                        goHome();
+                    } else {
+                        
+                    }
+                })
+				});
+				});
 		</script>
 	</head>
 
@@ -42,16 +49,20 @@
 			</div>
 			<div class="mui-input-row">
 				<label>已完成任务</label>
-				<input id='over' name="unit" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+				<input id='over' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
 			</div>
 			<div class="mui-input-row">
 				<label>还未下载任务</label>
-				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
 			</div>
 			<div class="mui-input-row">
 				<label>已经下载的任务</label>
-				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="请输入委托人">
+				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
 			</div>
+		</div>
+
+		<div class="mui-content-padded">
+			<button id='logout' class="mui-btn mui-btn-primary mui-btn-block">退出账户</button>
 		</div>
 	</body>
 </html>
