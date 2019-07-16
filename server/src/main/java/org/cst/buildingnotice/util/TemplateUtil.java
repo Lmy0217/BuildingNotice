@@ -12,6 +12,8 @@ public class TemplateUtil {
 	
 	public static String stringRender(String template, String data) {
 		
+		if (template == null || data == null) return "Template or data null!";
+		
 		List<Character> operator = new ArrayList<Character>();
 		List<Integer> choose = new ArrayList<Integer>();
 		List<Character> separator = new ArrayList<Character>();
@@ -26,7 +28,11 @@ public class TemplateUtil {
 		char separate = '\u0000';
 		
 		int dataIdx = data.indexOf(';');
-		int dataWidth = Integer.parseInt(data.substring(0, dataIdx++));
+		int dataWidth = 0;
+		try {
+			dataWidth = Integer.parseInt(data.substring(0, dataIdx++));
+		} catch (Exception e) {
+		}
 		
 		for (int i = 0; i < template.length(); i++) {
 			char c = template.charAt(i);
@@ -67,8 +73,12 @@ public class TemplateUtil {
 						choose.add(layer);
 						separator.add(separate);
 					}
-					chooseData = Integer.parseInt(data.substring(dataIdx, 
-							dataIdx + dataWidth));
+					try {
+						chooseData = Integer.parseInt(data.substring(dataIdx, 
+								dataIdx + dataWidth));
+					} catch (Exception e) {
+						return "Template data error!";
+					}
 					dataIdx += dataWidth;
 					chooseDataIdx = 0;
 					layer = 0;
@@ -114,14 +124,29 @@ public class TemplateUtil {
 		return stringBuilder.toString();
 	}
 	
-	public static void render(String templateFile, 
-			HashMap<String, Object> data, String outFile) throws IOException {
+	public static boolean render(String templateFile, 
+			HashMap<String, Object> data, String outFile) {
 		
-		XWPFTemplate template = XWPFTemplate.compile(templateFile).render(data);
-		FileOutputStream out = new FileOutputStream(outFile);
-		template.write(out); 
-		out.flush();
-		out.close();
-		template.close();
+		FileOutputStream out = null;
+		XWPFTemplate template = null;
+		boolean flag = true; 
+		
+		try {
+			template = XWPFTemplate.compile(templateFile).render(data);
+			out = new FileOutputStream(outFile);
+			template.write(out); 
+			out.flush();
+		} catch (Exception e1) {
+			flag = false;
+		} finally {
+			try {
+				out.close();
+				template.close();
+			} catch (IOException e2) {
+				flag = false;
+			}
+		}
+		
+		return flag;
 	}
 }

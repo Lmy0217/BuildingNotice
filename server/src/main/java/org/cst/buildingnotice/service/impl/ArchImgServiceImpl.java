@@ -24,4 +24,8 @@ public class ArchImgServiceImpl implements ArchImgService {
 	public List<Integer> getImgsByArchid(int archid) {
 		return archImgMapper.selectByArchid(archid);
 	}
+
+	public List<Integer> getArchsByImgid(int imgid) {
+		return archImgMapper.selectByImgid(imgid);
+	}
 }
