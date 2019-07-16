@@ -84,14 +84,26 @@
 								var obj = document.getElementsByName("imgid[]");
 								console.log(obj);
 								var photoId = [];
-								for (var j in obj) {
+								var testPhoto=[];
+								for (var j=0;j<obj.length;j++) {
+									testPhoto.push(parseInt(obj[j].value));
 									if (obj[j].checked) {
 										photoId.push(parseInt(obj[j].value));
 										obj[j].checked="";
 									}
 									obj[j].value="0";
 								}
-								console.log(photoId);
+								console.log(photoId);console.log(testPhoto);
+								min0=Math.min.apply(Math,testPhoto);
+								console.log(min0);
+								if(min0<0){
+									mui.alert('图片上传失败，中断！','信息助手','确定',function (e) {
+									   e.index
+									},'div');
+									closeDB()
+									return false;
+								}
+								
 								data = zhenliJson(e[0], photoId);
 								upData(data);
 								wa.close();
@@ -148,7 +160,7 @@
 							// hideLoading();
 							return false;
 						} else if (res.status != '200') {
-							mui.toast(res.msg);
+							mui.toast('err#'+res.status+':'+res.msg);
 						} else {
 							console.log('成功了！')
 							console.log(res);
@@ -230,6 +242,7 @@
 							'file': imgBlob,
 							'depict': result[photoDes],
 						}
+						console.log(data);
 						console.log(imgUrl);
 						var formData = new FormData();
 						// formData.append("accountnum", 123456); 
@@ -242,6 +255,7 @@
 						// });
 						console.log(formData);
 						var temp = null;
+						var tempInput = document.getElementById(tempId);
 						mui.ajax(imgUrl, {
 							data: formData,
 							cache: false,
@@ -257,24 +271,26 @@
 								if (data.status == "401") {
 									// 如果密码错误，提示一下信息  
 									mui.alert(data.msg);
-									clearUserInfoCache(myStorage)
+									clearUserInfoCache(loaclStorage)
+									tempInput.value = -i;
 									mui.openWindow({
 										url: 'login.html'
 									})
 								} else if (data.status != "200") {
 									// 如果密码错误，提示一下信息  
-									mui.alert(data.msg);
+									mui.alert('err#'+data.status+':'+data.msg);
+									console.log(tempId)
+									tempInput.value = -i;
 									return false;
 								} else {
 									// mui.alert('图片上传成功！');
 									// console.log(data.imageid);
-									var tempInput = document.getElementById(tempId);
 									console.log(tempId)
 									tempInput.value = data.imageid;
 									tempInput.checked = "checked";
 									console.log(tempInput.checked)
-									var pi = document.getElementById('imgid1').value;
-									console.log(pi)
+									// var pi = document.getElementById('imgid1').value;
+									// console.log(pi)
 									var temp = data.imageid;
 									console.log(temp);
 									// return data.imageid;
@@ -328,7 +344,7 @@
 				openDB();
 				plus.sqlite.selectSql({
 					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==0',
+					sql: 'select rowid, * from infoDB where isUp==1',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						showInfo(e);

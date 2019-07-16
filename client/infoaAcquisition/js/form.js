@@ -294,9 +294,8 @@ function changeChild(father, child) {
 }
 
 //整理form3 
-function zhenliQuestion(jsonInfo) {
+function zhenliQuestion(jsonInfo,lenq) {
 	console.log(jsonInfo);
-	var lenq = 2;
 	var key = 'type3'
 	var result = '';
 	var head = ''
@@ -304,28 +303,9 @@ function zhenliQuestion(jsonInfo) {
 		// 砖木结构		
 		head = creatHead(key, 4, jsonInfo)
 		console.log(head);
-		if (head[0] == 1) {
-			result = result + "" + fixInteger(jsonInfo.type311, lenq);
-		}
-		if (head[1] == 1) {
-			var type322 = creatHead2('type322', 4, jsonInfo);
-			var type322_x = two2x(type322);
-			result = result + "" + fixInteger(type322_x, lenq);
-			result = result + fixInteger(jsonInfo.type321, lenq);
-		}
-		if (head[2] == 1) {
-			var type332 = creatHead2('type332', 3, jsonInfo);
-			var type332_x = two2x(type332);
-			result = result + "" + fixInteger(type332_x, lenq);
-			result = result + "" + fixInteger(jsonInfo.type331, lenq);
-		}
-		if (head[3] == 1) {
-			var type342 = creatHead('type342', 2, jsonInfo);
-			var type342_x = two2x(type342);
-			result = result + "" + fixInteger(type342_x, lenq);
-			result = result + "" + fixInteger(jsonInfo.type341, lenq);
-		}
-		// console.log('typec='+result);
+		var relu=new Array(1121);
+		var relu2=new Array(0040)
+		result=(head,relu,relu2,'type31',lenq)
 	} else if (jsonInfo.type == 2) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
@@ -347,7 +327,7 @@ function zhenliQuestion(jsonInfo) {
 	} else if (jsonInfo.type == 3) {
 
 	}
-	return fixInteger(two2x(head), lenq) + result;
+	return lenq+';'+fixInteger(two2x(head), lenq) + result;
 }
 
 //把一个表示二进制的数组转化为十进制
@@ -418,16 +398,39 @@ function creatHead(key, len, jsonInfo) {
 }
 
 //规则化
-function regularization(len, head, type) {
-	var typeArr = new Array(len);
-	typeArr = initArr(typeArr, 0);
-	for (i = 0; i < len; i++) {
-		var keySrc = type + i;
-		if (jsonInfo.hasOwnProperty(keySrc)) {
-			queArr[i] = jsonInfo[keySrc];
-		} else {
-			queArr[i] = 0;
+/**
+ * @param {Object} head 头两位数的规则
+ * @param {Object} relu n个选项的规则，是1情况还是2情况
+ * @param {Object} relu2 n个选项的长度，既有几个子选项
+ * @param {Object} key 关键字，如'type31'
+ * @param {Object} len 字符换算长度，否则补零
+ */
+function regularization(head, relu, relu2, key,len) {
+	var result='';
+	for(i=0;i<head.length;i++){
+		keym=key;
+		if(head[i]==1){
+			if(relu[i]==1){
+				var keya=keym+(i+1);
+				result = result + "" + fixInteger(jsonInfo[keya], len);
+			}else if(relu[i]==2){
+				var keya=keym+(i+1);
+				var keyb=keym+(i+2);
+				var keyb = creatHead2(keyb, relu2[i], jsonInfo);
+				var keyb_x = two2x(keyb);
+				result = result + "" + fixInteger(keyb_x, len);
+				result = result + fixInteger(jsonInfo[keya], len);
+			}
 		}
+	}
+	if (head[0] == 1) {
+		result = result + "" + fixInteger(jsonInfo.type311, lenq);
+	}
+	if (head[1] == 1) {
+		var type322 = creatHead2('type322', 4, jsonInfo);
+		var type322_x = two2x(type322);
+		result = result + "" + fixInteger(type322_x, lenq);
+		result = result + fixInteger(jsonInfo.type321, lenq);
 	}
 
 }
