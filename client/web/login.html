@@ -23,7 +23,7 @@
 						<ul class="admin_items">
 							<li>
 								<label for="user">用户名：</label>
-								<input type="text" name="user" value="" id="user" size="35" onblur="chkuser(this,'userMsg')" class="admin_input_style" />
+								<input type="text" name="name" value="" id="user" size="35" onblur="chkuser(this,'userMsg')" class="admin_input_style" />
 								<p id="userMsg" style="color: red; display: inline;"></p>
 							</li>
 							<li>
@@ -117,7 +117,7 @@
 						// datatype: "json",
 						// contentType: "application/x-www-form-urlencoded;charset=utf-8",
 						contentType:'application/json; charset=UTF-8',
-						data: jsons,
+						data: JSON.stringify(jsons),
 						success: function(data) {
 							console.log(data);
 							if(data.status == "200") {
