@@ -18,19 +18,19 @@ $.ajax({
 		data = data.data;
 		pages = Math.ceil(data.count / xianzhi); //总页数
 		console.log(data);
-		var searchSort = document.getElementById("searchSort");
-		for(var i = 0; i < searchSort.length; i++) {
-			var valueStr = searchSort[i].value;
-			valueStr = parseInt(valueStr.substring(17, 18));
-			if(valueStr == data.type) {
-				searchSort[i].selected = true;
-			}
-		}
+		// var searchSort = document.getElementById("searchSort");
+		// for(var i = 0; i < searchSort.length; i++) {
+		// 	var valueStr = searchSort[i].value;
+		// 	valueStr = parseInt(valueStr.substring(17, 18));
+		// 	if(valueStr == data.type) {
+		// 		searchSort[i].selected = true;
+		// 	}
+		// }
 		lists = data.list;
 		console.log(lists);
-		var newsUrl = '/article.html?id=';
-		var updateUrl = 'update.html?id=';
-		var delUrl = '/del?id=';
+		// var newsUrl = '/article.html?id=';
+		// var updateUrl = 'update.html?id=';
+		// var delUrl = '/del?id=';
 		for(i = 0; i < lists.length; i++) {
 			var list = lists[i];
 			if(list.title.length > 24) {
