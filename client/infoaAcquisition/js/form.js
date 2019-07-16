@@ -36,16 +36,17 @@ function submitFrom() {
 
 // 执行SQL语句，这里要弄三个表
 function w_insertSQL(jsonInfo) {
+	var len = 2;
 	var douhao = "','"
 	console.log(jsonInfo);
 	//------------------------
 	jsonInfo = zhenliPhoto(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
 	// console.log(damage);
-	typeb = zhenliType(jsonInfo);
+	typeb = zhenliType(jsonInfo, len);
 	// alert('typeb!');
 	console.log(typeb);
-	typec = zhenliQuestion(jsonInfo);
+	typec = zhenliQuestion(jsonInfo, len);
 	console.log(typec);
 	// insertSQL(tableName,creatImage)
 	var tableName = 'infoDB';
@@ -228,7 +229,7 @@ function openNext(formNow, formNext) {
 	var form_per = chuliForm(tmp);
 	var form_now = getForm('#' + formNow);
 	console.log(form_now);
-	
+
 	var extras = $.extend({}, form_per, form_now);
 
 	var url = formNext + ".html";
@@ -294,7 +295,7 @@ function changeChild(father, child) {
 }
 
 //整理form3 
-function zhenliQuestion(jsonInfo,lenq) {
+function zhenliQuestion(jsonInfo, lenq) {
 	console.log(jsonInfo);
 	var key = 'type3'
 	var result = '';
@@ -303,31 +304,34 @@ function zhenliQuestion(jsonInfo,lenq) {
 		// 砖木结构		
 		head = creatHead(key, 4, jsonInfo)
 		console.log(head);
-		var relu=new Array(1121);
-		var relu2=new Array(0040)
-		result=(head,relu,relu2,'type31',lenq)
+		var relu = [1, 1, 2, 1];
+		var relu2 = [0, 0, 4, 0]
+
+
 	} else if (jsonInfo.type == 2) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
-		if (head[0] == 1) {
-			result = result + "" + fixInteger(jsonInfo.type311, lenq);
-		}
-		if (head[1] == 1) {
-			result = result + fixInteger(jsonInfo.type321, lenq);
-		}
-		if (head[2] == 1) {
-			var type332 = creatHead2('type332', 3, jsonInfo);
-			var type332_x = two2x(type332);
-			result = result + "" + fixInteger(type332_x, lenq);
-			result = result + "" + fixInteger(jsonInfo.type331, lenq);
-		}
-		if (head[3] == 1) {
-			result = result + "" + fixInteger(jsonInfo.type341, lenq);
-		}
+		var relu = [1, 1, 2, 1];
+		var relu2 = [0, 0, 3, 0];
 	} else if (jsonInfo.type == 3) {
-
+		head = creatHead(key, 5, jsonInfo);
+		console.log(head);
+		var relu = [1, 2, 2, 1, 1];
+		var relu2 = [0, 2, 2, 0, 0];
+	} else if (jsonInfo.type == 4) {
+		head = creatHead(key, 5, jsonInfo);
+		console.log(head);
+		var relu = [1, 2, 1, 1];
+		var relu2 = [0, 2, 0, 0];
+	} else if (jsonInfo.type == 5) {
+		head = creatHead(key, 5, jsonInfo);
+		console.log(head);
+		var relu = [1, 2, 2, 2, 2];
+		var relu2 = [0, 4, 4, 3, 2];
 	}
-	return lenq+';'+fixInteger(two2x(head), lenq) + result;
+	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
+	console.log(result);
+	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
 
 //把一个表示二进制的数组转化为十进制
@@ -338,25 +342,37 @@ function two2x(arr) {
 	return arr_x;
 }
 //整理form2
-function zhenliType(jsonInfo) {
-
+function zhenliType(jsonInfo, lenq) {
 	var key = 'type2'
 	var result = '';
 	console.log(jsonInfo.type21);
 	if (jsonInfo.type == 1) {
 		// 砖木结构	
-		// ---------------
 		var type21 = creatHead2('type21', 4, jsonInfo)
-		var type21_x = parseInt(type21.join(''), 2);
+		var type21_x = parseInt(type21.join(''), lenq);
 		console.log(type21_x)
-		// ---------------
-		result = fixInteger(type21_x, 2) + '' + fixInteger(jsonInfo.type22, 2);
-		return result;
+		result = fixInteger(type21_x, lenq) + '' + fixInteger(jsonInfo.type22, lenq);
 	} else if (jsonInfo.type == 2) {
-		return '00';
-	} else if (jsonInfo.type == 3) {
 
+	} else if (jsonInfo.type == 3) {
+		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21_x = parseInt(type21.join(''), lenq);
+		result = result + fixInteger(type21_x, lenq);
+		var type22 = creatHead2('type22', 4, jsonInfo)
+		var type22_x = parseInt(type22.join(''), lenq);
+		result = result + fixInteger(type22_x, lenq);
+	} else if (jsonInfo.type == 4) {
+		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21_x = parseInt(type21.join(''), lenq);
+		result = result + fixInteger(type21_x, lenq);
+	} else if (jsonInfo.type == 5) {
+		result = result + fixInteger(jsonInfo.type21, lenq);
+		var type22 = creatHead2('type22', 4, jsonInfo)
+		var type22_x = parseInt(type22.join(''), lenq);
+		result = result + fixInteger(type22_x, lenq);
+		result = result + fixInteger(jsonInfo.type23, lenq);
 	}
+	return lenq + ';' + result;
 }
 
 // 
@@ -372,7 +388,7 @@ function creatHead2(key, len, jsonInfo) {
 			head[i] = 1;
 		}
 	}
-	console.log(head);
+	console.log('head2=' + head);
 	// head=parseInt(head,2);
 	// console.log(head);
 	return head;
@@ -405,17 +421,20 @@ function creatHead(key, len, jsonInfo) {
  * @param {Object} key 关键字，如'type31'
  * @param {Object} len 字符换算长度，否则补零
  */
-function regularization(head, relu, relu2, key,len) {
-	var result='';
-	for(i=0;i<head.length;i++){
-		keym=key;
-		if(head[i]==1){
-			if(relu[i]==1){
-				var keya=keym+(i+1);
+function regularization(jsonInfo, head, relu, relu2, key, len) {
+	var result = '';
+	console.log('regularization' + head)
+	for (i = 0; i < 4; i++) {
+		keym = key + (i + 1);
+		if (head[i] == 1) {
+			if (relu[i] == 1) {
+				var keya = keym + 1;
 				result = result + "" + fixInteger(jsonInfo[keya], len);
-			}else if(relu[i]==2){
-				var keya=keym+(i+1);
-				var keyb=keym+(i+2);
+			} else if (relu[i] == 2) {
+				var keya = keym + 1;
+				var keyb = keym + 2;
+				console.log(keya);
+				console.log(keyb);
 				var keyb = creatHead2(keyb, relu2[i], jsonInfo);
 				var keyb_x = two2x(keyb);
 				result = result + "" + fixInteger(keyb_x, len);
@@ -423,16 +442,8 @@ function regularization(head, relu, relu2, key,len) {
 			}
 		}
 	}
-	if (head[0] == 1) {
-		result = result + "" + fixInteger(jsonInfo.type311, lenq);
-	}
-	if (head[1] == 1) {
-		var type322 = creatHead2('type322', 4, jsonInfo);
-		var type322_x = two2x(type322);
-		result = result + "" + fixInteger(type322_x, lenq);
-		result = result + fixInteger(jsonInfo.type321, lenq);
-	}
-
+	console.log(result);
+	return result;
 }
 // 补全json字段，补全缺少的photo字段
 function zhenliPhoto(jsonInfo) {

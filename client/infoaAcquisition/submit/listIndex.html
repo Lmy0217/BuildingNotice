@@ -100,7 +100,7 @@
 									mui.alert('图片上传失败，中断！','信息助手','确定',function (e) {
 									   e.index
 									},'div');
-									closeDB()
+									closeDB() 
 									return false;
 								}
 								
@@ -131,6 +131,8 @@
 
 			function upData(data) {
 				console.log(data)
+				var token = localStorage.getItem('TOKEN_TOKEN');
+				data['token']=token;
 				// {
 				// 	'data': data,
 				// }
@@ -247,7 +249,7 @@
 						var formData = new FormData();
 						// formData.append("accountnum", 123456); 
 						formData.append('depict', data.depict);
-
+formData.append('token', data.token);
 						formData.append('file', new File([data.file], '12345.png'));
 						// formData.append('new', data.file);
 						// Object.keys(data).forEach((key) => {
