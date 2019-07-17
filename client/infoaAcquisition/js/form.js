@@ -52,11 +52,11 @@ function w_insertSQL(jsonInfo) {
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists " + tableName + "(" +
 		"'unit'	text," +
-		"'phone'	int(11)," +
+		"'phone'	text(11)," +
 		"'material'	text ," +
 		"'addr'	text," +
 		"'hold'	text," +
-		"'holdid' int(20)," +
+		"'holdid' text(20)," +
 		"'attr' int(2)," +
 		"'layer' int(2)," +
 		"'typeid'	int(1)," +
@@ -77,12 +77,12 @@ function w_insertSQL(jsonInfo) {
 		"'remark'	text," +
 
 		"'isUp'	int(1)" + ")";
-	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
-		jsonInfo.phone + ",'" +
+	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "','" +
+		jsonInfo.phone + "','" +
 		jsonInfo.material + "','" +
 		jsonInfo.addr + "','" +
-		jsonInfo.hold + "'," +
-		jsonInfo.holdid + "," +
+		jsonInfo.hold + "','" +
+		jsonInfo.holdid + "'," +
 		jsonInfo.attr + "," +
 		jsonInfo.layer + "," +
 		jsonInfo.type + ",'" +

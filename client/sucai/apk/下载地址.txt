@@ -1,2 +1,7 @@
+v0.84
+https://www.lanzous.com/i5114lc
+修复了手机号码与身份证号溢出的问题
+
+
 v0.832
 https://www.lanzous.com/i50y92f
