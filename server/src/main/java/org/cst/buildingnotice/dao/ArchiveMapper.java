@@ -1,5 +1,7 @@
 package org.cst.buildingnotice.dao;
 
+import java.util.List;
+
 import org.cst.buildingnotice.entity.Archive;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 
@@ -17,4 +19,6 @@ public interface ArchiveMapper {
     int updateByPrimaryKeyWithBLOBs(ArchiveWithBLOBs record);
 
     int updateByPrimaryKey(Archive record);
+    
+    List<ArchiveWithBLOBs> selectByUserid(Integer userid);
 }

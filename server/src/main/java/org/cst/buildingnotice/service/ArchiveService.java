@@ -1,6 +1,7 @@
 package org.cst.buildingnotice.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 
@@ -11,4 +12,6 @@ public interface ArchiveService {
 			double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status);
 
 	public ArchiveWithBLOBs getArchiveById(Integer id);
+	
+	public List<ArchiveWithBLOBs> getArchivesByUserid(Integer userid);
 }

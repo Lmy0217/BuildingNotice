@@ -1,6 +1,7 @@
 package org.cst.buildingnotice.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.cst.buildingnotice.dao.ArchiveMapper;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
@@ -44,5 +45,9 @@ public class ArchiveServiceImpl implements ArchiveService {
 
 	public ArchiveWithBLOBs getArchiveById(Integer id) {
 		return archiveMapper.selectByPrimaryKey(id);
+	}
+	
+	public List<ArchiveWithBLOBs> getArchivesByUserid(Integer userid) {
+		return archiveMapper.selectByUserid(userid);
 	}
 }

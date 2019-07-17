@@ -95,4 +95,23 @@
 //        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 //        resultActions.andDo(MockMvcResultHandlers.print());
 //	}
+//	
+//	//@Test
+//	public void listTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		
+//		requestBodyJSON.put("type", 0);
+//		requestBodyJSON.put("page", 1);
+//		requestBodyJSON.put("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/list")
+//				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//	    
+//	    ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse();
+//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
 //}
