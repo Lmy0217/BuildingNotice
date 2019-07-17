@@ -10,10 +10,12 @@
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
 		<script type="text/javascript" src="js/js.js"></script>
 		<script type="text/javascript" src="js/jump.js"></script>
-		<!-- <script type="text/javascript" src="js/check.js"></script> -->
+		<script type="text/javascript" src="js/check.js"></script>
 		<script type="text/javascript">
 			window.onload = function() {
 				runSetIndexTimes();
+				setInterval("runSetIndexTimes()", 1000);
+				document.getElementById('res-hose').innerText=domin;
 			}
 		</script>
 	</head>
@@ -59,10 +61,10 @@
 							<a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
 							<ul class="sub-menu">
 								<li>
-									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe008;</i>作品管理</a>
+									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
 								</li>
 								<li>
-									<a href="insert.html?id=0.html"><i class="icon-font">&#xe005;</i>新增文章</a>
+									<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
 							</ul>
 						</li>
@@ -70,10 +72,10 @@
 							<a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
 							<ul class="sub-menu">
 								<li>
-									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe017;</i>文件管理（未下载）</a>
+									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
 								</li>
 								<li>
-									<a href="design.html?type=2&page=1"><i class="icon-font">&#xe037;</i>文件管理（已下载）</a>
+									<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
 								<!-- <li>
 									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe046;</i>修改简介</a>
@@ -92,7 +94,7 @@
 			<!--/sidebar-->
 			<div class="main-wrap">
 				<div class="crumb-wrap">
-					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>欢迎使用『亲水』建工后台</span></div>
+					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>欢迎使用『信息采集助手』后台管理系统</span></div>
 				</div>
 				<div class="result-wrap">
 					<div class="result-title">
@@ -101,10 +103,10 @@
 					<div class="result-content">
 						<div class="short-wrap">
 							<li>
-								<a href="design.html?type=0&page=1"><i class="icon-font">&#xe017;</i>作品管理</a>
+								<a href="design.html?type=0&page=1"><i class="icon-font">&#xe017;</i>文章管理</a>
 							</li>
 							<li>
-								<a href="insert.html?id=0"><i class="icon-font">&#xe037;</i>新增文章</a>
+								<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
 							</li>
 						</div>
 					</div>
@@ -127,9 +129,9 @@
 							<li>
 								<label class="res-lab">系统版本</label><span class="res-info">v-1.0</span>
 							</li>
-							<li>
+							<!-- <li>
 								<label class="res-lab">上传附件限制</label><span class="res-info">10M</span>
-							</li>
+							</li> -->
 							<li>
 								<label class="res-lab">服务器时间</label><span id="serverTime" class="res-info"></span>
 							</li>
@@ -140,7 +142,10 @@
 								<label class="res-lab">服务器域名/IP</label><span class="res-info">http://www.ncqsjg.cn/</span>
 							</li>
 							<li>
-								<label class="res-lab">Host</label><span class="res-info">http://47.100.192.151/</span>
+								<label class="res-lab">Host</label><span class="res-hose"></span>
+							</li>
+							<li>
+								<a href="test.html"><label class="res-lab">test</label><span class="res-info">测试网页</span></a>
 							</li>
 						</ul>
 					</div>
