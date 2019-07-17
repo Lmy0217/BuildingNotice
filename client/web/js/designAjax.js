@@ -12,6 +12,7 @@ $.ajax({
 		page: listPage,
 		token: q,
 	},
+	contentType:'application/json; charset=UTF-8',
 	type: 'get',
 	dataType: 'json',
 	success: function(data) {
