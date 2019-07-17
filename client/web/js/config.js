@@ -3,6 +3,7 @@ var name='/buildingnotice';
 var website = domin+name;
 
 var loginUrl = website + '/user/login';
+var checkUser=website+'/user/token';
 // var imgUrl = website + '/image/upload';
 // var upUrl = website + '/archive/create';
 

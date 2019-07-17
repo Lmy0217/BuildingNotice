@@ -3,17 +3,19 @@ var listType = GetUrlParam("type");
 var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
-var listList = ["全部分类", "已下文件", "未下文件"];
+var listList = ["全部分类", "未下文件", "已下文件"];
 var q = getCookie('token');
-$.ajax({
-	url: listUrl,
-	data: {
+var data={
 		type: listType,
 		page: listPage,
 		token: q,
-	},
-	type: 'get',
-	dataType: 'json',
+	}
+$.ajax({
+	url: listUrl,
+	datatype: "json",
+	contentType:'application/json;charset=UTF-8',
+	data:JSON.stringify(data),
+	type: 'post',
 	success: function(data) {
 		console.log(data);
 		// data = data.data;
@@ -22,7 +24,7 @@ $.ajax({
 		for (var i = 0; i < searchSort.length; i++) {
 			var valueStr = searchSort[i].value;
 			valueStr = parseInt(valueStr.substring(17, 18));
-			if (valueStr == data.type) {
+			if (valueStr == listType) {
 				searchSort[i].selected = true;
 			}
 		}
@@ -50,9 +52,8 @@ $.ajax({
 				"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
 				"<td>" + titles + "</td>" +
 				"<td>" + list.date + "</td>" +
-				"<td>" + author + "</td>" +
 				"<td>" +
-				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles(" + list.id + ")'>下载</a> " +
+				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
 				"</td>" +
 				"</tr>" ;
 
@@ -100,7 +101,7 @@ function download(type, downList) {
 	var jsons = {
 		"token": q,
 		"type": type,
-		"id": downList,
+		"ids": downList,
 	};
 	var form = $("<form>");
 	form.attr('style', 'display:none');

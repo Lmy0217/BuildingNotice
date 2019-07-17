@@ -16,14 +16,15 @@ if(q == undefined) {
 		data["token"] = q;
 		//		console.log(data);
 		$.ajax({
-			url: website + "token/check",
+			url: checkUser,
 			cache: false,
 			type: "post",
 			datatype: "json",
-			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: data,
+			contentType:'application/json;charset=UTF-8',
+			data:JSON.stringify(data),
 			success: function(data) {
-				if(data.code == "200") {
+				console.log(data);
+				if(data.status == "200") {
 					//根据后台返回值确定是否操作成功
 					console.log("验证成功");
 					if(u != undefined) {
@@ -32,7 +33,7 @@ if(q == undefined) {
 					} else {
 						$("#user").append("管理员");
 					}
-					//					document.cookie = data.token;
+					document.cookie = setCookie("token", data.token, "3");
 				} else {
 					console.log("非法访问");
 					window.location.href = 'login.html'
