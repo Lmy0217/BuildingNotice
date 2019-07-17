@@ -14,4 +14,6 @@ public interface ArchiveService {
 	public ArchiveWithBLOBs getArchiveById(Integer id);
 	
 	public List<ArchiveWithBLOBs> getArchivesByUserid(Integer userid);
+	
+	public int updateByPrimaryKeyWithBLOBs(ArchiveWithBLOBs record);
 }

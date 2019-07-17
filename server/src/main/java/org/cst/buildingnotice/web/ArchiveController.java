@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -247,16 +248,18 @@ public class ArchiveController {
 		if (archive_path == null || imgs_path == null || template_path == null) {
 			return null;
 		}
-		String template_file = template_path + File.separator + "template_2.docx";
 		
-		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateformat = new SimpleDateFormat("yyyy年MM月dd日");
+		DateFormat yearformat = new SimpleDateFormat("yyyy");
 		List<String> files = new ArrayList<String>();
+		List<ArchiveWithBLOBs> archiveList = new ArrayList<ArchiveWithBLOBs>();
 		
 		for (int i = 0; i < ids.size(); i++) {
 			
 			int id = ids.get(i);
 			
 			ArchiveWithBLOBs archiveWithBLOBs = archiveService.getArchiveById(id);
+			archiveList.add(archiveWithBLOBs);
 			if (archiveWithBLOBs == null || archiveWithBLOBs.getUserid() != userId) {
 				return null;
 			}
@@ -272,6 +275,10 @@ public class ArchiveController {
 			List<Image> imgs = imageService.getImagesByIdList(archImgService.getImgsByArchid(id));
 			
 			String identityTime = dateformat.format(archiveWithBLOBs.getIdentitytime());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(archiveWithBLOBs.getIdentitytime());
+			calendar.add(Calendar.DATE, 7);
+			
 			String file_name = String.format("%08d", id) + '_' + identityTime + ".docx";
 			String file = archive_path + File.separator + file_name;
 			System.out.println("file :" + file);
@@ -284,9 +291,9 @@ public class ArchiveController {
 			data.put("hold", archiveWithBLOBs.getHold());
 			data.put("holdid", archiveWithBLOBs.getHoldid());
 			data.put("attr", archiveWithBLOBs.getAttr());
-			data.put("layer", archiveWithBLOBs.getLayer());
+			data.put("layer", archiveWithBLOBs.getLayer() + "层");
 			data.put("createyear", archiveWithBLOBs.getCreateyear() != null ? 
-					dateformat.format(archiveWithBLOBs.getCreateyear()) : null);
+					(yearformat.format(archiveWithBLOBs.getCreateyear()) + "年") : null);
 			data.put("typename", typeWithBLOBs.getName());
 			data.put("identitytime", identityTime);
 			data.put("body1", TemplateUtil.stringRender(
@@ -300,7 +307,7 @@ public class ArchiveController {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
 				data.put("image" + j, new PictureRenderData(560, 310, img_path));
-				data.put("imagedepict" + j, imgs.get(i).getDepict());
+				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
 			
 			data.put("a111", damage.getA111());
@@ -331,10 +338,19 @@ public class ArchiveController {
 					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), 
 							archiveWithBLOBs.getBody3())));
 			
+			data.put("year", calendar.get(Calendar.YEAR));
+			data.put("month", calendar.get(Calendar.MONTH));
+			data.put("day", calendar.get(Calendar.DAY_OF_MONTH));
+			
 			data = Template.defaultValue(data);
 			
 			System.out.println("data complete");
-			
+
+			String template_name = "template_4";
+			if (imgs.size() == 1) template_name = "template_1";
+			else if (imgs.size() == 0) template_name = "template_0";
+			String template_file = template_path + File.separator 
+					+ template_name + ".docx";
 			if (!TemplateUtil.render(template_file, data, file)) {
 				return null;
 			}
@@ -365,6 +381,15 @@ public class ArchiveController {
 			try {
 				if (in != null) in.close();
 			} catch (IOException e) {
+				return null;
+			}
+		}
+		
+		for (int i = 0; i < archiveList.size(); i++) {
+			ArchiveWithBLOBs archiveWithBLOBs = archiveList.get(i);
+			archiveWithBLOBs.setStatus(1);
+			int flag = archiveService.updateByPrimaryKeyWithBLOBs(archiveWithBLOBs);
+			if (flag != 1) {
 				return null;
 			}
 		}
