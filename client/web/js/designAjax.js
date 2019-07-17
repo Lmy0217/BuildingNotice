@@ -5,15 +5,16 @@ var listPage = GetUrlParam("page");
 var xianzhi = 15;
 var listList = ["全部分类", "已下文件", "未下文件"];
 var q = getCookie('token');
-$.ajax({
-	url: listUrl,
-	data: {
+var data={
 		type: listType,
 		page: listPage,
 		token: q,
-	},
+	}
+$.ajax({
+	url: listUrl,
 	datatype: "json",
-	contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	contentType:'application/json;charset=UTF-8',
+	data:JSON.stringify(data),
 	type: 'post',
 	success: function(data) {
 		console.log(data);

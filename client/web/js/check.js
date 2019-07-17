@@ -20,8 +20,8 @@ if(q == undefined) {
 			cache: false,
 			type: "post",
 			datatype: "json",
-			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: data,
+			contentType:'application/json;charset=UTF-8',
+			data:JSON.stringify(data),
 			success: function(data) {
 				console.log(data);
 				if(data.code == "200") {
