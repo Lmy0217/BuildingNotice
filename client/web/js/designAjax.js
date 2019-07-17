@@ -4,11 +4,11 @@ var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
-var q = getCookie('token');
+var token=getCookie('token');
 var data={
 		type: listType,
 		page: listPage,
-		token: q,
+		token: token,
 	}
 $.ajax({
 	url: listUrl,
@@ -98,8 +98,9 @@ function downFiles(c) {
 }
 
 function download(type, downList) {
+	var token= getCookie('token');
 	var jsons = {
-		"token": q,
+		"token":token ,
 		"type": type,
 		"ids": downList,
 	};

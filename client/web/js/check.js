@@ -3,6 +3,7 @@ console.log(document.cookie);
 console.log(q);
 var u = getCookie('user');
 console.log(u);
+window.onload=
 if(q == undefined) {
 	window.location.href = 'login.html'
 } else {
