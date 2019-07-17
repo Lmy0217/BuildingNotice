@@ -25,6 +25,7 @@ if(q == undefined) {
 			success: function(data) {
 				if(data.code == "200") {
 					//根据后台返回值确定是否操作成功
+					console.log(data);
 					console.log("验证成功");
 					if(u != undefined) {
 						$("#user").append(u);
