@@ -305,3 +305,18 @@ function checkAll(all, cchk) {
 	}
 
 }
+
+//根据checkbox获取勾选的值
+function getChkValue(chk){  
+	console.log(chk);
+		 var  obj = document.getElementsByName(chk);
+		console.log(obj)
+		 var baseTable=[];
+		 for(var i in obj){
+			 if(obj[i].checked){
+				 baseTable.push(obj[i].value);
+			 }
+		 }
+		 console.log(baseTable)
+		 return baseTable;
+ }

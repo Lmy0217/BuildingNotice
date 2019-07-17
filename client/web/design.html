@@ -113,8 +113,8 @@
 						<div class="result-title">
 							<div class="result-list">
 								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a> -->
-								<a id="batchDel" href="javascript:void(0)"><i class="icon-font">&#xe009;</i>批量下载</a>
-								<a id="updateOrd" href="javascript:void(0)"><i class="icon-font">&#xe00a;</i>更新排序</a>
+								<a id="batchDown" href="javascript:void(0)" onclick="downFiles()"><i class="icon-font">&#xe009;</i>批量下载</a>
+								<a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a>
 							</div>
 						</div>
 						<div class="result-content">
@@ -129,12 +129,12 @@
 								<tr>
 									<td class='tc'><input name='word[]' value='1' type='checkbox'></td>
 									<td>
-										<a target='_blank' href='' title=''> title</a>
+										title
 									</td>
 									<td> data</td>
 									<td> user </td>
 									<td>
-										<a class='link-update' href=''>下载</a> "
+										<a class='link-update' href="javascript:void(0)"  onclick="downFiles(1)">下载</a> "
 									</td>
 								</tr>
 								<tr>
