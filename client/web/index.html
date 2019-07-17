@@ -15,6 +15,7 @@
 			window.onload = function() {
 				runSetIndexTimes();
 				setInterval("runSetIndexTimes()", 1000);
+				document.getElementById('res-hose').innerText=domin;
 			}
 		</script>
 	</head>
@@ -128,9 +129,9 @@
 							<li>
 								<label class="res-lab">系统版本</label><span class="res-info">v-1.0</span>
 							</li>
-							<li>
+							<!-- <li>
 								<label class="res-lab">上传附件限制</label><span class="res-info">10M</span>
-							</li>
+							</li> -->
 							<li>
 								<label class="res-lab">服务器时间</label><span id="serverTime" class="res-info"></span>
 							</li>
@@ -141,7 +142,7 @@
 								<label class="res-lab">服务器域名/IP</label><span class="res-info">http://www.ncqsjg.cn/</span>
 							</li>
 							<li>
-								<label class="res-lab">Host</label><span class="res-info">http://47.100.192.151/</span>
+								<label class="res-lab">Host</label><span class="res-hose"></span>
 							</li>
 							<li>
 								<a href="test.html"><label class="res-lab">test</label><span class="res-info">测试网页</span></a>
