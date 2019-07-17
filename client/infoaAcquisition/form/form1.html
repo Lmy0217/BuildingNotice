@@ -46,12 +46,11 @@
 			mui.plusReady(function() {
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
 				// watchJSON(ws);
-				var ws = plus.webview.currentWebview();
+				// var ws = plus.webview.currentWebview();
 				var form_per = chuliForm(ws);
 				if(form_per.vkey==1){
 					perValue(form_per);
 				}
-				console.log(form_per);
 				document.getElementById('goBack').addEventListener("tap", function() {
 					mui.back();
 				})
@@ -109,15 +108,23 @@
 					flag=0;
 				}
 				if(flag==1){
-					if(q==1){
-						form_now.createyear=form_now.createyear+"-01-01";
-						console.log(form_now);
-						plus.webview.create(url, id, style, form_now).show();
-					}else if(q==2){
-						form_now.createyear=form_now.createyear+"-01";
-						console.log(form_now);
-						plus.webview.create(url, id, style, form_now).show();
-					}else{
+					var tmp = plus.webview.currentWebview();
+					var form_per = chuliForm(tmp);
+					if(q!=0){						
+						if(q==1){
+							var tmp = plus.webview.currentWebview();
+							var form_per = chuliForm(tmp);
+							form_now.createyear=form_now.createyear+"-01-01";
+							console.log(form_now);
+						}else if(q==2){
+							form_now.createyear=form_now.createyear+"-01";
+							console.log(form_now);
+						}
+						var extras = $.extend({}, form_per, form_now);
+						console.log(extras);
+						plus.webview.create(url, id, style, extras).show();
+					}
+					else{
 						openNext('form1',mubiao);
 					}					
 				}

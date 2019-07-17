@@ -42,7 +42,7 @@ function w_insertSQL(jsonInfo) {
 	//------------------------
 	jsonInfo = zhenliPhoto(jsonInfo);
 	damage = zhenliDamage(jsonInfo);
-	// console.log(damage);
+	console.log(damage);
 	typeb = zhenliType(jsonInfo, len);
 	// alert('typeb!');
 	console.log(typeb);
@@ -52,11 +52,11 @@ function w_insertSQL(jsonInfo) {
 	var tableName = 'infoDB';
 	creatMain = "create table if not exists " + tableName + "(" +
 		"'unit'	text," +
-		"'phone'	int(11)," +
+		"'phone'	text(11)," +
 		"'material'	text ," +
 		"'addr'	text," +
 		"'hold'	text," +
-		"'holdid' int(20)," +
+		"'holdid' text(20)," +
 		"'attr' int(2)," +
 		"'layer' int(2)," +
 		"'typeid'	int(1)," +
@@ -77,12 +77,12 @@ function w_insertSQL(jsonInfo) {
 		"'remark'	text," +
 
 		"'isUp'	int(1)" + ")";
-	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "'," +
-		jsonInfo.phone + ",'" +
+	sqlStr = "insert into " + tableName + " values('" + jsonInfo.unit + "','" +
+		jsonInfo.phone + "','" +
 		jsonInfo.material + "','" +
 		jsonInfo.addr + "','" +
-		jsonInfo.hold + "'," +
-		jsonInfo.holdid + "," +
+		jsonInfo.hold + "','" +
+		jsonInfo.holdid + "'," +
 		jsonInfo.attr + "," +
 		jsonInfo.layer + "," +
 		jsonInfo.type + ",'" +
@@ -227,11 +227,12 @@ function insertSQL(tableName, creatTable, sqlStr) {
 function openNext(formNow, formNext) {
 	var tmp = plus.webview.currentWebview();
 	var form_per = chuliForm(tmp);
+
 	var form_now = getForm('#' + formNow);
 	console.log(form_now);
 
 	var extras = $.extend({}, form_per, form_now);
-
+	console.log(extras);
 	var url = formNext + ".html";
 	var id = formNext;
 	var style = {};
@@ -249,22 +250,22 @@ function changeChild2(father, child1, child2) {
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; i < $(child_str1).length; i++) {
+			for (var i = 0; i < $(child_str1).length; i++) {
 				$(child_str1)[i].disabled = "";
 			}
 			$(child_str1)[0].checked = "checked";
-			for (i = 0; i < child2.length; i++) {
+			for (var i = 0; i < child2.length; i++) {
 				child2[i].disabled = "";
 			}
 			child2[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
 			// $(child_str1).disabled = "disabled";
-			for (i = 0; i < $(child_str1).length; i++) {
+			for (var i = 0; i < $(child_str1).length; i++) {
 				$(child_str1)[i].disabled = "disabled";
 				$(child_str1)[i].checked = "";
 			}
-			for (i = 0; i < child2.length; i++) {
+			for (var i = 0; i < child2.length; i++) {
 				child2[i].disabled = "disabled";
 				child2[i].checked = "";
 			}
@@ -279,14 +280,14 @@ function changeChild(father, child) {
 	$(father_str).change(function() {
 		if (this.checked) {
 			// alert("启用"); 
-			for (i = 0; i < $(child_str).length; i++) {
+			for (var i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "";
 			}
 			$(child_str)[0].checked = "checked";
 		} else {
 			// alert("未启用"); 
 			$(child_str).disabled = "disabled";
-			for (i = 0; i < $(child_str).length; i++) {
+			for (var i = 0; i < $(child_str).length; i++) {
 				$(child_str)[i].disabled = "disabled";
 				$(child_str)[i].checked = "";
 			}
@@ -304,8 +305,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 		// 砖木结构		
 		head = creatHead(key, 5, jsonInfo)
 		console.log(head);
-		var relu = [1, 2, 2, 2,2];
-		var relu2 = [0,4,4,3, 2];
+		var relu = [1, 2, 2, 2, 2];
+		var relu2 = [0, 4, 4, 3, 2];
 	} else if (jsonInfo.type == 2) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
@@ -319,8 +320,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 	} else if (jsonInfo.type == 4) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
-		var relu = [1, 1, 2, 1,0];
-		var relu2 = [0, 0,2, 0, 0];
+		var relu = [1, 1, 2, 1, 0];
+		var relu2 = [0, 0, 2, 0, 0];
 	} else if (jsonInfo.type == 5) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
@@ -390,7 +391,7 @@ function creatHead2(key, len, jsonInfo) {
 	var a = jsonInfo[key];
 	// console.log(jsonInfo['type21[]'])
 	console.log(a)
-	for (i = 0; i < a.length; i++) {
+	for (var i = 0; i < a.length; i++) {
 		head[a[i] - 1] = 1;
 	}
 	console.log('head2=' + head);
@@ -401,7 +402,7 @@ function creatHead2(key, len, jsonInfo) {
 
 function creatHead(key, len, jsonInfo) {
 	var head = new Array(len);
-	for (i = 1; i <= len; i++) {
+	for (var i = 1; i <= len; i++) {
 		var keyName = key + i;
 		if (jsonInfo.hasOwnProperty(keyName)) {
 			console.log(i)
@@ -433,7 +434,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 	console.log(relu2);
 	watchJSON(jsonInfo);
 	console.log('regularizati:' + head)
-	for (ir = 0; ir < head.length; ir++) {
+	for (var ir = 0; ir < head.length; ir++) {
 		keym = key + (ir + 1);
 		console.log(ir);
 		if (head[ir] == 1) {
@@ -442,7 +443,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 				var keya = keym + 1;
 				result = result + "" + fixInteger(jsonInfo[keya], len);
 			} else if (relu[ir] == 2) {
-				alert(keym+' '+ir+' '+relu[ir] );
+				// alert(keym+' '+ir+' '+relu[ir] );
 				var keya = keym + 1;
 				var keyb = keym + 2;
 				console.log(keya);
@@ -462,7 +463,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 }
 // 补全json字段，补全缺少的photo字段
 function zhenliPhoto(jsonInfo) {
-	for (i = 1; i <= 4; i++) {
+	for (var i = 1; i <= 4; i++) {
 		var keySrc = "photoSrc" + i;
 		if (!jsonInfo.hasOwnProperty(keySrc)) {
 			jsonInfo[keySrc] = "";
@@ -473,30 +474,19 @@ function zhenliPhoto(jsonInfo) {
 
 //整理承重墙的部分统计,返回一个18位长的数组
 function zhenliDamage(jsonInfo) {
-	var damageArr = new Array(18)
-	damageArr[0] = jsonInfo.zhongzhu;
-	damageArr[1] = jsonInfo.zhongzhu_w;
-	damageArr[2] = jsonInfo.bianzhu;
-	damageArr[3] = jsonInfo.bianzhu_w;
-	damageArr[4] = jsonInfo.jiaozhu;
-	damageArr[5] = jsonInfo.jiaozhu_w;
-	damageArr[6] = jsonInfo.wujia;
-	damageArr[7] = jsonInfo.wujia_w;
-	damageArr[8] = jsonInfo.zhongjianliang;
-	damageArr[9] = jsonInfo.zhongjianliang_w;
-	damageArr[10] = jsonInfo.bianliang;
-	damageArr[11] = jsonInfo.bianliang_w;
-	damageArr[12] = jsonInfo.qiangti;
-	damageArr[13] = jsonInfo.qiangti_w;
-	damageArr[14] = jsonInfo.loubangoujian;
-	damageArr[15] = jsonInfo.loubangoujian_w;
-	damageArr[16] = jsonInfo.weihugoujian;
-	damageArr[17] = jsonInfo.weihugoujian_w;
+	var damageArr = new Array(18);
+	for (var i = 0; i < 9; i++) {
+		var key = 'gou4' + (i + 1);
+		var keyw = key + '_w';
+		console.log(key)
+		damageArr[i * 2] = jsonInfo[key];
+		damageArr[i * 2 + 1] = jsonInfo[keyw];
+	}
 	return damageArr;
 }
 
 function initArr(arr, q) {
-	for (i = 0; i < arr.length; i++) {
+	for (var i = 0; i < arr.length; i++) {
 		arr[i] = q;
 	}
 	return arr;

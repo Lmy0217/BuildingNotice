@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>使用说明</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/mycss.css" />
+		<style>
+			.mui-input-group .lv-title {
+				width: 100%;
+			}
+			
+			.lv-content {
+				height: auto;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: auto;
+				min-height: 40px;
+				max-height: 100px;
+			}
+			.imageup{ width:100px; height: 50px; line-height:50px;display: inline-block;padding: 0 11px;
+			background: #02bafa;
+			color: #F3F3F3;
+			border: 1px #26bbdb solid;
+			border-radius: 10px;
+			} 
+			.button{  width:100px; height: 50px; line-height:50px;} 
+			ul li p{
+			    display: inline-block;
+			}
+			.mui-input-row .result{
+				color: #000000;
+				font-weight:bold;
+			}
+			.mui-input-group .lv-c{
+				width: 100%;
+				padding-left: 15%;
+			}
+		</style>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/util.js"></script>
+		<script src="../js/config.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
+				var account = localStorage.getItem("account");
+				document.getElementById('username').innerText=account;
+				//设置时间
+				var myDate = new Date();
+				var year = myDate.getFullYear();
+				var month = myDate.getMonth() + 1;
+				var day = myDate.getDate();
+				var today = year + '年' + conver(month) + "月" + conver(day)+ "日";
+								console.log(today);
+								document.getElementById('today').innerText=today;
+				document.getElementById("logout").addEventListener('tap', function() {
+					 var btnArray = ['否', '是'];
+                mui.confirm('确定要退出吗？', '用户账户', btnArray, function(e) {
+                    if (e.index == 1) {
+                        localStorage.removeItem("TOKEN_TOKEN");
+                        goHome();
+                    } else {
+                        
+                    }
+                })
+				});
+				document.getElementById("clearCache").addEventListener('tap',function(e){
+					plus.cache.calculate(function(size) {
+                //console.log(size)
+                sizeCache = size;
+                mui.confirm("您目前的系统缓存为" + parseFloat(sizeCache / (1024 * 1024)).toFixed(2) + "M，清除缓存会丢失所有信息并需要重新登录？", "清除缓存", ["确认", "取消"],
+                    function(e) {
+                        if (e.index == 1) {} else {
+                            plus.cache.clear(function() {
+                                alert("缓存清除完毕");
+                                outLoginFun();
+                            });
+                        }
+                    });
+            });
+				})
+				});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="goBack" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">欢迎<span id="username"></span></h1>
+		</header>
+		<div class="mui-content mui-input-group">
+			<div class="mui-input-row">
+				<label class="lv-title">今天是：<span id="today"></span></label>
+			</div>
+			<div class="mui-input-row">
+				<label>已完成任务</label>
+				<input id='over' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+			</div>
+			<div class="mui-input-row">
+				<label>还未下载任务</label>
+				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+			</div>
+			<div class="mui-input-row">
+				<label>已经下载的任务</label>
+				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+			</div>
+		</div>
+
+		<div class="mui-content-padded">
+			<button id='logout' class="mui-btn mui-btn-primary mui-btn-block">退出账户</button>
+		</div>
+
+		<div class="mui-content-padded">
+			<button id='clearCache' class="mui-btn mui-btn-danger mui-btn-block">清理缓存</button>
+		</div>
+	</body>
+</html>

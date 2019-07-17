@@ -56,7 +56,7 @@
 			mui.plusReady(function() {
 				var tmp = plus.webview.currentWebview();
 				var form_per = chuliForm(tmp);
-				document.getElementById("div1").innerText = 'hi,' + JSON.stringify(tmp.hold);
+				document.getElementById("div1").innerText = '户主：' + JSON.stringify(tmp.hold);
 				console.log(JSON.stringify(form_per));
 				document.getElementById('goBack').addEventListener("tap", function() {
 					mui.back('form1');
@@ -237,12 +237,9 @@
 				
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-primary mui-btn-block" onclick="openNext('form2','form3')">下一步</button>
-			</div>
-			<div class="mui-content-padded mui-row">
-				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="goHome()">回主页</button>
-				<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="mui.back('form1')">上一步</button>
-			</div>
+				<button class="mui-btn mui-btn-primary  mui-btn-block" onclick="openNext('form2','form3')">下一步</button>
+				<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>		
+			</div>		
 	</body>
 
 </html>
