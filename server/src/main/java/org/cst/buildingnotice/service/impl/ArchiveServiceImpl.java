@@ -15,8 +15,8 @@ public class ArchiveServiceImpl implements ArchiveService {
 	private ArchiveMapper archiveMapper;
 
 	public Integer create(String unit, String phone, String material, String addr, String hold, String holdid, String attr,
-			Integer layer, Date createyear, int typeid, String body1, String body2, String body3, int rankid,
-			double rankratio, String advise, Date identitytime, String remark, int userid) {
+			Integer layer, Date createyear, Integer typeid, String body1, String body2, String body3, Integer rankid,
+			double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status) {
 		ArchiveWithBLOBs archiveWithBLOBs = new ArchiveWithBLOBs();
 		archiveWithBLOBs.setUnit(unit != null ? unit : "");
 		archiveWithBLOBs.setPhone(phone != null ? phone : "");
@@ -37,6 +37,7 @@ public class ArchiveServiceImpl implements ArchiveService {
 		archiveWithBLOBs.setIdentitytime(identitytime);
 		archiveWithBLOBs.setRemark(remark != null ? remark : "");
 		archiveWithBLOBs.setUserid(userid);
+		archiveWithBLOBs.setStatus(status);
 		archiveMapper.insertSelective(archiveWithBLOBs);
 		return archiveWithBLOBs.getId();
 	}
