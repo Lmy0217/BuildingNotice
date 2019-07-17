@@ -227,11 +227,12 @@ function insertSQL(tableName, creatTable, sqlStr) {
 function openNext(formNow, formNext) {
 	var tmp = plus.webview.currentWebview();
 	var form_per = chuliForm(tmp);
+	
 	var form_now = getForm('#' + formNow);
 	console.log(form_now);
 
 	var extras = $.extend({}, form_per, form_now);
-
+	console.log(extras);
 	var url = formNext + ".html";
 	var id = formNext;
 	var style = {};
@@ -442,7 +443,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 				var keya = keym + 1;
 				result = result + "" + fixInteger(jsonInfo[keya], len);
 			} else if (relu[ir] == 2) {
-				alert(keym+' '+ir+' '+relu[ir] );
+				// alert(keym+' '+ir+' '+relu[ir] );
 				var keya = keym + 1;
 				var keyb = keym + 2;
 				console.log(keya);
