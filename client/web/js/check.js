@@ -24,7 +24,7 @@ if(q == undefined) {
 			data:JSON.stringify(data),
 			success: function(data) {
 				console.log(data);
-				if(data.code == "200") {
+				if(data.status == "200") {
 					//根据后台返回值确定是否操作成功
 					console.log("验证成功");
 					if(u != undefined) {
