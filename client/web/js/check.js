@@ -9,7 +9,7 @@ if(q == undefined) {
 	var c_start = document.cookie.indexOf("token");
 	//	console.log(c_start);
 	if(c_start == -1) {
-		// window.location.href = 'login.html'
+		window.location.href = 'login.html'
 	} else {
 		var data = {};
 		var data = transformToJson(data);
@@ -36,7 +36,7 @@ if(q == undefined) {
 					document.cookie = setCookie("token", data.token, "3");
 				} else {
 					console.log("非法访问");
-					// window.location.href = 'login.html'
+					window.location.href = 'login.html'
 				}
 			}
 		});
