@@ -196,9 +196,10 @@ public class ArchiveController {
 			return null;
 		}
 		
+		Integer type = json.getInteger("type");
 		JSONArray idsJson = json.getJSONArray("ids");
 		String hexToken = json.getString("token");
-		if (idsJson == null || hexToken == null) {
+		if (type == null && idsJson == null || hexToken == null) {
 			return null;
 		}
 		
@@ -224,7 +225,21 @@ public class ArchiveController {
 			return null;
 		}
 		
-		List<Integer> ids = idsJson.toJavaList(Integer.class);
+		// TODO type download
+		List<Integer> ids = new ArrayList<Integer>();
+		List<ArchiveWithBLOBs> archs = null;
+		if (type != null && (type == 0 || type == 1 || type == 2)) {
+			archs = archiveService.getArchivesByUserid(userId);
+			for (int idx = 0; idx < archs.size(); idx++) {
+				if (type == 0 || archs.get(idx).getStatus() + 1 == type) {
+					ids.add(archs.get(idx).getId());
+				}
+			}
+		} else if (idsJson != null) {
+			ids = idsJson.toJavaList(Integer.class);
+		} else {
+			return null;
+		}
 		
 		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
 		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
@@ -360,5 +375,78 @@ public class ArchiveController {
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(body, headers, HttpStatus.OK);
 		
 		return response;
+	}
+	
+	@RequestMapping(value="/list", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> list(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		Integer type = json.getInteger("type");
+		Integer page = json.getInteger("page");
+		String hexToken = json.getString("token");
+		if (hexToken == null || type == null || page == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		if (user.getRole() < 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+		}
+		
+		List<ArchiveWithBLOBs> archs = archiveService.getArchivesByUserid(userId);
+		if (type == 1 || type == 2) {
+			for (int i = archs.size() - 1; i >= 0; i--) {
+				if (archs.get(i).getStatus() + 1 != type) {
+					archs.remove(i);
+				}
+			}
+		}
+		int idxStart = (page - 1) * 15;
+		int idxStop = idxStart + 15;
+		idxStop = idxStop > archs.size() ? archs.size() : idxStop;
+		
+		List<HashMap<String, Object>> jsonList = new ArrayList<HashMap<String, Object>>();
+		for (int i = idxStart; i < idxStop; i++) {
+			HashMap<String, Object> jsonObject = new HashMap<String, Object>();
+			ArchiveWithBLOBs archiveWithBLOBs = archs.get(i);
+			jsonObject.put("id", archiveWithBLOBs.getId());
+			jsonObject.put("title", archiveWithBLOBs.getIdentitytime() + "-" + archiveWithBLOBs.getHold());
+			jsonObject.put("date", archiveWithBLOBs.getIdentitytime());
+			jsonList.add(jsonObject);
+		}
+		
+		HashMap<String, Object> jsonResult = new HashMap<String, Object>();
+		jsonResult.put("status", HttpStatus.OK.value());
+		jsonResult.put("count", idxStop - idxStart);
+		jsonResult.put("list", jsonList);
+		
+		return jsonResult;
 	}
 }
