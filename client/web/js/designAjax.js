@@ -15,9 +15,9 @@ $.ajax({
 	type: 'get',
 	dataType: 'json',
 	success: function(data) {
-		data = data.data;
-		pages = Math.ceil(data.count / xianzhi); //总页数
 		console.log(data);
+		// data = data.data;
+		pages = Math.ceil(data.count / xianzhi); //总页数
 		var searchSort = document.getElementById("searchSort");
 		for (var i = 0; i < searchSort.length; i++) {
 			var valueStr = searchSort[i].value;
