@@ -3,7 +3,7 @@ var listType = GetUrlParam("type");
 var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
-var listList = ["全部分类", "已下文件", "未下文件"];
+var listList = ["全部分类", "未下文件", "已下文件"];
 var q = getCookie('token');
 var data={
 		type: listType,
