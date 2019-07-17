@@ -18,14 +18,14 @@ $.ajax({
 		data = data.data;
 		pages = Math.ceil(data.count / xianzhi); //总页数
 		console.log(data);
-		// var searchSort = document.getElementById("searchSort");
-		// for(var i = 0; i < searchSort.length; i++) {
-		// 	var valueStr = searchSort[i].value;
-		// 	valueStr = parseInt(valueStr.substring(17, 18));
-		// 	if(valueStr == data.type) {
-		// 		searchSort[i].selected = true;
-		// 	}
-		// }
+		var searchSort = document.getElementById("searchSort");
+		for (var i = 0; i < searchSort.length; i++) {
+			var valueStr = searchSort[i].value;
+			valueStr = parseInt(valueStr.substring(17, 18));
+			if (valueStr == data.type) {
+				searchSort[i].selected = true;
+			}
+		}
 		lists = data.list;
 		console.log(lists);
 		// var newsUrl = '/article.html?id=';
@@ -39,7 +39,7 @@ $.ajax({
 				var title = list.title;
 			}
 			if (list.author == undefined)
-				author = "admin";
+				author = "user";
 			else {
 				author = list.author;
 			}
@@ -47,22 +47,15 @@ $.ajax({
 			titles = checkTitle(titles);
 			console.log(titles);
 			infoStr = "<tr>" +
-				"<td class= 'tc'><input name= 'id[]' value='" + list.id + "' type='checkbox'></td>" +
-				"<td>" +
-				"<input name= 'ids' value= '" + list.id + "' type= 'hidden'>" +
-				"<input class= 'common-input sort-input' name= 'ord[]' value= '" + list.id + "' type= 'text'>" +
-				"</td>" +
-				"<td>" + list.id + "</td>" +
-				"<td 'title='" + list.title + "'>" +
-				"<a target='_blank' href='" + newsUrl + list.id + "' title='" + list.title + "'>" + title + "</a>" +
-				"</td>" +
-				"<td>" + list.looked_times + "</td>" +
-				"<td>" + author + "</td>" +
+				"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
+				"<td>" + titles + "</td>" +
 				"<td>" + list.date + "</td>" +
+				"<td>" + author + "</td>" +
 				"<td>" +
-				"<a class='link-update' href='" + updateUrl + list.id + "'>修改</a> " +
-				"<a class='link-del' href='javascript:void(0)' onclick='del(" + list.id + ",\"" + titles + "\")'>删除</a>" +
-				"</td></tr>";
+				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles(" + list.id + ")'>下载</a> " +
+				"</td>" +
+				"</tr>" ;
+
 			$("#result_info").append(infoStr);
 		}
 		var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
