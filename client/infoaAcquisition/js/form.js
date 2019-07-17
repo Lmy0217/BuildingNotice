@@ -328,11 +328,12 @@ function zhenliQuestion(jsonInfo, lenq) {
 		var relu = [1, 2, 2, 2, 2];
 		var relu2 = [0, 4, 4, 3, 2];
 	}
-	console.log(head);
+	
 	console.log(relu);
 	console.log(relu2);
 	console.log(key);
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
+	head=head.reverse();
 	console.log(result);
 	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
@@ -389,7 +390,7 @@ function creatHead2(key, len, jsonInfo) {
 	console.log(len);
 	console.log('head2=' + head);
 	var a = jsonInfo[key];
-	// console.log(jsonInfo['type21[]'])
+	console.log(key)
 	console.log(a)
 	for (var i = 0; i < a.length; i++) {
 		head[a[i] - 1] = 1;
@@ -397,7 +398,7 @@ function creatHead2(key, len, jsonInfo) {
 	console.log('head2=' + head);
 	head=head.reverse();
 	// head=parseInt(head,2);
-	// console.log(head);
+	console.log(head);
 	return head;
 }
 
@@ -415,9 +416,8 @@ function creatHead(key, len, jsonInfo) {
 		console.log(head)
 	}
 	console.log(head);
-	head=head.reverse();
 	// head=parseInt(head,2);
-	// console.log(head);
+	console.log(head);
 	return head;
 }
 
