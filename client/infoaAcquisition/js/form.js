@@ -395,6 +395,7 @@ function creatHead2(key, len, jsonInfo) {
 		head[a[i] - 1] = 1;
 	}
 	console.log('head2=' + head);
+	head=head.reverse();
 	// head=parseInt(head,2);
 	// console.log(head);
 	return head;
@@ -414,6 +415,7 @@ function creatHead(key, len, jsonInfo) {
 		console.log(head)
 	}
 	console.log(head);
+	head=head.reverse();
 	// head=parseInt(head,2);
 	// console.log(head);
 	return head;
