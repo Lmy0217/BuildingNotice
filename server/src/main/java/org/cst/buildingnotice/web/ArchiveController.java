@@ -291,9 +291,9 @@ public class ArchiveController {
 			data.put("hold", archiveWithBLOBs.getHold());
 			data.put("holdid", archiveWithBLOBs.getHoldid());
 			data.put("attr", archiveWithBLOBs.getAttr());
-			data.put("layer", archiveWithBLOBs.getLayer() + "层");
+			data.put("layer", archiveWithBLOBs.getLayer());
 			data.put("createyear", archiveWithBLOBs.getCreateyear() != null ? 
-					(yearformat.format(archiveWithBLOBs.getCreateyear()) + "年") : null);
+					(yearformat.format(archiveWithBLOBs.getCreateyear())) : null);
 			data.put("typename", typeWithBLOBs.getName());
 			data.put("identitytime", identityTime);
 			data.put("body1", TemplateUtil.stringRender(

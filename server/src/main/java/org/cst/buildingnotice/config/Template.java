@@ -30,10 +30,12 @@ public class Template {
 		if (attr == null || attr.length() == 0) data.put("attr", "不详");
 		
 		Integer layer = (Integer) data.getOrDefault("layer", null);
-		if (layer == null || layer < 1) data.put("attr", Integer.valueOf(0));
+		if (layer == null || layer < 1) data.put("layer", Integer.valueOf(0));
+		else data.put("layer", layer + "层");
 		
 		String createyear = (String) data.getOrDefault("createyear", null);
 		if (createyear == null || createyear.length() == 0) data.put("createyear", "不详");
+		else data.put("createyear", createyear + "年");
 		
 		String body1 = (String) data.getOrDefault("body1", null);
 		if (body1 == null || body1.length() == 0) data.put("body1", "无");
