@@ -22,7 +22,7 @@
 					<form id="myform" method="post">
 						<ul class="admin_items">
 							<li>
-								<label for="user">用户名：</label>
+								<label for="name">用户名：</label>
 								<input type="text" name="name" value="" id="name" size="35" onblur="chkuser(this,'userMsg')" class="admin_input_style" />
 								<p id="userMsg" style="color: red; display: inline;"></p>
 							</li>
@@ -75,7 +75,7 @@
 			function checkPwd(jsons) {
 				var userRelue = /^[a-zA-Z0-9;]{3,16}$/;
 				var pwdRelue = /^[a-zA-Z0-9_]{6,16}$/;
-				if(jsons.user.length == 0) {
+				if(jsons.name.length == 0) {
 					alert("用户名不能为空");
 					return false;
 				} else if(jsons.pwd.length == 0) {
@@ -122,8 +122,8 @@
 							console.log(data);
 							if(data.status == "200") {
 								//根据后台返回值确定是否操作成功
-								document.cookie = setCookie("token", data.data.token, "3");
-								document.cookie = setCookie("user", jsons.user, "3");
+								document.cookie = setCookie("token", data.token, "3");
+								document.cookie = setCookie("name", jsons.name, "3");
 								window.location.href = "index.html";
 							} else {
 								alert("用户名或者密码错误");
