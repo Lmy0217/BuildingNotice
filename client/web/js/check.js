@@ -23,9 +23,9 @@ if(q == undefined) {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: data,
 			success: function(data) {
+				console.log(data);
 				if(data.code == "200") {
 					//根据后台返回值确定是否操作成功
-					console.log(data);
 					console.log("验证成功");
 					if(u != undefined) {
 						$("#user").append(u);
