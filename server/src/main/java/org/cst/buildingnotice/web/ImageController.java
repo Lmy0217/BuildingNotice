@@ -32,7 +32,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,6 +54,7 @@ public class ImageController {
 	@Autowired
 	private ArchImgService archImgService;
 	
+	@Autowired
 	private ArchiveService archiveService;
 
 	@RequestMapping(value = "/upload", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
@@ -132,11 +132,14 @@ public class ImageController {
 		};
 	}
 
-	// TODO test download type
-	@RequestMapping(value = "/download", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
-	public ResponseEntity<byte[]> download(@RequestBody String jsonstring, 
+	@RequestMapping(value = "/download", method=RequestMethod.POST)
+	public ResponseEntity<byte[]> download(
+			@RequestParam(value="json", required=false) String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
+		if (jsonstring == null) {
+			return null;
+		}
 		System.out.println(jsonstring);
 		
 		JSONObject json = null;
