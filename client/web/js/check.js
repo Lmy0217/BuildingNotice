@@ -16,7 +16,7 @@ if(q == undefined) {
 		data["token"] = q;
 		//		console.log(data);
 		$.ajax({
-			url: website + "token/check",
+			url: checkUser,
 			cache: false,
 			type: "post",
 			datatype: "json",
@@ -32,7 +32,7 @@ if(q == undefined) {
 					} else {
 						$("#user").append("管理员");
 					}
-					//					document.cookie = data.token;
+					document.cookie = setCookie("token", data.token, "3");
 				} else {
 					console.log("非法访问");
 					window.location.href = 'login.html'

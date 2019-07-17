@@ -59,12 +59,12 @@ type:(num)，  //
 ## 3 下载请求
 
 ```json
-get /archive/download
+post  /archive/download
 //说明：
 //type: 0,所有类别；1，未下载的文件；2，已下载的文件
 //page:(页数，一页15条记录，从最后开始算)
 //发送
-//contentType:  'application/json; charset=UTF-8'
+//contentType:  'formdata'
 {
     type:-1,// -1，按照id读取要下载的文件；1，所有未下载的文件，不需要读取id；2，所有已下载的文件，不需要读取id.
     id:[
@@ -80,4 +80,25 @@ get /archive/download
 // 一种是勾选式，用户勾选若干文件，然后获取到这些文件的id，提供下载。
 // 一种是全部式，用户可以选择下载所有的“未下载”的文件，或者已下载的文件。这时，id为空
 // 下载全部文件或者已下载的文件对服务器压力太大。是否需要这种功能，待商榷。
+```
+
+## 4 安全校验
+
+```json
+post  {website}
+//说明：
+//向后台发送cookie，确保用户合法
+//type: "post",
+//datatype: "json",
+//contentType: "application/x-www-form-urlencoded;charset=utf-8",
+发送
+{
+	token:(str),
+}
+返回
+{
+	status:200,//成功登陆
+}
+
+
 ```

@@ -23,7 +23,7 @@ $.ajax({
 		for (var i = 0; i < searchSort.length; i++) {
 			var valueStr = searchSort[i].value;
 			valueStr = parseInt(valueStr.substring(17, 18));
-			if (valueStr == data.type) {
+			if (valueStr == listType) {
 				searchSort[i].selected = true;
 			}
 		}
@@ -51,7 +51,6 @@ $.ajax({
 				"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
 				"<td>" + titles + "</td>" +
 				"<td>" + list.date + "</td>" +
-				"<td>" + author + "</td>" +
 				"<td>" +
 				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles(" + list.id + ")'>下载</a> " +
 				"</td>" +
