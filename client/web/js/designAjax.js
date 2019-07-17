@@ -53,7 +53,7 @@ $.ajax({
 				"<td>" + titles + "</td>" +
 				"<td>" + list.date + "</td>" +
 				"<td>" +
-				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles(" + list.id + ")'>下载</a> " +
+				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
 				"</td>" +
 				"</tr>" ;
 
@@ -101,7 +101,7 @@ function download(type, downList) {
 	var jsons = {
 		"token": q,
 		"type": type,
-		"id": downList,
+		"ids": downList,
 	};
 	var form = $("<form>");
 	form.attr('style', 'display:none');
