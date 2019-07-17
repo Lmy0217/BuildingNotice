@@ -39,7 +39,7 @@
 //        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 //    }
 //	
-//	@Test
+//	//@Test
 //	public void uploadTest() throws Exception {
 //		
 //		MockMultipartFile jpgfile = new MockMultipartFile("file", "filename.jpg", 
@@ -48,7 +48,7 @@
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = 				
 //				MockMvcRequestBuilders.multipart("/image/upload").file(jpgfile)
 //				.param("depict", "depict")
-//				.param("token", "363b736e3206180a4265e4becb0ac4caba706053e8a6384ee226e60c77c7a1fd48e7");
+//				.param("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
 //		
 //		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
 //		resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
@@ -60,12 +60,11 @@
 //	public void downloadTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("id", 245);
-//		requestBodyJSON.put("token", "363b736e3206180a4265e4becb0ac4caba706053e8a6384ee226e60c77c7a1fd48e7");
+//		requestBodyJSON.put("id", 6);
+//		requestBodyJSON.put("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/image/download")
-//	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
-//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//	    		.param("json", requestBodyJSON.toString());
 //		
 //		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
 //        resultActions.andReturn().getResponse();

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : agekt.com_3306
+ Source Server         : 49.234.178.101_3306
  Source Server Type    : MariaDB
  Source Server Version : 100213
- Source Host           : agekt.com:3306
+ Source Host           : 49.234.178.101:3306
  Source Schema         : ssm
 
  Target Server Type    : MariaDB
  Target Server Version : 100213
  File Encoding         : 65001
 
- Date: 14/07/2019 15:26:31
+ Date: 16/07/2019 22:58:07
 */
 
 SET NAMES utf8mb4;
@@ -55,6 +55,7 @@ CREATE TABLE `archive`  (
   `identitytime` timestamp(0) NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '鉴定时间',
   `remark` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `userid` int(11) NOT NULL COMMENT '用户id',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `typeid`(`typeid`) USING BTREE,
   INDEX `rankid`(`rankid`) USING BTREE,
@@ -101,13 +102,7 @@ CREATE TABLE `image`  (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路径',
   `depict` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of image
--- ----------------------------
-INSERT INTO `image` VALUES (1, 'path1', 'depict1');
-INSERT INTO `image` VALUES (2, 'path2', 'depict2');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for rank
@@ -162,12 +157,15 @@ CREATE TABLE `user`  (
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '令牌',
   `role` int(11) NOT NULL DEFAULT 0 COMMENT '权限',
   `device` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备号',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', 'admin', 'admin', NULL, 0, NULL);
+INSERT INTO `user` VALUES (2, 'admin', '0c8b0c323913c23858abd25d518c5646bc0ee5ae856a049665dd89db362a8c7c', 'a456a72721b7c2418072602dd7b97281', '4c433af7df0fbb5d524fe5c79d743e66cfe357c568ec9d90edd518eb89aa52f23b31353633353337313536383133', 10, NULL, 0);
+INSERT INTO `user` VALUES (3, 'myluo', '57b2db9ec2d13f97370c69e15afc28e7ea505862d8b3c28835811b7f1dda473c', '83c0f415ade99519294b1c936013db8b', '79fa22988bee4b8dbe7e94e345b68805c36b7cfc4ca0628cdf0bb6bed9765c6f3b31353633353339393235393034', 10, NULL, 0);
+INSERT INTO `user` VALUES (4, 'test', 'db095bc25ba72622945b9e697884e313b3d49ee61ee9d8cee3d738015630b0f7', 'cafa959f4b0a579dcd92374ab07ab7b2', NULL, 10, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

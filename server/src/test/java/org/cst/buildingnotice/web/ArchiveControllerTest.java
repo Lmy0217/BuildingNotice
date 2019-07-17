@@ -85,13 +85,13 @@
 //		
 //		List<Integer> ids = Arrays.asList(16, 17);
 //		requestBodyJSON.put("ids", ids);
+//		requestBodyJSON.put("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
 //		
-//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("/archive/download")
-//	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
-//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/download")
+//				.param("json", requestBodyJSON.toString());
 //	    
 //	    ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
-//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//        resultActions.andReturn().getResponse();
 //        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 //        resultActions.andDo(MockMvcResultHandlers.print());
 //	}

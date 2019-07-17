@@ -15,6 +15,8 @@ public class User {
 
     private String device;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class User {
 
     public void setDevice(String device) {
         this.device = device == null ? null : device.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

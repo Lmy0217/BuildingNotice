@@ -45,6 +45,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -151,7 +152,7 @@ public class ArchiveController {
 		
 		Integer archid = archiveService.create(unit, phone, material, addr, hold, 
 				holdid, attr, layer, date, typeid, body1, body2, body3, rankid, 
-				rankratio, advise, null, remark, userId);
+				rankratio, advise, null, remark, userId, null);
 		if (archid == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 		}
@@ -178,10 +179,14 @@ public class ArchiveController {
 		};
 	}
 	
-	@RequestMapping(value = "/download", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.POST)
-	public ResponseEntity<byte[]> download(@RequestBody String jsonstring,
+	@RequestMapping(value = "/download", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> download(
+			@RequestParam(value="json", required=false) String jsonstring,
 			HttpServletRequest request, Model model) {
 		
+		if (jsonstring == null) {
+			return null;
+		}
 		System.out.println(jsonstring);
 		
 		JSONObject json = null;
