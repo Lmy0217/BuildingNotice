@@ -12,9 +12,9 @@ $.ajax({
 		page: listPage,
 		token: q,
 	},
-	contentType:'application/json; charset=UTF-8',
-	type: 'get',
-	dataType: 'json',
+	datatype: "json",
+	contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	type: 'post',
 	success: function(data) {
 		console.log(data);
 		// data = data.data;
