@@ -1,5 +1,6 @@
 v0.94
 https://www.lanzous.com/i51vjfg
+关闭测试弹窗
 用户页增加用户验证
 
 v0.93
