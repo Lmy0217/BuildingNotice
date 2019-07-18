@@ -463,7 +463,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 		}else if(head[ir] == 0){
 			var a=relu[ir]*2;
 			console.log(relu[ir]*2);
-			alert('in')
+			// alert('in')
 			var res = new Array(a);
 			res = initArr(res, 0);//不满的位数补0
 			// console.log(res.join(''));

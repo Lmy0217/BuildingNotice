@@ -120,7 +120,7 @@ function goHome() {
 	// 
 	// 			}
 	// 		}
-	if (!isOpenDB()) {
+	if (isOpenDB()) {
 		closeDB();
 	}
 	var allPage = plus.webview.all();
