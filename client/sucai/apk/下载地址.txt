@@ -1,3 +1,7 @@
+v0.91
+https://www.lanzous.com/i51ipze
+采用了新的编码方式
+
 v0.9
 https://www.lanzous.com/i516xid
 修复了编码问题
