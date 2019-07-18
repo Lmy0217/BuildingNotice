@@ -379,7 +379,8 @@ function zhenliType(jsonInfo, lenq) {
 		result = result + fixInteger(jsonInfo.type23, lenq);
 		result = result + fixInteger(type22_x, lenq);
 	}
-	return lenq + ';' + result;
+	return result;
+	// return lenq + ';' + result;
 }
 
 // 
