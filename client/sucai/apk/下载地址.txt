@@ -1,3 +1,7 @@
+v0.94
+https://www.lanzous.com/i51vjfg
+用户页增加用户验证
+
 v0.93
 https://www.lanzous.com/i51v17a
 修复了不能上传图片的问题
