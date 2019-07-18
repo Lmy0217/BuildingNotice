@@ -125,7 +125,7 @@
 ## **修改权限**
 管理员修改普通用户权限。修改时，请使用 HTTP POST 方式
 #### API地址
-[POST] /user/pwd
+[POST] /user/role
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
