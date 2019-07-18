@@ -340,7 +340,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 
 //把一个表示二进制的数组转化为十进制
 function two2x(arr) {
-	console.log('arr=' + arr);
+	// console.log('arr=' + arr);
 	var arr_x = parseInt(arr.join(''), 2);
 	console.log(arr_x);
 	return arr_x;
@@ -458,10 +458,14 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 				console.log(result)
 				console.log(ir)
 			}
-		}else{
-			var res = new Array(relu[ir]*2);
+		}else if(head[ir] == 0){
+			var a=relu[ir]*2;
+			console.log(relu[ir]*2);
+			alert('in')
+			var res = new Array(a);
 			res = initArr(res, 0);//不满的位数补0
-			result=result+parseInt(res.join(''));
+			// console.log(res.join(''));
+			result=result+""+fixInteger((res.join('')),a);
 		}
 	}
 	console.log(result);
