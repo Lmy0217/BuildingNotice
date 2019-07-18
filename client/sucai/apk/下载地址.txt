@@ -1,3 +1,7 @@
+v0.93
+https://www.lanzous.com/i51v17a
+修复了不能上传图片的问题
+
 v0.91
 https://www.lanzous.com/i51ipze
 采用了新的编码方式
