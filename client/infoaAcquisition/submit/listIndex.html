@@ -79,75 +79,20 @@
 							success: function(e) {
 								console.log('selectSql success: ' + JSON.stringify(e));
 								// photoId = upPhoto(e[0]);
-								flag=w_upPhoto(e[0]);
-								var photoId=[];
-								console.log(flag);
-								// {
-								var pi = document.getElementById('imgid1').value;
-								console.log(pi);
-								var obj = document.getElementsByName("imgid[]");
-								console.log(obj);
-								console.log(flag);
-								// var photoId = [];
-								// var testPhoto = [];
-								// for (var j = 0; j < obj.length; j++) {
-								// 	testPhoto.push(parseInt(obj[j].value));
-								// 	if (obj[j].checked) {
-								// 		photoId.push(parseInt(obj[j].value));
-								// 		obj[j].checked = "";
-								// 	}
-								// 	obj[j].value = "0";
-								// }
-								// do {
-								// 	sleep(50);
-								// 	photoId = getImageId();
-								// 	console.log(photoId);
-								// }
-								// while (photoId.length!=flag);
-								// while (!checkIdChange()){
+								flag_arr = getFlag(e[0]);
+								console.log(flag_arr);
+								// flag=w_upPhoto(e[0]);
+								var flag = flag_arr.length;
+								if (flag == 0) {
+									photoId = getImageId();
 									console.log(photoId);
-								// for(var ji=0;ji<flag;ji++){
-									var tma=0;
-									do {
-										tma++
-										setTimeout("console.log('8 seconds!')",500)
-										// sleep(500);
-									}
-									while (!checkIdChange(flag-1)&&tma<50);
-								// }
-								
-								photoId = getImageId();
-								// while()
-								console.log(photoId);
-								// console.log(testPhoto);
-								// min0 = Math.min.apply(Math, testPhoto);
-								// console.log(min0);
-								// // while()
-								// if (min0 < 0) {
-								// 	mui.alert('图片上传失败，中断！', '信息助手', '确定', function(e) {
-								// 		e.index
-								// 	}, 'div');
-								// 	closeDB()
-								// 	return false;
-								// }
-
-								// data = zhenliJson(e[0], photoId);
-								// upData(data);
-								// wa.close();
-								// console.log(i);
-								// w_showInfo();
-								// console.log(i);
-								// },function(err){
-								// 	console.log(err);
-								// });
-
-
-
-								// while(wait==0){
-								// 	console.log(wait);
-								// 	sleep(1000);
-								// }	
-
+									data = zhenliJson(e[0], photoId);
+									console.log(data);
+									upData(data);
+									w_showInfo();
+								} else {
+									w_upPhoto(flag_arr);
+								}
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));

@@ -281,10 +281,10 @@ function w_upPhoto2(result) {
 	}
 }
 
-function w_upPhoto(result) {
+function getFlag(result) {
 	var flag = 0;
 	var flag_arr = [];
-	var photoId=[];
+	var photoId = [];
 	for (var i = 1; i <= 4; i++) {
 		var photoSrc = 'photoSrc' + i;
 		var photoDes = 'photoDes' + i;
@@ -301,45 +301,42 @@ function w_upPhoto(result) {
 		}
 	}
 	console.log(flag_arr);
+	for (i = 0; i < flag; i++) {
+		var image = flag_arr[i];
+		image.count = flag;
+		flag_arr[i] = image;
+	}
+	return flag_arr;
+}
+
+function w_upPhoto(flag_arr) {
+	var flag = flag_arr.length;
 	for (i = 0; i <= flag; i++) {
-		if(i==flag){
+		if (i == flag) {
 			do {
 				sleep(50);
 			}
 			while (checkIdChange(i));
 			photoId = getImageId0();
 			console.log(photoId);
-		}else{
+		} else {
 			image = flag_arr[i];
 			console.log(image);
 			upPhotoMain(image);
 			do {
-				setTimeout("console.log('5 seconds!')",500)
+				setTimeout("console.log('5 seconds!')", 500)
 			}
 			while (checkIdChange(i));
-			console.log('正在上传第'+i);
-		}		
+			console.log('正在上传第' + i);
+		}
 	}
-	photoId = getImageId0();
-	console.log(photoId);
-	
-	// console.log(flag-1);
-	
-	// }
-	
-	// do {
-	// 	sleep(1000);
-	// 	photoId = getImageId0();
-	// 	console.log(photoId);
-	// }
-	// while (photoId.length!=flag);
-	return flag;
 }
+
 
 function checkIdChange(i) {
 	var obj = document.getElementsByName("imgid[]");
 	// console.log(i);
-	console.log(obj[i].value+""+i);
+	console.log(obj[i].value + "" + i);
 	if (obj[i].value == 0) {
 		return false;
 	} else {
@@ -370,7 +367,7 @@ function upPhotoMain(image) {
 			// console.log(photoDes);
 			console.log(image.alt);
 			var tempId = image.info;
-			console.log('tempId:'+tempId)
+			console.log('tempId:' + tempId)
 			// 调用ajax  
 			var data = {
 				'token': token,
@@ -387,6 +384,7 @@ function upPhotoMain(image) {
 			console.log(formData);
 			var temp = null;
 			var tempInput = document.getElementById(tempId);
+			var waitInput = document.getElementById("wait");
 			mui.ajax(imgUrl, {
 				data: formData,
 				cache: false,
@@ -404,6 +402,7 @@ function upPhotoMain(image) {
 						mui.alert(data.msg);
 						localStorage.removeItem("TOKEN_TOKEN");
 						tempInput.value = -i;
+						waitInput.value=-i;
 						mui.openWindow({
 							url: '../login.html'
 						})
@@ -412,6 +411,7 @@ function upPhotoMain(image) {
 						mui.alert('err#' + data.status + ':' + data.msg);
 						// console.log(tempId)
 						tempInput.value = -i;
+						waitInput.value=-i;
 						return false;
 					} else {
 						// mui.alert('图片上传成功！');
@@ -419,10 +419,25 @@ function upPhotoMain(image) {
 						console.log(tempId)
 						tempInput.value = data.imageid;
 						tempInput.checked = "checked";
-						console.log(tempInput.checked)
-						// var pi = document.getElementById('imgid1').value;
-						// console.log(pi)
+						if (waitInput.value < 0) {
+							mui.alert('图片上传失败，中断！', '信息助手', '确定', function(e) {
+								e.index
+							}, 'div');
+							closeDB()
+							return false;
+						}
+						waitInput.value = parseInt(waitInput.value) + 1;
+						console.log(waitInput.value);
 						var temp = data.imageid;
+						//------------------
+						if (waitInput.value == image.count) {
+							photoId = getImageId();
+							console.log(photoId);
+							data = zhenliJson(image.mother, photoId);
+							console.log(data);
+							upData(data);
+							w_showInfo();
+						}
 
 					}
 				},
