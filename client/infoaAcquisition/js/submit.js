@@ -314,7 +314,7 @@ function w_upPhoto(result) {
 			console.log(image);
 			upPhotoMain(image);
 			do {
-				sleep(50);
+				setTimeout("console.log('5 seconds!')",500)
 			}
 			while (checkIdChange(i));
 			console.log('正在上传第'+i);
