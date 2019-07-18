@@ -13,4 +13,6 @@ public interface UserService {
 	public List<User> getUserByName(String name);
 	
 	int updateById(User user);
+	
+	public List<User> getUsersByRole(Integer role);
 }

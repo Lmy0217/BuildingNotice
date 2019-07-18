@@ -54,4 +54,8 @@ public class ArchiveServiceImpl implements ArchiveService {
 	public int updateByPrimaryKeyWithBLOBs(ArchiveWithBLOBs record) {
 		return archiveMapper.updateByPrimaryKeyWithBLOBs(record);
 	}
+
+	public int countByUserid(Integer userid) {
+		return archiveMapper.countByUserid(userid);
+	}
 }
