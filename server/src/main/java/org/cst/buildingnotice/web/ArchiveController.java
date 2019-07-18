@@ -141,7 +141,10 @@ public class ArchiveController {
 		
 		double rankratio = damageService.ratio(damage);
 		int rankid = rankService.getIdByRatio(rankratio);
-		String advise = typeService.getAdviseByIdAndBody3(typeid, body3);
+		List<String> bodyTransform = TemplateUtil.transform(typeid, body1, body2, body3);
+		if (bodyTransform == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "转换错误！");
+		}
 		
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
@@ -152,8 +155,9 @@ public class ArchiveController {
 		}
 		
 		Integer archid = archiveService.create(unit, phone, material, addr, hold, 
-				holdid, attr, layer, date, typeid, body1, body2, body3, rankid, 
-				rankratio, advise, null, remark, userId, null);
+				holdid, attr, layer, date, typeid, bodyTransform.get(0), 
+				bodyTransform.get(1), bodyTransform.get(2), rankid, 
+				rankratio, bodyTransform.get(3), null, remark, userId, null);
 		if (archid == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 		}
@@ -186,7 +190,7 @@ public class ArchiveController {
 			HttpServletRequest request, Model model) {
 		
 		if (jsonstring == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "请求错误！");
 		}
 		System.out.println(jsonstring);
 		
@@ -194,36 +198,36 @@ public class ArchiveController {
 		try {
 			json = JSONObject.parseObject(jsonstring);
 		} catch (JSONException e) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
 		}
 		
 		Integer type = json.getInteger("type");
 		JSONArray idsJson = json.getJSONArray("ids");
 		String hexToken = json.getString("token");
 		if (type == null && idsJson == null || hexToken == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
 		
 		String token = StringUtil.hex2String(hexToken);
 		Integer userId = SecurityUtil.getIdInToken(token);
 		if (userId == -1) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "Token 错误！");
 		}
 		User user = userService.getUserById(userId);
 		if (user == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "Token 错误！");
 		}
 		
 		if (user.getToken() == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "未登录！");
 		}
 		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
 		if (!verifyFlag) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
 		if (user.getRole() < 1) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		// TODO type download
@@ -239,14 +243,14 @@ public class ArchiveController {
 		} else if (idsJson != null) {
 			ids = idsJson.toJavaList(Integer.class);
 		} else {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
 		
 		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
 		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
 		String template_path = FileUtil.getRealPath(request, "/uploads/template");
 		if (archive_path == null || imgs_path == null || template_path == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
 		
 		DateFormat dateformat = new SimpleDateFormat("yyyy年MM月dd日");
@@ -260,17 +264,20 @@ public class ArchiveController {
 			
 			ArchiveWithBLOBs archiveWithBLOBs = archiveService.getArchiveById(id);
 			archiveList.add(archiveWithBLOBs);
-			if (archiveWithBLOBs == null || archiveWithBLOBs.getUserid() != userId) {
-				return null;
+			if (archiveWithBLOBs == null) {
+				return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "报告不存在！");
+			}
+			if (archiveWithBLOBs.getUserid() != userId) {
+				return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 			}
 			Damage damage = damageService.getDamageByArchid(id);
 			if (damage == null) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "报告缺少必要信息！");
 			}
 			TypeWithBLOBs typeWithBLOBs = typeService.getTypeById(archiveWithBLOBs.getTypeid());
 			Rank rank = rankService.getRankById(archiveWithBLOBs.getRankid());
 			if (typeWithBLOBs == null || rank == null) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "类型不存在！");
 			}
 			List<Image> imgs = imageService.getImagesByIdList(archImgService.getImgsByArchid(id));
 			
@@ -306,7 +313,9 @@ public class ArchiveController {
 			for (int j = 0; j < imgs.size(); j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
-				data.put("image" + j, new PictureRenderData(560, 310, img_path));
+				int width = imgs.size() == 1 ? 560 : 200;
+				int height = imgs.size() == 1 ? 310 : 140;
+				data.put("image" + j, new PictureRenderData(width, height, img_path));
 				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
 			
@@ -339,7 +348,7 @@ public class ArchiveController {
 							archiveWithBLOBs.getBody3())));
 			
 			data.put("year", calendar.get(Calendar.YEAR));
-			data.put("month", calendar.get(Calendar.MONTH));
+			data.put("month", calendar.get(Calendar.MONTH + 1));
 			data.put("day", calendar.get(Calendar.DAY_OF_MONTH));
 			
 			data = Template.defaultValue(data);
@@ -352,7 +361,7 @@ public class ArchiveController {
 			String template_file = template_path + File.separator 
 					+ template_name + ".docx";
 			if (!TemplateUtil.render(template_file, data, file)) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "生成错误！");
 			}
 			files.add(file);
 		}
@@ -361,12 +370,12 @@ public class ArchiveController {
 				.format(new Date()) + "_" + String.format("%08d", userId) + ".zip";
 		String zip_path = FileUtil.getRealPath(request, "/downloads/zip");
 		if (zip_path == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
 		String zip_file = zip_path + File.separator + zip_file_name;
 		
 		if (!ZipUtil.zip(files, zip_file)) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "压缩错误！");
 		}
 		
 		InputStream in = null;;
@@ -376,12 +385,12 @@ public class ArchiveController {
 			body = new byte[in.available()];
 			in.read(body);
 		} catch (Exception e) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "IO 错误！");
 		} finally {
 			try {
 				if (in != null) in.close();
 			} catch (IOException e) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "IO 错误！");
 			}
 		}
 		
@@ -390,7 +399,7 @@ public class ArchiveController {
 			archiveWithBLOBs.setStatus(1);
 			int flag = archiveService.updateByPrimaryKeyWithBLOBs(archiveWithBLOBs);
 			if (flag != 1) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 			}
 		}
 
