@@ -191,6 +191,12 @@
 #### POST参数 (非Json)
 |参数|类型|说明|
 |-|-|-|
+|json|String|(必填) Json 字符串|
+
+Json 字符串
+
+|参数|类型|说明|
+|-|-|-|
 |token|String|(必填) 令牌|
 |id|Integer|(必填) 图片 Id (参见 [上传图片](#上传图片))|
 #### 成功返回数据 (非Json)
@@ -241,12 +247,19 @@
 从服务器下载报告压缩包。下载时，请使用 HTTP POST 方式
 #### API地址
 [POST] /archive/download
-#### POST参数 (Json)
+#### POST参数 (非Json)
+|参数|类型|说明|
+|-|-|-|
+|json|String|(必填) Json 字符串|
+
+Json 字符串
+
 |参数|类型|说明|
 |-|-|-|
 |token|String|(必填) 令牌|
 |type|Integer|(选填) 报告类型|
 |ids|List (Integer)|(选填) 报告 Id|
+
 #### 成功返回数据 (非Json)
 |参数|类型|说明|
 |-|-|-|
