@@ -21,4 +21,6 @@ public interface ArchiveMapper {
     int updateByPrimaryKey(Archive record);
     
     List<ArchiveWithBLOBs> selectByUserid(Integer userid);
+    
+    int countByUserid(Integer userid);
 }

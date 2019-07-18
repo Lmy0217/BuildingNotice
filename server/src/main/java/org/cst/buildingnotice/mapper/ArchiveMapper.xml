@@ -50,6 +50,12 @@
     where userid = #{userid,jdbcType=INTEGER}
     order by identitytime desc
   </select>
+  <select id="countByUserid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+      count(*)
+    from archive
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from archive
     where id = #{id,jdbcType=INTEGER}

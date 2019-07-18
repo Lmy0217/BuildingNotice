@@ -34,4 +34,8 @@ public class UserServiceImpl implements UserService {
 	public int updateById(User user) {
 		return userMapper.updateByPrimaryKey(user);
 	}
+
+	public List<User> getUsersByRole(Integer role) {
+		return userMapper.selectByRole(role);
+	}
 }

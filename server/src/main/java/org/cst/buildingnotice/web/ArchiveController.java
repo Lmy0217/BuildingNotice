@@ -348,7 +348,7 @@ public class ArchiveController {
 							archiveWithBLOBs.getBody3())));
 			
 			data.put("year", calendar.get(Calendar.YEAR));
-			data.put("month", calendar.get(Calendar.MONTH + 1));
+			data.put("month", calendar.get(Calendar.MONTH) + 1);
 			data.put("day", calendar.get(Calendar.DAY_OF_MONTH));
 			
 			data = Template.defaultValue(data);
