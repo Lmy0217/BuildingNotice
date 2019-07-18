@@ -335,7 +335,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	head=head.reverse();
 	console.log(result);
-	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
+	return fixInteger(two2x(head), lenq) + result;
+	// return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
 
 //把一个表示二进制的数组转化为十进制

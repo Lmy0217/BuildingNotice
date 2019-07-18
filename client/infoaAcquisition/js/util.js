@@ -120,6 +120,9 @@ function goHome() {
 	// 
 	// 			}
 	// 		}
+	if (!isOpenDB()) {
+		closeDB();
+	}
 	var allPage = plus.webview.all();
 	watchJSON(allPage);
 	homeId = plus.webview.getLaunchWebview().id;
@@ -290,24 +293,39 @@ function postImage(url, data, callback, waitingDialog) {
 }
 
 function getBase64Image2(img) { //传入图片路径，返回base64
-	function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+	function getBase64ImageA(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
 		var canvas = document.createElement("canvas");
-		canvas.width = width ? width : img.width;
-		canvas.height = height ? height : img.height;
-
+		mainW=600;
+		width = img.width;
+		height = img.height;
+		if (width > height) {
+			if (width > mainW) {
+				height = Math.round(height *= mainW / width);
+				width = mainW;
+			}
+		} else {
+			if (height > mainW) {
+				width = Math.round(width *= mainW / height);
+				height = mainW;
+			}
+		}
+		canvas.width = width; /*设置新的图片的宽度*/
+		canvas.height = height; /*设置新的图片的长度*/
 		var ctx = canvas.getContext("2d");
 		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 		var dataURL = canvas.toDataURL();
 		return dataURL;
 	}
+	console.log(img);
 	var image = new Image();
 	image.crossOrigin = '';
 	image.src = img;
 	var deferred = $.Deferred();
 	if (img) {
 		image.onload = function() {
-			deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
+			deferred.resolve(getBase64ImageA(image)); //将base64传给done上传处理
 		}
+		// console.log(deferred.promise());
 		return deferred.promise(); //问题要让onload完成后再return sessionStorage['imgTest']
 	}
 }
