@@ -138,7 +138,7 @@ public class ImageController {
 			HttpServletRequest request, Model model) {
 		
 		if (jsonstring == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "请求错误！");
 		}
 		System.out.println(jsonstring);
 		
@@ -146,52 +146,52 @@ public class ImageController {
 		try {
 			json = JSONObject.parseObject(jsonstring);
 		} catch (JSONException e) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
 		}
 		
 		Integer id = json.getInteger("id");
 		String hexToken = json.getString("token");
 		if (id == null || hexToken == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
 		
 		String token = StringUtil.hex2String(hexToken);
 		Integer userId = SecurityUtil.getIdInToken(token);
 		if (userId == -1) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "Token 错误！");
 		}
 		User user = userService.getUserById(userId);
 		if (user == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "Token 错误！");
 		}
 		
 		if (user.getToken() == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "未登录！");
 		}
 		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
 		if (!verifyFlag) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
 		if (user.getRole() < 1) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		List<Integer> archids = archImgService.getArchsByImgid(id);
 		if (archids.size() != 1) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "图片属性错误！");
 		}
 		Archive archive = archiveService.getArchiveById(archids.get(0));
 		if (archive == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "图片属性错误！");
 		}
 		if (archive.getUserid() != userId) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		Image image = imageService.getImageById(id);
 		if (image == null) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "图片不存在！");
 		}
 		
 		String uploads_path = FileUtil.getRealPath(request, "/uploads/images");
@@ -199,7 +199,7 @@ public class ImageController {
 		try {
 			file_path = new String(file_path.getBytes("gbk"), "iso8859-1");
 		} catch (UnsupportedEncodingException e) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "ISO8859-1 转换错误！");
 		}
 		
 		InputStream in = null;;
@@ -209,12 +209,12 @@ public class ImageController {
 			body = new byte[in.available()];
 			in.read(body);
 		} catch (Exception e) {
-			return null;
+			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "IO 错误！");
 		} finally {
 			try {
 				if (in != null) in.close();
 			} catch (IOException e) {
-				return null;
+				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "IO 错误！");
 			}
 		}
 
