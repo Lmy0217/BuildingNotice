@@ -376,8 +376,8 @@ function zhenliType(jsonInfo, lenq) {
 		result = result + fixInteger(jsonInfo.type21, lenq);
 		var type22 = creatHead2('type22', 3, jsonInfo)
 		var type22_x = parseInt(type22.join(''), lenq);
-		result = result + fixInteger(type22_x, lenq);
 		result = result + fixInteger(jsonInfo.type23, lenq);
+		result = result + fixInteger(type22_x, lenq);
 	}
 	return lenq + ';' + result;
 }
@@ -453,11 +453,15 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 				watchJSON(jsonInfo);
 				var keyb = creatHead2(keyb, relu2[ir], jsonInfo);
 				var keyb_x = two2x(keyb);
-				result = result + "" + fixInteger(keyb_x, len);
 				result = result + fixInteger(jsonInfo[keya], len);
+				result = result + "" + fixInteger(keyb_x, len);
 				console.log(result)
 				console.log(ir)
 			}
+		}else{
+			var res = new Array(relu[ir]*2);
+			res = initArr(res, 0);//不满的位数补0
+			result=result+parseInt(res.join(''));
 		}
 	}
 	console.log(result);
