@@ -44,7 +44,7 @@
 				</div>
 			</div>
 			<p class="admin_copyright">
-				<a tabindex="5" href="https://www.lanzous.com/i51vjfg" target="_blank">最新安卓安装包下载</a>
+				<a tabindex="5" href="#" target="_blank" id="apkdown">最新安卓安装包下载</a>
 				<br/>
 				<br/>
 			</p>
@@ -59,6 +59,7 @@
 				var osName=getOsInfo();
 				console.log(osName);
 				document.getElementById('imei').value=osName;
+				document.getElementById('apkdown').href=apkdownUrl;
 			}
 			function chkuser(txt, name) {
 				var show = document.getElementById(name);
@@ -118,7 +119,7 @@
 						url: loginUrl,
 						// cache: false,
 						type: "post",
-						dataType:"json",
+						datatype:"json",
 						// datatype: "json",
 						// contentType: "application/x-www-form-urlencoded;charset=utf-8",
 						contentType:'application/json; charset=UTF-8',
