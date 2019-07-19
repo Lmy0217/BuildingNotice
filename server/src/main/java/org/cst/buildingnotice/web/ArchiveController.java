@@ -313,8 +313,8 @@ public class ArchiveController {
 			for (int j = 0; j < imgs.size(); j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
-				int width = imgs.size() == 1 ? 560 : 200;
-				int height = imgs.size() == 1 ? 310 : 140;
+				int width = imgs.size() == 1 ? 560 : 250;
+				int height = imgs.size() == 1 ? 310 : 135;
 				data.put("image" + j, new PictureRenderData(width, height, img_path));
 				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
@@ -338,7 +338,7 @@ public class ArchiveController {
 			data.put("a611", damage.getA611());
 			data.put("a612", damage.getA612());
 			
-			data.put("rankratio", archiveWithBLOBs.getRankratio() * 100);
+			data.put("rankratio", archiveWithBLOBs.getRankratio());
 			data.put("rankdepict", rank.getDepict());
 			data.put("rankname", rank.getName());
 			
