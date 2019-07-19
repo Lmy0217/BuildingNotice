@@ -216,7 +216,7 @@ function chrole(id, mubiao) {
 		// jsons["token"] = q,
 		console.log(jsons);
 		$.ajax({
-			url: "http://47.100.192.151:5555/news/delete",
+			url: changeRole,
 			type: "post",
 			cache: false,
 			datatype: "json",
