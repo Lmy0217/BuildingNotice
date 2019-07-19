@@ -84,7 +84,7 @@ function userlistMain() {
 				}
 				// titles = checkTitle(list.title);
 				// titles = checkTitle(titles);
-				console.log(titles);
+				// console.log(titles);
 				if (data.role == 0) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
