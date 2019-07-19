@@ -1,5 +1,9 @@
 //package org.cst.buildingnotice.web;
 //
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.List;
+//
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -41,22 +45,33 @@
 //	@Test
 //	public void createTest() throws Exception {
 //		
+//		HashMap<String, String> pwdMap = new HashMap<String, String>() {
+//			private static final long serialVersionUID = 1L;
+//			{
+//				put("admin", "admin123456");
+//				put("test", "a12345678");
+//				put("myluo", "a12345678");
+//			}
+//		};
+//		
 //		JSONObject requestBodyJSON = new JSONObject();
-////		requestBodyJSON.put("name", "admin");
-////		requestBodyJSON.put("pwd", "admin123456");
-////		requestBodyJSON.put("name", "test");
-////		requestBodyJSON.put("pwd", "a12345678");
-//		requestBodyJSON.put("name", "myluo");
-//		requestBodyJSON.put("pwd", "a12345678");
 //		
-//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/create")
-//	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
-//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
-//		
-//		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
-//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
-//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
-//        resultActions.andDo(MockMvcResultHandlers.print());
+//		for (HashMap.Entry<String, String> entry : pwdMap.entrySet()) {
+//			
+//			requestBodyJSON.put("name", entry.getKey());
+//			requestBodyJSON.put("pwd", entry.getValue());
+//			
+//			MockHttpServletRequestBuilder mockHttpServletRequestBuilder = 
+//					MockMvcRequestBuilders.post("/user/create")
+//		    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+//		    		.content(requestBodyJSON.toJSONString())
+//		            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//			
+//			ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//	        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//	        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//	        resultActions.andDo(MockMvcResultHandlers.print());
+//		}
 //	}
 //	
 //	//@Test

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 49.234.178.101_3306
+ Source Server         : 139.199.129.48_3306
  Source Server Type    : MariaDB
- Source Server Version : 100225
- Source Host           : 49.234.178.101:3306
+ Source Server Version : 100213
+ Source Host           : 139.199.129.48:3306
  Source Schema         : ssm
 
  Target Server Type    : MariaDB
- Target Server Version : 100225
+ Target Server Version : 100213
  File Encoding         : 65001
 
- Date: 18/07/2019 14:22:51
+ Date: 19/07/2019 22:12:34
 */
 
 SET NAMES utf8mb4;
@@ -165,8 +165,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (2, 'admin', '0c8b0c323913c23858abd25d518c5646bc0ee5ae856a049665dd89db362a8c7c', 'a456a72721b7c2418072602dd7b97281', '', 10, NULL, 0);
-INSERT INTO `user` VALUES (3, 'myluo', 'cbf48e4209b520a9f20a5c41d7c64ca18c014d36e6e02f38c035947835d54c70', '1c0960078f90a6d2e0a3c6386ac019e8', '247a4edd91d34740247a2d702b95ce2ce2c161008509d16b337a6e6a06a429e43b31353633363432353534303531', 10, NULL, 0);
-INSERT INTO `user` VALUES (4, 'test', 'db095bc25ba72622945b9e697884e313b3d49ee61ee9d8cee3d738015630b0f7', 'cafa959f4b0a579dcd92374ab07ab7b2', NULL, 10, NULL, 0);
+INSERT INTO `user` VALUES (2, 'admin', '0c8b0c323913c23858abd25d518c5646bc0ee5ae856a049665dd89db362a8c7c', 'a456a72721b7c2418072602dd7b97281', NULL, 10, NULL, 0);
+INSERT INTO `user` VALUES (3, 'myluo', '6a37889b791dc510c8f644c9d0e3744c65ea4cf82f6eb95ff3e19756625e9af8', '608a7ade2d1024c22adf1ed4d314fc6e', NULL, 10, NULL, 0);
+INSERT INTO `user` VALUES (4, 'test', 'e83721588f516e483306bd64b4adfd9c2395131a323b43d5f93207df92abfaf8', '5eaf0577f8ff3db68f39fe0997c781e2', NULL, 10, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
