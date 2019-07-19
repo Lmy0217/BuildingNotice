@@ -88,12 +88,12 @@
 //					alert("用户名必须是以数字开头，长度3~16位，只能包含字母和数字");
 //					return false;
 //				} else
-				if(jsons.old_pwd.match(pwdRelue) == null) {
+				if(jsons.pwd.match(pwdRelue) == null) {
 					alert("旧密码不符合格式，请联系管理员");
 					return false;
-				} else if(jsons.new_pwd.match(pwdRelue) == null) {
+				} else if(jsons.newpwd.match(pwdRelue) == null) {
 					alert("密码长度在6~18之间，只能包含字符、数字和下划线");return false;
-				} else if(jsons.new_pwd != jsons.qrnew_pwd) {
+				} else if(jsons.newpwd != jsons.qrnewpwd) {
 					alert("两次输入的密码不一致，请检查！");return false;
 				}else{
 					return true;
