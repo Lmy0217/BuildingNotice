@@ -38,7 +38,7 @@
 							</li>
 							<li>
 								<label for="pwd">确认新密码：</label>
-								<input type="password" name="qrnew_pwd" value="" id="qrnew_pwd" onblur="qrnewpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="qrnewpwd" value="" id="qrnew_pwd" onblur="qrnewpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="qrnew_pwdMsg" style="color: red;"></p>
 							</li>
 							<li>
@@ -117,7 +117,7 @@
 				$("#show3").html(JSON.stringify(jsons));
 				var flag=checkPwd(jsons);
 				if(flag==false) {
-					location.reload(force)
+					// location.reload(force)
 				} else {
 					jsons["token"] = q;
 					console.log(jsons);
