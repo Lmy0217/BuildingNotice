@@ -72,6 +72,7 @@ function userlistMain() {
 			// var delUrl = '/del?id=';
 			for (i = 0; i < lists.length; i++) {
 				var list = lists[i];
+				console.log(list);
 				// if (list.title.length > 24) {
 				// 	var title = list.title.substr(0, 25) + "…";
 				// } else {
@@ -85,22 +86,22 @@ function userlistMain() {
 				// titles = checkTitle(list.title);
 				// titles = checkTitle(titles);
 				// console.log(titles);
-				if (data.role == 0) {
+				if (list.role == 0) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						"<td>" + data.role + "</td>" +
+						"<td>" + list.role + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 1 +
 						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
 						"</tr>";
-				} else if (data.role == 1) {
+				} else if (list.role == 1) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						"<td>" + data.role + "</td>" +
+						"<td>" + list.role + "</td>" +
 						"<td>" +"提权&nbsp;&nbsp; " +
 						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 0 +
 						"])'>降权" +
