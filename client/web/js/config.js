@@ -10,3 +10,5 @@ var changePwd=website+'/user/pwd';
 
 var downUrl= website +'/archive/download';
 var listUrl=website+'/archive/list';
+
+var apkdownUrl='https://www.lanzous.com/i51vjfg';
