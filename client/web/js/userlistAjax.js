@@ -82,8 +82,8 @@ function userlistMain() {
 				else {
 					name = list.name;
 				}
-				titles = checkTitle(list.title);
-				titles = checkTitle(titles);
+				// titles = checkTitle(list.title);
+				// titles = checkTitle(titles);
 				console.log(titles);
 				if (data.role == 0) {
 					infoStr = "<tr>" +
