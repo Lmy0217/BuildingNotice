@@ -5,6 +5,26 @@ import java.util.HashMap;
 import com.deepoove.poi.data.PictureRenderData;
 
 public class Template {
+	
+	private static final String[] CHINESE_NUMBER_STRINGS = {
+			"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"
+	};
+	
+	public static String digit2ChineseNumberString(int digit) {
+		
+		if (digit >= 0 && digit <= 10) {
+			return CHINESE_NUMBER_STRINGS[digit];
+		} else if (digit > 10 && digit < 20) {
+			return CHINESE_NUMBER_STRINGS[10] + CHINESE_NUMBER_STRINGS[digit - 10];
+		} else if (digit >= 20 && digit < 100 && digit % 10 == 0) {
+			return CHINESE_NUMBER_STRINGS[digit / 10] + CHINESE_NUMBER_STRINGS[10];
+		} else if (digit >= 20 && digit < 100 && digit % 10 != 0) {
+			return CHINESE_NUMBER_STRINGS[digit / 10] + CHINESE_NUMBER_STRINGS[10] 
+					+ CHINESE_NUMBER_STRINGS[digit % 10];
+		} else {
+			return "超过一百";
+		}
+	}
 
 	public static HashMap<String, Object> defaultValue(HashMap<String, Object> data) {
 		
@@ -28,10 +48,12 @@ public class Template {
 		
 		String attr = (String) data.getOrDefault("attr", null);
 		if (attr == null || attr.length() == 0) data.put("attr", "不详");
+		else if (attr.equals("1")) data.put("attr", "住宅");
+		else if (attr.equals("2")) data.put("attr", "附属用房");
 		
 		Integer layer = (Integer) data.getOrDefault("layer", null);
-		if (layer == null || layer < 1) data.put("layer", Integer.valueOf(0));
-		else data.put("layer", layer + "层");
+		if (layer == null || layer < 1) data.put("layer", "不详");
+		else data.put("layer", digit2ChineseNumberString(layer) + "层");
 		
 		String createyear = (String) data.getOrDefault("createyear", null);
 		if (createyear == null || createyear.length() == 0) data.put("createyear", "不详");
@@ -111,8 +133,8 @@ public class Template {
 		if (a612 == null || a612 < 1) data.put("a612", Integer.valueOf(0));
 		
 		Double rankratio = (Double) data.getOrDefault("rankratio", null);
-		if (rankratio == null || rankratio < 0 || rankratio > 1) 
-			data.put("rankratio", Double.valueOf(0));
+		if (rankratio == null || rankratio < 0.0 || rankratio >= 1.0) data.put("rankratio", "100");
+		else data.put("rankratio", String.format("%.2f", rankratio * 100));
 		
 		String rankdepict = (String) data.getOrDefault("rankdepict", null);
 		if (rankdepict == null || rankdepict.length() == 0) data.put("rankdepict", "");

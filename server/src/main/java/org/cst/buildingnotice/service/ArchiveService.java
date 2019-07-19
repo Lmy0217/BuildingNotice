@@ -9,7 +9,7 @@ public interface ArchiveService {
 
 	public Integer create(String unit, String phone, String material, String addr, String hold, String holdid, String attr,
 			Integer layer, Date createyear, Integer typeid, String body1, String body2, String body3, Integer rankid,
-			double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status);
+			Double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status);
 
 	public ArchiveWithBLOBs getArchiveById(Integer id);
 	

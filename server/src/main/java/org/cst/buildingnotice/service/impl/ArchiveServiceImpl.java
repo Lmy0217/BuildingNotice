@@ -17,7 +17,7 @@ public class ArchiveServiceImpl implements ArchiveService {
 
 	public Integer create(String unit, String phone, String material, String addr, String hold, String holdid, String attr,
 			Integer layer, Date createyear, Integer typeid, String body1, String body2, String body3, Integer rankid,
-			double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status) {
+			Double rankratio, String advise, Date identitytime, String remark, Integer userid, Integer status) {
 		ArchiveWithBLOBs archiveWithBLOBs = new ArchiveWithBLOBs();
 		archiveWithBLOBs.setUnit(unit != null ? unit : "");
 		archiveWithBLOBs.setPhone(phone != null ? phone : "");
