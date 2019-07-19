@@ -92,7 +92,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + 1 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +','+ 1 +
 						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
@@ -103,7 +103,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" + "提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + 0 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +','+ 0 +
 						"])'>降权" +
 						"</td>" +
 						"</tr>";
