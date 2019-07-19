@@ -225,14 +225,14 @@ function chrole(id, mubiao) {
 			success: function(data) {
 				console.log(data);
 				if (data.status == 200) {
-					alert("成功提权");
+					alert("成功改变权限");
 					location.replace(location.href); //成功后刷新页面
 				} else {
-					alert("提权失败！<br/>err#" + data.msg);
+					alert("改变权限失败！<br/>err#" + data.msg);
 				}
 			},
 			error: function(data) {
-				alert("提权失败！");
+				alert("改变权限失败！");
 			}
 		})
 		//					$.post("http://47.100.192.151:5555/news/delete", {
