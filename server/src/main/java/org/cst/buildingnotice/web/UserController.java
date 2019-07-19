@@ -456,6 +456,7 @@ public class UserController {
 			User u = users.get(i);
 			int archCount = archiveService.countByUserid(u.getId());
 			jsonObject.put("id", u.getId());
+			jsonObject.put("name", u.getName());
 			jsonObject.put("role", u.getRole());
 			jsonObject.put("archcount", archCount);
 			jsonList.add(jsonObject);
