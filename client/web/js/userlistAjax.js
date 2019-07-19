@@ -70,7 +70,7 @@ function userlistMain() {
 			// var newsUrl = '/article.html?id=';
 			// var updateUrl = 'update.html?id=';
 			// var delUrl = '/del?id=';
-			for (i = 0; i < lists.length; i++) {
+			for (var i = 0; i < lists.length; i++) {
 				var list = lists[i];
 				console.log(list);
 				// if (list.title.length > 24) {
@@ -92,7 +92,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +','+ 1 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',' + 1 +
 						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
@@ -103,7 +103,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" + "提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +','+ 0 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',' + 0 +
 						"])'>降权" +
 						"</td>" +
 						"</tr>";
@@ -112,7 +112,17 @@ function userlistMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			var pagesStr = "共" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			// if (pages > 1) {
+			// 	var fenyeStr = '';
+			// 	if (pages < 10) {
+			// 		for(i=1;i<=pages;i++){
+			// 			fenye ="<a href='userlist.html?role='+list.role+'&page='+i+'>i</a>&nbsp"
+			// 		}
+			// 		
+			// 	}
+			// }
+
 			$("#list_page").append(pagesStr);
 			//list_page
 		}
