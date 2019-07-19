@@ -343,9 +343,7 @@ public class ArchiveController {
 			data.put("rankname", rank.getName());
 			
 			data.put("advise", TemplateUtil.stringRender(
-					typeWithBLOBs.getAdvise(), 
-					typeService.getAdviseByIdAndBody3(typeWithBLOBs.getId(), 
-							archiveWithBLOBs.getBody3())));
+					typeWithBLOBs.getAdvise(), archiveWithBLOBs.getAdvise()));
 			
 			data.put("year", calendar.get(Calendar.YEAR));
 			data.put("month", calendar.get(Calendar.MONTH) + 1);
