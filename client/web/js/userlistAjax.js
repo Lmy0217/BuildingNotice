@@ -92,7 +92,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 1 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id  + 1 +
 						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
@@ -103,7 +103,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +"提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 0 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +  0 +
 						"])'>降权" +
 						"</td>" +
 						"</tr>";
@@ -152,7 +152,7 @@ function downFiles(c) {
 	}
 }
 
-function chrole(id, mubiao) {
+function chrole2(id, mubiao) {
 	var token = getCookie('token');
 	var jsons = {
 		"token": token,
@@ -177,17 +177,28 @@ function chrole(id, mubiao) {
 	form.remove();
 }
 
+function w_chrole(mubiao){
+	var chgList = getChkValue('user[]');
+	console.log(chgList);
+	console.log(downList)
+	if (downList.length < 1) {
+		alert("没有选择要改变权限的用户！")
+	} else {
+		chrole(chgList,mubiao);
+	}
+}
+
 //删除
-function chrole(id, name, mubiao) {
-	console.log(id, name);
-	var msg = "您真的确定要修改" + name + "的权限吗？";
+function chrole(id, mubiao) {
+	console.log(id);
+	var msg = "您真的确定要修改这些用户的权限吗？";
 	if (!confirm(msg)) {
 		window.event.returnValue = false;
 	} else {
 		var token = getCookie('token');
 		var jsons = {
 			"token": token,
-			"userid": id,
+			"userid": [id],
 			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
