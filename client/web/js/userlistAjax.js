@@ -208,7 +208,7 @@ function chrole(id, mubiao) {
 		var token = getCookie('token');
 		var jsons = {
 			"token": token,
-			"userid": id,
+			"userid": id[0],
 			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
