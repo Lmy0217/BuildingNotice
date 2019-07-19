@@ -92,7 +92,7 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id  + 1 +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + 1 +
 						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
@@ -102,8 +102,8 @@ function userlistMain() {
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
-						"<td>" +"提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +  0 +
+						"<td>" + "提权&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + 0 +
 						"])'>降权" +
 						"</td>" +
 						"</tr>";
@@ -113,7 +113,7 @@ function userlistMain() {
 				$("#result_info").append(infoStr);
 			}
 			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
-
+			$("#list_page").append(pagesStr);
 			//list_page
 		}
 	})
@@ -177,14 +177,14 @@ function chrole2(id, mubiao) {
 	form.remove();
 }
 
-function w_chrole(mubiao){
+function w_chrole(mubiao) {
 	var chgList = getChkValue('user[]');
 	console.log(chgList);
 	console.log(downList)
 	if (downList.length < 1) {
 		alert("没有选择要改变权限的用户！")
 	} else {
-		chrole(chgList,mubiao);
+		chrole(chgList, mubiao);
 	}
 }
 
