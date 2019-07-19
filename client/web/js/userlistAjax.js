@@ -92,8 +92,8 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',' + 1 +
-						"])'>提权</a>&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 1 +
+						")'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
 						"</tr>";
@@ -103,8 +103,8 @@ function userlistMain() {
 						"<td>" + name + "</td>" +
 						"<td>" + list.role + "</td>" +
 						"<td>" + "提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',' + 0 +
-						"])'>降权" +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 0 +
+						")'>降权" +
 						"</td>" +
 						"</tr>";
 				}
@@ -208,7 +208,7 @@ function chrole(id, mubiao) {
 		var token = getCookie('token');
 		var jsons = {
 			"token": token,
-			"userid": [id],
+			"userid": id,
 			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
