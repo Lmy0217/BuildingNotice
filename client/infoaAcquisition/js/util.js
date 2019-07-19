@@ -244,6 +244,7 @@ function postData(url, data, callback, waitingDialog) {
 		success: callback,
 		error: function(xhr, type, errorThrown) {
 			waitingDialog.close();
+			console.log(JSON.stringify(xhr));
 			console.log(JSON.stringify(errorThrown));
 			mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
 
@@ -337,6 +338,7 @@ function getBase64Image2(img) { //传入图片路径，返回base64
 // 	});
 
 function checkUser(data) {
+	// alert('checkuser');
 	var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
 	var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
 	if (data.name.length == 0) {
