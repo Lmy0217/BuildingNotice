@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,8 +60,9 @@ public class UserController {
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
 		}
-		if (pwd.length() < 8) {
-			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码长度小于 8 位！");
+		if (!Pattern.matches("^[a-zA-Z][a-zA-Z0-9]{2,15}$", name) 
+				&& !Pattern.matches("^[a-zA-Z0-9_]{8,16}$", pwd)) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名或密码不符合要求！");
 		}
 		
 		String salt = SecurityUtil.saltGenerate();
@@ -296,8 +298,8 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码错误！");
 		}
 		
-		if (newPwd.length() < 8) {
-			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码长度小于 8 位！");
+		if (!Pattern.matches("^[a-zA-Z0-9_]{8,16}$", newPwd)) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "新密码不符合要求！");
 		}
 		
 		String salt = SecurityUtil.saltGenerate();

@@ -464,13 +464,16 @@ public class ArchiveController {
 		int idxStop = idxStart + 15;
 		idxStop = idxStop > archs.size() ? archs.size() : idxStop;
 		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		List<HashMap<String, Object>> jsonList = new ArrayList<HashMap<String, Object>>();
 		for (int i = idxStart; i < idxStop; i++) {
 			HashMap<String, Object> jsonObject = new HashMap<String, Object>();
 			ArchiveWithBLOBs archiveWithBLOBs = archs.get(i);
 			jsonObject.put("id", archiveWithBLOBs.getId());
-			jsonObject.put("title", archiveWithBLOBs.getIdentitytime() + "-" + archiveWithBLOBs.getHold());
-			jsonObject.put("date", archiveWithBLOBs.getIdentitytime());
+			jsonObject.put("title", dateFormat.format(archiveWithBLOBs.getIdentitytime()) 
+					+ " " + archiveWithBLOBs.getHold());
+			jsonObject.put("date", dateFormat.format(archiveWithBLOBs.getIdentitytime()));
 			jsonList.add(jsonObject);
 		}
 		

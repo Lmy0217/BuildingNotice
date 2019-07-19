@@ -38,16 +38,16 @@
 //        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 //    }
 //	
-//	//@Test
+//	@Test
 //	public void createTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
 ////		requestBodyJSON.put("name", "admin");
 ////		requestBodyJSON.put("pwd", "admin123456");
-//		requestBodyJSON.put("name", "test");
-//		requestBodyJSON.put("pwd", "12345678");
-////		requestBodyJSON.put("name", "myluo");
-////		requestBodyJSON.put("pwd", "12345678");
+////		requestBodyJSON.put("name", "test");
+////		requestBodyJSON.put("pwd", "a12345678");
+//		requestBodyJSON.put("name", "myluo");
+//		requestBodyJSON.put("pwd", "a12345678");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/create")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
