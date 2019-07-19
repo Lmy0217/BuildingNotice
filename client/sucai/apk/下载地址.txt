@@ -1,3 +1,7 @@
+v0.952
+https://www.lanzous.com/i52g4ah
+修复登录出错的问题
+
 v0.95
 https://www.lanzous.com/i525fxa
 登录增加密码限制
