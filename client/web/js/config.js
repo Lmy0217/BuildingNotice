@@ -10,5 +10,6 @@ var changePwd=website+'/user/pwd';
 
 var downUrl= website +'/archive/download';
 var listUrl=website+'/archive/list';
+var userlistUrl=website+'/user/list';
 
 var apkdownUrl='https://www.lanzous.com/i525fxa';

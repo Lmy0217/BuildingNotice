@@ -1,22 +1,27 @@
 var title = "暂无内容";
-var listType = GetUrlParam("type");
+var listType = GetUrlParam("role");
 var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
-var listList = ["全部分类", "未下文件", "已下文件"];
+var listList = ["全部用户", "未开通用户", "普通用户"];
 
 window.onload=function(){
-	designMain();
+	userlistMain();
 }
-function designMain(){
+function userlistMain(){
 	var token=getCookie('token');
+	if(listType=='-'){
+		listTypec=null
+	}else{
+		listTypec=listType;
+	}
 	var data={
-			type: listType,
+			role: listTypec,
 			page: listPage,
 			token: token,
 		}
 	$.ajax({
-		url: listUrl,
+		url: userlistUrl,
 		datatype: "json",
 		contentType:'application/json;charset=UTF-8',
 		data:JSON.stringify(data),
@@ -40,27 +45,41 @@ function designMain(){
 			// var delUrl = '/del?id=';
 			for (i = 0; i < lists.length; i++) {
 				var list = lists[i];
-				if (list.title.length > 24) {
-					var title = list.title.substr(0, 25) + "…";
-				} else {
-					var title = list.title;
-				}
-				if (list.author == undefined)
-					author = "user";
+				// if (list.title.length > 24) {
+				// 	var title = list.title.substr(0, 25) + "…";
+				// } else {
+				// 	var title = list.title;
+				// }
+				if (list.name == undefined)
+					name = "user";
 				else {
-					author = list.author;
+					name = list.name;
 				}
 				titles = checkTitle(list.title);
 				titles = checkTitle(titles);
 				console.log(titles);
-				infoStr = "<tr>" +
-					"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
-					"<td>" + titles + "</td>" +
-					"<td>" + list.date + "</td>" +
-					"<td>" +
-					"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-					"</td>" +
-					"</tr>" ;
+				if(data.role==0){
+					infoStr = "<tr>" +
+						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
+						"<td>" + name + "</td>" +
+						// "<td>" + list.date + "</td>" +
+						"<td>" +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +',"'+data.name+'",'+ 1 +"])'>提权</a>&nbsp;&nbsp; " +
+						"降权" +
+						"</td>" +
+						"</tr>" ;
+				}else if(data.role==1){
+					infoStr = "<tr>" +
+						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
+						"<td>" + name + "</td>" +
+						// "<td>" + list.date + "</td>" +
+						"<td>" +
+						"提权&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id  +',"'+data.name+'",'+ 0 +"])'>降权"</a> +
+						"</td>" +
+						"</tr>" ;
+				}
+				
 	
 				$("#result_info").append(infoStr);
 			}
@@ -104,12 +123,12 @@ function downFiles(c) {
 	}
 }
 
-function download(type, downList) {
+function chrole(id, mubiao) {
 	var token= getCookie('token');
 	var jsons = {
 		"token":token ,
-		"type": type,
-		"ids": downList,
+		"userid": id,
+		"role": mubiao,
 	};
 	var form = $("<form>");
 	form.attr('style', 'display:none');
@@ -130,38 +149,40 @@ function download(type, downList) {
 }
 
 //删除
-function del(id, title) {
-	console.log(id, title);
-	var msg = "您真的确定要删除《" + title + "》吗？";
+function chrole(id, name,mubiao) {
+	console.log(id, name);
+	var msg = "您真的确定要修改" + name + "的权限吗？";
 	if (!confirm(msg)) {
 		window.event.returnValue = false;
 	} else {
-		console.log("已经执行删除");
+		var token= getCookie('token');
 		var jsons = {
-			"news_id": id
+			"token":token ,
+			"userid": id,
+			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
 		jsons = JSON.parse(jsons);
-		jsons["token"] = q,
+		// jsons["token"] = q,
 			console.log(jsons);
 		$.ajax({
 			url: "http://47.100.192.151:5555/news/delete",
 			type: "post",
 			cache: false,
-			datatype: "json",
-			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: jsons,
+			datatype:"json",
+			contentType:'application/json; charset=UTF-8',
+			data: JSON.stringify(jsons),
 			success: function(data) {
 				console.log(data);
-				if (data.code == 200) {
-					alert("成功删除");
+				if (data.status == 200) {
+					alert("成功提权");
 					location.replace(location.href); //成功后刷新页面
 				} else {
-					alert("删除失败！");
+					alert("提权失败！<br/>err#"+data.msg);
 				}
 			},
 			error: function(data) {
-				alert("删除失败！");
+				alert("提权失败！");
 			}
 		})
 		//					$.post("http://47.100.192.151:5555/news/delete", {

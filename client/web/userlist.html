@@ -10,7 +10,7 @@
 		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/js.js"></script>
 		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
-		<script type="text/javascript" src="js/check.js"></script>
+		<!-- <script type="text/javascript" src="js/check.js"></script> -->
 		<script type="text/javascript" src="js/userlistAjax.js"></script>
 		<script type="text/javascript" src="js/jump.js"></script>
 	</head>
@@ -100,14 +100,14 @@
 									<th width="120">选择分类:</th>
 									<td>
 										<select name="search-sort" id="searchSort" onchange="javascript:window.location=this.options[this.selectedIndex].value;">
-											<option value="design.html?type=2&page=1">已下文件</option>
-											<option value="design.html?type=1&page=1">未下文件</option>
-											<option value="design.html?type=0&page=1">全部文件</option>
+											<option value="design.html?role=1&page=1">普通用户</option>
+											<option value="design.html?role=0&page=1">未开通用户</option>
+											<option value="design.html?role=-&page=1">全部用户</option>
 										</select>
 									</td>
-									<!--<th width="70">关键字:</th>
+									<!-- <th width="70">关键字:</th>
 									<td><input class="common-text" placeholder="关键字" name="keywords" value="" id="" type="text"></td>
-									<td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>-->
+									<td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td> -->
 								</tr>
 							</table>
 						</form>
@@ -117,17 +117,17 @@
 					<form name="myform" id="myform" method="post">
 						<div class="result-title">
 							<div class="result-list">
-								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a> -->
-								<a id="batchDown" href="javascript:void(0)" onclick="downFiles()"><i class="icon-font">&#xe009;</i>批量下载</a>
-								<a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a>
+								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a>
+								<a id="batchDown" href="javascript:void(0)" onclick="uprole()"><i class="icon-font">&#xe009;</i>批量提权</a>
+								<!-- <a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a> -->
 							</div>
 						</div>
 						<div class="result-content">
 							<table class="result-tab" width="100%" id="result_info">
 								<tr>
 									<th class="tc" width="5%"><input class="allChoose" id='all' name="" type="checkbox" onclick='checkAll("all","word[]")'></th>
-									<th>标题</th>
-									<th>更新时间</th>
+									<th>用户</th>
+									<th>权限等级</th>
 									<!-- <th>采集人</th> -->
 									<th>操作</th>
 								</tr>
