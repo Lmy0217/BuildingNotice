@@ -5,26 +5,52 @@ var listPage = GetUrlParam("page");
 var xianzhi = 15;
 var listList = ["全部用户", "未开通用户", "普通用户"];
 
-window.onload=function(){
+
+window.onload = function() {
+	// userlistMain();
+	// infoStr1 = "<tr>" +
+	// 					"<td class='tc'><input name='user[]' value='" + 'list.id' + "' type='checkbox'></td>" +
+	// 					"<td>" + 'name' + "</td>" +
+	// 					"<td>" + 'data.role' + "</td>" +
+	// 					"<td>" +
+	// 					"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + 'list.id' + ',"' +' data.name '+ '",' + 1 +
+	// 					"])'>提权</a>&nbsp;&nbsp; " +
+	// 					"降权" +
+	// 					"</td>" +
+	// 					"</tr>";
+	// console.log(infoStr1);
+	// $("#result_info").append(infoStr1);
+	// infoStr2 = "<tr>" +
+	// 					"<td class='tc'><input name='user[]' value='" + 'list.id' + "' type='checkbox'></td>" +
+	// 					"<td>" + 'name '+ "</td>" +
+	// 					"<td>" +' data.role' + "</td>" +
+	// 					"<td>" +"提权&nbsp;&nbsp; " +
+	// 					"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + 'list.id' + ',"' +' data.name' + '",' + 0 +
+	// 					"])'>降权" +
+	// 					"</td>" +
+	// 					"</tr>";
+	// console.log(infoStr2);
+	// $("#result_info").append(infoStr2);
 	userlistMain();
 }
-function userlistMain(){
-	var token=getCookie('token');
-	if(listType=='-'){
-		listTypec=null
-	}else{
-		listTypec=listType;
+
+function userlistMain() {
+	var token = getCookie('token');
+	if (listType == '-') {
+		listTypec = null
+	} else {
+		listTypec = listType;
 	}
-	var data={
-			role: listTypec,
-			page: listPage,
-			token: token,
-		}
+	var data = {
+		role: listTypec,
+		page: listPage,
+		token: token,
+	}
 	$.ajax({
 		url: userlistUrl,
 		datatype: "json",
-		contentType:'application/json;charset=UTF-8',
-		data:JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify(data),
 		type: 'post',
 		success: function(data) {
 			console.log(data);
@@ -58,33 +84,34 @@ function userlistMain(){
 				titles = checkTitle(list.title);
 				titles = checkTitle(titles);
 				console.log(titles);
-				if(data.role==0){
+				if (data.role == 0) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						// "<td>" + list.date + "</td>" +
+						"<td>" + data.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id +',"'+data.name+'",'+ 1 +"])'>提权</a>&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 1 +
+						"])'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
-						"</tr>" ;
-				}else if(data.role==1){
+						"</tr>";
+				} else if (data.role == 1) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						// "<td>" + list.date + "</td>" +
-						"<td>" +
-						"提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id  +',"'+data.name+'",'+ 0 +"])'>降权"</a> +
+						"<td>" + data.role + "</td>" +
+						"<td>" +"提权&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 0 +
+						"])'>降权" +
 						"</td>" +
-						"</tr>" ;
+						"</tr>";
 				}
-				
-	
+
+
 				$("#result_info").append(infoStr);
 			}
 			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
-	
+
 			//list_page
 		}
 	})
@@ -124,9 +151,9 @@ function downFiles(c) {
 }
 
 function chrole(id, mubiao) {
-	var token= getCookie('token');
+	var token = getCookie('token');
 	var jsons = {
-		"token":token ,
+		"token": token,
 		"userid": id,
 		"role": mubiao,
 	};
@@ -149,28 +176,28 @@ function chrole(id, mubiao) {
 }
 
 //删除
-function chrole(id, name,mubiao) {
+function chrole(id, name, mubiao) {
 	console.log(id, name);
 	var msg = "您真的确定要修改" + name + "的权限吗？";
 	if (!confirm(msg)) {
 		window.event.returnValue = false;
 	} else {
-		var token= getCookie('token');
+		var token = getCookie('token');
 		var jsons = {
-			"token":token ,
+			"token": token,
 			"userid": id,
 			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
 		jsons = JSON.parse(jsons);
 		// jsons["token"] = q,
-			console.log(jsons);
+		console.log(jsons);
 		$.ajax({
 			url: "http://47.100.192.151:5555/news/delete",
 			type: "post",
 			cache: false,
-			datatype:"json",
-			contentType:'application/json; charset=UTF-8',
+			datatype: "json",
+			contentType: 'application/json; charset=UTF-8',
 			data: JSON.stringify(jsons),
 			success: function(data) {
 				console.log(data);
@@ -178,7 +205,7 @@ function chrole(id, name,mubiao) {
 					alert("成功提权");
 					location.replace(location.href); //成功后刷新页面
 				} else {
-					alert("提权失败！<br/>err#"+data.msg);
+					alert("提权失败！<br/>err#" + data.msg);
 				}
 			},
 			error: function(data) {
