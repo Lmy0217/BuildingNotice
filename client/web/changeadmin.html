@@ -28,12 +28,12 @@
 							</li>
 							<li>
 								<label for="pwd">请输入旧密码：</label>
-								<input type="password" name="old_pwd" value="" id="old_pwd" onblur="chkvalue(this,'old_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="pwd" value="" id="old_pwd" onblur="chkvalue(this,'old_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="old_pwdMsg" style="color: red; display: inline;"></p>
 							</li>
 							<li>
 								<label for="pwd">请输入新密码：</label>
-								<input type="password" name="new_pwd" value="" id="new_pwd" onblur="chkvalue(this,'new_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="newpwd" value="" id="new_pwd" onblur="chkvalue(this,'new_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="new_pwdMsg" style="color: red;"></p>
 							</li>
 							<li>
@@ -99,9 +99,10 @@
 					return true;
 				}
 			}
-			var q = getCookie('token');
+			
 
 			function myLogin() {
+				var q = getCookie('token');
 				// var website =changePwd;
 				var myform = $("#myform");
 				//返回字符串xxx=xxx&yyy=yyy;   
