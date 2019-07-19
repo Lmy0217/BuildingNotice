@@ -64,7 +64,7 @@ function showAdmin(){
 	if(perm>1){
 		console.log('管理员登录了');
 		console.log($('#admin'));
-		$('#admin').style.display="block";
+		$('#admin')[0].style.display="block";
 	}else{
 		console.log('普通用户登录了');
 	}
