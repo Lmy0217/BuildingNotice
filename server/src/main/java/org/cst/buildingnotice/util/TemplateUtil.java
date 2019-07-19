@@ -116,10 +116,12 @@ public class TemplateUtil {
 				break;
 			default:
 				if (separ) {
-					separate += c;
+					if (c == '\n') separate += (char) 11;
+					else separate += c;
 				} else {
 					if (read) {
-						if (c == '$') stringBuilder.append(++serial + "、");
+						if (c == '$') stringBuilder.append(++serial + ". ");
+						else if (c == '\n') stringBuilder.append((char) 11);
 						else stringBuilder.append(c);
 					}
 				}

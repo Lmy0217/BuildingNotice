@@ -27,49 +27,4 @@ public class TypeServiceImpl implements TypeService {
 	public TypeWithBLOBs getTypeById(int id) {
 		return typeMapper.selectByPrimaryKey(id);
 	}
-
-	// TODO more type
-	public String getAdviseByIdAndBody3(int id, String body3) {
-		
-		if (body3 == null || body3.length() == 0) return body3;
-		
-		String advise = null;
-		try {
-			advise = body3.substring(0, 2) + body3.substring(6);
-		} catch (Exception e) {
-			advise = body3;
-		}
-		
-		return advise;
-		
-//		if (id != 2 || body3 == null || body3.length() == 0) return body3;
-//		
-//		StringBuilder stringBuilder = new StringBuilder();
-//		
-//		int dataIdx = body3.indexOf(';');
-//		int dataWidth = 0;
-//		try {
-//			dataWidth = Integer.parseInt(body3.substring(0, dataIdx++));
-//		} catch (Exception e) {
-//			return null;
-//		}
-//		if (dataWidth < 1 || dataWidth + dataIdx + 1 > body3.length()) return null;
-//		stringBuilder.append(dataWidth + ";");
-//		
-//		int choose = -1;
-//		try {
-//			choose = Integer.parseInt(body3.substring(dataIdx, dataIdx + dataWidth));
-//		} catch (Exception e) {
-//			return null;
-//		}
-//		if (choose == -1) return null;
-//		stringBuilder.append(choose);
-//		
-//		if ((choose & (1 << 3)) > 0) {
-//			if (2 * dataWidth + dataIdx + 1 > body3.length()) return null;
-//			stringBuilder.append(body3.substring(body3.length() - dataWidth, body3.length()));
-//		}
-//		
-//		return stringBuilder.toString();
-	}
 }

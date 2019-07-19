@@ -63,7 +63,7 @@
 //	public void loginTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("name", "myluo");
+//		requestBodyJSON.put("name", "test");
 //		requestBodyJSON.put("pwd", "12345678");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/login")

@@ -14,7 +14,7 @@
 //	@Autowired
 //    public UserService userService;
 //	
-//	//@Test
+//	@Test
 //    public void getUserByIdTest(){
 //        User user = userService.getUserById(1);
 //        System.out.println(user.getName());

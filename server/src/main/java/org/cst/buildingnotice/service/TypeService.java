@@ -8,6 +8,4 @@ public interface TypeService {
 			String advise);
 
 	public TypeWithBLOBs getTypeById(int id);
-	
-	public String getAdviseByIdAndBody3(int id, String body3);
 }

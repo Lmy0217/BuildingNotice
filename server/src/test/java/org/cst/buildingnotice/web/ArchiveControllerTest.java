@@ -83,9 +83,9 @@
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
 //		
-//		List<Integer> ids = Arrays.asList(16, 17);
+//		List<Integer> ids = Arrays.asList(1, 9);
 //		requestBodyJSON.put("ids", ids);
-//		requestBodyJSON.put("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
+//		requestBodyJSON.put("token", "343b399faadbe6b33d02d3e5abf9ceb11a82afb741a8ecbc6811e9d19d69ebe35e64");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/download")
 //				.param("json", requestBodyJSON.toString());
@@ -101,9 +101,9 @@
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
 //		
-//		requestBodyJSON.put("type", 0);
+//		requestBodyJSON.put("type", -1);
 //		requestBodyJSON.put("page", 1);
-//		requestBodyJSON.put("token", "333ba6f82bc54c5254b51969fb7d74eb9fb882965b251d87b1ba6f4025a3f1a2816d");
+//		requestBodyJSON.put("token", "343b399faadbe6b33d02d3e5abf9ceb11a82afb741a8ecbc6811e9d19d69ebe35e64");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/list")
 //				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
