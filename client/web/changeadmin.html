@@ -57,13 +57,13 @@
 		</div>
 		<script type="text/javascript">
 			function chkvalue(txt, name) {
-				var relue = /^[a-zA-Z0-9_]{6,16}$/;
+				var relue = /^[a-zA-Z0-9_]{8,16}$/;
 				console.log(txt.value.match(relue));
 				var show = document.getElementById(name);
 				console.log(show);
 				if(txt.value == "") show.innerText = "输入不能为空";
 				else if(txt.value.match(relue) == null) {
-					show.innerText = "密码以字母开头，长度在6~18之间，只能包含字符、数字和下划线";
+					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字符、数字和下划线";
 				} else show.style.display = "none";
 			}
 
@@ -83,7 +83,7 @@
 
 			function checkPwd(jsons) {
 				var userRelue = /^[a-zA-Z0-9;]{3,16}$/;
-				var pwdRelue = /^[a-zA-Z0-9_]{6,16}$/;
+				var pwdRelue = /^[a-zA-Z0-9_]{8,16}$/;
 //				if(jsons.user.match(userRelue) == null) {
 //					alert("用户名必须是以数字开头，长度3~16位，只能包含字母和数字");
 //					return false;
@@ -92,7 +92,7 @@
 					alert("旧密码不符合格式，请联系管理员");
 					return false;
 				} else if(jsons.newpwd.match(pwdRelue) == null) {
-					alert("密码长度在6~18之间，只能包含字符、数字和下划线");return false;
+					alert("密码长度在8~18之间，只能包含字符、数字和下划线");return false;
 				} else if(jsons.newpwd != jsons.qrnewpwd) {
 					alert("两次输入的密码不一致，请检查！");return false;
 				}else{
