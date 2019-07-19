@@ -40,14 +40,25 @@
 			}
 		</style>
 		<script src="../js/mui.min.js"></script>
-		<script src="../js/util.js"></script>
 		<script src="../js/config.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/util.js"></script>
+		<script src="../js/check.js"></script>
+
 		<script>
 			mui.init();
 			mui.plusReady(function() {
+				checkUser();
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
 				var account = localStorage.getItem("account");
 				document.getElementById('username').innerText=account;
+				// var flag=0;
+				// 				do{
+				// 	sleep(500);
+				// 	flag++;
+				// 	checkUser()
+				// }
+				// while (flag<10)
 				//设置时间
 				var myDate = new Date();
 				var year = myDate.getFullYear();

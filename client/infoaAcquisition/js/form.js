@@ -335,7 +335,8 @@ function zhenliQuestion(jsonInfo, lenq) {
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	head=head.reverse();
 	console.log(result);
-	return lenq + ';' + fixInteger(two2x(head), lenq) + result;
+	return fixInteger(two2x(head), lenq) + result;
+	// return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
 
 //把一个表示二进制的数组转化为十进制
@@ -379,7 +380,8 @@ function zhenliType(jsonInfo, lenq) {
 		result = result + fixInteger(jsonInfo.type23, lenq);
 		result = result + fixInteger(type22_x, lenq);
 	}
-	return lenq + ';' + result;
+	return result;
+	// return lenq + ';' + result;
 }
 
 // 
@@ -461,7 +463,7 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 		}else if(head[ir] == 0){
 			var a=relu[ir]*2;
 			console.log(relu[ir]*2);
-			alert('in')
+			// alert('in')
 			var res = new Array(a);
 			res = initArr(res, 0);//不满的位数补0
 			// console.log(res.join(''));
