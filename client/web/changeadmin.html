@@ -38,7 +38,7 @@
 							</li>
 							<li>
 								<label for="pwd">确认新密码：</label>
-								<input type="password" name="qrnewpwd" value="" id="qrnew_pwd" onblur="qrnewpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="qrnewpwd" value="" id="qrnew_pwd" onblur="qr_newpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="qrnew_pwdMsg" style="color: red;"></p>
 							</li>
 							<li>
@@ -67,7 +67,7 @@
 				} else show.style.display = "none";
 			}
 
-			function qrnewpwd(txt, name) {
+			function qr_newpwd(txt, name) {
 				var show = document.getElementById(name);
 				var pwd = document.getElementById("new_pwd");
 				console.log(pwd.value, txt.value)
@@ -135,7 +135,7 @@
 								//根据后台返回值确定是否操作成功
 								alert("修改密码成功，下次登录请使用新密码！");
 								document.cookie = setCookie("token", data.token, "3");
-								// window.location.href = "login.html";
+								window.location.href = "index.html";
 							} else {
 								alert("用户名或者密码错误，请检查或联系管理员");
 							}
