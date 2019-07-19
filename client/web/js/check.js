@@ -35,8 +35,8 @@ if (q == undefined) {
 						$("#user").append("管理员");
 					}
 					document.cookie = setCookie("token", data.token, "3");
-					document.cookie = setCookie("perm", data.perm, "3");
-					if(data.perm>1){
+					perm=getCookie('perm');
+					if(perm>1){
 						console.log('管理员登录了');
 						console.log($('#admin'));
 						$('#admin').style.display="block";
