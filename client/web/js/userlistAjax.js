@@ -31,6 +31,7 @@ window.onload = function() {
 	// 					"</tr>";
 	// console.log(infoStr2);
 	// $("#result_info").append(infoStr2);
+	showAdmin();
 	userlistMain();
 }
 
