@@ -74,7 +74,7 @@
 								</li>
 								<div id="admin" style="display: none;">
 									<li>
-										<a href="userlist?page=1.html"><i class="icon-font">&#xe003;</i>用户管理</a>
+										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
 									</li>
 								</div>
 								<!-- <li>
@@ -100,9 +100,9 @@
 									<th width="120">选择分类:</th>
 									<td>
 										<select name="search-sort" id="searchSort" onchange="javascript:window.location=this.options[this.selectedIndex].value;">
-											<option value="design.html?role=1&page=1">普通用户</option>
-											<option value="design.html?role=0&page=1">未开通用户</option>
-											<option value="design.html?role=-&page=1">全部用户</option>
+											<option value="userlist.html?role=1&page=1">普通用户</option>
+											<option value="userlist.html?role=0&page=1">未开通用户</option>
+											<option value="userlist.html?role=-&page=1">全部用户</option>
 										</select>
 									</td>
 									<!-- <th width="70">关键字:</th>
@@ -117,9 +117,8 @@
 					<form name="myform" id="myform" method="post">
 						<div class="result-title">
 							<div class="result-list">
-								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a>
-								<a id="batchDown" href="javascript:void(0)" onclick="uprole()"><i class="icon-font">&#xe009;</i>批量提权</a>
-								<!-- <a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a> -->
+								<!-- <a id="batchDown" href="javascript:void(0)" onclick="uprole(1)"><i class="icon-font">&#xe009;</i>批量提权</a>
+								<a id="updateOrd" href="javascript:void(0)" onclick="uprole(0)"><i class="icon-font">&#xe00a;</i>批量降权</a> -->
 							</div>
 						</div>
 						<div class="result-content">
@@ -130,38 +129,16 @@
 									<th>权限等级</th>
 									<!-- <th>采集人</th> -->
 									<th>操作</th>
-								</tr>
-								<!-- <tr>
-									<td class='tc'><input name='word[]' value='1' type='checkbox'></td>
-									<td>
-										title
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href="javascript:void(0)"  onclick="downFiles(1)">下载</a> 
-									</td>
-								</tr>
-								<tr>
-									<td class='tc'><input name='word[]' value='2' type='checkbox'></td>
-									<td>
-										<a target='_blank' href='' title=''> title</a>
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href='' onclick="down">下载</a> "
-									</td>
-								</tr> -->
+								</tr>								
 							</table>
 							<div class="list-page" id="list_page">
-								<!--2 条 1/1 页-->
+								<!-- 2 条 1/1 页
+								<a href="userlist.html?role=role&page=1">1</a> -->
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			<!--/main-->
 		</div>
 	</body>
 

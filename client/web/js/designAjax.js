@@ -5,21 +5,23 @@ var listPage = GetUrlParam("page");
 var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
 
-window.onload=function(){
+window.onload = function() {
+	showAdmin();
 	designMain();
 }
-function designMain(){
-	var token=getCookie('token');
-	var data={
-			type: listType,
-			page: listPage,
-			token: token,
-		}
+
+function designMain() {
+	var token = getCookie('token');
+	var data = {
+		type: listType,
+		page: listPage,
+		token: token,
+	}
 	$.ajax({
 		url: listUrl,
 		datatype: "json",
-		contentType:'application/json;charset=UTF-8',
-		data:JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify(data),
 		type: 'post',
 		success: function(data) {
 			console.log(data);
@@ -60,12 +62,12 @@ function designMain(){
 					"<td>" +
 					"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
 					"</td>" +
-					"</tr>" ;
-	
+					"</tr>";
+
 				$("#result_info").append(infoStr);
 			}
 			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
-	
+			$("#list_page").append(pagesStr);
 			//list_page
 		}
 	})
@@ -105,9 +107,9 @@ function downFiles(c) {
 }
 
 function download(type, downList) {
-	var token= getCookie('token');
+	var token = getCookie('token');
 	var jsons = {
-		"token":token ,
+		"token": token,
 		"type": type,
 		"ids": downList,
 	};

@@ -35,10 +35,7 @@ if (q == undefined) {
 						$("#user").append("管理员");
 					}
 					document.cookie = setCookie("token", data.token, "3");
-					document.cookie = setCookie("perm", data.perm, "3");
-					if(data.perm>1){
-						$('#admin').style.display="block";
-					}
+					
 				} else {
 					console.log("非法访问");
 					window.location.href = 'login.html'
@@ -60,4 +57,30 @@ function getCookie(cname) {
 		if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
 	}
 	return "";
+}
+
+function showAdmin(){
+	perm=getCookie('perm');
+	if(perm>1){
+		console.log('管理员登录了');
+		console.log($('#admin'));
+		$('#admin')[0].style.display="block";
+	}else{
+		console.log('普通用户登录了');
+	}
+}
+function w_checkRole(mubiao){
+	if(!checkRole(mubiao)){
+		window.location.href = 'index.html'
+	}
+}
+function checkRole(mubiao){
+	perm=getCookie('perm');
+	if(perm>=mubiao){
+		console.log('条件满足');
+		return true;
+	}else{
+		console.log('非法登录');
+		return false;
+	}
 }

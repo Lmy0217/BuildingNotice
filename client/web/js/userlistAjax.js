@@ -31,6 +31,7 @@ window.onload = function() {
 	// 					"</tr>";
 	// console.log(infoStr2);
 	// $("#result_info").append(infoStr2);
+	showAdmin();
 	userlistMain();
 }
 
@@ -69,8 +70,9 @@ function userlistMain() {
 			// var newsUrl = '/article.html?id=';
 			// var updateUrl = 'update.html?id=';
 			// var delUrl = '/del?id=';
-			for (i = 0; i < lists.length; i++) {
+			for (var i = 0; i < lists.length; i++) {
 				var list = lists[i];
+				console.log(list);
 				// if (list.title.length > 24) {
 				// 	var title = list.title.substr(0, 25) + "…";
 				// } else {
@@ -81,28 +83,28 @@ function userlistMain() {
 				else {
 					name = list.name;
 				}
-				titles = checkTitle(list.title);
-				titles = checkTitle(titles);
-				console.log(titles);
-				if (data.role == 0) {
+				// titles = checkTitle(list.title);
+				// titles = checkTitle(titles);
+				// console.log(titles);
+				if (list.role == 0) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						"<td>" + data.role + "</td>" +
+						"<td>" + list.role + "</td>" +
 						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 1 +
-						"])'>提权</a>&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 1 +
+						")'>提权</a>&nbsp;&nbsp; " +
 						"降权" +
 						"</td>" +
 						"</tr>";
-				} else if (data.role == 1) {
+				} else if (list.role == 1) {
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + name + "</td>" +
-						"<td>" + data.role + "</td>" +
-						"<td>" +"提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + ',"' + data.name + '",' + 0 +
-						"])'>降权" +
+						"<td>" + list.role + "</td>" +
+						"<td>" + "提权&nbsp;&nbsp; " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 0 +
+						")'>降权" +
 						"</td>" +
 						"</tr>";
 				}
@@ -110,8 +112,18 @@ function userlistMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			var pagesStr = "共" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			// if (pages > 1) {
+			// 	var fenyeStr = '';
+			// 	if (pages < 10) {
+			// 		for(i=1;i<=pages;i++){
+			// 			fenye ="<a href='userlist.html?role='+list.role+'&page='+i+'>i</a>&nbsp"
+			// 		}
+			// 		
+			// 	}
+			// }
 
+			$("#list_page").append(pagesStr);
 			//list_page
 		}
 	})
@@ -150,7 +162,7 @@ function downFiles(c) {
 	}
 }
 
-function chrole(id, mubiao) {
+function chrole2(id, mubiao) {
 	var token = getCookie('token');
 	var jsons = {
 		"token": token,
@@ -175,17 +187,28 @@ function chrole(id, mubiao) {
 	form.remove();
 }
 
+function w_chrole(mubiao) {
+	var chgList = getChkValue('user[]');
+	console.log(chgList);
+	console.log(downList)
+	if (downList.length < 1) {
+		alert("没有选择要改变权限的用户！")
+	} else {
+		chrole(chgList, mubiao);
+	}
+}
+
 //删除
-function chrole(id, name, mubiao) {
-	console.log(id, name);
-	var msg = "您真的确定要修改" + name + "的权限吗？";
+function chrole(id, mubiao) {
+	console.log(id);
+	var msg = "您真的确定要修改这些用户的权限吗？";
 	if (!confirm(msg)) {
 		window.event.returnValue = false;
 	} else {
 		var token = getCookie('token');
 		var jsons = {
 			"token": token,
-			"userid": id,
+			"userid": id[0],
 			"role": mubiao,
 		};
 		jsons = JSON.stringify(jsons);
@@ -193,7 +216,7 @@ function chrole(id, name, mubiao) {
 		// jsons["token"] = q,
 		console.log(jsons);
 		$.ajax({
-			url: "http://47.100.192.151:5555/news/delete",
+			url: changeRole,
 			type: "post",
 			cache: false,
 			datatype: "json",
@@ -202,14 +225,14 @@ function chrole(id, name, mubiao) {
 			success: function(data) {
 				console.log(data);
 				if (data.status == 200) {
-					alert("成功提权");
+					alert("成功改变权限");
 					location.replace(location.href); //成功后刷新页面
 				} else {
-					alert("提权失败！<br/>err#" + data.msg);
+					alert("改变权限失败！<br/>err#" + data.msg);
 				}
 			},
 			error: function(data) {
-				alert("提权失败！");
+				alert("改变权限失败！");
 			}
 		})
 		//					$.post("http://47.100.192.151:5555/news/delete", {

@@ -17,6 +17,7 @@
 			window.onload = function() {
 				runSetIndexTimes();
 				setInterval("runSetIndexTimes()", 1000);
+				showAdmin();
 				document.getElementById('res-host').innerText=domin;
 				document.getElementById('apkdown').href=apkdownUrl;
 			}
@@ -82,7 +83,7 @@
 								</li>
 								<div id="admin" style="display: none;">
 									<li>
-										<a href="userlist?page=1.html"><i class="icon-font">&#xe003;</i>用户管理</a>
+										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
 									</li>
 								</div>
 								
