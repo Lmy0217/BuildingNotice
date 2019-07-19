@@ -29,7 +29,7 @@ public class ImageServiceImpl implements ImageService {
 
 	public List<Image> getImagesByIdList(List<Integer> ids) {
 		if (ids == null) return null;
-		if (ids.isEmpty()) new ArrayList<Image>();
+		if (ids.isEmpty()) return new ArrayList<Image>();
 		return imageMapper.selectByIdList(ids);
 	}
 }
