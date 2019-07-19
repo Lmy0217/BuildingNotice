@@ -4,66 +4,73 @@ var listPage = GetUrlParam("page");
 
 var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
-var token=getCookie('token');
-var data={
-		type: listType,
-		page: listPage,
-		token: token,
-	}
-$.ajax({
-	url: listUrl,
-	datatype: "json",
-	contentType:'application/json;charset=UTF-8',
-	data:JSON.stringify(data),
-	type: 'post',
-	success: function(data) {
-		console.log(data);
-		// data = data.data;
-		pages = Math.ceil(data.count / xianzhi); //总页数
-		var searchSort = document.getElementById("searchSort");
-		for (var i = 0; i < searchSort.length; i++) {
-			var valueStr = searchSort[i].value;
-			valueStr = parseInt(valueStr.substring(17, 18));
-			if (valueStr == listType) {
-				searchSort[i].selected = true;
-			}
-		}
-		lists = data.list;
-		console.log(lists);
-		// var newsUrl = '/article.html?id=';
-		// var updateUrl = 'update.html?id=';
-		// var delUrl = '/del?id=';
-		for (i = 0; i < lists.length; i++) {
-			var list = lists[i];
-			if (list.title.length > 24) {
-				var title = list.title.substr(0, 25) + "…";
-			} else {
-				var title = list.title;
-			}
-			if (list.author == undefined)
-				author = "user";
-			else {
-				author = list.author;
-			}
-			titles = checkTitle(list.title);
-			titles = checkTitle(titles);
-			console.log(titles);
-			infoStr = "<tr>" +
-				"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
-				"<td>" + titles + "</td>" +
-				"<td>" + list.date + "</td>" +
-				"<td>" +
-				"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-				"</td>" +
-				"</tr>" ;
 
-			$("#result_info").append(infoStr);
+window.onload=function(){
+	designMain();
+}
+function designMain(){
+	var token=getCookie('token');
+	var data={
+			type: listType,
+			page: listPage,
+			token: token,
 		}
-		var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+	$.ajax({
+		url: listUrl,
+		datatype: "json",
+		contentType:'application/json;charset=UTF-8',
+		data:JSON.stringify(data),
+		type: 'post',
+		success: function(data) {
+			console.log(data);
+			// data = data.data;
+			pages = Math.ceil(data.count / xianzhi); //总页数
+			var searchSort = document.getElementById("searchSort");
+			for (var i = 0; i < searchSort.length; i++) {
+				var valueStr = searchSort[i].value;
+				valueStr = parseInt(valueStr.substring(17, 18));
+				if (valueStr == listType) {
+					searchSort[i].selected = true;
+				}
+			}
+			lists = data.list;
+			console.log(lists);
+			// var newsUrl = '/article.html?id=';
+			// var updateUrl = 'update.html?id=';
+			// var delUrl = '/del?id=';
+			for (i = 0; i < lists.length; i++) {
+				var list = lists[i];
+				if (list.title.length > 24) {
+					var title = list.title.substr(0, 25) + "…";
+				} else {
+					var title = list.title;
+				}
+				if (list.author == undefined)
+					author = "user";
+				else {
+					author = list.author;
+				}
+				titles = checkTitle(list.title);
+				titles = checkTitle(titles);
+				console.log(titles);
+				infoStr = "<tr>" +
+					"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
+					"<td>" + titles + "</td>" +
+					"<td>" + list.date + "</td>" +
+					"<td>" +
+					"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
+					"</td>" +
+					"</tr>" ;
+	
+				$("#result_info").append(infoStr);
+			}
+			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+	
+			//list_page
+		}
+	})
+}
 
-		//list_page
-	}
-})
 
 function checkTitle(title) {
 	var title = title.replace(/"/g, " ");

@@ -28,17 +28,17 @@
 							</li>
 							<li>
 								<label for="pwd">请输入旧密码：</label>
-								<input type="password" name="old_pwd" value="" id="old_pwd" onblur="chkvalue(this,'old_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="pwd" value="" id="old_pwd" onblur="chkvalue(this,'old_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="old_pwdMsg" style="color: red; display: inline;"></p>
 							</li>
 							<li>
 								<label for="pwd">请输入新密码：</label>
-								<input type="password" name="new_pwd" value="" id="new_pwd" onblur="chkvalue(this,'new_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="newpwd" value="" id="new_pwd" onblur="chkvalue(this,'new_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="new_pwdMsg" style="color: red;"></p>
 							</li>
 							<li>
 								<label for="pwd">确认新密码：</label>
-								<input type="password" name="qrnew_pwd" value="" id="qrnew_pwd" onblur="qrnewpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
+								<input type="password" name="qrnewpwd" value="" id="qrnew_pwd" onblur="qr_newpwd(this,'qrnew_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="qrnew_pwdMsg" style="color: red;"></p>
 							</li>
 							<li>
@@ -49,25 +49,25 @@
 				</div>
 			</div>
 			<p class="admin_copyright">
-				<a tabindex="5" href="http://www.ncqsjg.cn/" target="_blank">返回首页</a>
-				<a tabindex="5" href="http://www.ncqsjg.cn/admin/" target="_blank">返回后台</a> &copy; 2018 Powered by
-				<a href="http://ncqsjg.luov.top">NCUWork</a>
+				<!-- <a tabindex="5" href="http://www.ncqsjg.cn/" target="_blank">返回首页</a> -->
+				<a tabindex="5" href="http://49.234.178.101:8080" target="_blank">返回首页</a> &copy; 2019 Powered by
+				<a href="https://myluo.cn">明故为知</a> & <a href="https://luov.top">Mr.Luo</a>
 			</p>
 
 		</div>
 		<script type="text/javascript">
 			function chkvalue(txt, name) {
-				var relue = /^[a-zA-Z0-9_]{6,16}$/;
+				var relue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
 				console.log(txt.value.match(relue));
 				var show = document.getElementById(name);
 				console.log(show);
 				if(txt.value == "") show.innerText = "输入不能为空";
 				else if(txt.value.match(relue) == null) {
-					show.innerText = "密码以字母开头，长度在6~18之间，只能包含字符、数字和下划线";
+					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字符、数字和下划线";
 				} else show.style.display = "none";
 			}
 
-			function qrnewpwd(txt, name) {
+			function qr_newpwd(txt, name) {
 				var show = document.getElementById(name);
 				var pwd = document.getElementById("new_pwd");
 				console.log(pwd.value, txt.value)
@@ -82,26 +82,27 @@
 			}
 
 			function checkPwd(jsons) {
-				var userRelue = /^[a-zA-Z0-9;]{3,16}$/;
-				var pwdRelue = /^[a-zA-Z0-9_]{6,16}$/;
+				var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
+				var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
 //				if(jsons.user.match(userRelue) == null) {
 //					alert("用户名必须是以数字开头，长度3~16位，只能包含字母和数字");
 //					return false;
 //				} else
-				if(jsons.old_pwd.match(pwdRelue) == null) {
+				if(jsons.pwd.match(pwdRelue) == null) {
 					alert("旧密码不符合格式，请联系管理员");
 					return false;
-				} else if(jsons.new_pwd.match(pwdRelue) == null) {
-					alert("密码长度在6~18之间，只能包含字符、数字和下划线");return false;
-				} else if(jsons.new_pwd != jsons.qrnew_pwd) {
+				} else if(jsons.newpwd.match(pwdRelue) == null) {
+					alert("密码长度在8~18之间，只能包含字符、数字和下划线");return false;
+				} else if(jsons.newpwd != jsons.qrnewpwd) {
 					alert("两次输入的密码不一致，请检查！");return false;
 				}else{
 					return true;
 				}
 			}
-			var q = getCookie('token');
+			
 
 			function myLogin() {
+				var q = getCookie('token');
 				// var website =changePwd;
 				var myform = $("#myform");
 				//返回字符串xxx=xxx&yyy=yyy;   
@@ -116,7 +117,7 @@
 				$("#show3").html(JSON.stringify(jsons));
 				var flag=checkPwd(jsons);
 				if(flag==false) {
-					location.reload(force)
+					// location.reload(force)
 				} else {
 					jsons["token"] = q;
 					console.log(jsons);
@@ -134,7 +135,7 @@
 								//根据后台返回值确定是否操作成功
 								alert("修改密码成功，下次登录请使用新密码！");
 								document.cookie = setCookie("token", data.token, "3");
-								// window.location.href = "login.html";
+								window.location.href = "index.html";
 							} else {
 								alert("用户名或者密码错误，请检查或联系管理员");
 							}

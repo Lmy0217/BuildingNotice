@@ -1,3 +1,7 @@
+v0.95
+https://www.lanzous.com/i525fxa
+登录增加密码限制
+
 v0.94
 https://www.lanzous.com/i51vjfg
 关闭测试弹窗
