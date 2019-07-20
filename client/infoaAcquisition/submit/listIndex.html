@@ -69,8 +69,21 @@
 					console.log(perChk);
 					var wait = document.getElementById("wait");
 					openDB();
-					for (i = 0; i < perChk.length; i++) {
+					var stop=document.getElementById("endq");
+					stop.value=perChk.length;
+					console.log('stop.value'+stop.value)
+					var tempwait=document.getElementById("tempwait");
+					for (var i = 0; i < perChk.length; i++) {
+						console.log('stop.valueaaaaa'+stop.value+' '+perChk.length);
 						wait.value = 0;
+						var waitInput = document.createElement("input");//创建一个标签
+						waitInput.id="wait"+i;
+						waitInput.type='text';
+						waitInput.value='0';
+						waitInput.setAttribute("value","0");
+						tempwait.appendChild(waitInput);
+						document.getElementById(waitInput.id).value='0';
+						console.log(waitInput);
 						var wa = plus.nativeUI.showWaiting("正在上传" + (i + 1) + "/" + perChk.length + "..");
 						// mui.showLoading("正在上传" + (i + 1) + "/" + perChk.length + "..", "div");
 						plus.sqlite.selectSql({
@@ -88,11 +101,13 @@
 									console.log(photoId);
 									data = zhenliJson(e[0], photoId);
 									console.log(data);
-									upData(data);
-									w_showInfo();
+									console.log(i)
+									upData(data,i);
 								} else {
-									w_upPhoto(flag_arr);
+									console.log(i)
+									w_upPhoto(flag_arr,i);
 								}
+								// w_showInfo()
 							},
 							fail: function(e) {
 								console.log('selectSql fail: ' + JSON.stringify(e));
@@ -107,7 +122,8 @@
 
 			});
 
-			function upData(data) {
+			function upData(data,num) {
+				console.log(document.getElementById('wait'+num).value);
 				console.log(data)
 				var token = localStorage.getItem('TOKEN_TOKEN');
 				data['token'] = token;
@@ -116,6 +132,7 @@
 				// }
 				// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
 				// var USER_KEY = myStorage.getItem('USER_KEY');
+				var stop=document.getElementById("endq");
 				mui.ajax(upUrl, {
 					type: 'POST',
 					dataType: 'json',
@@ -125,6 +142,8 @@
 					async: false,
 					timeout: 1000, //超时时间设置为10秒；
 					success: function(res) {
+						console.log(stop.value);
+						stop.value=parseInt(stop.value)-1;
 						if (typeof res == 'string') {
 							var res = JSON.parse(res);
 						}
@@ -142,26 +161,41 @@
 						} else if (res.status != '200') {
 							mui.toast('err#' + res.status + ':' + res.msg);
 						} else {
+							console.log('stop'+stop.value);
 							console.log('成功了！')
 							console.log(res);
-							document.getElementById('wait').value = 1;
+							document.getElementById('wait'+num).value = 1;
 							plus.sqlite.selectSql({
 								name: 'info',
-								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
+								sql: 'update infoDB set isUp = 0 where rowid = ' + data.rowid,
 								success: function(e) {
-									console.log(e);
 									console.log('runSql success: ' + JSON.stringify(e));
+									if(stop.value==0){
+										w_showInfo();
+									}
 								},
 								fail: function(e) {
 									console.log('runSql fail: ' + JSON.stringify(e));
+									if(stop.value==0){
+										w_showInfo();
+									}
 								}
 							});
+							
 						}
 						// mui.hideLoading();
 					},
 					error: function(xhr, type, errorThrown) {
+						
+						console.log(stop.value);
+						stop.value=parseInt(stop.value)-1;
+						console.log(stop.value);
 						console.log(JSON.stringify(xhr));
+						if(stop.value==0){
+							w_showInfo();
+						}
 						mui.hideLoading();
+						
 					},
 					headers: {
 						// 'access_token': AUTH_TOKEN,
@@ -219,16 +253,16 @@
 				openDB();
 				plus.sqlite.selectSql({
 					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==0',
+					sql: 'select rowid, * from infoDB where isUp==1',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						showInfo(e);
-						closeDB();
+						// closeDB();
 					},
 					fail: function(e) {
 						console.log('selectSql fail: ' + JSON.stringify(e));
 						showInfoFail(e);
-						closeDB();
+						// closeDB();
 					}
 				});
 			}
@@ -254,7 +288,7 @@
 				for (i = result.length - 1; i >= 0; i--) {
 					var temp = "<li class='mui-table-view-cell'>" +
 						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label>" + (result.length - i) + "." + result[i].hold + "</label>" +
+						"<label>" + result[i].rowid  + "." + result[i].hold + "</label>" +
 						"<input name='perChk[]' value='" + result[i].rowid + "' type='checkbox' >" +
 						"</div>" +
 						"</li>"
@@ -332,6 +366,14 @@
 				<div class="mui-input-row">
 					<label>一个周期</label>
 					<input id='wait' name="wait" type="text" class="mui-input-clear mui-input" placeholder="" value="0">
+				</div>
+				<div class="mui-input-row" id="tempwait">
+					<label>一个周期</label>
+					<!-- <input id='wait' name="wait" type="text" class="mui-input-clear mui-input" placeholder="" value="0"> -->
+				</div>
+				<div class="mui-input-row">
+					<label>结束标记</label>
+					<input id='endq' name="endq" type="text" class="mui-input-clear mui-input" placeholder="" value="0">
 				</div>
 			</div>
 		</div>
