@@ -577,7 +577,7 @@ function checkCHBnull(form,key,des){
 //检查CheckBox项目输入不为空
 function checkCHBnull2(form,key1,key2,des){
 	if(form.hasOwnProperty(key1)&!form.hasOwnProperty(key2)){
-		mui.alert(des+'部分不能为空，请重新填写','缺少值','确定',function (e) {
+		mui.alert(des+'部分不能为空，请重新填写！','缺少值','确定',function (e) {
 		   e.index
 		},'div');
 		return 1;

@@ -66,6 +66,19 @@
 		changeChild2('type34','type341','type342[]');
 		changeChild2('type35','type351','type352[]');
 	});
+	
+	function w_openNext(){
+		var flag=0;var q=0;
+		var form_now=getForm('#form2');
+		flag=flag+checkCHBnull(form_now,'type21','承重');
+		flag=flag+checkCHBnull2(form_now,'type32','type322','腐蚀问题');
+		flag=flag+checkCHBnull2(form_now,'type33','type332','开裂问题');
+		flag=flag+checkCHBnull2(form_now,'type34','type342','柱脚问题');
+		flag=flag+checkCHBnull2(form_now,'type35','type352','屋面板问题');
+		if(flag==0){
+			openNext('form2','form3');
+		}
+	}
 </script>
 		<header class="mui-bar mui-bar-nav">
 			<a id="goBack" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -210,7 +223,7 @@
 					<label>木檩条</label>
 					<input name="type322[]" type="checkbox" value="4" disabled="disabled">
 				</div>
-				
+
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>3. 存在开裂现象</label>
 					<input name="type33" value="2" type="checkbox">
@@ -290,9 +303,9 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button class="mui-btn mui-btn-primary  mui-btn-block" onclick="openNext('form2','form3')">下一步</button>
-				<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>		
-			</div>			
+				<button class="mui-btn mui-btn-primary  mui-btn-block" onclick="w_openNext()">下一步</button>
+				<button class="mui-btn mui-btn-block mui-btn-primary" onclick="goHome()">回主页</button>
+			</div>
 
 			<script type="text/javascript">
 				mui.init()
