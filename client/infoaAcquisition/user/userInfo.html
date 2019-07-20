@@ -52,13 +52,10 @@
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
 				var account = localStorage.getItem("account");
 				document.getElementById('username').innerText=account;
-				// var flag=0;
-				// 				do{
-				// 	sleep(500);
-				// 	flag++;
-				// 	checkUser()
-				// }
-				// while (flag<10)
+				var backa = document.getElementById('goBack');
+				backa.addEventListener("tap", function() {
+					mui.back();
+				})
 				//设置时间
 				var myDate = new Date();
 				var year = myDate.getFullYear();
