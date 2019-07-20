@@ -120,7 +120,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					mui.back();
+					// mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -311,7 +311,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 		head = creatHead(key, 4, jsonInfo);
 		console.log(head);
 		var relu = [1, 1, 2, 1];
-		var relu2 = [0, 0, 3, 0];
+		var relu2 = [0, 0, 2, 0];
 	} else if (jsonInfo.type == 3) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
@@ -321,7 +321,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
 		var relu = [1, 1, 2, 1, 0];
-		var relu2 = [0, 0, 2, 0, 0];
+		var relu2 = [0,0, 2, 0, 0];
 	} else if (jsonInfo.type == 5) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
@@ -363,22 +363,26 @@ function zhenliType(jsonInfo, lenq) {
 		var type21_x = parseInt(type21.join(''), lenq);
 		result = fixInteger(type21_x, lenq);
 	} else if (jsonInfo.type == 3) {
-		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21 = creatHead2('type21', 3, jsonInfo)
 		var type21_x = parseInt(type21.join(''), lenq);
 		result = result + fixInteger(type21_x, lenq);
-		var type22 = creatHead2('type22', 4, jsonInfo)
+		var type22 = creatHead2('type22', 3, jsonInfo)
 		var type22_x = parseInt(type22.join(''), lenq);
 		result = result + fixInteger(type22_x, lenq);
 	} else if (jsonInfo.type == 4) {
-		var type21 = creatHead2('type21', 4, jsonInfo)
+		var type21 = creatHead2('type21', 3, jsonInfo)
 		var type21_x = parseInt(type21.join(''), lenq);
 		result = result + fixInteger(type21_x, lenq);
 	} else if (jsonInfo.type == 5) {
-		result = result + fixInteger(jsonInfo.type21, lenq);
+		if(jsonInfo.type21==null){
+			result = result + fixInteger(0, lenq);
+		}else{
+			result = result + fixInteger(jsonInfo.type21, lenq);
+		}		
 		var type22 = creatHead2('type22', 3, jsonInfo)
 		var type22_x = parseInt(type22.join(''), lenq);
-		result = result + fixInteger(jsonInfo.type23, lenq);
 		result = result + fixInteger(type22_x, lenq);
+		result = result + fixInteger(jsonInfo.type23, lenq);
 	}
 	return result;
 	// return lenq + ';' + result;

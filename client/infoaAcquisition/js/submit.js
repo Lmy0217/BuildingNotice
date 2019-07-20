@@ -1,286 +1,3 @@
-function w_upPhoto2(result) {
-	flag = 0;
-	var flag_arr = [];
-	for (var i = 1; i <= 4; i++) {
-		var photoSrc = 'photoSrc' + i;
-		var photoDes = 'photoDes' + i;
-		var tempId = "imgid" + i;
-		console.log('wai' + typeof(result[photoSrc]) + '_' + photoSrc)
-		if (!result[photoSrc] == '') {
-			var image = new Image();
-			image.src = result[photoSrc];
-			image.alt = result[photoDes];
-			image.mother = result;
-			flag_arr[flag] = image;
-			flag = flag + 1;
-		}
-	}
-	console.log(flag_arr);
-	for (var i = 1; i < flag; i++) {
-		var image = flag_arr[0];
-		image.self = flag_arr;
-	}
-	localStorage.setItem('images', flag_arr);
-	if (flag == 1) {
-		var image = flag_arr[0];
-		console.log(image)
-		getBase64Image2(image.src)
-			.then(function(base64) {
-				var imgData = base64;
-				var imgBlob = dataURLtoBlob(imgData);
-				document.getElementById("imgBlob").value = imgBlob;
-				console.log(imgBlob);
-
-				var wd = plus.nativeUI.showWaiting();
-				console.log(photoDes);
-				console.log(image.alt);
-				// 调用ajax  
-				var token = localStorage.getItem('TOKEN_TOKEN');
-				var data = {
-					'token': token,
-					'file': imgBlob,
-					'depict': image.alt,
-				}
-				console.log(data);
-				console.log(imgUrl);
-				var formData = new FormData();
-				// formData.append("accountnum", 123456); 
-				formData.append('depict', data.depict);
-				formData.append('token', data.token);
-				formData.append('file', new File([data.file], '12345.png'));
-				console.log(formData);
-				var temp = null;
-				var tempInput = document.getElementById(tempId);
-				mui.ajax(imgUrl, {
-					data: formData,
-					cache: false,
-					processData: false,
-					contentType: false,
-					async: false,
-					type: 'post',
-					// contentType: "multipart/form-data",
-					timeout: 5000,
-					success: function(data) {
-						console.log(data);
-						wd.close(); // 调用成功，先关闭等待的对话框  
-						if (data.status == "401" || data.status == "400") {
-							// 如果密码错误，提示一下信息  
-							mui.alert(data.msg);
-							localStorage.removeItem("TOKEN_TOKEN");
-							tempInput.value = -i;
-							mui.openWindow({
-								url: '../login.html'
-							})
-						} else if (data.status != "200") {
-							// 如果密码错误，提示一下信息  
-							mui.alert('err#' + data.status + ':' + data.msg);
-							console.log(tempId)
-							tempInput.value = -i;
-							return false;
-						} else {
-							// mui.alert('图片上传成功！');
-							// console.log(data.imageid);
-							console.log(tempId)
-							tempInput.value = data.imageid;
-							tempInput.checked = "checked";
-							console.log(tempInput.checked)
-							// var pi = document.getElementById('imgid1').value;
-							// console.log(pi)
-							var temp = data.imageid;
-							photoId = getImageId();
-							console.log(image.mother)
-							data = zhenliJson(image.mother, photoId);
-							upData(data);
-							// wa.close();
-							console.log(i);
-							w_showInfo();
-							// console.log(temp);
-							// return data.imageid;
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						// waitingDialog.close();
-						console.log(JSON.stringify(errorThrown));
-						mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
-					},
-				});
-				// console.log(temp);
-			}, function(err) {
-				console.log(err);
-			});
-	} else if (flag == 2) {
-		var flag_arr = image.self;
-		var image = flag_arr[0];
-		console.log(image)
-		getBase64Image2(image.src)
-			.then(function(base64) {
-				var imgData = base64;
-				var imgBlob = dataURLtoBlob(imgData);
-				document.getElementById("imgBlob").value = imgBlob;
-				console.log(imgBlob);
-
-				var wd = plus.nativeUI.showWaiting();
-				console.log(photoDes);
-				console.log(image.alt);
-				// 调用ajax  
-				var token = localStorage.getItem('TOKEN_TOKEN');
-				var data = {
-					'token': token,
-					'file': imgBlob,
-					'depict': image.alt,
-				}
-				console.log(data);
-				console.log(imgUrl);
-				var formData = new FormData();
-				// formData.append("accountnum", 123456); 
-				formData.append('depict', data.depict);
-				formData.append('token', data.token);
-				formData.append('file', new File([data.file], '12345.png'));
-				console.log(formData);
-				var temp = null;
-				var tempInput = document.getElementById(tempId);
-				mui.ajax(imgUrl, {
-					data: formData,
-					cache: false,
-					processData: false,
-					contentType: false,
-					async: false,
-					type: 'post',
-					// contentType: "multipart/form-data",
-					timeout: 5000,
-					success: function(data) {
-						console.log(data);
-						wd.close(); // 调用成功，先关闭等待的对话框  
-						if (data.status == "401" || data.status == "400") {
-							// 如果密码错误，提示一下信息  
-							mui.alert(data.msg);
-							localStorage.removeItem("TOKEN_TOKEN");
-							tempInput.value = -i;
-							mui.openWindow({
-								url: '../login.html'
-							})
-						} else if (data.status != "200") {
-							// 如果密码错误，提示一下信息  
-							mui.alert('err#' + data.status + ':' + data.msg);
-							console.log(tempId)
-							tempInput.value = -i;
-							return false;
-						} else {
-							// mui.alert('图片上传成功！');
-							// console.log(data.imageid);
-							console.log(tempId)
-							tempInput.value = data.imageid;
-							tempInput.checked = "checked";
-							console.log(tempInput.checked);
-							var temp = data.imageid;
-							//---------------
-							var flag_arr = localStorage.getItem("images");
-							console.log(flag_arr);
-							var image = flag_arr[1];
-							console.log(image)
-							getBase64Image2(image.src)
-								.then(function(base64) {
-									var imgData = base64;
-									var imgBlob = dataURLtoBlob(imgData);
-									document.getElementById("imgBlob").value = imgBlob;
-									console.log(imgBlob);
-
-									var wd = plus.nativeUI.showWaiting();
-									console.log(photoDes);
-									console.log(image.alt);
-									// 调用ajax  
-									var token = localStorage.getItem('TOKEN_TOKEN');
-									var data = {
-										'token': token,
-										'file': imgBlob,
-										'depict': image.alt,
-									}
-									console.log(data);
-									console.log(imgUrl);
-									var formData = new FormData();
-									// formData.append("accountnum", 123456); 
-									formData.append('depict', data.depict);
-									formData.append('token', data.token);
-									formData.append('file', new File([data.file], '12345.png'));
-									console.log(formData);
-									var temp = null;
-									var tempInput = document.getElementById(tempId);
-									mui.ajax(imgUrl, {
-										data: formData,
-										cache: false,
-										processData: false,
-										contentType: false,
-										async: false,
-										type: 'post',
-										// contentType: "multipart/form-data",
-										timeout: 5000,
-										success: function(data) {
-											console.log(data);
-											wd.close(); // 调用成功，先关闭等待的对话框  
-											if (data.status == "401" || data.status == "400") {
-												// 如果密码错误，提示一下信息  
-												mui.alert(data.msg);
-												localStorage.removeItem("TOKEN_TOKEN");
-												tempInput.value = -i;
-												mui.openWindow({
-													url: '../login.html'
-												})
-											} else if (data.status != "200") {
-												// 如果密码错误，提示一下信息  
-												mui.alert('err#' + data.status + ':' + data.msg);
-												console.log(tempId)
-												tempInput.value = -i;
-												return false;
-											} else {
-												// mui.alert('图片上传成功！');
-												// console.log(data.imageid);
-												console.log(tempId)
-												tempInput.value = data.imageid;
-												tempInput.checked = "checked";
-												console.log(tempInput.checked)
-												// var pi = document.getElementById('imgid1').value;
-												// console.log(pi)
-												var temp = data.imageid;
-												photoId = getImageId();
-												console.log(image.mother)
-												data = zhenliJson(image.mother, photoId);
-												upData(data);
-												// wa.close();
-												console.log(i);
-												w_showInfo();
-												// console.log(temp);
-												// return data.imageid;
-											}
-										},
-										error: function(xhr, type, errorThrown) {
-											// waitingDialog.close();
-											console.log(JSON.stringify(errorThrown));
-											mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
-										},
-									});
-									// console.log(temp);
-								}, function(err) {
-									console.log(err);
-								});
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						// waitingDialog.close();
-						console.log(JSON.stringify(errorThrown));
-						mui.alert("<网络连接失败，请重新尝试一下>", "错误", "OK", null);
-					},
-				});
-				// console.log(temp);
-			}, function(err) {
-				console.log(err);
-			});
-	} else if (flag == 3) {
-
-	} else if (flag == 4) {
-
-	}
-}
-
 function getFlag(result) {
 	var flag = 0;
 	var flag_arr = [];
@@ -309,24 +26,28 @@ function getFlag(result) {
 	return flag_arr;
 }
 
-function w_upPhoto(flag_arr) {
+function w_upPhoto(flag_arr,num) {
+	console.log(num)
 	var flag = flag_arr.length;
 	for (i = 0; i <= flag; i++) {
+		var c=0;
 		if (i == flag) {
 			do {
-				sleep(50);
+				sleep(500);
+				c++;
 			}
-			while (checkIdChange(i));
+			while (checkIdChange(i)&&c<10);
 			photoId = getImageId0();
 			console.log(photoId);
 		} else {
 			image = flag_arr[i];
 			console.log(image);
-			upPhotoMain(image);
+			upPhotoMain(image,num);
 			do {
-				setTimeout("console.log('5 seconds!')", 500)
+				setTimeout("console.log('5 seconds!')", 500);
+				c++;
 			}
-			while (checkIdChange(i));
+			while (checkIdChange(i)&&c<10);
 			console.log('正在上传第' + i);
 		}
 	}
@@ -344,7 +65,7 @@ function checkIdChange(i) {
 	}
 }
 
-function upPhotoMain(image) {
+function upPhotoMain(image,num) {
 
 	// var files = document.getElementById('image');
 	// 上传文件
@@ -384,7 +105,10 @@ function upPhotoMain(image) {
 			console.log(formData);
 			var temp = null;
 			var tempInput = document.getElementById(tempId);
-			var waitInput = document.getElementById("wait");
+			var waitstr="wait"+num;
+			console.log(waitstr);
+			var waitInput = document.getElementById(waitstr);
+			
 			mui.ajax(imgUrl, {
 				data: formData,
 				cache: false,
@@ -428,6 +152,8 @@ function upPhotoMain(image) {
 						}
 						waitInput.value = parseInt(waitInput.value) + 1;
 						console.log(waitInput.value);
+						var stop=document.getElementById("endq");
+						console.log(stop.value);
 						var temp = data.imageid;
 						//------------------
 						if (waitInput.value == image.count) {
@@ -435,8 +161,8 @@ function upPhotoMain(image) {
 							console.log(photoId);
 							data = zhenliJson(image.mother, photoId);
 							console.log(data);
-							upData(data);
-							w_showInfo();
+							
+							upData(data,num);
 						}
 
 					}
