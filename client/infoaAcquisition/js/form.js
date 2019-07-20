@@ -120,7 +120,7 @@ function w_insertSQL(jsonInfo) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
 					plus.nativeUI.alert('缓存成功，表单已完成！');
-					// mui.back();
+					mui.back();
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -560,5 +560,28 @@ function addPhoto(creatImage, imageSqlStr) {
 	} else {
 		console.log('失败了' + isOk)
 		return null;
+	}
+}
+//检查CheckBox项目输入不为空
+function checkCHBnull(form,key,des){
+	if(!form.hasOwnProperty(key)){
+		mui.alert(des+'部分不能为空，请重新填写','缺少值','确定',function (e) {
+		   e.index
+		},'div');
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+//检查CheckBox项目输入不为空
+function checkCHBnull2(form,key1,key2,des){
+	if(form.hasOwnProperty(key1)&!form.hasOwnProperty(key2)){
+		mui.alert(des+'部分不能为空，请重新填写','缺少值','确定',function (e) {
+		   e.index
+		},'div');
+		return 1;
+	}else{
+		return 0;
 	}
 }
