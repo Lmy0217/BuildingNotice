@@ -115,13 +115,14 @@ public class TemplateUtil {
 				separ = false;
 				break;
 			default:
-				if (separ) {
-					if (c == '\n') separate += " \n\r ";
-					else separate += c;
-				} else {
-					if (read) {
+				if (read) {
+					if (separ) {
+						System.out.print(c);
+						if (c == '\n') separate += '\n';
+						else separate += c;
+					} else {
 						if (c == '$') stringBuilder.append(++serial + ". ");
-						else if (c == '\n') stringBuilder.append(" \n\r ");
+						else if (c == '\n') stringBuilder.append('\n');
 						else stringBuilder.append(c);
 					}
 				}
@@ -252,7 +253,7 @@ public class TemplateUtil {
 				
 				//   sentence_4
 				var5 = body3.substring(10, 12);
-				if (!var5.equals("0000")) sbody3.append(var5);
+				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
 				out.add(sadvise.toString());
@@ -297,8 +298,8 @@ public class TemplateUtil {
 				}
 				
 				//   sentence_4
-				var5 = body3.substring(12, 16);
-				if (!var5.equals("0000")) sbody3.append(var5);
+				var5 = body3.substring(12, 14);
+				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
 				out.add(sadvise.toString());
@@ -333,15 +334,15 @@ public class TemplateUtil {
 				if (!var3.equals("00")) sbody3.append(var3);
 				
 				//   sentence_3
-				var4 = body3.substring(8, 12);
+				var4 = body3.substring(6, 10);
 				if (!var4.equals("0000")) {
 					sbody3.append(var4.substring(2) + var4.substring(0, 2));
 					sadvise.append(var4.substring(2));
 				}
 				
 				//   sentence_4
-				var5 = body3.substring(12, 16);
-				if (!var5.equals("0000")) sbody3.append(var5);
+				var5 = body3.substring(10, 12);
+				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
 				out.add(sadvise.toString());
