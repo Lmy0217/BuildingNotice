@@ -286,7 +286,7 @@ public class ArchiveController {
 			calendar.setTime(archiveWithBLOBs.getIdentitytime());
 			calendar.add(Calendar.DATE, 7);
 			
-			String file_name = String.format("%08d", id) + '_' + identityTime + ".docx";
+			String file_name = String.format("%08d", id) + '_' + archiveWithBLOBs.getHold() + ".docx";
 			String file = archive_path + File.separator + file_name;
 			System.out.println("file :" + file);
 			
