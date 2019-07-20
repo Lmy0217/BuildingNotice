@@ -1,3 +1,8 @@
+v0.955
+https://www.lanzous.com/i52wp0j
+修复了底框结构，框架接口和木结构的编码错误问题
+修复了批量上传只上传第一个的问题
+
 v0.952
 https://www.lanzous.com/i52g4ah
 修复登录出错的问题
