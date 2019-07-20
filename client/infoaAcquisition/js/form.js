@@ -119,8 +119,9 @@ function w_insertSQL(jsonInfo) {
 				success: function(e) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
-					plus.nativeUI.alert('缓存成功，表单已完成！');
-					mui.back();
+					mui.alert('缓存成功，表单已完成！','成功','确定',function (e) {
+					   mui.back();
+					},'div')
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -142,54 +143,6 @@ function w_insertSQL(jsonInfo) {
 
 }
 
-// 执行SQL语句，这里要弄三个表
-function w_insertSQL_todo(jsonInfo) {
-	var douhao = "','"
-	console.log(douhao);
-	var tableName = 'imageDB';
-	var creatImage = "create table if not exists imageDB(" + // 'id' integer PRIMARY KEY,
-		"'filePath'	TEXT," +
-		"'depict'	TEXT(255)" + ")";
-	// console.log(creatImage);
-	openDB();
-	//第一张图片------------------------
-	var keySrc = "photoSrc1";
-	var keyDes = "photoDes1";
-	if (jsonInfo.hasOwnProperty(keySrc)) {
-		// console.log(imageId);
-		var imageSqlStr = "insert into " + tableName + " values('" + jsonInfo.photoSrc1 + "','" + jsonInfo.photoDes1 + "')";
-
-		console.log(creatImage);
-		console.log(imageSqlStr)
-		var imageId = addPhoto(creatImage, imageSqlStr);
-		console.log(imageId);
-		// closeDB();	
-
-	}
-	//------------------------
-
-	zhenliDamage(jsonInfo);
-	// insertSQL(tableName,creatImage)
-	var tableName = 'infoDB';
-	creatMain = "create table if not exists main('id' integer PRIMARY KEY AUTOINCREMENT," +
-		"'uint'	TEXT(255)," +
-		"'phone'	integer(11)," +
-		"'material'	TEXT(255) ," +
-		"'addr'	TEXT(255)," +
-		"'hold'	TEXT(255)," +
-		"'holdid' INTEGER(20)," +
-		"'attr' integer(2)," +
-		"'layer' integer(2)," +
-		"'type'	TEXT," +
-		"'identitytime'	text(10)," +
-		"'imageId'	TEXT(255)," +
-		"'damage'	TEXT(255)," +
-
-		"'isUp'	integer(1)" + "')";
-
-	// sqlStr="insert into "+tableName+" values("+jsonInfo.uint+douhao+jsonInfo.phone+douhao+jsonInfo.material+douhao+
-	// jsonInfo.addr+douhao+hold+douhao+jsonInfo.holdid+douhao
-}
 
 // 执行SQL语句
 function insertSQL(tableName, creatTable, sqlStr) {
@@ -321,19 +274,19 @@ function zhenliQuestion(jsonInfo, lenq) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
 		var relu = [1, 1, 2, 1, 0];
-		var relu2 = [0,0, 2, 0, 0];
+		var relu2 = [0, 0, 2, 0, 0];
 	} else if (jsonInfo.type == 5) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
 		var relu = [1, 2, 2, 2, 2];
 		var relu2 = [0, 4, 4, 3, 2];
 	}
-	
+
 	console.log(relu);
 	console.log(relu2);
 	console.log(key);
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
-	head=head.reverse();
+	head = head.reverse();
 	console.log(result);
 	return fixInteger(two2x(head), lenq) + result;
 	// return lenq + ';' + fixInteger(two2x(head), lenq) + result;
@@ -374,11 +327,11 @@ function zhenliType(jsonInfo, lenq) {
 		var type21_x = parseInt(type21.join(''), lenq);
 		result = result + fixInteger(type21_x, lenq);
 	} else if (jsonInfo.type == 5) {
-		if(jsonInfo.type21==null){
+		if (jsonInfo.type21 == null) {
 			result = result + fixInteger(0, lenq);
-		}else{
+		} else {
 			result = result + fixInteger(jsonInfo.type21, lenq);
-		}		
+		}
 		var type22 = creatHead2('type22', 3, jsonInfo)
 		var type22_x = parseInt(type22.join(''), lenq);
 		result = result + fixInteger(type22_x, lenq);
@@ -402,7 +355,7 @@ function creatHead2(key, len, jsonInfo) {
 		head[a[i] - 1] = 1;
 	}
 	console.log('head2=' + head);
-	head=head.reverse();
+	head = head.reverse();
 	// head=parseInt(head,2);
 	console.log(head);
 	return head;
@@ -464,14 +417,14 @@ function regularization(jsonInfo, head, relu, relu2, key, len) {
 				console.log(result)
 				console.log(ir)
 			}
-		}else if(head[ir] == 0){
-			var a=relu[ir]*2;
-			console.log(relu[ir]*2);
+		} else if (head[ir] == 0) {
+			var a = relu[ir] * 2;
+			console.log(relu[ir] * 2);
 			// alert('in')
 			var res = new Array(a);
-			res = initArr(res, 0);//不满的位数补0
+			res = initArr(res, 0); //不满的位数补0
 			// console.log(res.join(''));
-			result=result+""+fixInteger((res.join('')),a);
+			result = result + "" + fixInteger((res.join('')), a);
 		}
 	}
 	console.log(result);
@@ -563,25 +516,62 @@ function addPhoto(creatImage, imageSqlStr) {
 	}
 }
 //检查CheckBox项目输入不为空
-function checkCHBnull(form,key,des){
-	if(!form.hasOwnProperty(key)){
-		mui.alert(des+'部分不能为空，请重新填写','缺少值','确定',function (e) {
-		   e.index
-		},'div');
+function checkCHBnull(form, key, des) {
+	if (!form.hasOwnProperty(key)) {
+		mui.alert(des + '部分不能为空，请重新填写', '缺少值', '确定', function(e) {
+			e.index
+		}, 'div');
 		return 1;
-	}else{
+	} else {
 		return 0;
 	}
 }
 
 //检查CheckBox项目输入不为空
-function checkCHBnull2(form,key1,key2,des){
-	if(form.hasOwnProperty(key1)&!form.hasOwnProperty(key2)){
-		mui.alert(des+'部分不能为空，请重新填写！','缺少值','确定',function (e) {
-		   e.index
-		},'div');
+function checkCHBnull2(form, key1, key2, des) {
+	if (form.hasOwnProperty(key1) & !form.hasOwnProperty(key2)) {
+		mui.alert(des + '部分不能为空，请重新填写！', '缺少值', '确定', function(e) {
+			e.index
+		}, 'div');
 		return 1;
-	}else{
+	} else {
 		return 0;
 	}
+}
+
+function checkNumbox(){
+	var goujian=["中柱","边柱","脚柱","屋架","木梁","边梁","墙体","楼板","围护"]
+	for (var i = 1; i < 10; i++) {
+		keya = 'gou4' + i;
+		keyb = keya + '_w';
+		var keyav = mui('#'+keya).numbox().getValue();
+		var keybv = mui('#' + keyb).numbox().getValue();
+		console.log(keybv+'/'+keyav)
+		if(keybv>keyav){
+			mui.alert('危险“'+goujian[i-1]+'”的值大于“'+goujian[i-1]+'”的值，请检查！','错误','确认',function (e) {
+			   e.index
+			},'div');
+			return false;
+		}
+	}
+	return true;
+}
+
+//监听数字输入框，使得危险数最大值为母框值
+function listenerNum() {
+	for (var i = 1; i < 10; i++) {
+		keya = 'gou4' + i;
+		keyb = keya + '_w';
+		console.log(keya)
+		liNum(keya,keyb);
+	}
+	liNum('gou41','gou41_w');
+}
+
+function liNum(keya,keyb){
+	$(keya).change(function() {
+		vale=mui('#'+keya).numbox().getValue();
+		console.log(vale);
+		mui('#' + keyb).numbox().setOption('max', vale);
+	})
 }
