@@ -322,8 +322,9 @@ function getChkValue(chk){
  }
  
  //分页列表展示
- function showPage(page, type,total,url) {
+ function showPage(page,type,total,url) {
 	page=parseInt(page);
+	total=parseInt(total);
  	var str = '<span class="current">' + page + '</span>';
  
  	for (var i = 1; i <= 3; i++) {

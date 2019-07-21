@@ -88,7 +88,7 @@ function userlistMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			pagesStr=showPage(listPage,listTypec,data.count,userlistUrl) ;
+			pagesStr=showPage(listPage,listTypec,pages,userlistUrl) ;
 			$("#list_page").append(pagesStr);
 			//list_page
 		}
