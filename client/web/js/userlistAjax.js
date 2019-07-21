@@ -6,7 +6,7 @@ var xianzhi = 15;
 var listList = ["全部用户", "未开通用户", "普通用户"];
 
 
-window.onload = function() {	
+window.onload = function() {
 	showAdmin();
 	userlistMain();
 }
@@ -88,8 +88,10 @@ function userlistMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			pagesStr=showPage(listPage,listTypec,pages,userlistUrl) ;
-			$("#list_page").append(pagesStr);
+			if (pages > 1) {
+				pagesStr = showPage(listPage, listTypec, pages, userlistUrl);
+				$("#list_page").append(pagesStr);
+			}
 			//list_page
 		}
 	})
