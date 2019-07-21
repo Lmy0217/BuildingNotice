@@ -6,31 +6,7 @@ var xianzhi = 15;
 var listList = ["全部用户", "未开通用户", "普通用户"];
 
 
-window.onload = function() {
-	// userlistMain();
-	// infoStr1 = "<tr>" +
-	// 					"<td class='tc'><input name='user[]' value='" + 'list.id' + "' type='checkbox'></td>" +
-	// 					"<td>" + 'name' + "</td>" +
-	// 					"<td>" + 'data.role' + "</td>" +
-	// 					"<td>" +
-	// 					"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + 'list.id' + ',"' +' data.name '+ '",' + 1 +
-	// 					"])'>提权</a>&nbsp;&nbsp; " +
-	// 					"降权" +
-	// 					"</td>" +
-	// 					"</tr>";
-	// console.log(infoStr1);
-	// $("#result_info").append(infoStr1);
-	// infoStr2 = "<tr>" +
-	// 					"<td class='tc'><input name='user[]' value='" + 'list.id' + "' type='checkbox'></td>" +
-	// 					"<td>" + 'name '+ "</td>" +
-	// 					"<td>" +' data.role' + "</td>" +
-	// 					"<td>" +"提权&nbsp;&nbsp; " +
-	// 					"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + 'list.id' + ',"' +' data.name' + '",' + 0 +
-	// 					"])'>降权" +
-	// 					"</td>" +
-	// 					"</tr>";
-	// console.log(infoStr2);
-	// $("#result_info").append(infoStr2);
+window.onload = function() {	
 	showAdmin();
 	userlistMain();
 }
@@ -112,17 +88,7 @@ function userlistMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			var pagesStr = "共" + data.count + " 条 " + listPage + "/" + pages + " 页"
-			// if (pages > 1) {
-			// 	var fenyeStr = '';
-			// 	if (pages < 10) {
-			// 		for(i=1;i<=pages;i++){
-			// 			fenye ="<a href='userlist.html?role='+list.role+'&page='+i+'>i</a>&nbsp"
-			// 		}
-			// 		
-			// 	}
-			// }
-
+			pagesStr=showPage(listPage,listTypec,data.count,userlistUrl) ;
 			$("#list_page").append(pagesStr);
 			//list_page
 		}

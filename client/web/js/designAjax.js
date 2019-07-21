@@ -7,7 +7,7 @@ var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
 	showAdmin();
-	designMain();
+	designMain();	
 }
 
 function designMain() {
@@ -66,12 +66,15 @@ function designMain() {
 
 				$("#result_info").append(infoStr);
 			}
-			var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+			pagesStr=showPage(listPage,listType,data.count,listUrl) ;
 			$("#list_page").append(pagesStr);
 			//list_page
 		}
 	})
 }
+
+
 
 
 function checkTitle(title) {

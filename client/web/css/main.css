@@ -60,3 +60,10 @@
 #logo{
 	height: 50px;
 }
+
+.list-page .current {
+    margin: 0 5px;
+    padding: 2px 7px;
+    background: #428bca;
+    border: 1px solid #428bca;
+    color: #fff;}

@@ -320,3 +320,37 @@ function getChkValue(chk){
 		 console.log(baseTable)
 		 return baseTable;
  }
+ 
+ //分页列表展示
+ function showPage(page, type,total,url) {
+ 	var str = '<span class="current">' + page + '</span>';
+ 
+ 	for (var i = 1; i <= 3; i++) {
+ 		if (page - i > 1) {
+ 			str = '<a href='+url+'?type='+type+'page='+(page - i) +'>' + (page - i) + '</a> ' + str;
+ 		}
+ 		if (page + i < total) {
+ 			str = str + ' ' +'<a href='+url+'?type='+type+'page='+(page +  i) +'>'+ (page + i)+ '</a> ';
+ 		}
+ 	}
+ 
+ 	if (page - 4 > 1) {
+ 		str = '<a href="javascript:void(0)">...</a> ' + str;
+ 	}
+ 
+ 	if (page > 1) {
+ 		str = '<a href='+url+'?type='+type+'page='+(page - 1) +'>' +'<上一页 '+'</a> ' + 
+ 		'<a href='+url+'?type='+type+'page='+1 +'>'+ 1 + '</a> '  + str;
+ 	}
+ 
+ 	if (page + 4 < total) {
+ 		str = str + '<a href="javascript:void(0)">...</a> ';
+ 	}
+ 
+ 	if (page < total) {
+ 		str = str + ' ' + '<a href='+url+'?type='+type+'page='+(total) +'>' +total+ '</a> '+ 
+ 		'<a href='+url+'?type='+type+'page='+(page +  1) +'>'+' 下一页 >'+ '</a> ';
+ 	}
+ 
+ 	return str;
+ }
