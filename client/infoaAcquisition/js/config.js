@@ -8,3 +8,5 @@ var checkUrl=website+'/user/token';
 var loginUrl = website + '/user/login';
 var imgUrl = website + '/image/upload';
 var upUrl = website + '/archive/create';
+
+var listUrl=website+'/archive/list';
