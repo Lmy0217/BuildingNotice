@@ -67,8 +67,10 @@ function designMain() {
 				$("#result_info").append(infoStr);
 			}
 			// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
-			pagesStr=showPage(listPage,listType,pages,listUrl) ;
-			$("#list_page").append(pagesStr);
+			if(pages>1){
+				pagesStr=showPage(listPage,listType,pages,listUrl) ;
+				$("#list_page").append(pagesStr);
+			}
 			//list_page
 		}
 	})
