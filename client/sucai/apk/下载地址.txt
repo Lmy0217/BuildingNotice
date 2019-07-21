@@ -1,3 +1,7 @@
+v0.965
+https://www.lanzous.com/i534mnc
+增加用户信息显示
+
 v0.96
 https://www.lanzous.com/i52za5c
 1. 所有的左上角返回按键功能正常
