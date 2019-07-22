@@ -31,6 +31,11 @@
 								<input type="password" name="pwd" value="" id="pwd" size="35" onblur="chkvalue(this,'pwdMsg')" class="admin_input_style" />
 								<p id="pwdMsg" style="color: red; display: inline;"></p>
 							</li>
+							<li>
+								<label for="pwd">再次输入密码：</label>
+								<input type="password" name="qrpwd" value="" id="qrpwd" onblur="qrpwdf(this,'qr_pwdMsg')" size="35" class="admin_input_style" />
+								<p id="qr_pwdMsg" style="color: red;"></p>
+							</li>
 							<li style="display: none;">
 								<label for="imei">imie：</label>
 								<input type="imei" name="imei" value="" id="imei" size="35" class="admin_input_style" />
@@ -93,6 +98,20 @@
 					return false;
 				} else {
 					return true;
+				}
+			}
+			
+			function qrpwdf(txt, name) {
+				var show = document.getElementById(name);
+				var pwd = document.getElementById("pwd");
+				// console.log(pwd.value, txt.value)
+				if(txt.value == "") {
+					show.innerText = "请再次输入密码";
+				}
+				if(txt.value != pwd.value) {
+					show.innerText = "两次密码输入不一致";
+				} else {
+					show.innerText = "";
 				}
 			}
 
