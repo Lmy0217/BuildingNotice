@@ -1,6 +1,12 @@
+v0.965
+https://www.lanzous.com/i53sjkf
+
 增加APK私有证书，
 密码：luovandmyluo
 预计下一版本使用
+Myluo&Mr.Luo
+keytool -genkey -alias infoacu -keyalg RSA -sigalg SHA1WithRSA -keysize 2048 -validity 36500 -keystore infoacu.keystore  
+keytool -importkeystore -srckeystore ./infoacu.keystore -destkeystore ./infoacu.keystore -deststoretype JKS
 -----------------------
 
 v0.965

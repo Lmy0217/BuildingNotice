@@ -15,4 +15,4 @@ var downUrl= website +'/archive/download';
 var listUrl=website+'/archive/list';
 var userlistUrl=website+'/user/list';
 
-var apkdownUrl='https://www.lanzous.com/i534mnc';
+var apkdownUrl='https://www.lanzous.com/i53sjkf';
