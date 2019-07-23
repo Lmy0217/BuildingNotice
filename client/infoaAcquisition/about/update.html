@@ -34,6 +34,11 @@
 					<p><a id='apkdown' href="#">最新版本下载地址</a></p>
 					<p>&nbsp;</p>
 					<p>
+						<h4>v1.0</h4>
+						1. 增加软件使用说明页面<br/>
+						2. 修改首页样式，美化软件入口
+					</p>
+					<p>
 						<h4>v0.965</h4>增加APK私有证书，更加安全！
 					</p>
 					<p>
@@ -93,13 +98,13 @@
 		<script src="../js/config.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			
+
 
 			mui.plusReady(function() {
 				document.getElementById("now_version").innerText = version;
 				document.getElementById('apkdown').href = w_apkdownUrl;
 				// console.log(w_apkdownUrl);
-				
+
 				mui('body').on('tap', 'a', function(e) {
 					var href = this.getAttribute('href');
 					if (href) {
