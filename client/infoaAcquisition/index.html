@@ -6,6 +6,19 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-content button{
+				height: 200px;
+				width: 49%; 
+			}
+			.mui-content button{
+				font-size: 16px;
+			}
+			.mui-content button .mui-icon{
+				font-size: 28px;;
+			}
+			
+		</style>
 		<script type="text/javascript" src="js/util.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/jquery.min.js"></script>
@@ -24,15 +37,19 @@
 				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview  
 				// ... code  
 			}
-			function initValue(url,id){
-				openDB();var style = {};
+
+			function initValue(url, id) {
+				openDB();
+				var style = {};
 				plus.sqlite.selectSql({
 					name: 'info',
 					sql: 'select rowid, * from infoDB  order by rowid desc limit 0,1',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						// console.log(e);
-						var extras = {'vkey':1};
+						var extras = {
+							'vkey': 1
+						};
 						var extras = $.extend({}, extras, e[0]);
 						// console.log(extras);
 						plus.webview.create(url, id, style, extras).show();
@@ -40,7 +57,9 @@
 					},
 					fail: function(e) {
 						console.log('selectSql fail: ' + JSON.stringify(e));
-						var extras = {'vkey':0};
+						var extras = {
+							'vkey': 0
+						};
 						// console.log(extras);
 						plus.webview.create(url, id, style, extras).show();
 						closeDB();
@@ -48,48 +67,48 @@
 				});
 			}
 			//打开"采集信息"
-			function openForm(){
-				var url="form/form1.html";
-				var id="form1";
-				initValue(url,id);
+			function openForm() {
+				var url = "form/form1.html";
+				var id = "form1";
+				initValue(url, id);
 				// plus.webview.create(url,id).show();
 			}
 			//打开"任务上传"
-			function openSubmit(){
-				var url="submit/listIndex.html";
+			function openSubmit() {
+				var url = "submit/listIndex.html";
 				plus.webview.create(url).show();
 			}
 			//打开"使用说明"
-			function openAbout(){
-				var url="about/aindex.html";
+			function openAbout() {
+				var url = "about/aindex.html";
 				plus.webview.create(url).show();
 			}
 			// //打开"采集信息"
-			function openUser(){
+			function openUser() {
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
 				if (TOKEN_TOKEN == null) //如果缓存中有数据，则加载出来 
 				{
-					var url="login.html";
-					plus.webview.create(url,'login').show();
-				}else{
-					var url="user/userInfo.html";
-					plus.webview.create(url,'userinfo').show();
+					var url = "login.html";
+					plus.webview.create(url, 'login').show();
+				} else {
+					var url = "user/userInfo.html";
+					plus.webview.create(url, 'userinfo').show();
 				}
-				
-				
+
+
 			}
 		</script>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">信息采集系统</h1>
+			<h1 class="mui-title">危房信息采集系统</h1>
 		</header>
 		<div class="mui-content">
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openForm()">采集信息</button>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openSubmit()">任务上传</button>
-			<br\>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openUser()">我的账户</button>
-			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openAbout()">使用说明</button>
+			<button class="mui-btn  mui-btn-danger" onclick="openForm()"><span class="mui-icon mui-icon-pengyouquan"></span><br/>采集信息</button>
+			<button class="mui-btn mui-btn-success" onclick="openSubmit()"><span class="mui-icon mui-icon-paperplane"></span><br/>任务上传</button>
+			<p></p>
+			<button class="mui-btn  mui-btn-primary" onclick="openUser()"><span class="mui-icon mui-icon-contact"></span><br/>我的账户</button>
+			<button class="mui-btn  mui-btn-warning" onclick="openAbout()"><span class="mui-icon mui-icon-info"></span><br/>使用说明</button>
 		</div>
 		</div>
 	</body>

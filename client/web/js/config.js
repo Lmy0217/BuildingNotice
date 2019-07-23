@@ -18,5 +18,5 @@ var listUrl=website+'/archive/list';
 var userlistUrl=website+'/user/list';
 
 var apkdownUrl='https://www.lanzous.com/i53sjkf';
-var w_apkdownUrl=website+'apkdown.html';
+var w_apkdownUrl=website+'/apkdown.html';
 var version='0.965';

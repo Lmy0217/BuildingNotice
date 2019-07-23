@@ -93,10 +93,13 @@
 		<script src="../js/config.js"></script>
 		<script type="text/javascript">
 			mui.init()
-			document.getElementById("now_version").innerText = version;
-			document.getElementById('apkdown').href = w_apkdownUrl;
+			
 
 			mui.plusReady(function() {
+				document.getElementById("now_version").innerText = version;
+				document.getElementById('apkdown').href = w_apkdownUrl;
+				// console.log(w_apkdownUrl);
+				
 				mui('body').on('tap', 'a', function(e) {
 					var href = this.getAttribute('href');
 					if (href) {
