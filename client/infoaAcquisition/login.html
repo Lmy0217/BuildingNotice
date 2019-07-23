@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/style.css" rel="stylesheet" />
+		<!-- <link href="css/sty.css" rel="stylesheet" /> -->
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -125,7 +125,8 @@
 						"pwd": passwordBox.value,
 						"imei": imei,
 					};
-					if (checkUser(data)) {
+					var flag=checkUserPwd(data);
+					if (flag) {
 						// 调用ajax  
 						postData(loginUrl, //服务端的URL  
 							data, // json 数据  
