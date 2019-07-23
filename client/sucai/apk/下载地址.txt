@@ -1,3 +1,8 @@
+v1.0
+https://www.lanzous.com/i54geih
+1. 增加软件使用说明页面
+2. 修改首页样式，美化软件入口
+
 v0.965
 https://www.lanzous.com/i53sjkf
 
