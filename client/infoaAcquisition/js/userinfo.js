@@ -21,7 +21,11 @@ function getFileInfoAjax(type, key) {
 		type: 'post',
 		success: function(data) {
 			console.log(data);
-			document.getElementById(key).innerText = data.count;
+			if(typeof(data.count)=='underfind'){
+				document.getElementById(key).innerText = 'NaN';
+			}else{
+				document.getElementById(key).innerText = data.count;
+			}
 		},
 		error: function(data) {
 			document.getElementById(key).innerText = 'NaN';

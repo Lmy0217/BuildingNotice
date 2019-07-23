@@ -59,6 +59,11 @@
 				var url="submit/listIndex.html";
 				plus.webview.create(url).show();
 			}
+			//打开"使用说明"
+			function openAbout(){
+				var url="about/aindex.html";
+				plus.webview.create(url).show();
+			}
 			// //打开"采集信息"
 			function openUser(){
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
@@ -84,6 +89,7 @@
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openSubmit()">任务上传</button>
 			<br\>
 			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openUser()">我的账户</button>
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="openAbout()">使用说明</button>
 		</div>
 		</div>
 	</body>

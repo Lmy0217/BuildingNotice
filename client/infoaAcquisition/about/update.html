@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>更新日志</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/about.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!--顶部banner图 开始-->
+			<div id="kr-article-banner" class="kr-article-banner">
+				<div id="kr-article-cover" class="kr-article-cover">
+					<img src="../img/update_bg.jpg">
+				</div>
+				<h2 id="kr-article-title" class="kr-article-title">『危房信息采集助手』APP更新日志</h2>
+			</div>
+			<!--顶部banner图 结束-->
+			<div class="kr-article-content">
+				<!-- 文章作者、发布时间等信息 -->
+				<div class="kr-article-meta">
+					<div id="kr-article-author" class="kr-article-author">admin</div>
+					<div class="kr-article-text">发表于</div>
+					<div id="kr-article-time" class="kr-article-time">2019/07/23</div>
+				</div>
+				<!--文章详细内容-->
+				<div id="kr-article-article" class="kr-article-article" v-html="content">
+					<p>
+						<h4>当前版本：<span id='now_version'></span></h4>
+					</p>
+					<p><a id='apkdown' href="#">最新版本下载地址</a></p>
+					<p>&nbsp;</p>
+					<p>
+						<h4>v0.965</h4>增加APK私有证书，更加安全！
+					</p>
+					<p>
+						<h4>v0.965</h4>增加用户信息显示
+					</p>
+					<p>
+						<h4>v0.96</h4>1. 所有的左上角返回按键功能正常<br />
+						2. 对damage增加值限制，防止子值大于母值<br />
+						3. 增加电话号码与身份证号最大长度限制<br />
+						4. 增加表单部分CheckBox非空值限制<br />
+						5. 修复提交表单后不跳转的问题，增加验空函数
+					</p>
+					<p>
+						<h4>v0.955</h4>
+						1. 修复了底框结构，框架接口和木结构的编码错误问题<br />
+						2. 修复了批量上传只上传第一个的问题
+					</p>
+					<p>
+						<h4>v0.95</h4>
+						登录增加密码限制
+					</p>
+					<div class="mui-card">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-collapse">
+								<a class="mui-navigate-right" href="#">0.95以下版本</a>
+								<div class="mui-collapse-content">
+									<p>
+										<h4>v0.94</h4>
+										关闭测试弹窗<br />
+										用户页增加用户验证
+									</p>
+									<p>
+										<h4>v0.93</h4>
+										修复了不能上传图片的问题
+									</p>
+									<p>
+										<h4>v0.91</h4>
+										采用了新的编码方式
+									</p>
+									<p>
+										<h4>v0.9</h4>
+										修复了编码问题
+									</p>
+									<p>
+										<h4>v0.84</h4>
+										修复了手机号码与身份证号溢出的问题
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			document.getElementById("now_version").innerText = version;
+			document.getElementById('apkdown').href = w_apkdownUrl;
+
+			mui.plusReady(function() {
+				mui('body').on('tap', 'a', function(e) {
+					var href = this.getAttribute('href');
+					if (href) {
+						if (window.plus) {
+							plus.runtime.openURL(href);
+						} else {
+							location.href = href;
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
