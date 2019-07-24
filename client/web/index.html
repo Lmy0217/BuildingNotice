@@ -1,180 +1,538 @@
 <!doctype html>
-<html>
+<html class="no-js" lang="">
 
-	<head>
-		<meta charset="UTF-8" />
-		<title>『信息采集助手』后台管理</title>
-		<link rel="icon" href="favicon.ico" />
-		<link rel="stylesheet" type="text/css" href="css/common.css" />
-		<link rel="stylesheet" type="text/css" href="css/main.css" />
-		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
-		<script type="text/javascript" src="js/config.js"></script>
-		<script type="text/javascript" src="js/js.js"></script>
-		<script type="text/javascript" src="js/check.js  "></script>
-		<script type="text/javascript" src="js/jump.js"></script>
+<head>
+<!-- Basic page needs
+============================================ -->
+<meta charset="utf-8">		
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Home</title>
+
+<!-- Mobile specific metas
+============================================ -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google web fonts
+============================================ -->
+<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,700|Raleway:300,300i,400,700" rel="stylesheet">
+
+<!-- Favicon
+============================================ -->
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+
+<!-- CSS  -->
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- font-awesome CSS
+============================================ -->
+<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+<!-- owl.carousel CSS
+============================================ -->
+<link rel="stylesheet" href="css/owl.carousel.css">
+<link rel="stylesheet" href="css/owl.theme.css">
+
+<!-- simple-overlay CSS
+============================================ -->
+<link rel="stylesheet" href="css/simple-overlay.css">
 		
-		<script type="text/javascript">
-			window.onload = function() {
-				runSetIndexTimes();
-				setInterval("runSetIndexTimes()", 1000);
-				showAdmin();
-				document.getElementById('res-host').innerText=domin;
-				document.getElementById('apkdown').href=apkdownUrl;
-			}
-		</script>
-	</head>
+<!-- main CSS
+============================================ -->		
+<link rel="stylesheet" href="css/style.css">
 
-	<body>
-		<div class="topbar-wrap white">
-			<div class="topbar-inner clearfix">
-				<div class="topbar-logo-wrap clearfix">
-					<h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
-					<ul class="navbar-list clearfix">
-						<li><img id="logo" src="images/favicon.png" /></li>
-						<li>
-							<a class="on" href="index.html">首页</a>
-						</li>
-						<!-- <li>
-							<a href="http://www.ncqsjg.cn/" target="_blank">网站首页</a>
-						</li> -->
-					</ul>
+<!-- responsive CSS
+============================================ -->		
+<link rel="stylesheet" href="css/responsive.css">
+
+<!-- modernizr js
+============================================ -->		
+<script src="js/modernizr.js"></script>		
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+	function ahref(id){
+		document.getElementById(id).scrollIntoView();
+	}
+	
+</script>
+</head>
+<body>
+	
+<!-- =================================================================
+								BODY START
+================================================================== -->
+
+<!-- START HEADER SECTION -->
+
+<header id="header-section" class="navbar-fixed-top">
+	<nav class="navbar navbar-default">
+	  <div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<!-- logo -->
+			<a class="navbar-brand" href="index.html">
+				<div class="logo">
+					<span><img src="img/ico.png" style="width: 3rem; height: 3rem;margin-right: 1rem;"/>危房信采系统</span>
 				</div>
-				<div class="top-info-wrap">
-					<ul class="top-info-list clearfix">
-						<li>
-							<a href="#">欢迎，<span id="user"></span></a>
-						</li>
-						<li>
-							<a href="changeadmin.html">修改密码</a>
-						</li>
-						<li>
-							<a href="javascript:void(0)" onclick="dropOut()">退出</a>
-						</li>
-					</ul>
+			</a>
+
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+			<!-- menu list -->
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="#banner-section" class="smoothScroll" onclick="ahref('banner-section')">主页</a></li>
+			<li><a href="#about-section" class="smoothScroll" onclick="ahref('about-section')">关于</a></li>
+			<li><a href="#feature-section" class="smoothScroll" onclick="ahref('feature-section')">特点</a></li>
+			<li><a href="#screenshots-section" class="smoothScroll" onclick="ahref('screenshots-section')">速览</a></li>
+			<li><a href="#download-section" class="smoothScroll hidden-sm" onclick="ahref('download-section')">下载</a></li> 
+		  </ul>
+		</div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+</header>
+<!-- / END HEADER SECTION -->
+
+<!-- START BANNER SECTION -->
+<section id="banner-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5 col-sm-5">
+				<div class="banner-mobile">
+					<img src="img/banner-mobile.png" alt="banner-mobile" class="img-responsive" />
+				</div>
+			</div>
+			<div class="col-lg-5 col-sm-7">
+				<div class="banner-cont">
+					<h1>欢迎使用危房信息采集系统</h1>
+					<p>危房信息采集系统旨在便捷危房信息调查采集及报告生成。为采集过程中的网络离线环境专门设计。采集到的信息上传平台，自动转换为Word文档。一键下载，方便快捷</p>
+					<div class="banner-btn floatleft">
+						<a href="admin/index.html"><i class="fa fa-edge" aria-hidden="true"></i>&nbsp;登录网页版</a>
+					</div>
+					<div class="banner-btn floatleft">
+						<a href="apkdown.html"><i class="fa fa-android" aria-hidden="true"></i>&nbsp;下载安卓应用</a>
+					</div>
+					<div class="banner-btn" class="current">
+						<a disabled="disabled"><i class="fa fa-apple" aria-hidden="true"></i>&nbsp;敬请期待</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-sm-0"></div>
+		</div>
+	</div>
+</section>
+<!-- / END BANNER SECTION -->
+
+<!-- START ABOUT SECTION -->
+<section id="about-section" name="about-section" class="section-padding">
+	<div class="container about-container">
+		
+		<!-- start about top -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="about-top common-section-blue-top">
+					<h2>关于信采系统</h2>
+					<p>危房信息采集系统结合用户实际使用情况，深度个性化定制<br/>整个系统分为离线和在线两个部分</p>
 				</div>
 			</div>
 		</div>
-		<div class="container clearfix">
-			<div class="sidebar-wrap">
-				<div class="sidebar-title">
-					<h1>菜单</h1>
-				</div>
-				<div class="sidebar-content">
-					<ul class="sidebar-list">
-						<li>
-							<a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
-							<ul class="sub-menu">
-								<li>
-									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>未下文件</a>
-								</li>
-								<li>
-									<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
-							<ul class="sub-menu">
-								<li>
-									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
-								</li>
-								<li>
-									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
-								</li>
-								<div id="admin" style="display: none;">
-									<li>
-										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
-									</li>
-								</div>
-								
-								<!-- <li>
-									<a href="design.html?type=7&page=1"><i class="icon-font">&#xe046;</i>修改联系我们</a>
-								</li> -->
-								<!--<li>
-									<a href="index.html"><i class="icon-font">&#xe045;</i>修改招聘启事</a>
-								</li>-->
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<!--/sidebar-->
-			<div class="main-wrap">
-				<div class="crumb-wrap">
-					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>欢迎使用『信息采集助手』后台管理系统</span></div>
-				</div>
-				<div class="result-wrap">
-					<div class="result-title">
-						<h1>快捷操作</h1>
-					</div>
-					<div class="result-content">
-						<div class="short-wrap">
-							<li>
-								<a href="design.html?type=0&page=1"><i class="icon-font">&#xe017;</i>文章管理</a>
-							</li>
-							<li>
-								<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
-							</li>
+		
+		<!-- start about bottom -->
+		<div class="about-bottom">
+			<div class="row">
+				<div class="col-lg-5 col-md-5">
+					<div class="about-btm-cont">
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-6">
+								<h4>危房信采系统是什么？</h4>
+								<p>危房信息采集系统是根据用户实际使用情况专门定制集危房信息采集与报告生成于一体的综合系统，系统分为离线和在线两个部分。</p>
+							</div>
+							<div class="col-lg-12 col-md-12 col-sm-6">
+								<h4>它是如何工作的？</h4>
+								<p>在离线部分中，用户走访每家每户，使用危房信息采集助手将采集到的信息缓存在手机端。之后，在网络通畅的条件下，将数据上传。由云端完成计算与转换，生成完整的Word报告。</p>
+							</div>
+							<div class="col-lg-12 col-md-12 col-sm-6">
+								<h4 class="tab-hide">为什么选择它？</h4>
+								<p class="tab-hide">信采系统结合客户需求深度定制并可根据用户反馈不断调整，改进。采集到的信息自动转化为制式Word，免去重新录入排版的烦恼。</p>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="result-wrap">
-					<div class="result-title">
-						<h1>系统基本信息</h1>
-					</div>
-					<div class="result-content">
-						<ul class="sys-info-list">
-							<li>
-								<label class="res-lab">操作系统</label><span class="res-info">Ubuntu</span>
-							</li>
-							<li>
-								<label class="res-lab">运行环境</label><span class="res-info">Apache/2.2.21 (Win64) PHP/5.3.10</span>
-							</li>
-							<li>
-								<label class="res-lab">Java运行方式</label><span class="res-info">apache2handler</span>
-							</li>
-							<li>
-								<label class="res-lab">系统版本</label><span class="res-info">v-1.0</span>
-							</li>
-							<!-- <li>
-								<label class="res-lab">上传附件限制</label><span class="res-info">10M</span>
-							</li> -->
-							<li>
-								<label class="res-lab">服务器时间</label><span id="serverTime" class="res-info"></span>
-							</li>
-							<li>
-								<label class="res-lab">本机时间</label><span id="localTime" class="res-info"></span>
-							</li>
-							<li>
-								<label class="res-lab">服务器域名/IP</label><span class="res-info"></span>
-							</li>
-							<li>
-								<label class="res-lab">Host</label><span class="res-info" id="res-host"></span>
-							</li>
-							<li>
-								<label class="res-lab">最新APP</label><a href="" id='apkdown'><span class="res-info">下载安卓</span></a>
-							</li>
-							<!-- <li>
-								<a href="test.html"><label class="res-lab">test</label><span class="res-info">测试网页</span></a>
-							</li> -->
-						</ul>
+				<div class="col-lg-5 col-md-5">
+					<div class="about-mobile-img">
+						<img src="img/about-mobile.png" alt="about-mobile" class="img-responsive" />
 					</div>
 				</div>
-				<div class="result-wrap">
-					<div class="result-title">
-						<h1>使用帮助</h1>
-					</div>
-					<div class="result-content">
-						<ul class="sys-info-list">
-							<li>
-								<!--<label class="res-lab">更多模板：</label><span class="res-info"><a href="http://www.mycodes.net/" target="_blank">源码之家</a></span>-->
-							</li>
-						</ul>
+				<div class="col-lg-2 col-md-2">
+					<div class="about-pencil-img hidden-xs">
+						<img src="img/about-pen.png" alt="about-pen" class="img-responsive" />
 					</div>
 				</div>
 			</div>
-			<!--/main-->
 		</div>
-	</body>
+	</div>
+	
+	<!-- start about images -->
+	<div class="about-img">
+		<img src="img/about-banner.png" alt="about-banner-img" class="img-responsive">
+	</div>            
+</section>
+<!-- / END ABOUT SECTION -->
 
+<!-- START FEATURES SECTION -->
+<section id="feature-section" class="section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="feature-top common-section-white-top">
+					<h2>信采系统的特点</h2>
+					<p></p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature-bottom">
+			<div class="row">
+				<!-- feature left start -->
+				<div class="col-lg-3 col-md-4">
+					<div class="row">
+						<!-- feature left-top -->
+						<div class="col-lg-12 col-md-12 col-sm-6">
+							<div class="feature-left-top feature-multi-left">
+								<img src="img/wifi.png" alt="wifi" />
+								<h4>离线工作</h4>
+								<p>适应采集当地网络条件差的实际情况，信息采集过程无需依赖网络。</p>
+							</div>
+						</div>
+						<!-- feature left-middle -->
+						<div class="col-lg-12 col-md-12 col-sm-6">
+							<div class="feature-left-middle feature-multi-left tab-hide">
+								<img src="img/batch.png" alt="batch" style="height: 30px;"/>
+								<h4>自动填充</h4>
+								<p>信采助手APP将上一次填写的记录自动填充，免去重复数据反复填写的烦恼。</p>
+							</div>
+						</div>
+						<!-- feature left-bottom -->
+						<div class="col-lg-12 col-md-12 col-sm-6">
+							<div class="feature-left-bottom feature-multi-left">
+								<img src="img/refresh.png" alt="refresh" style="height: 28px;" />
+								<h4>智能转换</h4>
+								<p>数据上传云端后，自动转换为预设的Word文档，免去了录入编辑过程。</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- feature middle start -->
+				<div class="col-lg-6 col-md-4">
+					<div class="feature-middle">
+						<img src="img/feature-mobile.png" alt="feature-img" class="img-responsive" />
+					</div>
+				</div>
+				
+				<!-- feature right start -->
+				
+				<div class="col-lg-3 col-md-4">
+					<!-- feature right-top -->
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-6">
+							<div class="feature-right-top feature-multi-right tab-hide">
+								<img src="img/responsive.png" alt="responsive" />
+								<h4>多终端设计</h4>
+								<p>系统支持手机端APP与PC端网页。一处任务，多端处理。</p>
+							</div>
+						</div>
+					</div>
+					<!-- feature right-middle --> 
+					<div class="col-lg-12 col-md-12 col-sm-6">
+						<div class="feature-right-middle feature-multi-right">
+							<img src="img/users.png" alt="users" />
+							<h4>多级账户体系</h4>
+							<p>系统设计了超级管理员-管理员-普通会员-无权限用户4级用户体系，权责分明，更好管理。</p>
+						</div>
+					</div>
+					<!-- feature right-bottom -->
+					<div class="col-lg-12 col-md-12 col-sm-6">
+						<div class="feature-right-bottom feature-multi-right">
+							<img src="img/setting.png" alt="setting" />
+							<h4>定制化服务</h4>
+							<p>与客户深度沟通，根据需求的Word文档个性化定制APP端采集程序。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- / END FEATURES SECTION -->
+
+<!-- START SCREENSHOTS SECTION -->
+<section id="screenshots-section" class="section-padding">
+	<div class="container screenshot text-center">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="screenshots-top common-section-blue-top">
+					<h2>信采助手APP速览</h2>
+					<p>危房信息采集助手APP具备信息填写，照片获取，缓存本地，批量上传等功能</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 screenshot-all-img">
+				<div class="screenshot-mobile-img">
+					<img src="img/screenshots-mobile.png" alt="screenshots mobile">
+				</div>
+				<div class="screenshots-carousel">
+					<div class="carousel-common">
+						<img src="img/screenshot-1.png" alt="screenshot-1" class="img-responsive" />
+					</div>
+					<div class="carousel-common">
+						<img src="img/screenshot-2.png" alt="screenshot-2" class="img-responsive" />
+					</div>
+					<div class="carousel-common">
+						<img src="img/screenshot-3.png" alt="screenshot-3" class="img-responsive" />
+					</div>
+					<div class="carousel-common">
+						<img src="img/screenshot-4.png" alt="screenshot-4" class="img-responsive" />
+					</div>
+					<div class="carousel-common">
+						<img src="img/screenshot-5.png" alt="screenshot-5" class="img-responsive" />
+					</div>
+					<div class="carousel-common">
+						<img src="img/screenshot-6.png" alt="screenshot-6" class="img-responsive" />
+					</div>				
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- / END SCREENSHOTS SECTION -->
+	
+<!-- START TESTIMONIAL SECTION -->
+<!-- <section id="testimonial-section" class="section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="testimonial-top common-section-blue-top">
+					<h2>Testimonials</h2>
+					<p>Our Happy Client What Say About Dotapps</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-8">
+				<div class="testimonial-bottom">
+					<div class="testimonial-cont">
+						<img src="img/testimonial1.png" alt="testimonial girl images" class="img-responsive" />
+						<h3>Cristina Deo</h3>
+						<h4>UI Designer</h4>
+						<i class="fa fa-quote-left" aria-hidden="true"></i>
+						<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</span>
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+					</div>
+					<div class="testimonial-cont">
+						<img src="img/testimonial2.png" alt="testimonial girl images" class="img-responsive" />
+						<h3>John Smith</h3>
+						<h4>Web Developer</h4>
+						<i class="fa fa-quote-left" aria-hidden="true"></i>
+						<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</span>
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+					</div>
+					<div class="testimonial-cont">
+						<img src="img/testimonial3.png" alt="testimonial girl images" class="img-responsive" />
+						<h3>Anton Kovalsky</h3>
+						<h4>Graphic Designer</h4>
+						<i class="fa fa-quote-left" aria-hidden="true"></i>
+						<span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</span>
+						<i class="fa fa-quote-right" aria-hidden="true"></i>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
+</section> -->
+<!-- / END TESTIMONIAL SECTION -->
+
+<!-- START VIDEO SECTION -->
+<!-- <section id="video-section" class="vid-section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="video-top common-section-white-top">
+					<h2>How to use this apps</h2>
+					<p>Click and see this video</p>                            
+				</div>
+				<div class="video-play text-center">
+					
+					<a href=""
+					data-vimeo="<iframe src=''></iframe>"
+					class="btn btn-vimeo"><i class="fa fa-play" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- /END VIDEO SECTION -->
+
+<!-- START DOWNLOAD SECTION -->
+<section id="download-section" class="section-padding vid-section-padding"">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="download-top common-section-white-top">
+					<h2>获 取 下 载</h2>
+					<p>危房信息采集系统目前支持PC网页与安卓应用。更多平台支持敬请期待</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row text-center">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="download-bottom">
+					<a href="admin/index.html">
+						<div class="download-multi download-icon">
+							<i class="fa fa-edge"></i>
+						</div>
+						<div class="download-multi download-cont">
+							<p>立 即 体 验</p>
+							<h4>用户登录</h4>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="download-bottom">
+					<a href="apkdown.html">
+						<div class="download-multi download-icon">
+							<i class="fa fa-android"></i>
+						</div>
+						<div class="download-multi download-cont">
+							<p>立 即 下 载</p>
+							<h4>安卓应用</h4>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="download-bottom">
+					<a class="current">
+						<div class="download-multi download-icon">
+							<i class="fa fa-apple"></i>
+						</div>
+						<div class="download-multi download-cont">
+							<p>敬 请 期 待</p>
+							<h4>苹果应用</h4>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- /END DOWNLOAD SECTION -->
+
+<!-- START SUBSCRIBE SECTION -->
+<!-- <section id="subscribe-section" class="section-padding text-center">
+	<div class="container subscribe">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="subscribe-top common-section-white-top">
+					<h2>Subscribe</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis.</p>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="log-lg-12 col-xs-12">
+				<div class="form">
+					<form>
+						<input type="email" id="email" placeholder="Write your email here" />
+						<input type="submit" id="button" value="Subscribe" />
+					</form>
+				</div>
+				<div class="subscribe-icon">
+					<a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+					<a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+					<a href="#"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
+					<a href="#"><i class="fa fa-youtube-square" aria-hidden="true"></i></a>
+					<a href="#"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+<!-- / END SUBSCRIBE SECTION -->
+
+<!-- START SCROLL TOP -->
+<div id="scroll-top">
+	<div class="container">
+		<div class="row">
+				<div class="scrollup">
+					<i class="fa fa-chevron-up" aria-hidden="true"></i>
+				</div>
+		</div>
+	</div>
+</div>        
+<!-- / END SCROLL TOP -->
+
+<!-- START FOOTER SECTION -->
+<div id="footer-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="footer-cont">
+					<p>Copyright &copy; 2019. All rights reserved. 技术支持 <a href="https://www.myluo.cn/" target="_blank" title="明故为知">明故为知</a> & <a href="http://www.luov.top/" title="Mr.Luo" target="_blank">Mr.Luo</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- / END FOTTER SECTION -->
+
+
+<!-- JS -->
+
+<!-- jquery js -->   
+<script src="js/jquery-3.1.1.js"></script>
+<!-- bootstrap js -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<!-- easing js -->
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script> 
+<!-- mousescroll js -->
+<script type="text/javascript" src="js/mousescroll.js"></script> 
+<!-- smoothscroll js -->
+<script type="text/javascript" src="js/smoothscroll.js"></script> 
+<!-- owl carousel js -->
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<!-- wow js -->
+<script src="js/wow.min.js"></script>		
+<!-- simple overlay video js -->
+<script src="js/simple-overlay.js"></script>
+<script>
+		new WOW().init();
+</script>	
+<!-- Main js --> 	
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
 </html>
