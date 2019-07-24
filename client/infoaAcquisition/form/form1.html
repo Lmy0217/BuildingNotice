@@ -152,7 +152,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>联系电话</label>
-					<input id='phone' name="phone" type="number" class="mui-input-clear mui-input" placeholder="请输入联系电话">
+					<input id='phone' name="phone" type="number" class="mui-input-clear mui-input" placeholder="请输入联系电话" oninput="if(value.length>11)value=value.slice(0,11)">
 				</div>
 				<div class="mui-input-row">
 					<label>提供资料情况</label>
@@ -171,7 +171,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>身份证号</label>
-					<input id='holdid' name="holdid" type="number" class="mui-input-clear mui-input" placeholder="留空请输3个0">
+					<input id='holdid' name="holdid" type="number" class="mui-input-clear mui-input" placeholder="留空请输3个0" oninput="if(value.length>18)value=value.slice(0,18)">
 				</div>
 				<div class="mui-input-row">
 					<label class="lv-title">房屋属性</label>

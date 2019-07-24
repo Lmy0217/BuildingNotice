@@ -58,9 +58,9 @@
 		<script type="text/javascript">
 			function chkvalue(txt, name) {
 				var relue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
-				console.log(txt.value.match(relue));
+				// console.log(txt.value.match(relue));
 				var show = document.getElementById(name);
-				console.log(show);
+				// console.log(show);
 				if(txt.value == "") show.innerText = "输入不能为空";
 				else if(txt.value.match(relue) == null) {
 					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字符、数字和下划线";
@@ -70,7 +70,7 @@
 			function qr_newpwd(txt, name) {
 				var show = document.getElementById(name);
 				var pwd = document.getElementById("new_pwd");
-				console.log(pwd.value, txt.value)
+				// console.log(pwd.value, txt.value)
 				if(txt.value == "") {
 					show.innerText = "请再次输入密码";
 				}

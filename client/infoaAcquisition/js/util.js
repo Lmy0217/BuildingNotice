@@ -337,7 +337,7 @@ function getBase64Image2(img) { //传入图片路径，返回base64
 // 		console.log(err);
 // 	});
 
-function checkUser(data) {
+function checkUserPwd(data) {
 	// alert('checkuser');
 	var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
 	var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;

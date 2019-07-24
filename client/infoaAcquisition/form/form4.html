@@ -45,11 +45,20 @@
 				if(form_per.vkey==1){
 					perValue(form_per);
 				}
+				// listenerNum();
 				document.getElementById("div1").innerText='户主：'+JSON.stringify(tmp.hold);
 				document.getElementById('goBack').addEventListener("tap", function() {
 					mui.back('form3');
 				})
 			});
+			
+			function w_submitFrom(){
+				if(checkNumbox()){
+					submitFrom();
+				}else{
+					
+				}
+			}
 			//计算结果
 			function computeResult() {
 				var gou41 = mui('#gou41').numbox().getValue();//中柱
@@ -327,7 +336,7 @@
 		</div>
 
 		<div class="mui-content-padded">
-			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="submitFrom()">完成表单</button>
+			<button class="mui-btn mui-btn-primary mui-btn-block" onclick="w_submitFrom()">完成表单</button>
 		</div>
 		<!-- <div class="mui-content-padded mui-row">
 			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="" disabled="disabled">回主页</button>

@@ -44,6 +44,7 @@
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/util.js"></script>
 		<script src="../js/check.js"></script>
+		<script src="../js/userinfo.js"></script>
 
 		<script>
 			mui.init();
@@ -52,13 +53,12 @@
 				var TOKEN_TOKEN = localStorage.getItem("TOKEN_TOKEN");
 				var account = localStorage.getItem("account");
 				document.getElementById('username').innerText=account;
-				// var flag=0;
-				// 				do{
-				// 	sleep(500);
-				// 	flag++;
-				// 	checkUser()
-				// }
-				// while (flag<10)
+				var backa = document.getElementById('goBack');
+				backa.addEventListener("tap", function() {
+					mui.back();
+				})
+				//请求信息
+				getFileInfo();
 				//设置时间
 				var myDate = new Date();
 				var year = myDate.getFullYear();
@@ -78,6 +78,18 @@
                     }
                 })
 				});
+				//下载地址
+				document.getElementById("downUrl").href=domin;
+				mui('body').on('tap', 'a', function(e) {
+			var href = this.getAttribute('href');
+			if (href) {
+				if (window.plus) {
+					plus.runtime.openURL(href);
+				} else {
+					location.href = href;
+				}
+			}
+		});
 				document.getElementById("clearCache").addEventListener('tap',function(e){
 					plus.cache.calculate(function(size) {
                 //console.log(size)
@@ -92,7 +104,11 @@
                         }
                     });
             });
-				})
+			
+				});
+				document.getElementById("refresh").addEventListener('tap',function(e){
+					getFileInfo();
+				});
 				});
 		</script>
 	</head>
@@ -107,16 +123,17 @@
 				<label class="lv-title">今天是：<span id="today"></span></label>
 			</div>
 			<div class="mui-input-row">
-				<label>已完成任务</label>
-				<input id='over' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+				<label>任务情况:</label>
+				<button type="button" class="mui-btn mui-btn-primary" id='refresh'> <span class="mui-icon mui-icon-refreshempty"></span></button>
 			</div>
 			<div class="mui-input-row">
-				<label>还未下载任务</label>
-				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+				<label class="lv-title">已完成任务：<span id="over"></span>份。</label>
 			</div>
 			<div class="mui-input-row">
-				<label>已经下载的任务</label>
-				<input id='undown' name="unit" type="text" class="mui-input-clear mui-input" placeholder="">
+				<label class="lv-title">其中，未下载任务<span id="undown"></span>份，已下载任务<span id="downed"></span>份。</label>
+			</div>
+			<div class="mui-input-row">
+				<label class="lv-title">下载地址:&nbsp;&nbsp;&nbsp;<a id='downUrl' href="#">信息采集助手官网</a></label>
 			</div>
 		</div>
 
