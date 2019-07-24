@@ -721,6 +721,12 @@ a:after {
 /* ==========================================
     10.0 DOWNLOAD SECTION
 ========================================== */
+#download-section{
+    background: url(../img/feature.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+	color: #fff;
+}
 
 .download-bottom{
     background: #304ffe;
@@ -742,12 +748,15 @@ a:after {
 .download-multi p{
     color: #fff;
     padding-left: 30px;
+	font-size: 14px;
+	
 }
 .download-multi h4{
     color: #fff;
     font-size: 16px;
     padding-left: 30px;
     font-weight: bold;
+	padding-top: 5px;
 }
 .download-cont{
     border-left: 1px solid #98a7ff;
