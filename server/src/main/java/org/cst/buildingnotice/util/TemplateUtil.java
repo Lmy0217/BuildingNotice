@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.config.Configure;
+import com.deepoove.poi.config.Configure.ConfigureBuilder;
 
 public class TemplateUtil {
 	
@@ -117,7 +119,6 @@ public class TemplateUtil {
 			default:
 				if (read) {
 					if (separ) {
-						System.out.print(c);
 						if (c == '\n') separate += '\n';
 						else separate += c;
 					} else {
@@ -138,9 +139,15 @@ public class TemplateUtil {
 		FileOutputStream out = null;
 		XWPFTemplate template = null;
 		boolean flag = true; 
+
+		ConfigureBuilder builder = Configure.newBuilder();
+		builder.customPolicy("body1", new TextRenderPolicy());
+		builder.customPolicy("body2", new TextRenderPolicy());
+		builder.customPolicy("body3", new TextRenderPolicy());
+		builder.customPolicy("advise", new TextRenderPolicy());
 		
 		try {
-			template = XWPFTemplate.compile(templateFile).render(data);
+			template = XWPFTemplate.compile(templateFile, builder.build()).render(data);
 			out = new FileOutputStream(outFile);
 			template.write(out); 
 			out.flush();
@@ -190,8 +197,8 @@ public class TemplateUtil {
 				
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
@@ -237,8 +244,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 6);
@@ -280,8 +287,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
@@ -326,8 +333,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 6);
@@ -369,8 +376,8 @@ public class TemplateUtil {
 				
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
