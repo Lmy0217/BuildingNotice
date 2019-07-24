@@ -57,6 +57,12 @@
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<script>
+	function ahref(id){
+		document.getElementById(id).scrollIntoView();
+	}
+	
+</script>
 </head>
 <body>
 	
@@ -90,13 +96,13 @@
 
 			<!-- menu list -->
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#banner-section" class="smoothScroll">主页</a></li>
-			<li><a href="#about-section" class="smoothScroll">关于</a></li>
-			<li><a href="#feature-section" class="smoothScroll">特点</a></li>
-			<li><a href="#screenshots-section" class="smoothScroll">速览</a></li>
-			<li><a href="#pricing-section" class="smoothScroll">价格</a></li>
-			<li><a href="#testimonial-section" class="smoothScroll hidden-sm">评价</a></li>                
-			<li><a href="#subscribe-section" class="smoothScroll">联系</a></li>
+			<li><a href="#banner-section" class="smoothScroll" onclick="ahref('banner-section')">主页</a></li>
+			<li><a href="#about-section" class="smoothScroll" onclick="ahref('about-section')">关于</a></li>
+			<li><a href="#feature-section" class="smoothScroll" onclick="ahref('feature-section')">特点</a></li>
+			<li><a href="#screenshots-section" class="smoothScroll" onclick="ahref('screenshots-section')">速览</a></li>
+			<li><a href="#pricing-section" class="smoothScroll" onclick="ahref('pricing-section')">价格</a></li>
+			<li><a href="#download-section" class="smoothScroll hidden-sm" onclick="ahref('download-section')">下载</a></li>                
+			<li><a href="#subscribe-section" class="smoothScroll" onclick="ahref('subscribe-section')">联系</a></li>
 		  </ul>
 		</div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -223,8 +229,8 @@
 						<!-- feature left-bottom -->
 						<div class="col-lg-12 col-md-12 col-sm-6">
 							<div class="feature-left-bottom feature-multi-left tab-hide">
-								<img src="img/touch.png" alt="touch" />
-								<h4>触摸支持</h4>
+								<img src="img/batch.png" alt="batch" style="height: 30px;"/>
+								<h4>批量操作</h4>
 								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
 							</div>
 						</div>
@@ -255,7 +261,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-6">
 						<div class="feature-right-middle feature-multi-right">
 							<img src="img/users.png" alt="users" />
-							<h4>用户反馈</h4>
+							<h4>多级账户体系</h4>
 							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
 						</div>
 					</div>
