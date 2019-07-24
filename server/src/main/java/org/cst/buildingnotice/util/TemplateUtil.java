@@ -197,8 +197,8 @@ public class TemplateUtil {
 				
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
@@ -244,8 +244,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 6);
@@ -287,8 +287,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
@@ -333,8 +333,8 @@ public class TemplateUtil {
 						
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 6);
@@ -376,8 +376,8 @@ public class TemplateUtil {
 				
 				//   choose
 				var2 = Integer.parseInt(body3.substring(0, 2));
-				sbody3.append(String.format("%02d", var2 % 16));
-				sadvise.append(String.format("%02d", var2 % 16));
+				sbody3.append(String.format("%02d", var2 / 2));
+				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
 				var3 = body3.substring(4, 8);
