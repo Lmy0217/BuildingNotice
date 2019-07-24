@@ -313,8 +313,8 @@ public class ArchiveController {
 			for (int j = 0; j < imgs.size(); j++) {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
-				int width = imgs.size() == 1 ? 560 : 250;
-				int height = imgs.size() == 1 ? 310 : 135;
+				int width = imgs.size() == 1 ? 540 : 250;
+				int height = imgs.size() == 1 ? 300 : 135;
 				data.put("image" + j, new PictureRenderData(width, height, img_path));
 				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
@@ -356,6 +356,7 @@ public class ArchiveController {
 			String template_name = "template_4";
 			if (imgs.size() == 1) template_name = "template_1";
 			else if (imgs.size() == 0) template_name = "template_0";
+			if (rank.getId() == 4) template_name += "D";
 			String template_file = template_path + File.separator 
 					+ template_name + ".docx";
 			if (!TemplateUtil.render(template_file, data, file)) {
