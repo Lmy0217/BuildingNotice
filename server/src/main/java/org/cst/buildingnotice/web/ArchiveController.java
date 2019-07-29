@@ -314,7 +314,7 @@ public class ArchiveController {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
 				int width = imgs.size() == 1 ? 540 : 250;
-				int height = imgs.size() == 1 ? 300 : 135;
+				int height = imgs.size() == 1 ? 280 : 115;
 				data.put("image" + j, new PictureRenderData(width, height, img_path));
 				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
