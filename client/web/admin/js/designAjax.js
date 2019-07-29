@@ -7,9 +7,9 @@ var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
 	verification();
-	sleep(1000);
-	showAdmin();	
-	designMain();	
+	// sleep(1000);
+	showAdmin();
+	designMain();
 }
 
 function designMain() {
@@ -27,53 +27,65 @@ function designMain() {
 		type: 'post',
 		success: function(data) {
 			console.log(data);
-			// data = data.data;
-			pages = Math.ceil(data.count / xianzhi); //总页数
-			var searchSort = document.getElementById("searchSort");
-			for (var i = 0; i < searchSort.length; i++) {
-				var valueStr = searchSort[i].value;
-				valueStr = parseInt(valueStr.substring(17, 18));
-				if (valueStr == listType) {
-					searchSort[i].selected = true;
+			if (data.status == 200) {
+				document.cookie = setCookie("biaoji", 0, "3");
+				// data = data.data;
+				pages = Math.ceil(data.count / xianzhi); //总页数
+				var searchSort = document.getElementById("searchSort");
+				for (var i = 0; i < searchSort.length; i++) {
+					var valueStr = searchSort[i].value;
+					valueStr = parseInt(valueStr.substring(17, 18));
+					if (valueStr == listType) {
+						searchSort[i].selected = true;
+					}
 				}
-			}
-			lists = data.list;
-			console.log(lists);
-			// var newsUrl = '/article.html?id=';
-			// var updateUrl = 'update.html?id=';
-			// var delUrl = '/del?id=';
-			for (i = 0; i < lists.length; i++) {
-				var list = lists[i];
-				if (list.title.length > 24) {
-					var title = list.title.substr(0, 25) + "…";
-				} else {
-					var title = list.title;
-				}
-				if (list.author == undefined)
-					author = "user";
-				else {
-					author = list.author;
-				}
-				titles = checkTitle(list.title);
-				titles = checkTitle(titles);
-				console.log(titles);
-				infoStr = "<tr>" +
-					"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
-					"<td>" + titles + "</td>" +
-					"<td>" + list.date + "</td>" +
-					"<td>" +
-					"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-					"</td>" +
-					"</tr>";
+				lists = data.list;
+				console.log(lists);
+				// var newsUrl = '/article.html?id=';
+				// var updateUrl = 'update.html?id=';
+				// var delUrl = '/del?id=';
+				for (i = 0; i < lists.length; i++) {
+					var list = lists[i];
+					if (list.title.length > 24) {
+						var title = list.title.substr(0, 25) + "…";
+					} else {
+						var title = list.title;
+					}
+					if (list.author == undefined)
+						author = "user";
+					else {
+						author = list.author;
+					}
+					titles = checkTitle(list.title);
+					titles = checkTitle(titles);
+					console.log(titles);
+					infoStr = "<tr>" +
+						"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
+						"<td>" + titles + "</td>" +
+						"<td>" + list.date + "</td>" +
+						"<td>" +
+						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
+						"</td>" +
+						"</tr>";
 
-				$("#result_info").append(infoStr);
+					$("#result_info").append(infoStr);
+				}
+				// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
+				if (pages > 1) {
+					pagesStr = showPage(listPage, listType, pages, listUrl);
+					$("#list_page").append(pagesStr);
+				}
+				//list_page
+			}else{
+				var biaoji = getCookie("biaoji");
+				if(biaoji>3){
+					console.log("访问出错！");
+					window.location.href = 'login.html'
+				}else{
+					document.cookie = setCookie("biaoji", biaoji+1, "3");
+					designMain();
+				}
 			}
-			// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
-			if(pages>1){
-				pagesStr=showPage(listPage,listType,pages,listUrl) ;
-				$("#list_page").append(pagesStr);
-			}
-			//list_page
 		}
 	})
 }
