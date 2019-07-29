@@ -258,7 +258,12 @@
 					sql: 'select rowid, * from infoDB where isUp==0',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
-						showInfo(e);
+						console.log(e);
+						if(e.length==0){
+							showInfoFail(e);
+						}else{
+							showInfo(e);
+						}
 						// closeDB();
 					},
 					fail: function(e) {
@@ -275,7 +280,7 @@
 				mainList.innerHTML = "";
 				var temp = "<li class='mui-table-view-cell'>" +
 					"<div class='mui-input-row mui-checkbox mui-left'>" +
-					"<label> 数据库没有数据 </label>" +
+					"<label> 数据库中没有数据 </label>" +
 					"<input name='perChk[]' value='" + 'result[i].rowid' + "' type='checkbox' disabled='disabled' >" +
 					"</div>" +
 					"</li>"
