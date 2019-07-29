@@ -66,28 +66,42 @@ function userlistMain() {
 					// titles = checkTitle(list.title);
 					// titles = checkTitle(titles);
 					// console.log(titles);
-					if (list.role == 0) {
+					if (list.role-1 == 0) {
 						infoStr = "<tr>" +
 							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 							"<td>" + name + "</td>" +
 							"<td>" + list.role + "</td>" +
+							"<td>" + list.archcount + "</td>" +
 							"<td>" +
-							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 1 +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role+1) +
 							")'>提权</a>&nbsp;&nbsp; " +
 							"降权" +
 							"</td>" +
 							"</tr>";
-					} else if (list.role == 1) {
+					} else if (list.role + 1==2) {
 						infoStr = "<tr>" +
 							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 							"<td>" + name + "</td>" +
 							"<td>" + list.role + "</td>" +
+							"<td>" + list.archcount + "</td>" +
 							"<td>" + "提权&nbsp;&nbsp; " +
-							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 0 +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role-1) +
 							")'>降权" +
 							"</td>" +
 							"</tr>";
-					}
+					}else{
+						infoStr = "<tr>" +
+							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
+							"<td>" + name + "</td>" +
+							"<td>" + list.role + "</td>" +
+							"<td>" + list.archcount + "</td>" +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role+1) +
+							")'>提权</a>&nbsp;&nbsp; " +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role-1) +
+							")'>降权" +
+							"</td>" +
+							"</tr>";
+						}
 
 
 					$("#result_info").append(infoStr);
@@ -97,16 +111,16 @@ function userlistMain() {
 					$("#list_page").append(pagesStr);
 				}
 				//list_page
-			}
-		}else{
-			var biaoji = getCookie("biaoji");
-			sleep(1000);
-			if(biaoji>5){
-				console.log("访问出错！");
-				window.location.href = 'login.html'
-			}else{
-				document.cookie = setCookie("biaoji", biaoji+1, "3");
-				designMain();
+			} else {
+				var biaoji = getCookie("biaoji");
+				sleep(1000);
+				if (biaoji > 5) {
+					console.log("访问出错！");
+					window.location.href = 'login.html'
+				} else {
+					document.cookie = setCookie("biaoji", biaoji + 1, "3");
+					designMain();
+				}
 			}
 		}
 	})
