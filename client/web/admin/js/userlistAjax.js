@@ -8,7 +8,7 @@ var listList = ["全部用户", "未开通用户", "普通用户"];
 
 window.onload = function() {
 	verification();
-	sleep(1000);
+	document.cookie = setCookie("biaoji", 0, "3");
 	showAdmin();
 	userlistMain();
 }
@@ -32,69 +32,82 @@ function userlistMain() {
 		data: JSON.stringify(data),
 		type: 'post',
 		success: function(data) {
-			console.log(data);
-			// data = data.data;
-			pages = Math.ceil(data.count / xianzhi); //总页数
-			var searchSort = document.getElementById("searchSort");
-			for (var i = 0; i < searchSort.length; i++) {
-				var valueStr = searchSort[i].value;
-				valueStr = parseInt(valueStr.substring(17, 18));
-				if (valueStr == listType) {
-					searchSort[i].selected = true;
+			if (data.status == 200) {
+				document.cookie = setCookie("biaoji", 0, "3");
+				console.log(data);
+				// data = data.data;
+				pages = Math.ceil(data.count / xianzhi); //总页数
+				var searchSort = document.getElementById("searchSort");
+				for (var i = 0; i < searchSort.length; i++) {
+					var valueStr = searchSort[i].value;
+					valueStr = parseInt(valueStr.substring(17, 18));
+					if (valueStr == listType) {
+						searchSort[i].selected = true;
+					}
 				}
-			}
-			lists = data.list;
-			console.log(lists);
-			// var newsUrl = '/article.html?id=';
-			// var updateUrl = 'update.html?id=';
-			// var delUrl = '/del?id=';
-			for (var i = 0; i < lists.length; i++) {
-				var list = lists[i];
-				console.log(list);
-				// if (list.title.length > 24) {
-				// 	var title = list.title.substr(0, 25) + "…";
-				// } else {
-				// 	var title = list.title;
-				// }
-				if (list.name == undefined)
-					name = "user";
-				else {
-					name = list.name;
-				}
-				// titles = checkTitle(list.title);
-				// titles = checkTitle(titles);
-				// console.log(titles);
-				if (list.role == 0) {
-					infoStr = "<tr>" +
-						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
-						"<td>" + name + "</td>" +
-						"<td>" + list.role + "</td>" +
-						"<td>" +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 1 +
-						")'>提权</a>&nbsp;&nbsp; " +
-						"降权" +
-						"</td>" +
-						"</tr>";
-				} else if (list.role == 1) {
-					infoStr = "<tr>" +
-						"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
-						"<td>" + name + "</td>" +
-						"<td>" + list.role + "</td>" +
-						"<td>" + "提权&nbsp;&nbsp; " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 0 +
-						")'>降权" +
-						"</td>" +
-						"</tr>";
-				}
+				lists = data.list;
+				console.log(lists);
+				// var newsUrl = '/article.html?id=';
+				// var updateUrl = 'update.html?id=';
+				// var delUrl = '/del?id=';
+				for (var i = 0; i < lists.length; i++) {
+					var list = lists[i];
+					console.log(list);
+					// if (list.title.length > 24) {
+					// 	var title = list.title.substr(0, 25) + "…";
+					// } else {
+					// 	var title = list.title;
+					// }
+					if (list.name == undefined)
+						name = "user";
+					else {
+						name = list.name;
+					}
+					// titles = checkTitle(list.title);
+					// titles = checkTitle(titles);
+					// console.log(titles);
+					if (list.role == 0) {
+						infoStr = "<tr>" +
+							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
+							"<td>" + name + "</td>" +
+							"<td>" + list.role + "</td>" +
+							"<td>" +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 1 +
+							")'>提权</a>&nbsp;&nbsp; " +
+							"降权" +
+							"</td>" +
+							"</tr>";
+					} else if (list.role == 1) {
+						infoStr = "<tr>" +
+							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
+							"<td>" + name + "</td>" +
+							"<td>" + list.role + "</td>" +
+							"<td>" + "提权&nbsp;&nbsp; " +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + 0 +
+							")'>降权" +
+							"</td>" +
+							"</tr>";
+					}
 
 
-				$("#result_info").append(infoStr);
+					$("#result_info").append(infoStr);
+				}
+				if (pages > 1) {
+					pagesStr = showPage(listPage, listTypec, pages, userlistUrl);
+					$("#list_page").append(pagesStr);
+				}
+				//list_page
 			}
-			if (pages > 1) {
-				pagesStr = showPage(listPage, listTypec, pages, userlistUrl);
-				$("#list_page").append(pagesStr);
+		}else{
+			var biaoji = getCookie("biaoji");
+			sleep(1000);
+			if(biaoji>5){
+				console.log("访问出错！");
+				window.location.href = 'login.html'
+			}else{
+				document.cookie = setCookie("biaoji", biaoji+1, "3");
+				designMain();
 			}
-			//list_page
 		}
 	})
 }

@@ -7,8 +7,8 @@ var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
 	verification();
-	// sleep(1000);
 	showAdmin();
+	document.cookie = setCookie("biaoji", 0, "3");
 	designMain();
 }
 
@@ -78,7 +78,8 @@ function designMain() {
 				//list_page
 			}else{
 				var biaoji = getCookie("biaoji");
-				if(biaoji>3){
+				sleep(1000);
+				if(biaoji>5){
 					console.log("访问出错！");
 					window.location.href = 'login.html'
 				}else{
