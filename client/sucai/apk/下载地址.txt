@@ -1,3 +1,7 @@
+v1.11
+http://t.cn/Aijn5rYX
+修复砖木结构头部编码溢出的问题
+
 v1.1
 https://www.lanzous.com/i57mjqj
 1. 对木结构，砖木结构和砖混结构的部分项目进行增加和调整<br/>

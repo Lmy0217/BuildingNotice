@@ -288,7 +288,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	head = head.reverse();
 	console.log(result);
-	return fixInteger(two2x(head), lenq) + result;
+	return fixInteger(two2x(head), 3) + result;
 	// return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
 
