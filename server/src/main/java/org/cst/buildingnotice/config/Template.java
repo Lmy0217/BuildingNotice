@@ -44,7 +44,8 @@ public class Template {
 		if (hold == null || hold.length() == 0) data.put("hold", "不详");
 		
 		String holdid = (String) data.getOrDefault("holdid", null);
-		if (holdid == null || holdid.length() == 0) data.put("holdid", "不详");
+		if (holdid == null || holdid.length() == 0 || holdid.equals("000")) 
+			data.put("holdid", "不详");
 		
 		String attr = (String) data.getOrDefault("attr", null);
 		if (attr == null || attr.length() == 0) data.put("attr", "不详");
