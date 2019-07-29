@@ -32,7 +32,12 @@ function usermeMain() {
 				document.getElementById("archcount").innerText = data.archcount;
 				document.getElementById("archdown").innerText = data.archdown;
 				document.getElementById("archnodown").innerText = data.archnodown;
-				document.getElementById("adminname").innerText = data.adminname;
+				if(typeof(data.adminname)=='null'){
+					document.getElementById("adminname").innerText =typeof(data.adminname) ;
+				}else{
+					document.getElementById("adminname").innerText =data.adminname;
+				}
+				
 			} else {
 				var biaoji = getCookie("biaoji");
 				sleep(1000);
