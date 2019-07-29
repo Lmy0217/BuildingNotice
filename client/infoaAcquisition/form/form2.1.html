@@ -65,6 +65,7 @@
 		changeChild2('type33','type331','type332[]');
 		changeChild2('type34','type341','type342[]');
 		changeChild2('type35','type351','type352[]');
+		changeChild2('type36','type361','type362[]');
 	});
 	
 	function w_openNext(){
@@ -75,6 +76,7 @@
 		flag=flag+checkCHBnull2(form_now,'type33','type332','开裂问题');
 		flag=flag+checkCHBnull2(form_now,'type34','type342','柱脚问题');
 		flag=flag+checkCHBnull2(form_now,'type35','type352','屋面板问题');
+		flag=flag+checkCHBnull2(form_now,'type36','type362','墙体问题');
 		if(flag==0){
 			openNext('form2','form3');
 		}
@@ -300,6 +302,38 @@
 				<div class="mui-input-row mui-checkbox mui-left ">
 					<label>渗水</label>
 					<input name="type352[]" value="2" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>变形</label>
+					<input name="type352[]" value="3" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>6. 墙体存在问题</label>
+					<input name="type36" value="2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>轻微</label>
+					<input name="type361" value="1" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-radio mui-left ">
+					<label>严重</label>
+					<input name="type361" value="2" type="radio" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>开裂</label>
+					<input name="type362[]" value="1" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>倾斜</label>
+					<input name="type362[]" value="2" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>破损</label>
+					<input name="type362[]" value="3" type="checkbox" disabled="disabled">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>7. 纵横墙无可靠拉接</label>
+					<input name="type37" value="2" type="checkbox">
 				</div>
 			</form>
 			<div class="mui-content-padded">
