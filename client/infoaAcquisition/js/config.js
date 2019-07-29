@@ -4,6 +4,7 @@ var name='/buildingnotice';
 var website = domin+name;
 
 var loginUrl = website + '/user/login';
+var meUrl=website+'/user/my';
 var checkUser=website+'/user/token';
 var changePwd=website+'/user/pwd';
 var createUser=website+'/user/create';
@@ -17,6 +18,6 @@ var downUrl= website +'/archive/download';
 var listUrl=website+'/archive/list';
 var userlistUrl=website+'/user/list';
 
-var apkdownUrl='http://t.cn/Aijn5rYX';
+var apkdownUrl='https://www.lanzous.com/i57wv1g';
 var w_apkdownUrl=domin+'/apkdown.html';
-var version='1.11';
+var version='1.12';
