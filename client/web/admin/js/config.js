@@ -4,6 +4,7 @@ var name='/buildingnotice';
 var website = domin+name;
 
 var loginUrl = website + '/user/login';
+var meUrl=website+'/user/my';
 var checkUser=website+'/user/token';
 var changePwd=website+'/user/pwd';
 var createUser=website+'/user/create';

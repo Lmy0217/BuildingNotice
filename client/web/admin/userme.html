@@ -3,25 +3,26 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>『信息采集助手』后台管理</title>
+		<title>我的账户 - 后台管理</title>
 		<link rel="icon" href="favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="css/common.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
 		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/js.js"></script>
-		<script type="text/javascript" src="js/check.js  "></script>
+		<script type="text/javascript" src="js/check.js"></script>
+		<script type="text/javascript" src="js/userme.js"></script>
 		<script type="text/javascript" src="js/jump.js"></script>
 		
 		<script type="text/javascript">
-			window.onload = function() {
-				verification();
-				runSetIndexTimes();
-				setInterval("runSetIndexTimes()", 1000);
-				showAdmin();
-				document.getElementById('res-host').innerText=domin;
-				document.getElementById('apkdown').href=apkdownUrl;
-			}
+			// window.onload = function() {
+			// 	verification();
+			// 	runSetIndexTimes();
+			// 	setInterval("runSetIndexTimes()", 1000);
+			// 	showAdmin();
+			// 	document.getElementById('res-host').innerText=domin;
+			// 	document.getElementById('apkdown').href=apkdownUrl;
+			// }
 		</script>
 	</head>
 
@@ -80,7 +81,7 @@
 									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
 								</li>
 								<li>
-									<a href="userme.html"><i class="icon-font">&#xe014;</i>我的账户</a>
+									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
 								</li>
 								<div id="admin" style="display: none;">
 									<li>
@@ -114,64 +115,46 @@
 								<a href="design.html?type=0&page=1"><i class="icon-font">&#xe017;</i>文章管理</a>
 							</li>
 							<li>
-								<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
+								<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
 							</li>
 						</div>
 					</div>
 				</div>
 				<div class="result-wrap">
 					<div class="result-title">
-						<h1>系统基本信息</h1>
+						<h1>账户基本信息</h1>
 					</div>
 					<div class="result-content">
 						<ul class="sys-info-list">
 							<li>
-								<label class="res-lab">操作系统</label><span class="res-info">Ubuntu</span>
+								<label class="res-lab">账户名</label><span class="res-info" id="name"></span>
 							</li>
 							<li>
-								<label class="res-lab">运行环境</label><span class="res-info">Apache/2.2.21 (Win64) PHP/5.3.10</span>
+								<label class="res-lab">权限等级</label><span class="res-info" id="role"></span>
 							</li>
 							<li>
-								<label class="res-lab">Java运行方式</label><span class="res-info">apache2handler</span>
+								<label class="res-lab">已完成任务</label><span class="res-info" id="archcount">暂无</span>
 							</li>
 							<li>
-								<label class="res-lab">系统版本</label><span class="res-info">v-2.0</span>
-							</li>
-							<!-- <li>
-								<label class="res-lab">上传附件限制</label><span class="res-info">10M</span>
-							</li> -->
-							<li>
-								<label class="res-lab">服务器时间</label><span id="serverTime" class="res-info"></span>
+								<label class="res-lab">已下载报告</label><span class="res-info" id="archdown">暂无</span><label class="res-lab">未下载报告</label><span class="res-info" id="archnodown">暂无</span>
 							</li>
 							<li>
-								<label class="res-lab">本机时间</label><span id="localTime" class="res-info"></span>
+								<label class="res-lab">上级管理员</label><span id="serverTime" class="res-info"></span>
 							</li>
-							<li>
-								<label class="res-lab">服务器域名</label><span class="res-info"  id="res-host">http://www.gasfjd.cn:8080/</span>
-							</li>
-							<li>
-								<label class="res-lab">Host</label><span class="res-info">http://49.234.178.101:8080/</span>
-							</li>
-							<li>
-								<label class="res-lab">最新APP</label><a href="" id='apkdown'><span class="res-info">下载安卓</span></a>
-							</li>
-							<!-- <li>
-								<a href="test.html"><label class="res-lab">test</label><span class="res-info">测试网页</span></a>
-							</li> -->
 						</ul>
 					</div>
 				</div>
 				<div class="result-wrap">
-					<div class="result-title">
-						<h1>更新信息</h1>
+					<!-- <div class="result-title">
+						<h1>使用帮助</h1>
 					</div>
 					<div class="result-content">
 						<ul class="sys-info-list">
 							<li>
-								<label class="res-lab">v2.0：</label><span class="res-info">完成账户多级管理</span>
+								<!-- <label class="res-lab">更多模板：</label><span class="res-info"><a href="http://www.mycodes.net/" target="_blank">源码之家</a></span> 
 							</li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<!--/main-->
