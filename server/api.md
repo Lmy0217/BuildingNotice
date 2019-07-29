@@ -5,6 +5,7 @@
 * [用户登出](#用户登出)
 
 
+* [个人信息](#个人信息)
 * [更新令牌](#更新令牌)
 * [修改密码](#修改密码)
 
@@ -76,6 +77,29 @@
 |-|-|-|
 |status|Integer|200|
 |msg|String|成功描述|
+#### 失败返回数据 (Json)
+|参数|类型|说明|
+|-|-|-|
+|status|Integer|错误状态码 (参见 [状态码](#状态码))|
+|msg|String|错误描述|
+
+## **个人信息**
+用户获取个人信息。获取时，请使用 HTTP POST 方式
+#### API地址
+[POST] /user/my
+#### POST参数 (Json)
+|参数|类型|说明|
+|-|-|-|
+|token|String|(必填) 令牌|
+#### 成功返回数据 (Json)
+|参数|类型|说明|
+|-|-|-|
+|status|Integer|200|
+|role|Integer|权限|
+|archcount|Integer|总报告数|
+|archdown|Integer|已下载报告数|
+|archnodown|Integer|未下载报告数|
+|adminname|String|上级管理员名 (不存在返回 null)|
 #### 失败返回数据 (Json)
 |参数|类型|说明|
 |-|-|-|
