@@ -1,6 +1,7 @@
 package org.cst.buildingnotice.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.cst.buildingnotice.entity.Archive;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
@@ -24,5 +25,5 @@ public interface ArchiveMapper {
     
     int countByUserid(Integer userid);
     
-    List<Integer> statusCountByUserid(Integer userid);
+    List<Map<String, Object>> statusCountByUserid(Integer userid);
 }

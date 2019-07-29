@@ -436,22 +436,33 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		List<Integer> statusCount = archiveService.statusCountByUserid(userId);
-		if (statusCount.size() != 2) {
+		List<Map<String, Object>> statusCount = archiveService.statusCountByUserid(userId);
+		if (statusCount.size() == 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "状态错误！");
 		}
 		
-		return new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("status", HttpStatus.OK.value());
-				put("role", user.getRole());
-				put("archcount", statusCount.get(1) + statusCount.get(0));
-				put("archdown", statusCount.get(1));
-				put("archnodown", statusCount.get(0));
-				put("adminname", null);
+		long archdown = 0, archnodown = 0;
+		for (Map<String, Object> countMap : statusCount) {
+			long value = (Long) countMap.get("count(*)");
+			switch ((Integer) countMap.get("status")) {
+			case 0:
+				archnodown = value;
+				break;
+			case 1:
+				archdown = value;
+				break;
 			}
-		};
+		}
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("status", HttpStatus.OK.value());
+		result.put("role", user.getRole());
+		result.put("archcount", archdown + archnodown);
+		result.put("archdown", archdown);
+		result.put("archnodown", archnodown);
+		result.put("adminname", null);
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/list", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
