@@ -40,7 +40,10 @@ function userlistMain() {
 				var searchSort = document.getElementById("searchSort");
 				for (var i = 0; i < searchSort.length; i++) {
 					var valueStr = searchSort[i].value;
-					valueStr = parseInt(valueStr.substring(17, 18));
+					valueStr = parseInt(valueStr.substring(19, 20));
+					if(typeof(valueStr)=='NaN'){
+						valueStr='-';
+					}
 					if (valueStr == listType) {
 						searchSort[i].selected = true;
 					}
@@ -119,7 +122,7 @@ function userlistMain() {
 					window.location.href = 'login.html'
 				} else {
 					document.cookie = setCookie("biaoji", biaoji + 1, "3");
-					designMain();
+					userlistMain();
 				}
 			}
 		}

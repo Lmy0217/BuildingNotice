@@ -2,8 +2,8 @@ var title = "暂无内容";
 // var listType = GetUrlParam("type");
 // var listPage = GetUrlParam("page");
 // 
-var userList = ["未开通用户，请联系管理员开通", "普通用户", "管理员", "超级管理员"];
-
+var userList = ["未开通用户，请联系管理员开通", "普通用户", "管理员"];
+userList[10] = "超级管理员";
 window.onload = function() {
 	verification();
 	showAdmin();
@@ -27,21 +27,26 @@ function usermeMain() {
 			if (data.status == 200) {
 				document.cookie = setCookie("biaoji", 0, "3");
 				var user = getCookie('user');
-				document.getElementById("name").innerText=user;
-				document.getElementById("role").innerText=userList[data.role];
-				document.getElementById("archcount").innerText=data.archcount;
-				document.getElementById("archdown").innerText=data.archdown;
-				document.getElementById("archnodown").innerText=data.archnodown;
-				document.getElementById("adminname").innerText=data.adminname;
-			}else{
+				document.getElementById("name").innerText = user;
+				document.getElementById("role").innerText = userList[data.role];
+				document.getElementById("archcount").innerText = data.archcount;
+				document.getElementById("archdown").innerText = data.archdown;
+				document.getElementById("archnodown").innerText = data.archnodown;
+				if(typeof(data.adminname)=='null'){
+					document.getElementById("adminname").innerText =typeof(data.adminname) ;
+				}else{
+					document.getElementById("adminname").innerText =data.adminname;
+				}
+				
+			} else {
 				var biaoji = getCookie("biaoji");
 				sleep(1000);
-				if(biaoji>5){
+				if (biaoji > 5) {
 					console.log("访问出错！");
 					window.location.href = 'login.html'
-				}else{
-					document.cookie = setCookie("biaoji", biaoji+1, "3");
-					designMain();
+				} else {
+					document.cookie = setCookie("biaoji", biaoji + 1, "3");
+					usermeMain();
 				}
 			}
 		}
