@@ -35,7 +35,7 @@ function usermeMain() {
 				if(data.adminname! =null){
 					document.getElementById("adminname").innerText =data.adminname;
 				}else{
-					document.getElementById("adminname").innerText =暂无 ;
+					document.getElementById("adminname").innerText ="暂无" ;
 				}
 				
 			} else {
