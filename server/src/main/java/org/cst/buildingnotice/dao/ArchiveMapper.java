@@ -23,4 +23,6 @@ public interface ArchiveMapper {
     List<ArchiveWithBLOBs> selectByUserid(Integer userid);
     
     int countByUserid(Integer userid);
+    
+    List<Integer> statusCountByUserid(Integer userid);
 }

@@ -18,4 +18,6 @@ public interface ArchiveService {
 	public int updateByPrimaryKeyWithBLOBs(ArchiveWithBLOBs record);
 	
 	public int countByUserid(Integer userid);
+	
+	public List<Integer> statusCountByUserid(Integer userid);
 }
