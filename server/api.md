@@ -156,7 +156,7 @@
 |-|-|-|
 |status|Integer|200|
 |count|Integer|用户数|
-|list|List (Json)|用户信息列表 (用户信息：用户 Id、用户名、用户权限、用户报告数)|
+|list|List (Json)|用户信息列表 (用户信息：用户 Id (id)、用户名 (name)、用户权限 (role)、用户报告数 (archcount))|
 #### 失败返回数据 (Json)
 |参数|类型|说明|
 |-|-|-|
