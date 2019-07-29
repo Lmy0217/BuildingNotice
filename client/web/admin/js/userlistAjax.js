@@ -8,6 +8,7 @@ var listList = ["全部用户", "未开通用户", "普通用户"];
 
 window.onload = function() {
 	verification();
+	sleep(1000);
 	showAdmin();
 	userlistMain();
 }
