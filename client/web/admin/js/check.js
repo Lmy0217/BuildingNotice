@@ -1,4 +1,4 @@
-function test() {
+function verification() {
 	var q = getCookie('token');
 	console.log(document.cookie);
 	// console.log(q);
