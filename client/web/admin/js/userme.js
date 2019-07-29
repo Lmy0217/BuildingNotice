@@ -41,7 +41,7 @@ function usermeMain() {
 					window.location.href = 'login.html'
 				} else {
 					document.cookie = setCookie("biaoji", biaoji + 1, "3");
-					designMain();
+					usermeMain();
 				}
 			}
 		}
