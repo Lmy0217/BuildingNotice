@@ -172,7 +172,7 @@ public class TemplateUtil {
 		StringBuilder sbody3 = new StringBuilder();
 		StringBuilder sadvise = new StringBuilder();
 		
-		String var1 = null, var3 = null, var4 = null, var5 = null, var6 = null;
+		String var1 = null, var3 = null, var4 = null, var5 = null, var6 = null, var7 = null;
 		Integer var2 = null;
 		
 		try {
@@ -190,33 +190,40 @@ public class TemplateUtil {
 				sadvise.append("2;");
 				
 				//   sentence_1
-				var1 = body3.substring(2, 4);
+				var1 = body3.substring(3, 5);
 				if (var1.equals("00")) sbody3.append("01");
 				else if (var1.equals("01")) sbody3.append("02");
 				else if (var1.equals("02")) sbody3.append("04");
 				
 				//   choose
-				var2 = Integer.parseInt(body3.substring(0, 2));
+				var2 = Integer.parseInt(body3.substring(0, 3));
 				sbody3.append(String.format("%02d", var2 / 2));
 				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
-				var3 = body3.substring(4, 8);
+				var3 = body3.substring(5, 9);
 				if (!var3.equals("0000")) sbody3.append(var3.substring(2) + var3.substring(0, 2));
 				
 				//   sentence_3
-				var4 = body3.substring(8, 12);
+				var4 = body3.substring(9, 13);
 				if (!var4.equals("0000")) sbody3.append(var4.substring(2) + var4.substring(0, 2));
 				
 				//   sentence_4
-				var5 = body3.substring(12, 16);
+				var5 = body3.substring(13, 17);
 				if (!var5.equals("0000")) sbody3.append(var5);
 				
 				//   sentence_5
-				var6 = body3.substring(16, 20);
+				var6 = body3.substring(17, 21);
 				if (!var6.equals("0000")) {
 					sbody3.append(var6);
 					sadvise.append(var6.substring(2));
+				}
+				
+				//   sentence_6
+				var7 = body3.substring(21, 25);
+				if (!var7.equals("0000")) {
+					sbody3.append(var7);
+					sadvise.append(var7.substring(2));
 				}
 				
 				out.add(sbody3.toString());
@@ -237,29 +244,29 @@ public class TemplateUtil {
 				sadvise.append("2;");
 				
 				//   sentence_1
-				var1 = body3.substring(2, 4);
+				var1 = body3.substring(3, 5);
 				if (var1.equals("00")) sbody3.append("01");
 				else if (var1.equals("01")) sbody3.append("02");
 				else if (var1.equals("02")) sbody3.append("04");
 						
 				//   choose
-				var2 = Integer.parseInt(body3.substring(0, 2));
+				var2 = Integer.parseInt(body3.substring(0, 3));
 				sbody3.append(String.format("%02d", var2 / 2));
 				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
-				var3 = body3.substring(4, 6);
+				var3 = body3.substring(5, 7);
 				if (!var3.equals("00")) sbody3.append(var3);
 				
 				//   sentence_3
-				var4 = body3.substring(6, 10);
+				var4 = body3.substring(7, 11);
 				if (!var4.equals("0000")) {
 					sbody3.append(var4.substring(2) + var4.substring(0, 2));
 					sadvise.append(var4.substring(2));
 				}
 				
 				//   sentence_4
-				var5 = body3.substring(10, 12);
+				var5 = body3.substring(11, 13);
 				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
@@ -280,32 +287,32 @@ public class TemplateUtil {
 				sadvise.append("2;");
 				
 				//   sentence_1
-				var1 = body3.substring(2, 4);
+				var1 = body3.substring(3, 5);
 				if (var1.equals("00")) sbody3.append("01");
 				else if (var1.equals("01")) sbody3.append("02");
 				else if (var1.equals("02")) sbody3.append("04");
 						
 				//   choose
-				var2 = Integer.parseInt(body3.substring(0, 2));
+				var2 = Integer.parseInt(body3.substring(0, 3));
 				sbody3.append(String.format("%02d", var2 / 2));
 				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
-				var3 = body3.substring(4, 8);
+				var3 = body3.substring(5, 9);
 				if (!var3.equals("0000")) {
 					sbody3.append(var3.substring(2) + var3.substring(0, 2));
 					sadvise.append(var3.substring(2));
 				}
 				
 				//   sentence_3
-				var4 = body3.substring(8, 12);
+				var4 = body3.substring(9, 13);
 				if (!var4.equals("0000")) {
 					sbody3.append(var4.substring(2) + var4.substring(0, 2));
 					sadvise.append(var4.substring(2));
 				}
 				
 				//   sentence_4
-				var5 = body3.substring(12, 14);
+				var5 = body3.substring(13, 15);
 				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
@@ -326,29 +333,29 @@ public class TemplateUtil {
 				sadvise.append("2;");
 				
 				//   sentence_1
-				var1 = body3.substring(2, 4);
+				var1 = body3.substring(3, 5);
 				if (var1.equals("00")) sbody3.append("01");
 				else if (var1.equals("01")) sbody3.append("02");
 				else if (var1.equals("02")) sbody3.append("04");
 						
 				//   choose
-				var2 = Integer.parseInt(body3.substring(0, 2));
+				var2 = Integer.parseInt(body3.substring(0, 3));
 				sbody3.append(String.format("%02d", var2 / 2));
 				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
-				var3 = body3.substring(4, 6);
+				var3 = body3.substring(5, 7);
 				if (!var3.equals("00")) sbody3.append(var3);
 				
 				//   sentence_3
-				var4 = body3.substring(6, 10);
+				var4 = body3.substring(7, 11);
 				if (!var4.equals("0000")) {
 					sbody3.append(var4.substring(2) + var4.substring(0, 2));
 					sadvise.append(var4.substring(2));
 				}
 				
 				//   sentence_4
-				var5 = body3.substring(10, 12);
+				var5 = body3.substring(11, 13);
 				if (!var5.equals("00")) sbody3.append(var5);
 				
 				out.add(sbody3.toString());
@@ -369,30 +376,30 @@ public class TemplateUtil {
 				sadvise.append("2;");
 				
 				//   sentence_1
-				var1 = body3.substring(2, 4);
+				var1 = body3.substring(3, 5);
 				if (var1.equals("00")) sbody3.append("01");
 				else if (var1.equals("01")) sbody3.append("02");
 				else if (var1.equals("02")) sbody3.append("04");
 				
 				//   choose
-				var2 = Integer.parseInt(body3.substring(0, 2));
+				var2 = Integer.parseInt(body3.substring(0, 3));
 				sbody3.append(String.format("%02d", var2 / 2));
 				sadvise.append(String.format("%02d", var2 / 2));
 				
 				//   sentence_2
-				var3 = body3.substring(4, 8);
+				var3 = body3.substring(5, 9);
 				if (!var3.equals("0000")) sbody3.append(var3.substring(2) + var3.substring(0, 2));
 				
 				//   sentence_3
-				var4 = body3.substring(8, 12);
+				var4 = body3.substring(9, 13);
 				if (!var4.equals("0000")) sbody3.append(var4.substring(2) + var4.substring(0, 2));
 				
 				//   sentence_4
-				var5 = body3.substring(12, 16);
+				var5 = body3.substring(13, 17);
 				if (!var5.equals("0000")) sbody3.append(var5);
 				
 				//   sentence_5
-				var6 = body3.substring(16, 20);
+				var6 = body3.substring(17, 21);
 				if (!var6.equals("0000")) {
 					sbody3.append(var6);
 					sadvise.append(var6.substring(2));
