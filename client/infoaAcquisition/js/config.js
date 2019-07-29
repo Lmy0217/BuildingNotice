@@ -17,6 +17,6 @@ var downUrl= website +'/archive/download';
 var listUrl=website+'/archive/list';
 var userlistUrl=website+'/user/list';
 
-var apkdownUrl='https://www.lanzous.com/i54geih';
+var apkdownUrl='https://www.lanzous.com/i57mjqj';
 var w_apkdownUrl=domin+'/apkdown.html';
-var version='1.0';
+var version='1.1';
