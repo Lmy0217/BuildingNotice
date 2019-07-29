@@ -41,7 +41,9 @@ function userlistMain() {
 				for (var i = 0; i < searchSort.length; i++) {
 					var valueStr = searchSort[i].value;
 					valueStr = parseInt(valueStr.substring(17, 18));
-					console.log(valueStr);
+					if(typeof(valueStr)=='NaN'){
+						valueStr=='-';
+					}
 					if (valueStr == listType) {
 						searchSort[i].selected = true;
 					}
