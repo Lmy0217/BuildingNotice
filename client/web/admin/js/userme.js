@@ -32,7 +32,7 @@ function usermeMain() {
 				document.getElementById("archcount").innerText = data.archcount;
 				document.getElementById("archdown").innerText = data.archdown;
 				document.getElementById("archnodown").innerText = data.archnodown;
-				if(data.adminname! =null){
+				if(data.adminname!==null){
 					document.getElementById("adminname").innerText =data.adminname;
 				}else{
 					document.getElementById("adminname").innerText ="暂无" ;
