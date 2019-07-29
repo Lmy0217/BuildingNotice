@@ -58,4 +58,8 @@ public class ArchiveServiceImpl implements ArchiveService {
 	public int countByUserid(Integer userid) {
 		return archiveMapper.countByUserid(userid);
 	}
+
+	public List<Integer> statusCountByUserid(Integer userid) {
+		return archiveMapper.statusCountByUserid(userid);
+	}
 }

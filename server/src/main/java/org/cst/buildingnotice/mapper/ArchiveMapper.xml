@@ -56,6 +56,13 @@
     from archive
     where userid = #{userid,jdbcType=INTEGER}
   </select>
+  <select id="statusCountByUserid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+      count(*)
+    from archive
+    where userid = #{userid,jdbcType=INTEGER}
+    group by status
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from archive
     where id = #{id,jdbcType=INTEGER}
