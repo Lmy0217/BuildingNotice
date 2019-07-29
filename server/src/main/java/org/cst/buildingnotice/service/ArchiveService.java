@@ -2,6 +2,7 @@ package org.cst.buildingnotice.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 
@@ -19,5 +20,5 @@ public interface ArchiveService {
 	
 	public int countByUserid(Integer userid);
 	
-	public List<Integer> statusCountByUserid(Integer userid);
+	public List<Map<String, Object>> statusCountByUserid(Integer userid);
 }
