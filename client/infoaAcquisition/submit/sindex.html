@@ -28,6 +28,9 @@
 		
 		
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/check.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			
@@ -41,6 +44,8 @@
 			
 			 //创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
+				var token = localStorage.getItem('TOKEN_TOKEN');
+				checkUser2(token);
 				var self = plus.webview.currentWebview();
 				for (var i = 0; i < 2; i++) {
 					var temp = {};
@@ -48,14 +53,6 @@
 					if (i > 0) {
 						sub.hide();
 					}
-					// else{
-					// 	temp[subpages[i]] = "true";
-					// 	mui.extend(aniShow,temp);
-					// }
-
-					/* 让新创建的webview，追加合并到当前的窗口上。合并成一个窗口。
-					 * 目的：将父子窗口合并成一个页面，实现同开同关的效果。 避免点击返回安监室，子页面先关闭，而父页面的头部和尾部没有关闭的BUG。
-					 */
 					self.append(sub);
 				}
 			});
@@ -88,6 +85,44 @@
 				activeTab = targetTab;
 			});
 			
+			function checkUser2(token){
+				if (typeof(token) == 'undefined') {
+					window.location.href = 'login.html'
+					localStorage.removeItem("TOKEN_TOKEN");
+					mui.openWindow({
+						url: '../login.html'
+					})
+				} else {
+					data={};
+					data["token"] = token;
+					console.log(data);
+					$.ajax({
+						url: checkUrl,
+						cache: false,
+						type: "post",
+						datatype: "json",
+						contentType: 'application/json;charset=UTF-8',
+						data: JSON.stringify(data),
+						success: function(data) {
+							console.log(data);
+							if (data.status == "200") {
+								//根据后台返回值确定是否操作成功
+								console.log("更新令牌");
+								localStorage.setItem('TOKEN_TOKEN', data.token);
+							} else {
+								console.log("非法访问");
+								mui.alert(data.msg,'未登录','确定',function (e) {
+								   localStorage.removeItem("TOKEN_TOKEN");
+								},'div')
+								mui.openWindow({
+									url: '../login.html'
+								})
+							}
+						}
+					});
+				}
+				
+			}
 			
 			 //自定义事件，模拟点击“首页选项卡”
 //			document.addEventListener('gohome', function() {
