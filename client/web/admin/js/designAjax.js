@@ -65,10 +65,10 @@ function designMain() {
 						"<td>" + list.date + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id +'","'+list.title "])'>删除</a> " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id +"','"+list.title "])'>删除</a> " +
 						"</td>" +
 						"</tr>";
-
+console.log(infoStr);
 					$("#result_info").append(infoStr);
 				}
 				// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
