@@ -441,7 +441,7 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "状态错误！");
 		}
 		
-		long archdown = 0, archnodown = 0;
+		long archdown = 0, archnodown = 0, archdelete = 0;
 		for (Map<String, Object> countMap : statusCount) {
 			long value = (Long) countMap.get("count(*)");
 			switch ((Integer) countMap.get("status")) {
@@ -451,15 +451,19 @@ public class UserController {
 			case 1:
 				archdown = value;
 				break;
+			case -1:
+				archdelete = value;
+				break;
 			}
 		}
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("status", HttpStatus.OK.value());
 		result.put("role", user.getRole());
-		result.put("archcount", archdown + archnodown);
+		result.put("archcount", archdown + archnodown + archdelete);
 		result.put("archdown", archdown);
 		result.put("archnodown", archnodown);
+		result.put("archdelete", archdelete);
 		result.put("adminname", null);
 		
 		return result;

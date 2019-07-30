@@ -21,4 +21,6 @@ public interface ArchiveService {
 	public int countByUserid(Integer userid);
 	
 	public List<Map<String, Object>> statusCountByUserid(Integer userid);
+	
+	public int deleteByIdsAndUserid(List<Integer> ids, Integer userid);
 }

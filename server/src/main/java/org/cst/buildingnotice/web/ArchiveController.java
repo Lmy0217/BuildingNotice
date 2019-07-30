@@ -410,6 +410,60 @@ public class ArchiveController {
 		return response;
 	}
 	
+	@RequestMapping(value = "/delete", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		JSONArray idsJson = json.getJSONArray("ids");
+		String hexToken = json.getString("token");
+		if (idsJson == null || hexToken == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		if (user.getRole() < 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+		}
+		
+		List<Integer> ids = idsJson.toJavaList(Integer.class);
+		int count = archiveService.deleteByIdsAndUserid(ids, userId);
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+				put("count", count);
+			}
+		};
+	}
+	
 	@RequestMapping(value="/list", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> list(@RequestBody String jsonstring, 
@@ -454,11 +508,10 @@ public class ArchiveController {
 		}
 		
 		List<ArchiveWithBLOBs> archs = archiveService.getArchivesByUserid(userId);
-		if (type == 1 || type == 2) {
-			for (int i = archs.size() - 1; i >= 0; i--) {
-				if (archs.get(i).getStatus() + 1 != type) {
-					archs.remove(i);
-				}
+		for (int i = archs.size() - 1; i >= 0; i--) {
+			if (archs.get(i).getStatus() == -1 || 
+					((type == 1 || type == 2) && archs.get(i).getStatus() + 1 != type)) {
+				archs.remove(i);
 			}
 		}
 		int idxStart = (page - 1) * 15;

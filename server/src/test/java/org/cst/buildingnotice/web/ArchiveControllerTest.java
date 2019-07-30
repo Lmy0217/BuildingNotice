@@ -97,6 +97,25 @@
 //	}
 //	
 //	//@Test
+//	public void deleteTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		
+//		List<Integer> ids = Arrays.asList(1, 4, 28);
+//		requestBodyJSON.put("ids", ids);
+//		requestBodyJSON.put("token", "333b9e46af6c21b88696b8566afa207a65d0e1f07d7d22e9b38bdcef6d6b6a4a1827");
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/archive/delete")
+//				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//	    
+//	    ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse();
+//        //resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
+//	
+//	//@Test
 //	public void listTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
