@@ -99,6 +99,7 @@
 |archcount|Integer|总报告数|
 |archdown|Integer|已下载报告数|
 |archnodown|Integer|未下载报告数|
+|archdelete|Integer|已删除报告数|
 |adminname|String|上级管理员名 (不存在返回 null)|
 #### 失败返回数据 (Json)
 |参数|类型|说明|
@@ -267,6 +268,27 @@ Json 字符串
 |status|Integer|错误状态码 (参见 [状态码](#状态码))|
 |msg|String|错误描述|
 
+## **删除报告**
+用户删除报告。删除时，请使用 HTTP POST 方式
+#### API地址
+[POST] /archive/delete
+#### POST参数 (Json)
+|参数|类型|说明|
+|-|-|-|
+|token|String|(必填) 令牌|
+|ids|List (Integer)|(必填) 报告 Id 列表|
+
+#### 成功返回数据 (Json)
+|参数|类型|说明|
+|-|-|-|
+|status|Integer|200|
+|count|Integer|删除报告数|
+#### 失败返回数据 (Json)
+|参数|类型|说明|
+|-|-|-|
+|status|Integer|错误状态码 (参见 [状态码](#状态码))|
+|msg|String|错误描述|
+
 ## **下载报告**
 从服务器下载报告压缩包。下载时，请使用 HTTP POST 方式
 #### API地址
@@ -282,7 +304,7 @@ Json 字符串
 |-|-|-|
 |token|String|(必填) 令牌|
 |type|Integer|(选填) 报告类型|
-|ids|List (Integer)|(选填) 报告 Id|
+|ids|List (Integer)|(选填) 报告 Id 列表|
 
 #### 成功返回数据 (非Json)
 |参数|类型|说明|
