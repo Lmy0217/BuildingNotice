@@ -63,4 +63,8 @@ public class ArchiveServiceImpl implements ArchiveService {
 	public List<Map<String, Object>> statusCountByUserid(Integer userid) {
 		return archiveMapper.statusCountByUserid(userid);
 	}
+
+	public int deleteByIdsAndUserid(List<Integer> ids, Integer userid) {
+		return archiveMapper.deleteByIdsAndUserid(ids, userid);
+	}
 }
