@@ -200,7 +200,7 @@ function deleteF(type,delList){
 		data: JSON.stringify(jsons),
 		success: function(data) {
 			console.log(data);
-			if (data.code == 200) {
+			if (data.status == 200) {
 				alert("成功删除");
 				location.replace(location.href); //成功后刷新页面
 			} else {
