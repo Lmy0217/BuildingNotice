@@ -58,14 +58,14 @@ function designMain() {
 					}
 					titles = checkTitle(list.title);
 					titles = checkTitle(titles);
-					console.log(titles);
+					// console.log(titles);
 					infoStr = "<tr>" +
 						"<td class='tc'><input name='word[]' value='" + list.id + "' type='checkbox'></td>" +
 						"<td>" + titles + "</td>" +
 						"<td>" + list.date + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + ","+list.title +"])'>删除</a> " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + "],'"+list.title +"')>删除</a> " +
 						"</td>" +
 						"</tr>";
 					$("#result_info").append(infoStr);
