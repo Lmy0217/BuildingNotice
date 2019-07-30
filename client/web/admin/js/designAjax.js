@@ -65,7 +65,8 @@ function designMain() {
 						"<td>" + list.date + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + "],\"" + titles + "\")'>删除</a> " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + "],\"" + titles +
+						"\")'>删除</a> " +
 						"</td>" +
 						"</tr>";
 					$("#result_info").append(infoStr);
@@ -76,14 +77,14 @@ function designMain() {
 					$("#list_page").append(pagesStr);
 				}
 				//list_page
-			}else{
+			} else {
 				var biaoji = getCookie("biaoji");
 				sleep(1000);
-				if(biaoji>5){
+				if (biaoji > 5) {
 					console.log("访问出错！");
 					window.location.href = 'login.html'
-				}else{
-					document.cookie = setCookie("biaoji", biaoji+1, "3");
+				} else {
+					document.cookie = setCookie("biaoji", biaoji + 1, "3");
 					designMain();
 				}
 			}
@@ -159,15 +160,15 @@ function delFile(id, title) {
 		window.event.returnValue = false;
 	} else {
 		console.log("已经执行删除");
-		deleteF(-1,id)
+		deleteF(-1, id)
 	}
 }
 
 //批量删除
 function delFiles() {
-	var type=-1;
-		var delList = getChkValue('word[]');
-		console.log(delList);
+	var type = -1;
+	var delList = getChkValue('word[]');
+	console.log(delList);
 	if (delList.length < 1) {
 		alert("没有选择要删除的文件！");
 	} else {
@@ -179,12 +180,11 @@ function delFiles() {
 			deleteF(type, delList);
 		}
 	}
-	console.log(id, title);
-	
+
 }
 
 
-function deleteF(type,delList){
+function deleteF(type, delList) {
 	var token = getCookie('token');
 	var jsons = {
 		"token": token,
