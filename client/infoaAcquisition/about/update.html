@@ -24,7 +24,7 @@
 				<div class="kr-article-meta">
 					<div id="kr-article-author" class="kr-article-author">admin</div>
 					<div class="kr-article-text">发表于</div>
-					<div id="kr-article-time" class="kr-article-time">2019/07/29</div>
+					<div id="kr-article-time" class="kr-article-time">2019/07/30</div>
 				</div>
 				<!--文章详细内容-->
 				<div id="kr-article-article" class="kr-article-article" v-html="content">
@@ -34,8 +34,11 @@
 					<p><a id='apkdown' href="#">最新版本下载地址</a></p>
 					<p>&nbsp;</p>
 					<p>
-						<h4>v1.2</h4>
-						任务上传后手机端依旧支持查看。手机端任务“消失”需要手动删除。
+						<h4>v1.35</h4>
+						1. 任务上传后手机端依旧支持查看。手机端任务“消失”需要手动删除<br />
+						2. 任务上传增加用户登录限制
+						3. 用户信息可以查看已删除文件数
+						4. 界面美化工作
 					</p>
 					<p>
 						<h4>v1.12</h4>
@@ -119,7 +122,13 @@
 
 
 			mui.plusReady(function() {
-				document.getElementById("now_version").innerText = version;
+				//-----------------
+				mui.getJSON("../manifest.json", null, function(manifest) {
+					var version = manifest.version.name;
+					var versionCode = Number(manifest.version.code);
+					console.log("版本名称：" + version + "，版本code：" + versionCode);
+					document.getElementById("now_version").innerText = version+'.'+versionCode;
+				});				
 				document.getElementById('apkdown').href = w_apkdownUrl;
 				// console.log(w_apkdownUrl);
 

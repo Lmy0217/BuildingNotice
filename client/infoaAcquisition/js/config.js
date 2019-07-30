@@ -20,4 +20,3 @@ var userlistUrl=website+'/user/list';
 
 var apkdownUrl='https://www.lanzous.com/i57wv1g';
 var w_apkdownUrl=domin+'/apkdown.html';
-var version='1.12';
