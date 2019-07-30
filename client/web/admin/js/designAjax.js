@@ -6,10 +6,10 @@ var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
-	verification();
-	showAdmin();
+	// verification();
+	// showAdmin();
 	document.cookie = setCookie("biaoji", 0, "3");
-	designMain();
+	// designMain();
 }
 
 function designMain() {
@@ -65,6 +65,7 @@ function designMain() {
 						"<td>" + list.date + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id +','+list.title "])'>删除</a> " +
 						"</td>" +
 						"</tr>";
 
@@ -152,46 +153,63 @@ function download(type, downList) {
 }
 
 //删除
-function del(id, title) {
+function delFile(id, title) {
 	console.log(id, title);
 	var msg = "您真的确定要删除《" + title + "》吗？";
 	if (!confirm(msg)) {
 		window.event.returnValue = false;
 	} else {
 		console.log("已经执行删除");
-		var jsons = {
-			"news_id": id
-		};
-		jsons = JSON.stringify(jsons);
-		jsons = JSON.parse(jsons);
-		jsons["token"] = q,
-			console.log(jsons);
-		$.ajax({
-			url: "http://47.100.192.151:5555/news/delete",
-			type: "post",
-			cache: false,
-			datatype: "json",
-			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: jsons,
-			success: function(data) {
-				console.log(data);
-				if (data.code == 200) {
-					alert("成功删除");
-					location.replace(location.href); //成功后刷新页面
-				} else {
-					alert("删除失败！");
-				}
-			},
-			error: function(data) {
+		deleteF(-1,id)
+	}
+}
+
+//批量删除
+function delFiles() {
+	var type=-1;
+		var delList = getChkValue('word[]');
+		console.log(delList);
+	if (delList.length < 1) {
+		alert("没有选择要删除的文件！");
+	} else {
+		var msg = "您确定要删除这" + delList.length + "个文件吗？";
+		if (!confirm(msg)) {
+			window.event.returnValue = false;
+		} else {
+			console.log("已经执行批量删除");
+			deleteF(type, delList);
+		}
+	}
+	console.log(id, title);
+	
+}
+
+
+function deleteF(type,delList){
+	var token = getCookie('token');
+	var jsons = {
+		"token": token,
+		"type": type,
+		"ids": delList,
+	};
+	$.ajax({
+		url: deleteFile,
+		type: "post",
+		cache: false,
+		datatype: "json",
+		contentType: 'application/json; charset=UTF-8',
+		data: JSON.stringify(jsons),
+		success: function(data) {
+			console.log(data);
+			if (data.code == 200) {
+				alert("成功删除");
+				location.replace(location.href); //成功后刷新页面
+			} else {
 				alert("删除失败！");
 			}
-		})
-		//					$.post("http://47.100.192.151:5555/news/delete", {
-		//							name: "news_id",
-		//							city: id
-		//						},
-		//						function(data, status) {
-		//							alert("Data: " + data + "\nStatus: " + status);
-		//						});
-	}
+		},
+		error: function(data) {
+			alert("删除失败！");
+		}
+	})
 }
