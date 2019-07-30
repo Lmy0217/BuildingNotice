@@ -117,7 +117,7 @@
 					<form name="myform" id="myform" method="post">
 						<div class="result-title">
 							<div class="result-list">
-								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a> -->
+								<a id="delFiles" href="javascript:void(0)" onclick="delFiles()"><i class="icon-font">&#xe019;</i>批量删除</a>
 								<a id="batchDown" href="javascript:void(0)" onclick="downFiles()"><i class="icon-font">&#xe009;</i>批量下载</a>
 								<a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a>
 							</div>
@@ -131,31 +131,17 @@
 									<!-- <th>采集人</th> -->
 									<th>操作</th>
 								</tr>
+
 								<!-- <tr>
-									<td class='tc'><input name='word[]' value='1' type='checkbox'></td>
-									<td>
-										title
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href="javascript:void(0)"  onclick="downFiles(1)">下载</a> 
-									</td>
-								</tr>
-								<tr>
-									<td class='tc'><input name='word[]' value='2' type='checkbox'></td>
-									<td>
-										<a target='_blank' href='' title=''> title</a>
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href='' onclick="down">下载</a> "
-									</td>
+									<td class="tc"><input name="word[]" value="53" type="checkbox"></td>
+									<td>2019-07-30 20:35:59 李文彬3</td>
+									<td>2019-07-30 20:35:59</td>
+									<td><a class="link-update" href="javascript:void(0)" onclick="downFiles([53])">下载</a> <a class="link-update"
+										 href="javascript:void(0)" onclick="delFile([53],'2019-07-30_20:35:59_李文彬3')">删除</a> </td>
 								</tr> -->
 							</table>
 							<div class="list-page" id="list_page">
-									<!-- <a href="#?page=2">
+								<!-- <a href="#?page=2">
 										< prev </a> 
 											<span class="current">1</span>
 								<a href="#?page=2">2</a>

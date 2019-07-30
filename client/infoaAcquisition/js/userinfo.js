@@ -27,6 +27,7 @@ function getFileInfoAjax() {
 				showInfo("over", data.archcount);
 				showInfo("undown", data.archnodown);
 				showInfo("downed", data.archdown);
+				showInfo("deleted", data.archdelete);
 			} else {
 				showError();
 			}
@@ -50,4 +51,5 @@ function showError() {
 	document.getElementById("over").innerText = 'NaN';
 	document.getElementById("undown").innerText = 'NaN';
 	document.getElementById("downed").innerText = 'NaN';
+	document.getElementById("deleted").innerText = 'NaN';
 }

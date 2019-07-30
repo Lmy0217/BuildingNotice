@@ -7,40 +7,59 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/comment.css" rel="stylesheet" />
+		<style>
+			.lv-bar{
+				background: #007aff;
+			}
+			.mui-bar-tab a{
+				color: whitesmoke;
+			}
+			.mui-bar-tab .mui-tab-item.mui-active{
+				color: #FAFAFA;
+			}
+			.mui-bar-tab .mui-tab-item{
+				color: 	#8B4513;
+			}
+		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title" id="title">信息预览与上传</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title">信息预览与上传</h1>
 		</header>
-		
-		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="listIndex.html">
+
+		<nav class="mui-bar mui-bar-tab lv-bar">
+			<a id="defaultTab" class="mui-tab-item mui-active lv-bar-a" href="listIndex.html">
 				<span class="mui-icon mui-icon-upload"></span>
 				<span class="mui-tab-label">未上传任务</span>
 			</a>
 			<a class="mui-tab-item" href="listIndex2.html">
-				<span class="mui-icon mui-icon-navigate"></span>
+				<span class="mui-icon mui-icon-navigate lv-bar-a"></span>
 				<span class="mui-tab-label">已上传任务</span>
 			</a>
 		</nav>
-		
-		
+
+
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/check.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			
+
 			var subpages = ['listIndex.html', 'listIndex2.html'];
 			var subpage_style = {
 				top: '45px',
 				bottom: '51px'
 			};
-			
+
 			var aniShow = {};
-			
-			 //创建子页面，首个选项卡页面显示，其它均隐藏；
+
+			//创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
+				var token = localStorage.getItem('TOKEN_TOKEN');
+				checkUser2(token);
 				var self = plus.webview.currentWebview();
 				for (var i = 0; i < 2; i++) {
 					var temp = {};
@@ -48,24 +67,16 @@
 					if (i > 0) {
 						sub.hide();
 					}
-					// else{
-					// 	temp[subpages[i]] = "true";
-					// 	mui.extend(aniShow,temp);
-					// }
-
-					/* 让新创建的webview，追加合并到当前的窗口上。合并成一个窗口。
-					 * 目的：将父子窗口合并成一个页面，实现同开同关的效果。 避免点击返回安监室，子页面先关闭，而父页面的头部和尾部没有关闭的BUG。
-					 */
 					self.append(sub);
 				}
 			});
-			 //当前激活选项
+			//当前激活选项
 			var activeTab = subpages[0];
 			var title = document.getElementById("title");
-			 //选项卡点击事件
+			//选项卡点击事件
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
 				var targetTab = this.getAttribute('href');
-				
+
 				if (targetTab == activeTab) {
 					return;
 				}
@@ -73,34 +84,72 @@
 				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 				//显示目标选项卡
 				//若为iOS平台或非首次显示，则直接显示
-				if(mui.os.ios||aniShow[targetTab]){
+				if (mui.os.ios || aniShow[targetTab]) {
 					plus.webview.show(targetTab);
-				}else{
+				} else {
 					//否则，使用fade-in动画，且保存变量
 					var temp = {};
 					temp[targetTab] = "true";
-					mui.extend(aniShow,temp);
-					plus.webview.show(targetTab,"fade-in",300);
+					mui.extend(aniShow, temp);
+					plus.webview.show(targetTab, "fade-in", 300);
 				}
 				//隐藏当前;
 				plus.webview.hide(activeTab);
 				//更改当前活跃的选项卡
 				activeTab = targetTab;
 			});
-			
-			
-			 //自定义事件，模拟点击“首页选项卡”
-//			document.addEventListener('gohome', function() {
-//				var defaultTab = document.getElementById("defaultTab");
-//				//模拟首页点击
-//				mui.trigger(defaultTab, 'tap');
-//				//切换选项卡高亮
-//				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-//				if (defaultTab !== current) {
-//					current.classList.remove('mui-active');
-//					defaultTab.classList.add('mui-active');
-//				}
-//			});
+
+			function checkUser2(token) {
+				if (typeof(token) == 'undefined') {
+					window.location.href = 'login.html'
+					localStorage.removeItem("TOKEN_TOKEN");
+					mui.openWindow({
+						url: '../login.html'
+					})
+				} else {
+					data = {};
+					data["token"] = token;
+					console.log(data);
+					$.ajax({
+						url: checkUrl,
+						cache: false,
+						type: "post",
+						datatype: "json",
+						contentType: 'application/json;charset=UTF-8',
+						data: JSON.stringify(data),
+						success: function(data) {
+							console.log(data);
+							if (data.status == "200") {
+								//根据后台返回值确定是否操作成功
+								console.log("更新令牌");
+								localStorage.setItem('TOKEN_TOKEN', data.token);
+							} else {
+								console.log("非法访问");
+								mui.alert(data.msg, '未登录', '确定', function(e) {
+									localStorage.removeItem("TOKEN_TOKEN");
+								}, 'div')
+								mui.openWindow({
+									url: '../login.html'
+								})
+							}
+						}
+					});
+				}
+
+			}
+
+			//自定义事件，模拟点击“首页选项卡”
+			//			document.addEventListener('gohome', function() {
+			//				var defaultTab = document.getElementById("defaultTab");
+			//				//模拟首页点击
+			//				mui.trigger(defaultTab, 'tap');
+			//				//切换选项卡高亮
+			//				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+			//				if (defaultTab !== current) {
+			//					current.classList.remove('mui-active');
+			//					defaultTab.classList.add('mui-active');
+			//				}
+			//			});
 		</script>
 	</body>
 
