@@ -26,6 +26,13 @@
     values (#{code,jdbcType=VARCHAR}, #{createid,jdbcType=INTEGER}, #{inviteid,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
+  <insert id="insertCodes" parameterType="java.util.HashMap">
+    insert into invite (code, createid)
+    values
+    <foreach collection="ids" index="index" item="item" open="" separator="," close="">
+        (#{item}, #{createid,jdbcType=INTEGER})
+    </foreach>
+  </insert>
   <insert id="insertSelective" parameterType="org.cst.buildingnotice.entity.Invite">
     insert into invite
     <trim prefix="(" suffix=")" suffixOverrides=",">
