@@ -61,28 +61,34 @@
 				// backa.addEventListener("tap", function() {
 				// 	mui.back();
 				// 	goHome();
-				// })
-
-				document.getElementById('submit').addEventListener("tap", function() {
+				// });
+				document.getElementById("submit").addEventListener('tap', function() {
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
 					console.log(perChk);
-					if (typeof(perChk)!=="undefined") {
-						submitInfo()
+					if (perChk.length > 0) {
+						var btnArray = ['否', '是'];
+						mui.confirm('这里的任务是提交过的，确实还要提交吗？', '信采助手', btnArray, function(e) {
+							if (e.index == 1) {
+								submitInfo();
+							} else {
+								mui.toast('您取消了提交');
+							}
+						})
 					} else {
 						mui.toast("没有选择任务");
 					}
+				});
+				document.getElementById("deleteInfo").addEventListener('tap', function() {
+					deleteInfo();
 				})
-
-				// 扩展API加载完毕后调用onPlusReady回调函数 
-
 			});
 
 			function w_showInfo() {
 				openDB();
 				plus.sqlite.selectSql({
 					name: 'info',
-					sql: 'select rowid, * from infoDB where isUp==0',
+					sql: 'select rowid, * from infoDB where isUp==1',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
 						console.log(e);
@@ -168,10 +174,11 @@
 			<!-- <div id="btnCtrl" class="mui-btn mui-btn-primary mui-btn-block">
 				应用设置
 			</div> -->
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 40px;margin-top: 5px; ">全选</button>
-			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 40px;margin-top: 5px ;">反选</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 47px;margin-top: 2px; ">全选</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 47px;margin-top: 2px ;">反选</button>
 
-			<button id="submit" class="mui-btn mui-btn-primary mui-btn-block" onclick="" style="margin: 0;margin-top: 5px;">提交</button>
+			<button id="submit" class="mui-btn mui-btn-primary mui-col-xs-6" onclick="" style="height: 48px;margin-top: 2px; ">提交</button>
+			<button id="deleteInfo" class="mui-btn mui-btn-danger mui-col-xs-6" onclick="" style="height: 48px;margin-top: 2px; ">删除</button>
 		</div>
 		<!-- </div> -->
 	</body>
