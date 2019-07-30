@@ -6,6 +6,18 @@ var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
+	// titles='avc';
+	// id=123;
+	// infoStr = "<tr>" +
+	// 	"<td class='tc'><input name='word[]' value='" + id + "' type='checkbox'></td>" +
+	// 	"<td>" + titles + "</td>" +
+	// 	"<td>" + 'list.date' + "</td>" +
+	// 	"<td>" +
+	// 	"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + id + "])'>下载</a> " +
+	// 	"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + id + "],\"" + titles + "\")'>删除</a> " +
+	// 	"</td>" +
+	// 	"</tr>";
+	// 	$("#result_info").append(infoStr);
 	verification();
 	showAdmin();
 	document.cookie = setCookie("biaoji", 0, "3");
@@ -65,7 +77,7 @@ function designMain() {
 						"<td>" + list.date + "</td>" +
 						"<td>" +
 						"<a class='link-update' href='javascript:void(0)'  onclick='downFiles([" + list.id + "])'>下载</a> " +
-						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + "],'"+list.title +"')>删除</a> " +
+						"<a class='link-update' href='javascript:void(0)'  onclick='delFile([" + list.id + "],\"" + titles + "\")'>删除</a> " +
 						"</td>" +
 						"</tr>";
 					$("#result_info").append(infoStr);
