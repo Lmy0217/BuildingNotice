@@ -63,8 +63,12 @@
 				document.getElementById('apkdown').href=apkdownUrl;
 			}
 			function chkuser(txt, name) {
+				var relue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var show = document.getElementById(name);
 				if(txt.value == "") show.innerText = "输入不能为空";
+				else if(txt.value.match(relue) == null) {
+					show.innerText = "用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线";
+				}
 				else show.style.display = "none";
 			}
 
@@ -75,12 +79,12 @@
 				//console.log(show);
 				if(txt.value == "") show.innerText = "输入不能为空";
 				else if(txt.value.match(relue) == null) {
-					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字符、数字和下划线";
+					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字母、数字和下划线";
 				} else show.style.display = "none";
 			}
 
 			function checkPwd(jsons) {
-				var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
+				var userRelue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
 				if(jsons.name.length == 0) {
 					alert("用户名不能为空");
@@ -88,8 +92,11 @@
 				} else if(jsons.pwd.length == 0) {
 					alert("密码不能为空");
 					return false;
-				} else if(jsons.pwd.match(pwdRelue) == null) {
-					alert("密码长度在8~18之间，只能包含字符、数字和下划线");
+				} else if (jsons.name.match(userRelue) == null) {
+					alert("用户名长度在3~16之间，以字母或数字开头，只能包含字符、数字和下划线");
+					return false;
+				} else if (jsons.pwd.match(pwdRelue) == null) {
+					alert("密码长度在8~18之间，以字母开头，只能包含字符、数字和下划线");
 					return false;
 				} else {
 					return true;
