@@ -73,7 +73,7 @@ function designMain() {
 				}
 				// var pagesStr = "" + data.count + " 条 " + listPage + "/" + pages + " 页"
 				if (pages > 1) {
-					pagesStr = showPage(listPage, listType, pages, listUrl);
+					pagesStr = showPage(listPage, listType, pages, "design.html");
 					$("#list_page").append(pagesStr);
 				}
 				//list_page

@@ -48,11 +48,20 @@
 					</form>
 				</div>
 			</div>
+			<p class="admin_copyright" style="text-align: left;">
+				<a >说明</a>：<br />
+				新注册用户没有任何操作权限。请联系管理员开通。之后才可以使用APP和云端的各种功能。<br />
+				注册时，用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线。<br />
+				密码以字母开头，长度在8~18之间，只能包含字母、数字和下划线。<br />
+				<br />
+				<br />
+				<br />
+			</p>
 			<p class="admin_copyright">
 				<a tabindex="5" href="login.html">登录</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a  href="#" target="_blank" id="apkdown">最新安卓安装包下载</a>
-				<br/>
-				<br/>
+				<a href="#" target="_blank" id="apkdown">最新安卓安装包下载</a>
+				<br />
+				<br />
 			</p>
 			<p class="admin_copyright">
 				<a tabindex="5" href="http://www.gasfjd.cn:8080/" target="_blank">返回首页</a> &copy; 2019 Powered by
@@ -61,15 +70,20 @@
 
 		</div>
 		<script type="text/javascript">
-			window.onload=function(){
-				var osName=getOsInfo();
+			window.onload = function() {
+				var osName = getOsInfo();
 				console.log(osName);
-				document.getElementById('imei').value=osName;
-				document.getElementById('apkdown').href=apkdownUrl;
+				document.getElementById('imei').value = osName;
+				document.getElementById('apkdown').href = apkdownUrl;
 			}
+
 			function chkuser(txt, name) {
+				var relue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var show = document.getElementById(name);
 				if(txt.value == "") show.innerText = "输入不能为空";
+				else if(txt.value.match(relue) == null) {
+					show.innerText = "用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线";
+				}
 				else show.style.display = "none";
 			}
 
@@ -78,37 +92,40 @@
 				//console.log(txt.value.match(relue));
 				var show = document.getElementById(name);
 				//console.log(show);
-				if(txt.value == "") show.innerText = "输入不能为空";
-				else if(txt.value.match(relue) == null) {
+				if (txt.value == "") show.innerText = "输入不能为空";
+				else if (txt.value.match(relue) == null) {
 					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字符、数字和下划线";
 				} else show.style.display = "none";
 			}
 
 			function checkPwd(jsons) {
-				var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
+				var userRelue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
-				if(jsons.name.length == 0) {
+				if (jsons.name.length == 0) {
 					alert("用户名不能为空");
 					return false;
-				} else if(jsons.pwd.length == 0) {
+				} else if (jsons.pwd.length == 0) {
 					alert("密码不能为空");
 					return false;
-				} else if(jsons.pwd.match(pwdRelue) == null) {
-					alert("密码长度在8~18之间，只能包含字符、数字和下划线");
+				} else if (jsons.name.match(userRelue) == null) {
+					alert("用户名长度在3~16之间，以字母或数字开头，只能包含字母、数字和下划线");
+					return false;
+				} else if (jsons.pwd.match(pwdRelue) == null) {
+					alert("密码长度在8~18之间，以字母开头，只能包含字母、数字和下划线");
 					return false;
 				} else {
 					return true;
 				}
 			}
-			
+
 			function qrpwdf(txt, name) {
 				var show = document.getElementById(name);
 				var pwd = document.getElementById("pwd");
 				// console.log(pwd.value, txt.value)
-				if(txt.value == "") {
+				if (txt.value == "") {
 					show.innerText = "请再次输入密码";
 				}
-				if(txt.value != pwd.value) {
+				if (txt.value != pwd.value) {
 					show.innerText = "两次密码输入不一致";
 				} else {
 					show.innerText = "";
@@ -127,28 +144,28 @@
 
 				//将json数组转为json 对象
 				var jsons = transformToJson(formData);
-				
+
 				$("#show3").html(JSON.stringify(jsons));
 				console.log(jsons);
 				//get是通过地址栏传参数
 				var flag = checkPwd(jsons);
-				if(flag == false) {
+				if (flag == false) {
 					//console.log("请检查您的输入");
 				} else {
 					$.ajax({
 						url: createUser,
 						// cache: false,
 						type: "post",
-						datatype:"json",
+						datatype: "json",
 						// datatype: "json",
 						// contentType: "application/x-www-form-urlencoded;charset=utf-8",
-						contentType:'application/json; charset=UTF-8',
+						contentType: 'application/json; charset=UTF-8',
 						data: JSON.stringify(jsons),
 						success: function(data) {
 							console.log(data);
-							if(data.status == "200") {
+							if (data.status == "200") {
 								//根据后台返回值确定是否操作成功
-								alert('注册成功，欢迎'+jsons.name+'!');
+								alert('注册成功，欢迎' + jsons.name + '!');
 								// document.cookie = setCookie("token", data.token, "3");
 								// document.cookie = setCookie("user", jsons.name, "3");
 								window.location.href = "login.html";
