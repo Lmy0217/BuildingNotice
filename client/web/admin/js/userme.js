@@ -33,6 +33,7 @@ function usermeMain() {
 				document.getElementById("archdown").innerText = data.archdown;
 				document.getElementById("archnodown").innerText = data.archnodown;
 				document.getElementById("archdelete").innerText = data.archdelete;
+				document.getElementById("archsee").innerText = data.archcount-data.archdelete;
 				if(data.adminname!==null){
 					document.getElementById("adminname").innerText =data.adminname;
 				}else{
