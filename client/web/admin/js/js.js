@@ -347,7 +347,7 @@ function getChkValue(chk){
  
  	if (page > 1) {
  		str = '<a href='+url+'?type='+type+'&page='+(page - 1) +'>' +'<上一页 '+'</a> ' + 
- 		'<a href='+url+'?type='+type+'page='+1 +'>'+ 1 + '</a> '  + str;
+ 		'<a href='+url+'?type='+type+'&page='+1 +'>'+ 1 + '</a> '  + str;
  	}
  
  	if (page + 4 < total) {
