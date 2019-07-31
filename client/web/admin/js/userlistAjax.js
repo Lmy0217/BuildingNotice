@@ -15,6 +15,12 @@ window.onload = function() {
 
 function userlistMain() {
 	var token = getCookie('token');
+	var roleme = getCookie('roleme');
+	var rolemin=0;
+	var rolemax=2;
+	if(roleme<=rolemax){
+		rolemax=roleme;
+	}
 	if (listType == '-') {
 		listTypec = null
 	} else {
@@ -81,7 +87,7 @@ function userlistMain() {
 							"降权" +
 							"</td>" +
 							"</tr>";
-					} else if (list.role + 1 >= 2) {
+					} else if (list.role + 1 >= rolemax) {
 						infoStr = "<tr>" +
 							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 							"<td>" + name + "</td>" +
