@@ -36,7 +36,7 @@ function verification() {
 							$("#user").append("管理员");
 						}
 						document.cookie = setCookie("token", data.token, "3");
-						document.cookie = setCookie("roleme", data.role, "3");
+						document.cookie = setCookie("perm", data.role, "3");
 					} else {
 						console.log("非法访问");
 						window.location.href = 'login.html'

@@ -15,7 +15,7 @@ window.onload = function() {
 
 function userlistMain() {
 	var token = getCookie('token');
-	var roleme = getCookie('roleme');
+	var roleme = getCookie('perm');
 	var rolemin=0;
 	var rolemax=2;
 	if(roleme<=rolemax){
