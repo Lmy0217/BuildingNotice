@@ -337,7 +337,7 @@ function getChkValue(chk){
  			str = '<a href='+url+'?type='+type+'&page='+(page - i) +'>' + (page - i) + '</a> ' + str;
  		}
  		if (page + i < total) {
- 			str = str + ' ' +'<a href='+url+'?type='+type+'page='+(page +  i) +'>'+ (page + i)+ '</a> ';
+ 			str = str + ' ' +'<a href='+url+'?type='+type+'&page='+(page +  i) +'>'+ (page + i)+ '</a> ';
  		}
  	}
  
@@ -356,7 +356,7 @@ function getChkValue(chk){
  
  	if (page < total) {
  		str = str + ' ' + '<a href='+url+'?type='+type+'&page='+(total) +'>' +total+ '</a> '+ 
- 		'<a href='+url+'?type='+type+'page='+(page +  1) +'>'+' 下一页 >'+ '</a> ';
+ 		'<a href='+url+'?type='+type+'&page='+(page +  1) +'>'+' 下一页 >'+ '</a> ';
  	}
  
  	return str;
