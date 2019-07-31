@@ -1,3 +1,7 @@
+v1.35.10
+https://www.lanzous.com/i58rzfa
+修正用户登录文案
+
 v1.35.8
 https://www.lanzous.com/i58huaf
 1. 任务上传后手机端依旧支持查看。手机端任务“消失”需要手动删除

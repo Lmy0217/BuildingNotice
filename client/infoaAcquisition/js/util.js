@@ -339,7 +339,7 @@ function getBase64Image2(img) { //传入图片路径，返回base64
 
 function checkUserPwd(data) {
 	// alert('checkuser');
-	var userRelue = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
+	var userRelue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 	var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
 	if (data.name.length == 0) {
 		alert("用户名不能为空");
@@ -348,10 +348,10 @@ function checkUserPwd(data) {
 		alert("密码不能为空");
 		return false;
 	} else if (data.name.match(userRelue) == null) {
-		alert("账户名长度在3~16之间，只能包含字符、数字和下划线");
+		alert("账户名长度在3~16之间，字母或数字开头，只能包含字母、数字和下划线");
 		return false;
 	} else if (data.pwd.match(pwdRelue) == null) {
-		alert("密码长度在8~18之间，只能包含字符、数字和下划线");
+		alert("密码长度在8~18之间，字母开头，只能包含字母、数字和下划线");
 		return false;
 	} else {
 		return true;

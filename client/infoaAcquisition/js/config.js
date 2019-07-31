@@ -9,6 +9,7 @@ var checkUser = website + '/user/token';
 var changePwd = website + '/user/pwd';
 var createUser = website + '/user/create';
 var changeRole = website + '/user/role';
+var deleteFile=website+"/archive/delete";
 
 var checkUrl = website + '/user/token';
 var imgUrl = website + '/image/upload';
@@ -19,4 +20,4 @@ var listUrl = website + '/archive/list';
 var userlistUrl = website + '/user/list';
 
 var w_apkdownUrl = domin + '/apkdown.html';
-var apkdownUrl = 'https://www.lanzous.com/i58huaf';
+var apkdownUrl = 'https://www.lanzous.com/i58rzfa';
