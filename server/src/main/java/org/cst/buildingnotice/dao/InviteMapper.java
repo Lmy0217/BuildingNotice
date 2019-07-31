@@ -19,4 +19,6 @@ public interface InviteMapper {
     int updateByPrimaryKeySelective(Invite record);
 
     int updateByPrimaryKey(Invite record);
+    
+    List<Invite> selectByCreateid(Integer createid);
 }

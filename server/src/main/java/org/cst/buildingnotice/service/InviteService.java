@@ -2,9 +2,11 @@ package org.cst.buildingnotice.service;
 
 import java.util.List;
 
-public interface InviteService {
+import org.cst.buildingnotice.entity.Invite;
 
-	public int create(String code, Integer createid);
+public interface InviteService {
 	
-	public int create(List<String> codes, Integer createid);
+	public int create(Integer createid, int count);
+	
+	public List<Invite> getInvitesByCreateid(Integer createid);
 }

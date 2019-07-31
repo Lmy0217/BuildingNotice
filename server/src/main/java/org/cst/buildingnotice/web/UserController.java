@@ -60,6 +60,7 @@ public class UserController {
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
 		}
+		// TODO remove name pattern
 		if (!Pattern.matches("^[a-zA-Z][a-zA-Z0-9]{2,15}$", name) 
 				&& !Pattern.matches("^[a-zA-Z0-9_]{8,16}$", pwd)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名或密码不符合要求！");
