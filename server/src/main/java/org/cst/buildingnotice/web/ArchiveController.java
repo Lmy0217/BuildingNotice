@@ -533,7 +533,7 @@ public class ArchiveController {
 		
 		HashMap<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("status", HttpStatus.OK.value());
-		jsonResult.put("count", idxStop - idxStart);
+		jsonResult.put("count", archs.size());
 		jsonResult.put("list", jsonList);
 		
 		return jsonResult;

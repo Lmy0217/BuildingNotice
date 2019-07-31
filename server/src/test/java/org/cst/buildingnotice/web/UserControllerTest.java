@@ -78,7 +78,7 @@
 //	public void loginTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("name", "myluo");
+//		requestBodyJSON.put("name", "test");
 //		requestBodyJSON.put("pwd", "a12345678");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/login")
@@ -145,7 +145,7 @@
 //	public void myTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "333ba9ec4040692dfdce33c52c43d6d258442560834b16b5037aed3cfbbaf1761169");
+//		requestBodyJSON.put("token", "343bd91a87ccb12f5faae6e04f6473e8e4e7d2e35255ce9e489dcdff7eb9c09673c2");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/my")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
