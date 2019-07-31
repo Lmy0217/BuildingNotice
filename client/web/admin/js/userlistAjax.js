@@ -87,7 +87,7 @@ function userlistMain() {
 							"降权" +
 							"</td>" +
 							"</tr>";
-					} else if (list.role + 1 >= rolemax) {
+					} else if (list.role + 1 > rolemax) {
 						infoStr = "<tr>" +
 							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 							"<td>" + name + "</td>" +
