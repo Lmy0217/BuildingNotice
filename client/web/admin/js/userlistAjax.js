@@ -69,7 +69,7 @@ function userlistMain() {
 					// titles = checkTitle(list.title);
 					// titles = checkTitle(titles);
 					// console.log(titles);
-					if (list.role - 1 <= 0) {
+					if (list.role - 1 < 0) {
 						infoStr = "<tr>" +
 							"<td class='tc'><input name='user[]' value='" + list.id + "' type='checkbox'></td>" +
 							"<td>" + name + "</td>" +
@@ -98,8 +98,8 @@ function userlistMain() {
 							"<td>" + name + "</td>" +
 							"<td>" + list.role + "</td>" +
 							"<td>" + list.archcount + "</td>" +
-							"<td>" + "<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role +
-								1) +
+							"<td>" +
+							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role + 1) +
 							")'>提权</a>&nbsp;&nbsp; " +
 							"<a class='link-update' href='javascript:void(0)'  onclick='chrole([" + list.id + '],' + (list.role - 1) +
 							")'>降权" +
