@@ -7,7 +7,7 @@ var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
 	verification();
-	// showAdmin();
+	showAdmin();
 	document.cookie = setCookie("biaoji", 0, "3");
 	designMain();
 }

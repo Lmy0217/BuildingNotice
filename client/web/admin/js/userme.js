@@ -6,7 +6,7 @@ var userList = ["未开通用户，请联系管理员开通", "普通用户", "�
 userList[10] = "超级管理员";
 window.onload = function() {
 	verification();
-	// showAdmin();
+	showAdmin();
 	document.cookie = setCookie("biaoji", 0, "3");
 	usermeMain();
 }
