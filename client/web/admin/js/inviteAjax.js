@@ -62,7 +62,7 @@ function inviteMain() {
 					if (list.status == 1) {
 						var sta = "已使用";
 						var name = list.invite
-					} else (list.status == 0){
+					} else if(list.status == 0){
 						var name = "无"
 						var sta = "未使用";
 					}
