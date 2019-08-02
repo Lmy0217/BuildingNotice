@@ -59,9 +59,9 @@
 //	public void listTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "333b03b98ba31dc51f5f99a272e8080329dfc2fb53b4246a247d3aa8d617f62b1055");
+//		requestBodyJSON.put("token", "333b50923ddff41c9d29392e24cc4720c5cb6610f52e393d9cffb5b29e39648bb89c");
 //		requestBodyJSON.put("type", 1);
-//		requestBodyJSON.put("page", 1);
+//		requestBodyJSON.put("page", 2);
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/invite/list")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
