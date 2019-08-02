@@ -59,10 +59,10 @@ function inviteMain() {
 					// titles = checkTitle(list.title);
 					// titles = checkTitle(titles);
 					// console.log(titles);
-					if (list.status == 1) {
+					if (list.status == 2) {
 						var sta = "已使用";
 						var name = list.invite
-					} else {
+					} else (list.status == 1){
 						var name = "无"
 						var sta = "未使用";
 					}
