@@ -69,7 +69,7 @@ function showAdmin() {
 		console.log($('#admin'));
 		$('#admin')[0].style.display = "block";
 	} else {
-		console.log('普通用户登录了');
+		console.log('普通用户登录了,等级：'+perm');
 	}
 }
 
