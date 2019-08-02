@@ -72,9 +72,6 @@
 								<li>
 									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
-								<li>
-									<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
-								</li>
 							</ul>
 						</li>
 						<li>
@@ -166,10 +163,25 @@
 						<h1>使用说明</h1>
 					</div>
 					<div class="result-content">
-						<ul class="sys-info-list">							
+						<ul class="sys-info-list">
+							<li>
+								<label class="res-lab">用户权限：</label><span class="res-info">用户分为普通用户和管理员。用户可以上传采集数据，并在一段时间后在网页端下载或者管理云端生成的报告。</span>
+							</li>
 							<div class="admin" style="display: none;">
 								<li>
-									<label class="res-lab">邀请码管理：</label><span class="res-info">管理员可以通过邀请码邀请新用户。通过邀请码开通的用户默认即为普通用户。一个邀请码对应一个用户。</span>
+									<label class="res-lab">用户权限2：</label><span class="res-info">管理员除了可以处理自己的报告外，还可以邀请用户注册，查看用户报告数和关闭用户账户。</span>
+								</li>
+								<li>
+									<label class="res-lab">邀请码管理：</label><span class="res-info">管理员可以通过邀请码邀请新用户。通过邀请码注册的用户默认即为普通用户，与该管理员绑定。一个邀请码对应一个用户。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户降权：</label><span class="res-info">普通用户降权，既无法使用文件上传与下载功能，自然也不会有文件被处理。相当与关闭账户。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户提权：</label><span class="res-info">未开通用户可以通过提权，将其设为普通用户，正常使用系统各项功能。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户提权2：</label><span class="res-info">超级管理员可以将普通用户提升为管理员。管理员不能提升用户为管理员。</span>
 								</li>
 							</div>
 						</ul>
