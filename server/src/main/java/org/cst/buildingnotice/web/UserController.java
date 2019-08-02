@@ -160,8 +160,7 @@ public class UserController {
 			{
 				put("status", HttpStatus.OK.value());
 				put("token", StringUtil.string2Hex(tokenList.get(0)));
-				// TODO role system
-				put("perm", user.getRole() >= 10 ? 2 : 1);
+				put("role", user.getRole());
 			}
 		};
 	}
