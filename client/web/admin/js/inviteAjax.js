@@ -16,7 +16,7 @@ window.onload = function() {
 function inviteMain() {
 	var token = getCookie('token');
 	var data = {
-		role: listType,
+		type: listType,
 		page: listPage,
 		token: token,
 	}
