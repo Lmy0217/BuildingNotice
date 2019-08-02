@@ -145,7 +145,7 @@
 //	public void myTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "333b58e3db364da6666cf6b3d974a4d070d0b4aac3815008e5236153ff05e4ad31c0");
+//		requestBodyJSON.put("token", "383b9123b076a470d6da5ce25bdac62f6b80521180c28530f716334bfc0de8cad3a6");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/my")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
