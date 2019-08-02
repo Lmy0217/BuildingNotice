@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.entity.Invite;
 import org.cst.buildingnotice.entity.User;
 import org.cst.buildingnotice.service.InviteService;
@@ -77,7 +78,7 @@ public class InviteController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 2) {
+		if (user.getRole() < Config.ROLE_ADMIN) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -133,20 +134,20 @@ public class InviteController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 2) {
+		if (user.getRole() < Config.ROLE_ADMIN) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		List<Invite> invites = inviteService.getInvitesByCreateid(userId);
-		if (type == 1 || type == 2) {
+		if (type == Config.STATUS_INVITE_NOUSE + 1 || type == Config.STATUS_INVITE_USED + 1) {
 			for (int i = invites.size() - 1; i >= 0; i--) {
 				if (invites.get(i).getStatus() + 1 != type) {
 					invites.remove(i);
 				}
 			}
 		}
-		int idxStart = (page - 1) * 15;
-		int idxStop = idxStart + 15;
+		int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+		int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
 		idxStop = idxStop > invites.size() ? invites.size() : idxStop;
 		
 		List<HashMap<String, Object>> jsonList = new ArrayList<HashMap<String, Object>>();

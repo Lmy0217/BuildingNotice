@@ -8,8 +8,11 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Config;
+import org.cst.buildingnotice.entity.Invite;
 import org.cst.buildingnotice.entity.User;
 import org.cst.buildingnotice.service.ArchiveService;
+import org.cst.buildingnotice.service.InviteService;
 import org.cst.buildingnotice.service.UserService;
 import org.cst.buildingnotice.util.ExceptionUtil;
 import org.cst.buildingnotice.util.SecurityUtil;
@@ -36,6 +39,9 @@ public class UserController {
 	@Autowired
 	private ArchiveService archiveService;
 	
+	@Autowired
+	private InviteService inviteService;
+	
 	@RequestMapping(value="/create", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> create(@RequestBody String jsonstring, 
@@ -52,25 +58,45 @@ public class UserController {
 		
 		String name = json.getString("name");
 		String pwd = json.getString("pwd");
-		if (name == null || pwd == null) {
+		String inviteString = json.getString("invite");
+		if (name == null || pwd == null || (Config.USE_INVITE && inviteString == null)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		Invite invite = null;
+		if (Config.USE_INVITE) {
+			invite = inviteService.getInviteByCode(inviteString);
+			if (invite == null) {
+				return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "邀请码无效！");
+			} else if (invite.getStatus() != Config.STATUS_INVITE_NOUSE) {
+				return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "邀请码已被使用！");
+			}
 		}
 		
 		List<User> userList = userService.getUserByName(name);
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
 		}
-		// TODO remove name pattern
-		if (!Pattern.matches("^[a-zA-Z][a-zA-Z0-9]{2,15}$", name) 
-				&& !Pattern.matches("^[a-zA-Z0-9_]{8,16}$", pwd)) {
+		if (!Pattern.matches(Config.PATTERN_NAME, name) 
+				&& !Pattern.matches(Config.PATTERN_PWD, pwd)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名或密码不符合要求！");
 		}
 		
 		String salt = SecurityUtil.saltGenerate();
 		pwd = SecurityUtil.encrypt(pwd, salt);
-		Integer id = userService.create(name, StringUtil.string2Hex(pwd), StringUtil.string2Hex(salt));
+		Integer id = userService.create(name, StringUtil.string2Hex(pwd), 
+				StringUtil.string2Hex(salt), Config.USE_INVITE ? Config.ROLE_BAISE : Config.ROLE_NOPERM);
 		if (id == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		if (Config.USE_INVITE) {
+			invite.setInviteid(id);
+			invite.setStatus(Config.STATUS_INVITE_USED);
+			int flag = inviteService.update(invite);
+			if (flag != 1) {
+				return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+			}
 		}
 		
 		return new HashMap<String, Object>() {
@@ -299,7 +325,7 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码错误！");
 		}
 		
-		if (!Pattern.matches("^[a-zA-Z0-9_]{8,16}$", newPwd)) {
+		if (!Pattern.matches(Config.PATTERN_PWD, newPwd)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "新密码不符合要求！");
 		}
 		
@@ -368,7 +394,7 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 10) {
+		if (user.getRole() < Config.ROLE_SUPERADMIN) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -438,7 +464,7 @@ public class UserController {
 		}
 		
 		List<Map<String, Object>> statusCount = archiveService.statusCountByUserid(userId);
-		if (statusCount.size() == 0) {
+		if (statusCount.isEmpty()) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "状态错误！");
 		}
 		
@@ -458,6 +484,11 @@ public class UserController {
 			}
 		}
 		
+		List<String> adminnameList = inviteService.getAdminNameByInviteid(userId);
+		if (adminnameList.size() > 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据错误！");
+		}
+		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("status", HttpStatus.OK.value());
 		result.put("role", user.getRole());
@@ -465,7 +496,7 @@ public class UserController {
 		result.put("archdown", archdown);
 		result.put("archnodown", archnodown);
 		result.put("archdelete", archdelete);
-		result.put("adminname", null);
+		result.put("adminname", adminnameList.isEmpty() ? null : adminnameList.get(0));
 		
 		return result;
 	}
@@ -509,33 +540,62 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (role == null) role = user.getRole() - 1;
-		
-		if (user.getRole() < 10 || user.getRole() <= role || role < 0) {
-			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
-		}
-		
-		List<User> users = userService.getUsersByRole(role);
-		
-		int idxStart = (page - 1) * 15;
-		int idxStop = idxStart + 15;
-		idxStop = idxStop > users.size() ? users.size() : idxStop;
-		
 		List<HashMap<String, Object>> jsonList = new ArrayList<HashMap<String, Object>>();
-		for (int i = idxStart; i < idxStop; i++) {
-			HashMap<String, Object> jsonObject = new HashMap<String, Object>();
-			User u = users.get(i);
-			int archCount = archiveService.countByUserid(u.getId());
-			jsonObject.put("id", u.getId());
-			jsonObject.put("name", u.getName());
-			jsonObject.put("role", u.getRole());
-			jsonObject.put("archcount", archCount);
-			jsonList.add(jsonObject);
+		int count = 0;
+		
+		if (Config.USE_INVITE) {
+			if (user.getRole() < Config.ROLE_ADMIN) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+			}
+			
+			List<HashMap<String, Object>> resultHashMap = 
+					inviteService.getUsersByCreateidAndStatus(userId, Config.STATUS_INVITE_USED);
+			
+			int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+			int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
+			idxStop = idxStop > resultHashMap.size() ? resultHashMap.size() : idxStop;
+			
+			for (int i = idxStart; i < idxStop; i++) {
+				HashMap<String, Object> jsonObject = new HashMap<String, Object>();
+				HashMap<String, Object> r = resultHashMap.get(i);
+				int archCount = archiveService.countByUserid((Integer) r.get("id"));
+				jsonObject.put("id", (Integer) r.get("id"));
+				jsonObject.put("name", (String) r.get("name"));
+				jsonObject.put("role", (Integer) r.get("role"));
+				jsonObject.put("archcount", archCount);
+				jsonList.add(jsonObject);
+			}
+			count = resultHashMap.size();
+			
+		} else {
+			if (role == null) role = user.getRole() - 1;
+			
+			if (user.getRole() < Config.ROLE_SUPERADMIN || user.getRole() <= role || role < 0) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+			}
+			
+			List<User> users = userService.getUsersByRole(role);
+			
+			int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+			int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
+			idxStop = idxStop > users.size() ? users.size() : idxStop;
+			
+			for (int i = idxStart; i < idxStop; i++) {
+				HashMap<String, Object> jsonObject = new HashMap<String, Object>();
+				User u = users.get(i);
+				int archCount = archiveService.countByUserid(u.getId());
+				jsonObject.put("id", u.getId());
+				jsonObject.put("name", u.getName());
+				jsonObject.put("role", u.getRole());
+				jsonObject.put("archcount", archCount);
+				jsonList.add(jsonObject);
+			}
+			count = users.size();
 		}
 		
 		HashMap<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("status", HttpStatus.OK.value());
-		jsonResult.put("count", users.size());
+		jsonResult.put("count", count);
 		jsonResult.put("list", jsonList);
 		
 		return jsonResult;

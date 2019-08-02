@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.entity.Archive;
 import org.cst.buildingnotice.entity.Image;
 import org.cst.buildingnotice.entity.User;
@@ -87,18 +88,18 @@ public class ImageController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		String file_name = UUID.randomUUID().toString().replace("-", "") 
 				+ "_" + file.getOriginalFilename();
-		String uploads_path = FileUtil.getRealPath(request, "/uploads/images");
+		String uploads_path = FileUtil.getRealPath(request, Config.PATH_IMAGE);
 		String file_path = uploads_path + File.separator + file_name;
 
 		InputStream in = null;
 		OutputStream out = null;
-		byte[] buffer = new byte[1024];
+		byte[] buffer = new byte[Config.SIZE_STREAM_BUFFER];
 		int len = 0;
 		try {
 			in = file.getInputStream();
@@ -173,7 +174,7 @@ public class ImageController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -194,7 +195,7 @@ public class ImageController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "图片不存在！");
 		}
 		
-		String uploads_path = FileUtil.getRealPath(request, "/uploads/images");
+		String uploads_path = FileUtil.getRealPath(request, Config.PATH_IMAGE);
 		String file_path = uploads_path + File.separator + image.getPath();
 		try {
 			file_path = new String(file_path.getBytes("gbk"), "iso8859-1");

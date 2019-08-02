@@ -14,11 +14,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public UserMapper userMapper;
 
-	public Integer create(String name, String pwd, String salt) {
+	public Integer create(String name, String pwd, String salt, Integer role) {
 		User user = new User();
 		user.setName(name);
 		user.setPwd(pwd);
 		user.setSalt(salt);
+		user.setRole(role);
 		userMapper.insertSelective(user);
 		return user.getId();
 	}

@@ -1,6 +1,7 @@
 package org.cst.buildingnotice.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.cst.buildingnotice.dao.InviteMapper;
@@ -30,5 +31,21 @@ public class InviteServiceImpl implements InviteService {
 
 	public List<Invite> getInvitesByCreateid(Integer createid) {
 		return inviteMapper.selectByCreateid(createid);
+	}
+
+	public Invite getInviteByCode(String code) {
+		return inviteMapper.selectByPrimaryKey(code);
+	}
+
+	public int update(Invite invite) {
+		return inviteMapper.updateByPrimaryKeySelective(invite);
+	}
+
+	public List<HashMap<String, Object>> getUsersByCreateidAndStatus(Integer createid, Integer status) {
+		return inviteMapper.getUsersByCreateidAndStatus(createid, status);
+	}
+
+	public List<String> getAdminNameByInviteid(Integer inviteid) {
+		return inviteMapper.getAdminNameByInviteid(inviteid);
 	}
 }
