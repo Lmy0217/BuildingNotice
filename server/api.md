@@ -23,11 +23,11 @@
 #### API地址
 [POST] /user/create
 #### POST参数 (Json)
-|参数|类型|说明|
-|-|-|-|
-|name|String|(必填) 用户名|
-|pwd|String|(必填) 密码|
-|invite|String|(必填) 邀请码|
+|参数|类型|说明|规则|
+|-|-|-|-|
+|name|String|(必填) 用户名|^\[a-zA-Z0-9\]\[a-zA-Z0-9\]{2,15}$|
+|pwd|String|(必填) 密码|^\[a-zA-Z\]\[a-zA-Z0-9_\]{7,17}$|
+|invite|String|(必填) 邀请码|^\[a-zA-Z0-9\]{8}$|
 #### 成功返回数据 (Json)
 |参数|类型|说明|
 |-|-|-|
