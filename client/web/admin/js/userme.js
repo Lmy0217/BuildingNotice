@@ -3,6 +3,8 @@ var title = "暂无内容";
 // var listPage = GetUrlParam("page");
 // 
 var userList = ["未开通用户，请联系管理员开通", "普通用户", "管理员"];
+userList[8] = "超级管理员";
+userList[9] = "超级管理员";
 userList[10] = "超级管理员";
 window.onload = function() {
 	verification();
