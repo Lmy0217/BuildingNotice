@@ -11,6 +11,9 @@ var createUser = website + '/user/create';
 var changeRole = website + '/user/role';
 var deleteFile=website+"/archive/delete";
 
+var createInvite=website+'/invite/create';
+var invitelistUrl=website+'/invite/list';
+
 var checkUrl = website + '/user/token';
 var imgUrl = website + '/image/upload';
 var upUrl = website + '/archive/create';

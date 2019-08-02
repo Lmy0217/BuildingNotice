@@ -65,11 +65,13 @@ function getCookie(cname) {
 
 function showAdmin() {
 	perm = getCookie('perm');
-	console.log(perm);
+	// console.log(perm);
 	if (perm > 1) {
 		console.log('管理员登录了,等级：'+perm);
-		console.log($('#admin'));
-		$('#admin')[0].style.display = "block";
+		var adminShow=document.getElementsByClassName("admin");
+		for(var i=0;i<adminShow.length;i++){
+			adminShow[i].style.display = "block";
+		}
 	} else {
 		console.log('普通用户登录了,等级：'+perm);
 	}

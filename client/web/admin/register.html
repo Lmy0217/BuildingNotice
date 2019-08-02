@@ -36,6 +36,11 @@
 								<input type="password" name="qrpwd" value="" id="qrpwd" onblur="qrpwdf(this,'qr_pwdMsg')" size="35" class="admin_input_style" />
 								<p id="qr_pwdMsg" style="color: red;"></p>
 							</li>
+							<li>
+								<label for="invite">邀请码：</label>
+								<input type="text" name="invite" value="" id="invite" size="35" onblur="chkinvite(this,'inviteMsg')" class="admin_input_style" />
+								<p id="inviteMsg" style="color: red; display: inline;"></p>
+							</li>
 							<li style="display: none;">
 								<label for="imei">imie：</label>
 								<input type="imei" name="imei" value="" id="imei" size="35" class="admin_input_style" />
@@ -49,8 +54,8 @@
 				</div>
 			</div>
 			<p class="admin_copyright" style="text-align: left;">
-				<a >说明</a>：<br />
-				新注册用户没有任何操作权限。请联系管理员开通。之后才可以使用APP和云端的各种功能。<br />
+				<a>说明</a>：<br />
+				新用户注册请联系管理员获得邀请码。注册后即可正常使用系统。<br />
 				注册时，用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线。<br />
 				密码以字母开头，长度在8~18之间，只能包含字母、数字和下划线。<br />
 				<br />
@@ -80,11 +85,10 @@
 			function chkuser(txt, name) {
 				var relue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var show = document.getElementById(name);
-				if(txt.value == "") show.innerText = "输入不能为空";
-				else if(txt.value.match(relue) == null) {
+				if (txt.value == "") show.innerText = "输入不能为空";
+				else if (txt.value.match(relue) == null) {
 					show.innerText = "用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线";
-				}
-				else show.style.display = "none";
+				} else show.style.display = "none";
 			}
 
 			function chkvalue(txt, name) {
@@ -98,14 +102,29 @@
 				} else show.style.display = "none";
 			}
 
+			function chkinvite(txt, name) {
+				var relue = /^[a-zA-Z0-9]{8}$/;
+				//console.log(txt.value.match(relue));
+				var show = document.getElementById(name);
+				//console.log(show);
+				if (txt.value == "") show.innerText = "输入不能为空";
+				else if (txt.value.match(relue) == null) {
+					show.innerText = "邀请码格式不对，请联系管理员";
+				} else show.style.display = "none";
+			}
+
 			function checkPwd(jsons) {
 				var userRelue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
 				var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
+				var inviteRelue = /^[a-zA-Z0-9]{8}$/;
 				if (jsons.name.length == 0) {
 					alert("用户名不能为空");
 					return false;
 				} else if (jsons.pwd.length == 0) {
 					alert("密码不能为空");
+					return false;
+				} else if (jsons.invite.length == 0) {
+					alert("邀请码不能为空");
 					return false;
 				} else if (jsons.name.match(userRelue) == null) {
 					alert("用户名长度在3~16之间，以字母或数字开头，只能包含字母、数字和下划线");
@@ -113,7 +132,11 @@
 				} else if (jsons.pwd.match(pwdRelue) == null) {
 					alert("密码长度在8~18之间，以字母开头，只能包含字母、数字和下划线");
 					return false;
-				} else {
+				} else if (jsons.invite.match(inviteRelue) == null) {
+					alert("邀请码格式不对，请联系管理员");
+					return false;
+				}
+				else {
 					return true;
 				}
 			}

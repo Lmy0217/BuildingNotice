@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="js/check.js"></script>
 		<script type="text/javascript" src="js/userme.js"></script>
 		<script type="text/javascript" src="js/jump.js"></script>
-		
+
 		<script type="text/javascript">
 			// window.onload = function() {
 			// 	verification();
@@ -72,6 +72,9 @@
 								<li>
 									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
+								<li>
+									<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
+								</li>
 							</ul>
 						</li>
 						<li>
@@ -83,12 +86,15 @@
 								<li>
 									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
 								</li>
-								<div id="admin" style="display: none;">
+								<div class="admin" style="display: none;">
 									<li>
 										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
 									</li>
+									<li>
+										<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
+									</li>
 								</div>
-								
+
 								<!-- <li>
 									<a href="design.html?type=7&page=1"><i class="icon-font">&#xe046;</i>修改联系我们</a>
 								</li> -->
@@ -139,13 +145,15 @@
 								<label class="res-lab">其中，</label>
 							</li>
 							<li>
-								<label class="res-lab">可下载报告：</label><span class="res-info" id="archsee">暂无</span>份<label class="res-lab">已删除报告：</label><span class="res-info" id="archdelete">暂无</span>份
+								<label class="res-lab">可下载报告：</label><span class="res-info" id="archsee">暂无</span>份<label class="res-lab">已删除报告：</label><span
+								 class="res-info" id="archdelete">暂无</span>份
 							</li>
 							<li>
 								<label class="res-lab">可下载报告中，</label>
 							</li>
 							<li>
-								<label class="res-lab">已下载：</label><span class="res-info" id="archdown">暂无</span>份<label class="res-lab">未下载：</label><span class="res-info" id="archnodown">暂无</span>份
+								<label class="res-lab">已下载：</label><span class="res-info" id="archdown">暂无</span>份<label class="res-lab">未下载：</label><span
+								 class="res-info" id="archnodown">暂无</span>份
 							</li>
 							<li>
 								<label class="res-lab">上级管理员：</label><span class="res-info" id="adminname">暂无</span>
@@ -154,19 +162,21 @@
 					</div>
 				</div>
 				<div class="result-wrap">
-					<!-- <div class="result-title">
-						<h1>使用帮助</h1>
+					<div class="result-title">
+						<h1>使用说明</h1>
 					</div>
 					<div class="result-content">
-						<ul class="sys-info-list">
-							<li>
-								<!-- <label class="res-lab">更多模板：</label><span class="res-info"><a href="http://www.mycodes.net/" target="_blank">源码之家</a></span> 
-							</li>
+						<ul class="sys-info-list">							
+							<div class="admin" style="display: none;">
+								<li>
+									<label class="res-lab">邀请码管理：</label><span class="res-info">管理员可以通过邀请码邀请新用户。通过邀请码开通的用户默认即为普通用户。一个邀请码对应一个用户。</span>
+								</li>
+							</div>
 						</ul>
-					</div> -->
+					</div>
 				</div>
 			</div>
-			<!--/main-->
+			<!-- /main -->
 		</div>
 	</body>
 

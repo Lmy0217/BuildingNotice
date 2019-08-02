@@ -3,6 +3,8 @@ var title = "暂无内容";
 // var listPage = GetUrlParam("page");
 // 
 var userList = ["未开通用户，请联系管理员开通", "普通用户", "管理员"];
+userList[8] = "超级管理员";
+userList[9] = "超级管理员";
 userList[10] = "超级管理员";
 window.onload = function() {
 	verification();
@@ -44,8 +46,8 @@ function usermeMain() {
 				var biaoji = getCookie("biaoji");
 				sleep(1000);
 				if (biaoji > 5) {
-					console.log("访问出错！");
-					window.location.href = 'login.html'
+					console.log("访问出错！#err"+data.msg);
+					// window.location.href = 'login.html'
 				} else {
 					document.cookie = setCookie("biaoji", biaoji + 1, "3");
 					usermeMain();
