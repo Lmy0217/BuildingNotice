@@ -9,7 +9,7 @@ var listList = ["全部用户", "未开通用户", "普通用户"];
 window.onload = function() {
 	verification();
 	document.cookie = setCookie("biaoji", 0, "3");
-	showAdmin();
+	// showAdmin();
 	userlistMain();
 }
 
