@@ -40,7 +40,7 @@ function verification() {
 						// document.cookie = setCookie("perm", data.role, "3");
 					} else {
 						console.log("非法访问");
-						window.location.href = 'login.html'
+						// window.location.href = 'login.html'
 					}
 				}
 			});
