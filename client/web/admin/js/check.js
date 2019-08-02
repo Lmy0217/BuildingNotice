@@ -65,7 +65,7 @@ function getCookie(cname) {
 
 function showAdmin() {
 	perm = getCookie('perm');
-	console.log(perm);
+	// console.log(perm);
 	if (perm > 1) {
 		console.log('管理员登录了,等级：'+perm);
 		console.log($('#admin'));
