@@ -47,7 +47,7 @@ function usermeMain() {
 				sleep(1000);
 				if (biaoji > 5) {
 					console.log("访问出错！#err"+data.msg);
-					// window.location.href = 'login.html'
+					window.location.href = 'login.html'
 				} else {
 					document.cookie = setCookie("biaoji", biaoji + 1, "3");
 					usermeMain();
