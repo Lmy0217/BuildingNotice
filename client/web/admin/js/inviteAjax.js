@@ -76,7 +76,7 @@ function inviteMain() {
 					$("#result_info").append(infoStr);
 				}
 				if (pages > 1) {
-					pagesStr = showPage(listPage, listTypec, pages, "userlist.html");
+					pagesStr = showPage(listPage, listType, pages, "userlist.html");
 					$("#list_page").append(pagesStr);
 				}
 				//list_page
