@@ -463,9 +463,6 @@ public class UserController {
 		}
 		
 		List<Map<String, Object>> statusCount = archiveService.statusCountByUserid(userId);
-		if (statusCount.isEmpty()) {
-			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "状态错误！");
-		}
 		
 		long archdown = 0, archnodown = 0, archdelete = 0;
 		for (Map<String, Object> countMap : statusCount) {
