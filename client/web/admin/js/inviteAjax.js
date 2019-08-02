@@ -129,7 +129,7 @@ function newinvite() {
 					console.log(data);
 					if (data.status == 200) {
 						alert("成功申请了"+ num + "个邀请码。");
-						// location.replace(location.href); //成功后刷新页面
+						location.replace(location.href); //成功后刷新页面
 					} else {
 						alert("申请邀请码失败！<br/>err#" + data.msg+" 多次失败请联系管理员。");
 					}
