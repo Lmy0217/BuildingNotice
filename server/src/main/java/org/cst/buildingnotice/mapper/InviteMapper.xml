@@ -16,6 +16,26 @@
     from invite
     where code = #{code,jdbcType=VARCHAR}
   </select>
+  <select id="getUsersByCreateidAndStatus" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select 
+        id, name, role
+    from invite, user
+    where createid = #{createid,jdbcType=INTEGER} and inviteid = id and invite.status = #{status,jdbcType=INTEGER}
+    order by code
+  </select>
+  <select id="getAdminNameByInviteid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select 
+        name
+    from invite, user
+    where inviteid = #{inviteid,jdbcType=INTEGER} and createid = id
+  </select>
+  <select id="selectByCreateid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invite
+    where createid = #{createid,jdbcType=INTEGER}
+    order by code
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from invite
     where code = #{code,jdbcType=VARCHAR}
@@ -29,7 +49,7 @@
   <insert id="insertCodes" parameterType="java.util.HashMap">
     insert into invite (code, createid)
     values
-    <foreach collection="ids" index="index" item="item" open="" separator="," close="">
+    <foreach collection="codes" index="index" item="item" open="" separator="," close="">
         (#{item}, #{createid,jdbcType=INTEGER})
     </foreach>
   </insert>

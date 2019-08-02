@@ -113,7 +113,11 @@ CREATE TABLE `invite`  (
   `createid` int(11) NOT NULL COMMENT '生成用户 Id',
   `inviteid` int(11) NULL DEFAULT NULL COMMENT '被邀请用户 Id',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态',
-  PRIMARY KEY (`code`) USING BTREE
+  PRIMARY KEY (`code`) USING BTREE,
+  INDEX `createid`(`createid`) USING BTREE,
+  INDEX `inviteid`(`inviteid`) USING BTREE,
+  CONSTRAINT `invite_ibfk_1` FOREIGN KEY (`createid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `invite_ibfk_2` FOREIGN KEY (`inviteid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '邀请码' ROW_FORMAT = Dynamic;
 
 -- ----------------------------

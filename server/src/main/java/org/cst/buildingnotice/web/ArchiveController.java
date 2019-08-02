@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.config.Template;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 import org.cst.buildingnotice.entity.Damage;
@@ -132,7 +133,7 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -226,7 +227,7 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -246,9 +247,9 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
 		
-		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
-		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
-		String template_path = FileUtil.getRealPath(request, "/uploads/template");
+		String archive_path = FileUtil.getRealPath(request, Config.PATH_ARCHIVE);
+		String imgs_path = FileUtil.getRealPath(request, Config.PATH_IMAGE);
+		String template_path = FileUtil.getRealPath(request, Config.PATH_TEMPLATE);
 		if (archive_path == null || imgs_path == null || template_path == null) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
@@ -367,7 +368,7 @@ public class ArchiveController {
 		
 		String zip_file_name = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
 				.format(new Date()) + "_" + String.format("%08d", userId) + ".zip";
-		String zip_path = FileUtil.getRealPath(request, "/downloads/zip");
+		String zip_path = FileUtil.getRealPath(request, Config.PATH_ZIP);
 		if (zip_path == null) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
@@ -395,7 +396,7 @@ public class ArchiveController {
 		
 		for (int i = 0; i < archiveList.size(); i++) {
 			ArchiveWithBLOBs archiveWithBLOBs = archiveList.get(i);
-			archiveWithBLOBs.setStatus(1);
+			archiveWithBLOBs.setStatus(Config.STATUS_ARCHIVE_DOWNED);
 			int flag = archiveService.updateByPrimaryKeyWithBLOBs(archiveWithBLOBs);
 			if (flag != 1) {
 				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
@@ -448,7 +449,7 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -503,19 +504,21 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		List<ArchiveWithBLOBs> archs = archiveService.getArchivesByUserid(userId);
 		for (int i = archs.size() - 1; i >= 0; i--) {
 			if (archs.get(i).getStatus() == -1 || 
-					((type == 1 || type == 2) && archs.get(i).getStatus() + 1 != type)) {
+					((type == Config.STATUS_ARCHIVE_NODOWN + 1 || 
+					type == Config.STATUS_ARCHIVE_DOWNED + 1) 
+							&& archs.get(i).getStatus() + 1 != type)) {
 				archs.remove(i);
 			}
 		}
-		int idxStart = (page - 1) * 15;
-		int idxStop = idxStart + 15;
+		int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+		int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
 		idxStop = idxStop > archs.size() ? archs.size() : idxStop;
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

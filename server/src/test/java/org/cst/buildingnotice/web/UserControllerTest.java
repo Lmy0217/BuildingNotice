@@ -78,7 +78,7 @@
 //	public void loginTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("name", "test");
+//		requestBodyJSON.put("name", "myluo");
 //		requestBodyJSON.put("pwd", "a12345678");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/login")
@@ -145,9 +145,26 @@
 //	public void myTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "343bd91a87ccb12f5faae6e04f6473e8e4e7d2e35255ce9e489dcdff7eb9c09673c2");
+//		requestBodyJSON.put("token", "333b58e3db364da6666cf6b3d974a4d070d0b4aac3815008e5236153ff05e4ad31c0");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/my")
+//	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//		
+//		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
+//	
+//	//@Test
+//	public void listTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		requestBodyJSON.put("token", "333b58e3db364da6666cf6b3d974a4d070d0b4aac3815008e5236153ff05e4ad31c0");
+//		requestBodyJSON.put("page", 1);
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/list")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
 //	            .accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
 //		
