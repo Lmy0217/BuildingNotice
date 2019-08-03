@@ -6,6 +6,8 @@ public class Config {
 	
 	public final static int COUNT_PAGE_ITEM = 15;
 	
+	public final static int LIMIT_MAX_CREATE_INVITE = 10;
+	
 	public final static int SIZE_STREAM_BUFFER = 1024;
 
 	public final static String PATH_TEMPLATE = "/uploads/template";

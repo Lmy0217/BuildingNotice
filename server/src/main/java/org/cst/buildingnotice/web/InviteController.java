@@ -56,8 +56,8 @@ public class InviteController {
 		if (hexToken == null || count == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
-		if (count < 1) {
-			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "非法参数！");
+		if (count < 1 || count > Config.LIMIT_MAX_CREATE_INVITE) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "个数范围 1-" + Config.LIMIT_MAX_CREATE_INVITE + "！");
 		}
 		
 		String token = StringUtil.hex2String(hexToken);
