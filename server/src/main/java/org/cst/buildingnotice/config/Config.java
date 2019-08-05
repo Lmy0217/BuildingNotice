@@ -35,6 +35,9 @@ public class Config {
 	public final static String EMAIL_ACCOUNT = "admin@gasfjd.cn";
 	public final static String EMAIL_PWD = "Q63LO!J1irSNY09g";
 	
-	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080/";
-	public final static String ROOT_NAME = "危房信息采集系统";
+	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080";
+	public final static String ROOT_NAME = "危房信息采集";
+	public final static String NAME_SHORT = ROOT_NAME;
+	public final static String NAME_SYSTEM = NAME_SHORT + "系统";
+	public final static String NAME_TEAM = NAME_SHORT + "团队";
 }

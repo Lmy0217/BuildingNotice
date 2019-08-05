@@ -1,5 +1,6 @@
 package org.cst.buildingnotice.util;
 
+import org.cst.buildingnotice.config.Config;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,6 +12,6 @@ public class EmailTest {
 
 	@Test
 	public void sendEmailTest() {
-		EmailUtil.sendEmail("lmy0217@126.com", "test", "测试");
+		EmailUtil.sendVerify("lmy0217@126.com", "myluo", Config.ROOT_HOST);
 	}
 }
