@@ -29,4 +29,12 @@ public class Config {
 	public final static int STATUS_ARCHIVE_NODOWN = 0;
 	public final static int STATUS_ARCHIVE_DOWNED = 1;
 	public final static int STATUS_ARCHIVE_DELETE = -1; // Mapper used
+	
+	public final static String EMAIL_SMTP_HOST = "smtp.ym.163.com";
+	public final static int EMAIL_SMTP_PORT = 994;
+	public final static String EMAIL_ACCOUNT = "admin@gasfjd.cn";
+	public final static String EMAIL_PWD = "Q63LO!J1irSNY09g";
+	
+	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080/";
+	public final static String ROOT_NAME = "危房信息采集系统";
 }
