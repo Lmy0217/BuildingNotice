@@ -51,6 +51,7 @@ public class InviteController {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
 		}
 		
+		// TODO try get
 		String hexToken = json.getString("token");
 		Integer count = json.getInteger("count");
 		if (hexToken == null || count == null) {
