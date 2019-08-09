@@ -5,14 +5,16 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="pwdstatus" jdbcType="VARCHAR" property="pwdstatus" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="role" jdbcType="INTEGER" property="role" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="device" jdbcType="VARCHAR" property="device" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, pwd, salt, token, role, device, status
+    id, name, pwd, pwdstatus, salt, token, role, email, device, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -39,11 +41,13 @@
   </delete>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.User">
     insert into user (id, name, pwd, 
-      salt, token, role, 
-      device, status)
+      pwdstatus, salt, token, 
+      role, email, device, 
+      status)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, 
-      #{device,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+      #{pwdstatus,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+      #{role,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{device,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.cst.buildingnotice.entity.User">
     insert into user
@@ -57,6 +61,9 @@
       <if test="pwd != null">
         pwd,
       </if>
+      <if test="pwdstatus != null">
+        pwdstatus,
+      </if>
       <if test="salt != null">
         salt,
       </if>
@@ -65,6 +72,9 @@
       </if>
       <if test="role != null">
         role,
+      </if>
+      <if test="email != null">
+        email,
       </if>
       <if test="device != null">
         device,
@@ -83,6 +93,9 @@
       <if test="pwd != null">
         #{pwd,jdbcType=VARCHAR},
       </if>
+      <if test="pwdstatus != null">
+        #{pwdstatus,jdbcType=VARCHAR},
+      </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
       </if>
@@ -91,6 +104,9 @@
       </if>
       <if test="role != null">
         #{role,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="device != null">
         #{device,jdbcType=VARCHAR},
@@ -109,6 +125,9 @@
       <if test="pwd != null">
         pwd = #{pwd,jdbcType=VARCHAR},
       </if>
+      <if test="pwdstatus != null">
+        pwdstatus = #{pwdstatus,jdbcType=VARCHAR},
+      </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
       </if>
@@ -117,6 +136,9 @@
       </if>
       <if test="role != null">
         role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="device != null">
         device = #{device,jdbcType=VARCHAR},
@@ -131,9 +153,11 @@
     update user
     set name = #{name,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR},
+      pwdstatus = #{pwdstatus,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
       device = #{device,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

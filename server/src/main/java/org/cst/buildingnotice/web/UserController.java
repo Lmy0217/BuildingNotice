@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.entity.Invite;
@@ -14,6 +15,7 @@ import org.cst.buildingnotice.entity.User;
 import org.cst.buildingnotice.service.ArchiveService;
 import org.cst.buildingnotice.service.InviteService;
 import org.cst.buildingnotice.service.UserService;
+import org.cst.buildingnotice.util.EmailUtil;
 import org.cst.buildingnotice.util.ExceptionUtil;
 import org.cst.buildingnotice.util.SecurityUtil;
 import org.cst.buildingnotice.util.StringUtil;
@@ -410,6 +412,149 @@ public class UserController {
 		int flag = -1;
 		try {
 			flag = userService.updateById(otherUser);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/email", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> email(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		// TODO more test, maybe not work
+		HttpSession session = request.getSession();
+		Object email_timestamp = session.getAttribute("email_timestamp");
+		long timestamp = System.currentTimeMillis();
+		if (email_timestamp == null) {
+			session.setAttribute("email_timestamp", timestamp);
+		} else {
+			if (timestamp < (Long) email_timestamp + Config.GAP_EMAIL_SEND) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "两次邮件发送时间间隔太短！");
+			} else {
+				session.setAttribute("email_timestamp", timestamp);
+			}
+		}
+		
+		String hexToken = json.getString("token");
+		String email = json.getString("email");
+		if (hexToken == null || email == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		if (!Pattern.matches(Config.PATTERN_EMAIL, email)) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "邮箱地址不正确！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		List<String> codeList = SecurityUtil.codeEmail(userId, email);
+		if (!EmailUtil.sendVerify(email, user.getName(), Config.EMAIL_VERIFY_URL 
+				+ StringUtil.string2Hex(codeList.get(0)))) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "验证邮件发送失败！");
+		}
+		user.setEmail(email + ";" + StringUtil.string2Hex(codeList.get(1)));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/verifyemail", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> verifyemail(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String hexCode = json.getString("code");
+		if (hexCode == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String code = StringUtil.hex2String(hexCode);
+		Integer userId = SecurityUtil.getIdInCodeEmail(code);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		
+		String email = user.getEmail();
+		if (email == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		int sepIndex = email.indexOf(";");
+		if (sepIndex == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		
+		Boolean verifyFlag = SecurityUtil.verifyCodeEmail(code, 
+				StringUtil.hex2String(email.substring(sepIndex + 1)));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		user.setEmail(email.substring(0, sepIndex));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
 		} catch (Exception e) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 		}

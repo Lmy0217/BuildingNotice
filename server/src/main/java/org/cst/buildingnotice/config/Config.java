@@ -1,6 +1,12 @@
 package org.cst.buildingnotice.config;
 
 public class Config {
+	
+	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080";
+	public final static String ROOT_NAME = "危房信息采集";
+	public final static String NAME_SHORT = ROOT_NAME;
+	public final static String NAME_SYSTEM = NAME_SHORT + "系统";
+	public final static String NAME_TEAM = NAME_SHORT + "团队";
 
 	public final static boolean USE_INVITE = true;
 	
@@ -17,6 +23,7 @@ public class Config {
 	
 	public final static String PATTERN_NAME = "^[a-zA-Z][a-zA-Z0-9]{2,15}$";
 	public final static String PATTERN_PWD = "^[a-zA-Z0-9_]{8,16}$";
+	public final static String PATTERN_EMAIL = "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 	
 	public final static int ROLE_NOPERM = 0;
 	public final static int ROLE_BAISE = 1;
@@ -34,10 +41,9 @@ public class Config {
 	public final static int EMAIL_SMTP_PORT = 994;
 	public final static String EMAIL_ACCOUNT = "admin@gasfjd.cn";
 	public final static String EMAIL_PWD = "Q63LO!J1irSNY09g";
+	public final static String EMAIL_VERIFY_URL = ROOT_HOST + "/verifyemail.html?code=";
 	
-	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080";
-	public final static String ROOT_NAME = "危房信息采集";
-	public final static String NAME_SHORT = ROOT_NAME;
-	public final static String NAME_SYSTEM = NAME_SHORT + "系统";
-	public final static String NAME_TEAM = NAME_SHORT + "团队";
+	public final static long GAP_TOKEN_FALSE = 3 * 24 * 60 * 60 * 1000;
+	public final static long GAP_EMAIL_SEND = 60 * 1000;
+	public final static long GAP_EMAIL_VERIFY_FALSE = 3 * 60 * 60 * 1000;
 }
