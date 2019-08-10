@@ -2,7 +2,7 @@ package org.cst.buildingnotice.config;
 
 public class Config {
 	
-	public final static String ROOT_HOST = "http://www.gasfjd.cn:8080";
+	public final static String ROOT_HOST = "https://www.gasfjd.cn";
 	public final static String ROOT_NAME = "危房信息采集";
 	public final static String NAME_SHORT = ROOT_NAME;
 	public final static String NAME_SYSTEM = NAME_SHORT + "系统";
