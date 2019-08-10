@@ -6,6 +6,16 @@ var xianzhi = 15;
 var listList = ["全部分类", "未下文件", "已下文件"];
 
 window.onload = function() {
+	// pagesStr=showPage(1,0,3,'url')+'<br/><br/>' ;
+	// $("#list_page").append(pagesStr);
+	// pagesStr=showPage(2,0,5,'url')+'<br/><br/>'  ;
+	// $("#list_page").append(pagesStr);
+	// pagesStr=showPage(1,0,15,'url')+'<br/><br/>'  ;
+	// $("#list_page").append(pagesStr);
+	// pagesStr=showPage(8,0,15,'url')+'<br/><br/>'  ;
+	// $("#list_page").append(pagesStr);
+	// pagesStr=showPage(14,0,15,'url')+'<br/><br/>'  ;
+	// $("#list_page").append(pagesStr);
 	showAdmin();
 	designMain();	
 }
