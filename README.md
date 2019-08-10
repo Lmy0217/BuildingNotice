@@ -1,6 +1,6 @@
 # Building Notice
 
-[![Build Status](https://ci.gasfjd.cn/job/BuildingNotice/badge/icon)](http://www.gasfjd.cn:8081/job/BuildingNotice/)
+[![Build Status](https://ci.gasfjd.cn/job/BuildingNotice/badge/icon)](https://www.gasfjd.cn/job/BuildingNotice/)
 
 * [Server](server)
 * [Client](client)
