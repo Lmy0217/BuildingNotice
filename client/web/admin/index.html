@@ -15,6 +15,7 @@
 		
 		<script type="text/javascript">
 			window.onload = function() {
+				verification();
 				runSetIndexTimes();
 				setInterval("runSetIndexTimes()", 1000);
 				showAdmin();
@@ -42,7 +43,7 @@
 				<div class="top-info-wrap">
 					<ul class="top-info-list clearfix">
 						<li>
-							<a href="#">欢迎，<span id="user"></span></a>
+							<a href="userme.html">欢迎，<span id="user"></span></a>
 						</li>
 						<li>
 							<a href="changeadmin.html">修改密码</a>
@@ -68,7 +69,7 @@
 									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>未下文件</a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
+									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
 							</ul>
 						</li>
@@ -79,11 +80,14 @@
 									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
+									<a href="userme.html"><i class="icon-font">&#xe014;</i>我的账户</a>
 								</li>
-								<div id="admin" style="display: none;">
+								<div class="admin" style="display: none;">
 									<li>
 										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
+									</li>
+									<li>
+										<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
 									</li>
 								</div>
 								
@@ -125,16 +129,16 @@
 					<div class="result-content">
 						<ul class="sys-info-list">
 							<li>
-								<label class="res-lab">操作系统</label><span class="res-info">Ubuntu</span>
+								<label class="res-lab">操作系统</label><span class="res-info">CentOS</span>
 							</li>
 							<li>
-								<label class="res-lab">运行环境</label><span class="res-info">Apache/2.2.21 (Win64) PHP/5.3.10</span>
+								<label class="res-lab">运行环境</label><span class="res-info">Tomcat/Java</span>
 							</li>
 							<li>
 								<label class="res-lab">Java运行方式</label><span class="res-info">apache2handler</span>
 							</li>
 							<li>
-								<label class="res-lab">系统版本</label><span class="res-info">v-1.0</span>
+								<label class="res-lab">系统版本</label><span class="res-info">v-2.5</span>
 							</li>
 							<!-- <li>
 								<label class="res-lab">上传附件限制</label><span class="res-info">10M</span>
@@ -146,10 +150,10 @@
 								<label class="res-lab">本机时间</label><span id="localTime" class="res-info"></span>
 							</li>
 							<li>
-								<label class="res-lab">服务器域名/IP</label><span class="res-info">http://www.gasfjd.cn:8080/</span>
+								<label class="res-lab">服务器域名</label><span class="res-info"  id="res-host">http://www.gasfjd.cn:8080/</span>
 							</li>
 							<li>
-								<label class="res-lab">Host</label><span class="res-info" id="res-host"></span>
+								<label class="res-lab">Host</label><span class="res-info">http://49.234.178.101:8080/</span>
 							</li>
 							<li>
 								<label class="res-lab">最新APP</label><a href="" id='apkdown'><span class="res-info">下载安卓</span></a>
@@ -162,12 +166,24 @@
 				</div>
 				<div class="result-wrap">
 					<div class="result-title">
-						<h1>使用帮助</h1>
+						<h1>更新日志</h1>
 					</div>
 					<div class="result-content">
 						<ul class="sys-info-list">
 							<li>
-								<!--<label class="res-lab">更多模板：</label><span class="res-info"><a href="http://www.mycodes.net/" target="_blank">源码之家</a></span>-->
+								<label class="res-lab">v2.5：</label><span class="res-info">增加邀请码注册功能</span>
+							</li>
+							<li>
+								<label class="res-lab">v2.2.3：</label><span class="res-info">修复分页不显示和错误链接的问题</span>
+							</li>
+							<li>
+								<label class="res-lab">v2.2：</label><span class="res-info">增加文章删除和批量删除功能</span>
+							</li>
+							<li>
+								<label class="res-lab">v2.0：</label><span class="res-info">完成多级账户管理</span>
+							</li>
+							<li>
+								<label class="res-lab">v1.0：</label><span class="res-info">搭建页面，完成基础功能。实现用户注册，登录，文件浏览与下载等功能。</span>
 							</li>
 						</ul>
 					</div>

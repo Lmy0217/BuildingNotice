@@ -56,10 +56,26 @@
     from archive
     where userid = #{userid,jdbcType=INTEGER}
   </select>
+  <select id="statusCountByUserid" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select 
+      status,
+      count(*)
+    from archive
+    where userid = #{userid,jdbcType=INTEGER}
+    group by status
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from archive
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <update id="deleteByIdsAndUserid" parameterType="java.util.HashMap">
+    update archive
+    set status = -1
+    where userid = #{userid,jdbcType=INTEGER} and id in
+    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+  </update>
   <insert id="insert" parameterType="org.cst.buildingnotice.entity.ArchiveWithBLOBs">
     insert into archive (id, unit, phone, 
       material, addr, hold, 

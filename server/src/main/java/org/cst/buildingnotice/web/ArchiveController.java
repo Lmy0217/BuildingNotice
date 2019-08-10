@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.config.Template;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 import org.cst.buildingnotice.entity.Damage;
@@ -132,7 +133,7 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -226,7 +227,7 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -246,9 +247,9 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgEntity(HttpStatus.BAD_REQUEST, "缺少必要参数！");
 		}
 		
-		String archive_path = FileUtil.getRealPath(request, "/downloads/archive");
-		String imgs_path = FileUtil.getRealPath(request, "/uploads/images");
-		String template_path = FileUtil.getRealPath(request, "/uploads/template");
+		String archive_path = FileUtil.getRealPath(request, Config.PATH_ARCHIVE);
+		String imgs_path = FileUtil.getRealPath(request, Config.PATH_IMAGE);
+		String template_path = FileUtil.getRealPath(request, Config.PATH_TEMPLATE);
 		if (archive_path == null || imgs_path == null || template_path == null) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
@@ -314,7 +315,7 @@ public class ArchiveController {
 				String img_path = imgs_path + File.separator + imgs.get(j).getPath();
 				System.out.println(img_path);
 				int width = imgs.size() == 1 ? 540 : 250;
-				int height = imgs.size() == 1 ? 300 : 135;
+				int height = imgs.size() == 1 ? 280 : 115;
 				data.put("image" + j, new PictureRenderData(width, height, img_path));
 				data.put("imagedepict" + j, imgs.get(j).getDepict());
 			}
@@ -367,7 +368,7 @@ public class ArchiveController {
 		
 		String zip_file_name = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
 				.format(new Date()) + "_" + String.format("%08d", userId) + ".zip";
-		String zip_path = FileUtil.getRealPath(request, "/downloads/zip");
+		String zip_path = FileUtil.getRealPath(request, Config.PATH_ZIP);
 		if (zip_path == null) {
 			return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "服务器路径错误！");
 		}
@@ -395,7 +396,7 @@ public class ArchiveController {
 		
 		for (int i = 0; i < archiveList.size(); i++) {
 			ArchiveWithBLOBs archiveWithBLOBs = archiveList.get(i);
-			archiveWithBLOBs.setStatus(1);
+			archiveWithBLOBs.setStatus(Config.STATUS_ARCHIVE_DOWNED);
 			int flag = archiveService.updateByPrimaryKeyWithBLOBs(archiveWithBLOBs);
 			if (flag != 1) {
 				return ExceptionUtil.getMsgEntity(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
@@ -408,6 +409,60 @@ public class ArchiveController {
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(body, headers, HttpStatus.OK);
 		
 		return response;
+	}
+	
+	@RequestMapping(value = "/delete", produces = { "application/json; charset=UTF-8" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		JSONArray idsJson = json.getJSONArray("ids");
+		String hexToken = json.getString("token");
+		if (idsJson == null || hexToken == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		if (user.getRole() < Config.ROLE_BAISE) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+		}
+		
+		List<Integer> ids = idsJson.toJavaList(Integer.class);
+		int count = archiveService.deleteByIdsAndUserid(ids, userId);
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+				put("count", count);
+			}
+		};
 	}
 	
 	@RequestMapping(value="/list", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
@@ -449,20 +504,21 @@ public class ArchiveController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 1) {
+		if (user.getRole() < Config.ROLE_BAISE) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
 		List<ArchiveWithBLOBs> archs = archiveService.getArchivesByUserid(userId);
-		if (type == 1 || type == 2) {
-			for (int i = archs.size() - 1; i >= 0; i--) {
-				if (archs.get(i).getStatus() + 1 != type) {
-					archs.remove(i);
-				}
+		for (int i = archs.size() - 1; i >= 0; i--) {
+			if (archs.get(i).getStatus() == -1 || 
+					((type == Config.STATUS_ARCHIVE_NODOWN + 1 || 
+					type == Config.STATUS_ARCHIVE_DOWNED + 1) 
+							&& archs.get(i).getStatus() + 1 != type)) {
+				archs.remove(i);
 			}
 		}
-		int idxStart = (page - 1) * 15;
-		int idxStop = idxStart + 15;
+		int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+		int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
 		idxStop = idxStop > archs.size() ? archs.size() : idxStop;
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -480,7 +536,7 @@ public class ArchiveController {
 		
 		HashMap<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("status", HttpStatus.OK.value());
-		jsonResult.put("count", idxStop - idxStart);
+		jsonResult.put("count", archs.size());
 		jsonResult.put("list", jsonList);
 		
 		return jsonResult;

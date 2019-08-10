@@ -6,7 +6,7 @@ import org.cst.buildingnotice.entity.User;
 
 public interface UserService {
 
-	public Integer create(String name, String pwd, String salt);
+	public Integer create(String name, String pwd, String salt, Integer role);
 	
 	public User getUserById(int id);
 	

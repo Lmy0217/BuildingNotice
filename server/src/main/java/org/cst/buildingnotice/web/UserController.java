@@ -7,10 +7,15 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.cst.buildingnotice.config.Config;
+import org.cst.buildingnotice.entity.Invite;
 import org.cst.buildingnotice.entity.User;
 import org.cst.buildingnotice.service.ArchiveService;
+import org.cst.buildingnotice.service.InviteService;
 import org.cst.buildingnotice.service.UserService;
+import org.cst.buildingnotice.util.EmailUtil;
 import org.cst.buildingnotice.util.ExceptionUtil;
 import org.cst.buildingnotice.util.SecurityUtil;
 import org.cst.buildingnotice.util.StringUtil;
@@ -36,6 +41,9 @@ public class UserController {
 	@Autowired
 	private ArchiveService archiveService;
 	
+	@Autowired
+	private InviteService inviteService;
+	
 	@RequestMapping(value="/create", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> create(@RequestBody String jsonstring, 
@@ -52,24 +60,45 @@ public class UserController {
 		
 		String name = json.getString("name");
 		String pwd = json.getString("pwd");
-		if (name == null || pwd == null) {
+		String inviteString = json.getString("invite");
+		if (name == null || pwd == null || (Config.USE_INVITE && inviteString == null)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		Invite invite = null;
+		if (Config.USE_INVITE) {
+			invite = inviteService.getInviteByCode(inviteString);
+			if (invite == null) {
+				return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "邀请码无效！");
+			} else if (invite.getStatus() != Config.STATUS_INVITE_NOUSE) {
+				return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "邀请码已被使用！");
+			}
 		}
 		
 		List<User> userList = userService.getUserByName(name);
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
 		}
-		if (!Pattern.matches("^[a-zA-Z][a-zA-Z0-9]{2,15}$", name) 
-				&& !Pattern.matches("^[a-zA-Z0-9_]{8,16}$", pwd)) {
+		if (!Pattern.matches(Config.PATTERN_NAME, name) 
+				&& !Pattern.matches(Config.PATTERN_PWD, pwd)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名或密码不符合要求！");
 		}
 		
 		String salt = SecurityUtil.saltGenerate();
 		pwd = SecurityUtil.encrypt(pwd, salt);
-		Integer id = userService.create(name, StringUtil.string2Hex(pwd), StringUtil.string2Hex(salt));
+		Integer id = userService.create(name, StringUtil.string2Hex(pwd), 
+				StringUtil.string2Hex(salt), Config.USE_INVITE ? Config.ROLE_BAISE : Config.ROLE_NOPERM);
 		if (id == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		if (Config.USE_INVITE) {
+			invite.setInviteid(id);
+			invite.setStatus(Config.STATUS_INVITE_USED);
+			int flag = inviteService.update(invite);
+			if (flag != 1) {
+				return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+			}
 		}
 		
 		return new HashMap<String, Object>() {
@@ -133,8 +162,7 @@ public class UserController {
 			{
 				put("status", HttpStatus.OK.value());
 				put("token", StringUtil.string2Hex(tokenList.get(0)));
-				// TODO role system
-				put("perm", user.getRole() >= 10 ? 2 : 1);
+				put("role", user.getRole());
 			}
 		};
 	}
@@ -298,7 +326,7 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码错误！");
 		}
 		
-		if (!Pattern.matches("^[a-zA-Z0-9_]{8,16}$", newPwd)) {
+		if (!Pattern.matches(Config.PATTERN_PWD, newPwd)) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "新密码不符合要求！");
 		}
 		
@@ -367,7 +395,7 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (user.getRole() < 10) {
+		if (user.getRole() < Config.ROLE_SUPERADMIN) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
 		}
 		
@@ -397,6 +425,221 @@ public class UserController {
 				put("status", HttpStatus.OK.value());
 			}
 		};
+	}
+	
+	@RequestMapping(value="/email", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> email(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		// TODO more test, maybe not work
+		HttpSession session = request.getSession();
+		Object email_timestamp = session.getAttribute("email_timestamp");
+		long timestamp = System.currentTimeMillis();
+		if (email_timestamp == null) {
+			session.setAttribute("email_timestamp", timestamp);
+		} else {
+			if (timestamp < (Long) email_timestamp + Config.GAP_EMAIL_SEND) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "两次邮件发送时间间隔太短！");
+			} else {
+				session.setAttribute("email_timestamp", timestamp);
+			}
+		}
+		
+		String hexToken = json.getString("token");
+		String email = json.getString("email");
+		if (hexToken == null || email == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		if (!Pattern.matches(Config.PATTERN_EMAIL, email)) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "邮箱地址不正确！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		List<String> codeList = SecurityUtil.codeEmail(userId, email);
+		if (!EmailUtil.sendVerify(email, user.getName(), Config.EMAIL_VERIFY_URL 
+				+ StringUtil.string2Hex(codeList.get(0)))) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "验证邮件发送失败！");
+		}
+		user.setEmail(email + ";" + StringUtil.string2Hex(codeList.get(1)));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/verifyemail", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> verifyemail(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String hexCode = json.getString("code");
+		if (hexCode == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String code = StringUtil.hex2String(hexCode);
+		Integer userId = SecurityUtil.getIdInCodeEmail(code);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		
+		String email = user.getEmail();
+		if (email == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		int sepIndex = email.indexOf(";");
+		if (sepIndex == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		
+		Boolean verifyFlag = SecurityUtil.verifyCodeEmail(code, 
+				StringUtil.hex2String(email.substring(sepIndex + 1)));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		user.setEmail(email.substring(0, sepIndex));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/my", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> my(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String hexToken = json.getString("token");
+		if (hexToken == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String token = StringUtil.hex2String(hexToken);
+		Integer userId = SecurityUtil.getIdInToken(token);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		if (user.getToken() == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "未登录！");
+		}
+		Boolean verifyFlag = SecurityUtil.verifyToken(token, StringUtil.hex2String(user.getToken()));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
+		}
+		
+		List<Map<String, Object>> statusCount = archiveService.statusCountByUserid(userId);
+		
+		long archdown = 0, archnodown = 0, archdelete = 0;
+		for (Map<String, Object> countMap : statusCount) {
+			long value = (Long) countMap.get("count(*)");
+			switch ((Integer) countMap.get("status")) {
+			case 0:
+				archnodown = value;
+				break;
+			case 1:
+				archdown = value;
+				break;
+			case -1:
+				archdelete = value;
+				break;
+			}
+		}
+		
+		List<String> adminnameList = inviteService.getAdminNameByInviteid(userId);
+		if (adminnameList.size() > 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据错误！");
+		}
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("status", HttpStatus.OK.value());
+		result.put("role", user.getRole());
+		result.put("archcount", archdown + archnodown + archdelete);
+		result.put("archdown", archdown);
+		result.put("archnodown", archnodown);
+		result.put("archdelete", archdelete);
+		result.put("adminname", adminnameList.isEmpty() ? null : adminnameList.get(0));
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/list", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
@@ -438,33 +681,62 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
-		if (role == null) role = user.getRole() - 1;
-		
-		if (user.getRole() < 10 || user.getRole() <= role || role < 0) {
-			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
-		}
-		
-		List<User> users = userService.getUsersByRole(role);
-		
-		int idxStart = (page - 1) * 15;
-		int idxStop = idxStart + 15;
-		idxStop = idxStop > users.size() ? users.size() : idxStop;
-		
 		List<HashMap<String, Object>> jsonList = new ArrayList<HashMap<String, Object>>();
-		for (int i = idxStart; i < idxStop; i++) {
-			HashMap<String, Object> jsonObject = new HashMap<String, Object>();
-			User u = users.get(i);
-			int archCount = archiveService.countByUserid(u.getId());
-			jsonObject.put("id", u.getId());
-			jsonObject.put("name", u.getName());
-			jsonObject.put("role", u.getRole());
-			jsonObject.put("archcount", archCount);
-			jsonList.add(jsonObject);
+		int count = 0;
+		
+		if (Config.USE_INVITE) {
+			if (user.getRole() < Config.ROLE_ADMIN) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+			}
+			
+			List<HashMap<String, Object>> resultHashMap = 
+					inviteService.getUsersByCreateidAndStatus(userId, Config.STATUS_INVITE_USED);
+			
+			int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+			int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
+			idxStop = idxStop > resultHashMap.size() ? resultHashMap.size() : idxStop;
+			
+			for (int i = idxStart; i < idxStop; i++) {
+				HashMap<String, Object> jsonObject = new HashMap<String, Object>();
+				HashMap<String, Object> r = resultHashMap.get(i);
+				int archCount = archiveService.countByUserid((Integer) r.get("id"));
+				jsonObject.put("id", (Integer) r.get("id"));
+				jsonObject.put("name", (String) r.get("name"));
+				jsonObject.put("role", (Integer) r.get("role"));
+				jsonObject.put("archcount", archCount);
+				jsonList.add(jsonObject);
+			}
+			count = resultHashMap.size();
+			
+		} else {
+			if (role == null) role = user.getRole() - 1;
+			
+			if (user.getRole() < Config.ROLE_SUPERADMIN || user.getRole() <= role || role < 0) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "权限禁止！");
+			}
+			
+			List<User> users = userService.getUsersByRole(role);
+			
+			int idxStart = (page - 1) * Config.COUNT_PAGE_ITEM;
+			int idxStop = idxStart + Config.COUNT_PAGE_ITEM;
+			idxStop = idxStop > users.size() ? users.size() : idxStop;
+			
+			for (int i = idxStart; i < idxStop; i++) {
+				HashMap<String, Object> jsonObject = new HashMap<String, Object>();
+				User u = users.get(i);
+				int archCount = archiveService.countByUserid(u.getId());
+				jsonObject.put("id", u.getId());
+				jsonObject.put("name", u.getName());
+				jsonObject.put("role", u.getRole());
+				jsonObject.put("archcount", archCount);
+				jsonList.add(jsonObject);
+			}
+			count = users.size();
 		}
 		
 		HashMap<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("status", HttpStatus.OK.value());
-		jsonResult.put("count", idxStop - idxStart);
+		jsonResult.put("count", count);
 		jsonResult.put("list", jsonList);
 		
 		return jsonResult;

@@ -1,7 +1,9 @@
 package org.cst.buildingnotice.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.cst.buildingnotice.entity.Archive;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
 
@@ -23,4 +25,8 @@ public interface ArchiveMapper {
     List<ArchiveWithBLOBs> selectByUserid(Integer userid);
     
     int countByUserid(Integer userid);
+    
+    List<Map<String, Object>> statusCountByUserid(Integer userid);
+    
+    int deleteByIdsAndUserid(@Param("ids") List<Integer> ids, @Param("userid") Integer userid);
 }

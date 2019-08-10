@@ -2,6 +2,7 @@ package org.cst.buildingnotice.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.cst.buildingnotice.dao.ArchiveMapper;
 import org.cst.buildingnotice.entity.ArchiveWithBLOBs;
@@ -57,5 +58,13 @@ public class ArchiveServiceImpl implements ArchiveService {
 
 	public int countByUserid(Integer userid) {
 		return archiveMapper.countByUserid(userid);
+	}
+
+	public List<Map<String, Object>> statusCountByUserid(Integer userid) {
+		return archiveMapper.statusCountByUserid(userid);
+	}
+
+	public int deleteByIdsAndUserid(List<Integer> ids, Integer userid) {
+		return archiveMapper.deleteByIdsAndUserid(ids, userid);
 	}
 }

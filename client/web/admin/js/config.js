@@ -1,22 +1,26 @@
 // var domin='http://49.234.178.101:8080';
-var domin='http://www.gasfjd.cn:8080';
-var name='/buildingnotice';
-var website = domin+name;
+var domin = 'https://www.gasfjd.cn';
+var name = '/buildingnotice';
+var website = domin + name;
 
 var loginUrl = website + '/user/login';
-var checkUser=website+'/user/token';
-var changePwd=website+'/user/pwd';
-var createUser=website+'/user/create';
-var changeRole=website+'/user/role';
+var meUrl = website + '/user/my';
+var checkUser = website + '/user/token';
+var changePwd = website + '/user/pwd';
+var createUser = website + '/user/create';
+var changeRole = website + '/user/role';
+var deleteFile=website+"/archive/delete";
 
-var checkUrl=website+'/user/token';
+var createInvite=website+'/invite/create';
+var invitelistUrl=website+'/invite/list';
+
+var checkUrl = website + '/user/token';
 var imgUrl = website + '/image/upload';
 var upUrl = website + '/archive/create';
 
-var downUrl= website +'/archive/download';
-var listUrl=website+'/archive/list';
-var userlistUrl=website+'/user/list';
+var downUrl = website + '/archive/download';
+var listUrl = website + '/archive/list';
+var userlistUrl = website + '/user/list';
 
-var apkdownUrl='https://www.lanzous.com/i54geih';
-var w_apkdownUrl=domin+'/apkdown.html';
-var version='1.0';
+var w_apkdownUrl = domin + '/apkdown.html';
+var apkdownUrl = 'https://www.lanzous.com/i58rzfa';

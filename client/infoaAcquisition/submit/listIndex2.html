@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>采集信息浏览</title>
+		<link rel="stylesheet" href="../css/mui.min.css" type="text/css" />
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+		<style type="text/css">
+			li {
+				padding: 0.3em;
+				border-bottom: 1px solid #eaeaea;
+				text-align: left;
+			}
+
+			li:active {
+				background: #f4f4f4;
+			}
+		</style>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
+		<script type="text/javascript" src="../js/form.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/loading.js"></script>
+		<script type="text/javascript" src="../js/config.js"></script>
+		<script type="text/javascript" src="../js/submit.js"></script>
+		<script type="text/javascript">
+			//取消浏览器的所有事件，使得active的样式在手机上正常生效
+			document.addEventListener('touchstart', function() {
+				return false;
+			}, true);
+
+			mui.init({
+				/* 在页面的指定位置，加载子页面，实现卡头卡尾的效果 */
+				// subpages: [{
+				// 	url: "listInfo.html", //子页面HTML地址，支持本地地址和网络地址
+				// 	id: "listInfo.html", //子页面标志
+				// 	styles: {
+				// 		top: "45px", //子页面顶部位置(顶部选项卡默认高度45px)
+				// 		bottom: "51px", //子页面底部位置(顶部导航栏默认高度51px)
+				// 		//width:100%,//子页面宽度，默认为100%
+				// 		//height:100%,//子页面高度，默认为100%
+				// 	},
+				// 	//			      extras:{}//额外扩展参数,页面传值时使用
+				// }],
+			});
+			mui.plusReady(function() {
+				$('#scroll').scroll({
+					indicators: true //是否显示滚动条
+				});
+				mui('.mui-scroll-wrapper').scroll({
+					deceleration: 0.0005
+				}); //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+				w_showInfo();
+				// var backa = document.getElementById('goHome');
+				// backa.addEventListener("tap", function() {
+				// 	mui.back();
+				// 	goHome();
+				// });
+				document.getElementById("submit").addEventListener('tap', function() {
+					info = getForm('#' + 'infoForm');
+					var perChk = info.perChk;
+					console.log(perChk);
+					if (perChk.length > 0) {
+						var btnArray = ['否', '是'];
+						mui.confirm('这里的任务是提交过的，确实还要提交吗？', '信采助手', btnArray, function(e) {
+							if (e.index == 1) {
+								submitInfo();
+							} else {
+								mui.toast('您取消了提交');
+							}
+						})
+					} else {
+						mui.toast("没有选择任务");
+					}
+				});
+				document.getElementById("deleteInfo").addEventListener('tap', function() {
+					deleteInfo();
+				})
+			});
+
+			function w_showInfo() {
+				openDB();
+				plus.sqlite.selectSql({
+					name: 'info',
+					sql: 'select rowid, * from infoDB where isUp==1',
+					success: function(e) {
+						console.log('selectSql success: ' + JSON.stringify(e));
+						console.log(e);
+						if (e.length == 0) {
+							showInfoFail(e);
+						} else {
+							showInfo(e);
+						}
+						// closeDB();
+					},
+					fail: function(e) {
+						console.log('selectSql fail: ' + JSON.stringify(e));
+						showInfoFail(e);
+						// closeDB();
+					}
+				});
+			}
+		</script>
+	</head>
+	<body onselectstart="return false;">
+		<!-- <div class="mui-inner-wrap" style="position: relative;"> -->
+
+		<!-- <header class="mui-bar mui-bar-nav">
+			<a id="goHome" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">信息预览与上传</h1>
+		</header> -->
+		<div class="line mui-bar-nav" style="position: fixed; text-indent: 10px; height: 40px; line-height: 40px; top: 0px;padding-top: 0px;width: 100%;">
+			<div class="line" style="width:20%; float: left;">选择</div>
+			<div class="line" style="width:80%; float: right; font-weight: bold; text-align:center;">户主姓名</div>
+		</div>
+		<div class="mui-content">
+			<div id="scroll1" class="mui-scroll-wrapper" style="top: 40px; bottom: 102px;">
+				<!--MUI默认是position是absolute-->
+				<div class="mui-scroll">
+					<form id='infoForm' class="">
+						<ul id="mainList" class="mui-table-view">
+							<!-- <li class='mui-table-view-cell'><div class='mui-input-row mui-checkbox mui-left'><label>很少说话</label><input name='perChk' value='14' type='checkbox' ></div></li> -->
+						</ul>
+					</form>
+				</div>
+			</div>
+			<div class="temp" style="display: none;">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>图片1</label>
+					<input id="imgid1" name="imgid[]" value="0">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>图片2</label>
+					<input id="imgid2" name="imgid[]" value="0">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>图片3</label>
+					<input id="imgid3" name="imgid[]" value="0">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left ">
+					<label>图片4</label>
+					<input id="imgid4" name="imgid[]" value="0">
+				</div>
+				<div class="mui-input-row">
+					<label>图片</label>
+					<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>图片</label>
+					<input id='imgBlob' name="imgBlob" type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>一个周期</label>
+					<input id='wait' name="wait" type="text" class="mui-input-clear mui-input" placeholder="" value="0">
+				</div>
+				<div class="mui-input-row" id="tempwait">
+					<label>一个周期</label>
+					<!-- <input id='wait' name="wait" type="text" class="mui-input-clear mui-input" placeholder="" value="0"> -->
+				</div>
+				<div class="mui-input-row">
+					<label>结束标记</label>
+					<input id='endq' name="endq" type="text" class="mui-input-clear mui-input" placeholder="" value="0">
+				</div>
+			</div>
+		</div>
+		<div class="line mui-row" style="position: fixed;bottom: 0px; z-index: 10px;width:100%;margin: 0px;">
+			<!--需要固定在底部，所以需要用到绝对定位，另外，由于MUI本身的组件的z-index要高于我们自己的div，所以，这里需要自定义z-index，一般10就足够。-->
+			<!-- <div id="btnCtrl" class="mui-btn mui-btn-primary mui-btn-block">
+				应用设置
+			</div> -->
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(1)" style="height: 47px;margin-top: 2px; ">全选</button>
+			<button class="mui-btn mui-btn-primary mui-col-xs-6" onclick="allChk(0)" style="height: 47px;margin-top: 2px ;">反选</button>
+
+			<button id="submit" class="mui-btn mui-btn-primary mui-col-xs-6" onclick="" style="height: 48px;margin-top: 2px; ">提交</button>
+			<button id="deleteInfo" class="mui-btn mui-btn-danger mui-col-xs-6" onclick="" style="height: 48px;margin-top: 2px; ">删除</button>
+		</div>
+		<!-- </div> -->
+	</body>
+</html>

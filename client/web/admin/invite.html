@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>邀请码管理-后台管理</title>
+		<link rel="icon" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/js.js"></script>
+		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="js/check.js"></script>
+		<script type="text/javascript" src="js/inviteAjax.js"></script>
+		<script type="text/javascript" src="js/jump.js"></script>
+	</head>
+
+	<body>
+		<div class="topbar-wrap white">
+			<div class="topbar-inner clearfix">
+				<div class="topbar-logo-wrap clearfix">
+					<h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">邀请码管理</a></h1>
+					<ul class="navbar-list clearfix">
+						<li><img id="logo" src="images/favicon.png" /></li>
+						<li>
+							<a class="on" href="index.html">首页</a>
+						</li>
+						<li>
+							<a href="http://www.gasfjd.cn:8080/" target="_blank">网站首页</a>
+						</li>
+					</ul>
+				</div>
+				<div class="top-info-wrap">
+					<ul class="top-info-list clearfix">
+						<li>
+							<a href="userme.html">欢迎，<span id="user"></span></a>
+						</li>
+						<li>
+							<a href="changeadmin.html">修改密码</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="dropOut()">退出</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container clearfix">
+			<div class="sidebar-wrap">
+				<div class="sidebar-title">
+					<h1>菜单</h1>
+				</div>
+				<div class="sidebar-content">
+					<ul class="sidebar-list">
+						<li>
+							<a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>未下文件</a>
+								</li>
+								<li>
+									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
+								</li>
+								<li>
+									<a href="userme.html"><i class="icon-font">&#xe014;</i>我的账户</a>
+								</li>
+								<div class="admin" style="display: none;">
+									<li>
+										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
+									</li>
+									<li>
+										<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
+									</li>
+								</div>
+								<!-- <li>
+									<a href="index.html"><i class="icon-font">&#xe045;</i>修改招聘启事</a>
+								</li> -->
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--/sidebar-->
+			<div class="main-wrap">
+				<div class="crumb-wrap">
+					<div class="crumb-list"><i class="icon-font"></i>
+						<a href="index.html">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">邀请码管理</span></div>
+				</div>
+				<div class="search-wrap">
+					<div class="search-content">
+						<form action="#" method="post">
+							<table class="search-tab">
+								<tr>
+									<th width="120">选择分类:</th>
+									<td>
+										<select name="search-sort" id="searchSort" onchange="javascript:window.location=this.options[this.selectedIndex].value;">
+											<option value="invite.html?type=1&page=1">未使用邀请码</option>
+											<option value="invite.html?type=2&page=1">已使用邀请码</option>
+										</select>
+									</td>
+									<th width="100">申请新邀请码:</th>
+									<td><input class="common-text" placeholder="输入申请数量" name="invitenum" value="" id="invitenum" type="text"
+										 onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"></td><!-- 只允许输入正整数 -->
+									<td><input class="btn btn-primary btn2" name="sub" value="申请" type="submit" onclick="newinvite()"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				<div class="result-wrap">
+					<form name="myform" id="myform" method="post">
+						<div class="result-title">
+							<div class="result-list">
+								<!-- <a id="batchDown" href="javascript:void(0)" onclick="uprole(1)"><i class="icon-font">&#xe009;</i>批量提权</a>
+								<a id="updateOrd" href="javascript:void(0)" onclick="uprole(0)"><i class="icon-font">&#xe00a;</i>批量降权</a> -->
+							</div>
+						</div>
+						<div class="result-content">
+							<table class="result-tab" width="100%" id="result_info">
+								<tr>
+									<th class="tc" width="5%"><input class="allChoose" id='all' name="" type="checkbox"></th>
+									<!-- onclick='checkAll("all","word[]")' -->
+									<th>邀请码</th>
+									<th>使用状态</th>
+									<th>绑定用户</th>
+								</tr>
+							</table>
+							<div class="list-page" id="list_page">
+								<!-- 2 条 1/1 页
+								<a href="userlist.html?role=role&page=1">1</a> -->
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

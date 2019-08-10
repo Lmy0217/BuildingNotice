@@ -8,6 +8,7 @@ function checkUser(){
 		mui.openWindow({
 			url: '../login.html'
 		})
+		return false;
 	} else {
 		data={};
 		data["token"] = token;
@@ -25,6 +26,7 @@ function checkUser(){
 					//根据后台返回值确定是否操作成功
 					console.log("更新令牌");
 					localStorage.setItem('TOKEN_TOKEN', data.token);
+					return true;
 				} else {
 					console.log("非法访问");
 					mui.alert(data.msg,'未登录','确定',function (e) {
@@ -33,9 +35,11 @@ function checkUser(){
 					   	url: '../login.html'
 					   })
 					},'div')
+					return false;
 				}
 			}
 		});
 	}
 	
 }
+

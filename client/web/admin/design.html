@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>文章列表-后台管理</title>
+		<title>报告列表-后台管理</title>
 		<link rel="icon" href="favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="css/common.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -33,7 +33,7 @@
 				<div class="top-info-wrap">
 					<ul class="top-info-list clearfix">
 						<li>
-							<a href="#">欢迎，<span id="user"></span></a>
+							<a href="userme.html">欢迎，<span id="user"></span></a>
 						</li>
 						<li>
 							<a href="changeadmin.html">修改密码</a>
@@ -59,7 +59,7 @@
 									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>未下文件</a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-font">&#xe003;</i>我的账户</a>
+									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
 								</li>
 							</ul>
 						</li>
@@ -70,11 +70,14 @@
 									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
+									<a href="userme.html"><i class="icon-font">&#xe014;</i>我的账户</a>
 								</li>
-								<div id="admin" style="display: none;">
+								<div class="admin" style="display: none;">
 									<li>
 										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
+									</li>
+									<li>
+										<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
 									</li>
 								</div>
 								<!-- <li>
@@ -90,7 +93,7 @@
 
 				<div class="crumb-wrap">
 					<div class="crumb-list"><i class="icon-font"></i>
-						<a href="index.html">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">作品管理</span></div>
+						<a href="index.html">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">报告列表</span></div>
 				</div>
 				<div class="search-wrap">
 					<div class="search-content">
@@ -117,7 +120,7 @@
 					<form name="myform" id="myform" method="post">
 						<div class="result-title">
 							<div class="result-list">
-								<!-- <a href="insert.html"><i class="icon-font"></i>下载全部未下载文件</a> -->
+								<a id="delFiles" href="javascript:void(0)" onclick="delFiles()"><i class="icon-font">&#xe019;</i>批量删除</a>
 								<a id="batchDown" href="javascript:void(0)" onclick="downFiles()"><i class="icon-font">&#xe009;</i>批量下载</a>
 								<a id="updateOrd" href="javascript:void(0)" onclick="downFiles2(1)"><i class="icon-font">&#xe00a;</i>下载全部未下载文件</a>
 							</div>
@@ -131,31 +134,17 @@
 									<!-- <th>采集人</th> -->
 									<th>操作</th>
 								</tr>
+
 								<!-- <tr>
-									<td class='tc'><input name='word[]' value='1' type='checkbox'></td>
-									<td>
-										title
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href="javascript:void(0)"  onclick="downFiles(1)">下载</a> 
-									</td>
-								</tr>
-								<tr>
-									<td class='tc'><input name='word[]' value='2' type='checkbox'></td>
-									<td>
-										<a target='_blank' href='' title=''> title</a>
-									</td>
-									<td> data</td>
-									<td> user </td>
-									<td>
-										<a class='link-update' href='' onclick="down">下载</a> "
-									</td>
+									<td class="tc"><input name="word[]" value="53" type="checkbox"></td>
+									<td>2019-07-30 20:35:59 李文彬3</td>
+									<td>2019-07-30 20:35:59</td>
+									<td><a class="link-update" href="javascript:void(0)" onclick="downFiles([53])">下载</a> <a class="link-update"
+										 href="javascript:void(0)" onclick="delFile([53],'2019-07-30_20:35:59_李文彬3')">删除</a> </td>
 								</tr> -->
 							</table>
 							<div class="list-page" id="list_page">
-									<!-- <a href="#?page=2">
+								<!-- <a href="#?page=2">
 										< prev </a> 
 											<span class="current">1</span>
 								<a href="#?page=2">2</a>

@@ -119,9 +119,9 @@ function w_insertSQL(jsonInfo) {
 				success: function(e) {
 					console.log('insertSQL success: ' + JSON.stringify(e))
 					closeDB();
-					mui.alert('缓存成功，表单已完成！','成功','确定',function (e) {
-					   mui.back();
-					},'div')
+					mui.alert('缓存成功，表单已完成！', '成功', '确定', function(e) {
+						mui.back();
+					}, 'div')
 				},
 				fail: function(e) {
 					console.log('executeSql fail: ' + JSON.stringify(e))
@@ -256,15 +256,15 @@ function zhenliQuestion(jsonInfo, lenq) {
 	var head = ''
 	if (jsonInfo.type == 1) {
 		// 砖木结构		
-		head = creatHead(key, 5, jsonInfo)
+		head = creatHead(key, 7, jsonInfo)
 		console.log(head);
-		var relu = [1, 2, 2, 2, 2];
-		var relu2 = [0, 4, 4, 3, 2];
+		var relu = [1, 2, 2, 2, 2, 2, 0];
+		var relu2 = [0, 4, 4, 3, 3, 3, 0];
 	} else if (jsonInfo.type == 2) {
-		head = creatHead(key, 4, jsonInfo);
+		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
-		var relu = [1, 1, 2, 1];
-		var relu2 = [0, 0, 2, 0];
+		var relu = [1, 1, 2, 1, 0];
+		var relu2 = [0, 0, 2, 0, 0];
 	} else if (jsonInfo.type == 3) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
@@ -279,7 +279,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 		head = creatHead(key, 5, jsonInfo);
 		console.log(head);
 		var relu = [1, 2, 2, 2, 2];
-		var relu2 = [0, 4, 4, 3, 2];
+		var relu2 = [0, 4, 4, 3, 3];
 	}
 
 	console.log(relu);
@@ -288,7 +288,7 @@ function zhenliQuestion(jsonInfo, lenq) {
 	result = regularization(jsonInfo, head, relu, relu2, key, lenq);
 	head = head.reverse();
 	console.log(result);
-	return fixInteger(two2x(head), lenq) + result;
+	return fixInteger(two2x(head), 3) + result;
 	// return lenq + ';' + fixInteger(two2x(head), lenq) + result;
 }
 
@@ -539,18 +539,18 @@ function checkCHBnull2(form, key1, key2, des) {
 	}
 }
 
-function checkNumbox(){
-	var goujian=["中柱","边柱","脚柱","屋架","木梁","边梁","墙体","楼板","围护"]
+function checkNumbox() {
+	var goujian = ["中柱", "边柱", "脚柱", "屋架", "木梁", "边梁", "墙体", "楼板", "围护"]
 	for (var i = 1; i < 10; i++) {
 		keya = 'gou4' + i;
 		keyb = keya + '_w';
-		var keyav = mui('#'+keya).numbox().getValue();
+		var keyav = mui('#' + keya).numbox().getValue();
 		var keybv = mui('#' + keyb).numbox().getValue();
-		console.log(keybv+'/'+keyav)
-		if(keybv>keyav){
-			mui.alert('危险“'+goujian[i-1]+'”的值大于“'+goujian[i-1]+'”的值，请检查！','错误','确认',function (e) {
-			   e.index
-			},'div');
+		console.log(keybv + '/' + keyav)
+		if (keybv > keyav) {
+			mui.alert('危险“' + goujian[i - 1] + '”的值大于“' + goujian[i - 1] + '”的值，请检查！', '错误', '确认', function(e) {
+				e.index
+			}, 'div');
 			return false;
 		}
 	}
@@ -563,14 +563,14 @@ function listenerNum() {
 		keya = 'gou4' + i;
 		keyb = keya + '_w';
 		console.log(keya)
-		liNum(keya,keyb);
+		liNum(keya, keyb);
 	}
-	liNum('gou41','gou41_w');
+	liNum('gou41', 'gou41_w');
 }
 
-function liNum(keya,keyb){
+function liNum(keya, keyb) {
 	$(keya).change(function() {
-		vale=mui('#'+keya).numbox().getValue();
+		vale = mui('#' + keya).numbox().getValue();
 		console.log(vale);
 		mui('#' + keyb).numbox().setOption('max', vale);
 	})

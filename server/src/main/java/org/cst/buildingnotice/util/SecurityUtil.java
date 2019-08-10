@@ -9,8 +9,35 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+
+import org.cst.buildingnotice.config.Config;
 
 public class SecurityUtil {
+	
+	public static String[] chars = new String[] {
+		"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+		"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", 
+		"u", "v", "w", "x", "y", "z", 
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
+		"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+		"U", "V", "W", "X", "Y", "Z" 
+	};
+	
+	public static String getShortUUID() {
+		
+		StringBuffer stringBuffer = new StringBuffer();
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		
+		for (int i = 0; i < 8; i++) {
+			String str = uuid.substring(i * 4, i * 4 + 4);
+			int strInteger = Integer.parseInt(str, 16);
+			stringBuffer.append(chars[strInteger % 0x3E]);
+		}
+		
+		return stringBuffer.toString();
+	}
 
 	public static String saltGenerate() {
 
@@ -91,41 +118,71 @@ public class SecurityUtil {
 				StringUtil.string2Byte(SecurityUtil.encrypt(pwd, StringUtil.hex2String(hexSalt))),
 				StringUtil.hex2Byte(hexPwd));
 	}
+	
+	public static List<String> pki(Integer id, String info, long time) {
 
-	public static List<String> token(Integer id, String salt) {
-
-		long timestamp = System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000;
-		String token = id + ";" + sha(salt + timestamp + saltGenerate());
-		String tokenInData = sha(token + timestamp) + ";" + timestamp;
+		long timestamp = System.currentTimeMillis() + time;
+		String key = id + ";" + sha(info + timestamp + saltGenerate());
+		String keyInData = sha(key + timestamp) + ";" + timestamp;
 		
 		return new ArrayList<String>() {
 			private static final long serialVersionUID = 1L;
 			{
-				add(token);
-				add(tokenInData);
+				add(key);
+				add(keyInData);
 			}
 		};
 	}
 	
-	public static boolean verifyToken(String token, String tokenInData) {
+	public static boolean verifyPKI(String key, String keyInData) {
 		
-		int sepIndex = tokenInData.lastIndexOf(";");
-		long timestamp = Long.parseLong(tokenInData.substring(sepIndex + 1, tokenInData.length()));
+		int sepIndex = keyInData.lastIndexOf(";");
+		long timestamp = Long.parseLong(keyInData.substring(sepIndex + 1));
 		if (timestamp < System.currentTimeMillis()) return false;
 		
-		String tokenInput = sha(token + timestamp) + ";" + timestamp;
-		return slowEquals(StringUtil.string2Byte(tokenInput), StringUtil.string2Byte(tokenInData));
+		String tokenInput = sha(key + timestamp) + ";" + timestamp;
+		return slowEquals(StringUtil.string2Byte(tokenInput), StringUtil.string2Byte(keyInData));
 	}
 	
-	public static Integer getIdInToken(String token) {
+	public static Integer getIdInKey(String key) {
 		
 		Integer id = -1;
 		try {
-			int sepIndex = token.indexOf(";");
-			id = Integer.parseInt(token.substring(0, sepIndex));
+			int sepIndex = key.indexOf(";");
+			id = Integer.parseInt(key.substring(0, sepIndex));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return id;
+	}
+
+	public static List<String> token(Integer id, String salt) {
+
+		return pki(id, salt, Config.GAP_TOKEN_FALSE);
+	}
+	
+	public static boolean verifyToken(String token, String tokenInData) {
+		
+		return verifyPKI(token, tokenInData);
+	}
+	
+	public static Integer getIdInToken(String token) {
+		
+		return getIdInKey(token);
+	}
+	
+	public static List<String> codeEmail(Integer id, String email) {
+
+		return pki(id, email, Config.GAP_EMAIL_VERIFY_FALSE);
+	}
+	
+	public static boolean verifyCodeEmail(String code, String codeInData) {
+		
+		return verifyPKI(code, codeInData);
+	}
+	
+	public static Integer getIdInCodeEmail(String code) {
+		
+		return getIdInKey(code);
 	}
 }

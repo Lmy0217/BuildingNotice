@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>我的账户 - 后台管理</title>
+		<link rel="icon" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/js.js"></script>
+		<script type="text/javascript" src="js/check.js"></script>
+		<script type="text/javascript" src="js/userme.js"></script>
+		<script type="text/javascript" src="js/jump.js"></script>
+
+		<script type="text/javascript">
+			// window.onload = function() {
+			// 	verification();
+			// 	runSetIndexTimes();
+			// 	setInterval("runSetIndexTimes()", 1000);
+			// 	showAdmin();
+			// 	document.getElementById('res-host').innerText=domin;
+			// 	document.getElementById('apkdown').href=apkdownUrl;
+			// }
+		</script>
+	</head>
+
+	<body>
+		<div class="topbar-wrap white">
+			<div class="topbar-inner clearfix">
+				<div class="topbar-logo-wrap clearfix">
+					<h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+					<ul class="navbar-list clearfix">
+						<li><img id="logo" src="images/favicon.png" /></li>
+						<li>
+							<a class="on" href="index.html">首页</a>
+						</li>
+						<li>
+							<a href="http://www.gasfjd.cn:8080/" target="_blank">网站首页</a>
+						</li>
+					</ul>
+				</div>
+				<div class="top-info-wrap">
+					<ul class="top-info-list clearfix">
+						<li>
+							<a href="userme.html">欢迎，<span id="user"></span></a>
+						</li>
+						<li>
+							<a href="changeadmin.html">修改密码</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="dropOut()">退出</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container clearfix">
+			<div class="sidebar-wrap">
+				<div class="sidebar-title">
+					<h1>菜单</h1>
+				</div>
+				<div class="sidebar-content">
+					<ul class="sidebar-list">
+						<li>
+							<a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="design.html?type=1&page=1"><i class="icon-font">&#xe009;</i>未下文件</a>
+								</li>
+								<li>
+									<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="design.html?type=0&page=1"><i class="icon-font">&#xe009;</i>文件管理</a>
+								</li>
+								<li>
+									<a href="#"><i class="icon-font">&#xe014;</i>我的账户</a>
+								</li>
+								<div class="admin" style="display: none;">
+									<li>
+										<a href="userlist.html?role=-&page=1"><i class="icon-font">&#xe003;</i>用户管理</a>
+									</li>
+									<li>
+										<a href="invite.html?type=1&page=1"><i class="icon-font">&#xe004;</i>邀请码管理</a>
+									</li>
+								</div>
+
+								<!-- <li>
+									<a href="design.html?type=7&page=1"><i class="icon-font">&#xe046;</i>修改联系我们</a>
+								</li> -->
+								<!--<li>
+									<a href="index.html"><i class="icon-font">&#xe045;</i>修改招聘启事</a>
+								</li>-->
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--/sidebar-->
+			<div class="main-wrap">
+				<div class="crumb-wrap">
+					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>欢迎使用『信息采集助手』后台管理系统</span></div>
+				</div>
+				<div class="result-wrap">
+					<div class="result-title">
+						<h1>快捷操作</h1>
+					</div>
+					<div class="result-content">
+						<div class="short-wrap">
+							<li>
+								<a href="design.html?type=0&page=1"><i class="icon-font">&#xe017;</i>文章管理</a>
+							</li>
+							<li>
+								<a href="userme.html"><i class="icon-font">&#xe003;</i>我的账户</a>
+							</li>
+						</div>
+					</div>
+				</div>
+				<div class="result-wrap">
+					<div class="result-title">
+						<h1>账户基本信息</h1>
+					</div>
+					<div class="result-content">
+						<ul class="sys-info-list">
+							<li>
+								<label class="res-lab">账户名：</label><span class="res-info" id="name"></span>
+							</li>
+							<li>
+								<label class="res-lab">权限等级：</label><span class="res-info" id="role"></span>
+							</li>
+							<li>
+								<label class="res-lab">已完成任务：</label><span class="res-info" id="archcount">暂无</span>
+							</li>
+							<li>
+								<label class="res-lab">其中，</label>
+							</li>
+							<li>
+								<label class="res-lab">可下载报告：</label><span class="res-info" id="archsee">暂无</span>份<label class="res-lab">已删除报告：</label><span
+								 class="res-info" id="archdelete">暂无</span>份
+							</li>
+							<li>
+								<label class="res-lab">可下载报告中，</label>
+							</li>
+							<li>
+								<label class="res-lab">已下载：</label><span class="res-info" id="archdown">暂无</span>份<label class="res-lab">未下载：</label><span
+								 class="res-info" id="archnodown">暂无</span>份
+							</li>
+							<li>
+								<label class="res-lab">上级管理员：</label><span class="res-info" id="adminname">暂无</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="result-wrap">
+					<div class="result-title">
+						<h1>使用说明</h1>
+					</div>
+					<div class="result-content">
+						<ul class="sys-info-list">
+							<li>
+								<label class="res-lab">用户权限：</label><span class="res-info">用户分为普通用户和管理员。用户可以上传采集数据，并在一段时间后在网页端下载或者管理云端生成的报告。</span>
+							</li>
+							<div class="admin" style="display: none;">
+								<li>
+									<label class="res-lab">用户权限2：</label><span class="res-info">管理员除了可以处理自己的报告外，还可以邀请用户注册，查看用户报告数和关闭用户账户。</span>
+								</li>
+								<li>
+									<label class="res-lab">邀请码管理：</label><span class="res-info">管理员可以通过邀请码邀请新用户。通过邀请码注册的用户默认即为普通用户，与该管理员绑定。一个邀请码对应一个用户。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户降权：</label><span class="res-info">普通用户降权，既无法使用文件上传与下载功能，自然也不会有文件被处理。相当与关闭账户。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户提权：</label><span class="res-info">未开通用户可以通过提权，将其设为普通用户，正常使用系统各项功能。</span>
+								</li>
+								<li>
+									<label class="res-lab">用户提权2：</label><span class="res-info">超级管理员可以将普通用户提升为管理员。管理员不能提升用户为管理员。</span>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /main -->
+		</div>
+	</body>
+
+</html>

@@ -24,7 +24,7 @@
 				<div class="kr-article-meta">
 					<div id="kr-article-author" class="kr-article-author">admin</div>
 					<div class="kr-article-text">发表于</div>
-					<div id="kr-article-time" class="kr-article-time">2019/07/23</div>
+					<div id="kr-article-time" class="kr-article-time">2019/07/30</div>
 				</div>
 				<!--文章详细内容-->
 				<div id="kr-article-article" class="kr-article-article" v-html="content">
@@ -34,37 +34,58 @@
 					<p><a id='apkdown' href="#">最新版本下载地址</a></p>
 					<p>&nbsp;</p>
 					<p>
+						<h4>v1.35</h4>
+						1. 任务上传后手机端依旧支持查看。手机端任务“消失”需要手动删除<br />
+						2. 任务上传增加用户登录限制<br />
+						3. 用户信息可以查看已删除文件数<br />
+						4. 界面美化工作
+					</p>
+					<p>
+						<h4>v1.12</h4>
+						在“我的账户”处调用新接口，我的账户支持显示用户等级
+					</p>
+					<p>
+						<h4>v1.11</h4>
+						修复砖木结构头部编码溢出的问题
+					</p>
+					<p>
+						<h4>v1.1</h4>
+						1. 对木结构，砖木结构和砖混结构的部分项目进行增加和调整<br />
+						2. 修复了全部任务上传后，“任务上传”空白不提示的问题<br />
+						3. 精简代码，删除了部分冗余文件
+					</p>
+					<p>
 						<h4>v1.0</h4>
-						1. 增加软件使用说明页面<br/>
+						1. 增加软件使用说明页面<br />
 						2. 修改首页样式，美化软件入口
-					</p>
-					<p>
-						<h4>v0.965</h4>增加APK私有证书，更加安全！
-					</p>
-					<p>
-						<h4>v0.965</h4>增加用户信息显示
-					</p>
-					<p>
-						<h4>v0.96</h4>1. 所有的左上角返回按键功能正常<br />
-						2. 对damage增加值限制，防止子值大于母值<br />
-						3. 增加电话号码与身份证号最大长度限制<br />
-						4. 增加表单部分CheckBox非空值限制<br />
-						5. 修复提交表单后不跳转的问题，增加验空函数
-					</p>
-					<p>
-						<h4>v0.955</h4>
-						1. 修复了底框结构，框架接口和木结构的编码错误问题<br />
-						2. 修复了批量上传只上传第一个的问题
-					</p>
-					<p>
-						<h4>v0.95</h4>
-						登录增加密码限制
 					</p>
 					<div class="mui-card">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell mui-collapse">
-								<a class="mui-navigate-right" href="#">0.95以下版本</a>
+								<a class="mui-navigate-right" href="#">1.0以下版本</a>
 								<div class="mui-collapse-content">
+									<p>
+										<h4>v0.965</h4>增加APK私有证书，更加安全！
+									</p>
+									<p>
+										<h4>v0.965</h4>增加用户信息显示
+									</p>
+									<p>
+										<h4>v0.96</h4>1. 所有的左上角返回按键功能正常<br />
+										2. 对damage增加值限制，防止子值大于母值<br />
+										3. 增加电话号码与身份证号最大长度限制<br />
+										4. 增加表单部分CheckBox非空值限制<br />
+										5. 修复提交表单后不跳转的问题，增加验空函数
+									</p>
+									<p>
+										<h4>v0.955</h4>
+										1. 修复了底框结构，框架接口和木结构的编码错误问题<br />
+										2. 修复了批量上传只上传第一个的问题
+									</p>
+									<p>
+										<h4>v0.95</h4>
+										登录增加密码限制
+									</p>
 									<p>
 										<h4>v0.94</h4>
 										关闭测试弹窗<br />
@@ -101,7 +122,13 @@
 
 
 			mui.plusReady(function() {
-				document.getElementById("now_version").innerText = version;
+				//-----------------
+				mui.getJSON("../manifest.json", null, function(manifest) {
+					var version = manifest.version.name;
+					var versionCode = Number(manifest.version.code);
+					console.log("版本名称：" + version + "，版本code：" + versionCode);
+					document.getElementById("now_version").innerText = version+'.'+versionCode;
+				});				
 				document.getElementById('apkdown').href = w_apkdownUrl;
 				// console.log(w_apkdownUrl);
 

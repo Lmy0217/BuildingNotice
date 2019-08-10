@@ -57,199 +57,26 @@
 					deceleration: 0.0005
 				}); //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 				w_showInfo();
-				var backa = document.getElementById('goHome');
-				backa.addEventListener("tap", function() {
-					mui.back();
-					goHome();
-				})
+				// var backa = document.getElementById('goHome');
+				// backa.addEventListener("tap", function() {
+				// 	mui.back();
+				// 	goHome();
+				// })
 
 				document.getElementById('submit').addEventListener("tap", function() {
 					info = getForm('#' + 'infoForm');
 					var perChk = info.perChk;
 					console.log(perChk);
-					var wait = document.getElementById("wait");
-					openDB();
-					var stop=document.getElementById("endq");
-					stop.value=perChk.length;
-					console.log('stop.value'+stop.value)
-					var tempwait=document.getElementById("tempwait");
-					for (var i = 0; i < perChk.length; i++) {
-						console.log('stop.valueaaaaa'+stop.value+' '+perChk.length);
-						wait.value = 0;
-						var waitInput = document.createElement("input");//创建一个标签
-						waitInput.id="wait"+i;
-						waitInput.type='text';
-						waitInput.value='0';
-						waitInput.setAttribute("value","0");
-						tempwait.appendChild(waitInput);
-						document.getElementById(waitInput.id).value='0';
-						console.log(waitInput);
-						var wa = plus.nativeUI.showWaiting("正在上传" + (i + 1) + "/" + perChk.length + "..");
-						// mui.showLoading("正在上传" + (i + 1) + "/" + perChk.length + "..", "div");
-						plus.sqlite.selectSql({
-							name: 'info',
-							sql: 'select rowid, * from infoDB where rowid==' + perChk[i],
-							success: function(e) {
-								console.log('selectSql success: ' + JSON.stringify(e));
-								// photoId = upPhoto(e[0]);
-								flag_arr = getFlag(e[0]);
-								console.log(flag_arr);
-								// flag=w_upPhoto(e[0]);
-								var flag = flag_arr.length;
-								if (flag == 0) {
-									photoId = getImageId();
-									console.log(photoId);
-									data = zhenliJson(e[0], photoId);
-									console.log(data);
-									console.log(i)
-									upData(data,wait.value);
-									wait.value=parseInt(wait.value)+1;
-								} else {
-									console.log(i)
-									w_upPhoto(flag_arr,wait.value);
-									wait.value=parseInt(wait.value)+1;
-								}
-							},
-							fail: function(e) {
-								console.log('selectSql fail: ' + JSON.stringify(e));
-								wa.close();
-							}
-						});
-						wa.close();
+					if (typeof(perChk)!=="undefined") {
+						submitInfo()
+					} else {
+						mui.toast("没有选择任务");
 					}
 				})
 
 				// 扩展API加载完毕后调用onPlusReady回调函数 
 
 			});
-
-			function upData(data,num) {
-				console.log(document.getElementById('wait'+num).value);
-				console.log(data)
-				var token = localStorage.getItem('TOKEN_TOKEN');
-				data['token'] = token;
-				// {
-				// 	'data': data,
-				// }
-				// var AUTH_TOKEN = myStorage.getItem('AUTH_TOKEN');
-				// var USER_KEY = myStorage.getItem('USER_KEY');
-				var stop=document.getElementById("endq");
-				mui.ajax(upUrl, {
-					type: 'POST',
-					dataType: 'json',
-					cache: false,
-					data: data,
-					contentType: "application/json; charset=UTF-8",
-					async: false,
-					timeout: 1000, //超时时间设置为10秒；
-					success: function(res) {
-						console.log(stop.value);
-						stop.value=parseInt(stop.value)-1;
-						if (typeof res == 'string') {
-							var res = JSON.parse(res);
-						}
-						//如果登陆失效
-						if (res.status == '401' || data.status == "400") {
-							mui.toast(res.msg);
-							localStorage.removeItem("TOKEN_TOKEN");
-							mui.openWindow({
-								url: '../login.html'
-							})
-						} else if (res.status == '403') {
-							mui.toast(res.msg);
-							// hideLoading();
-							return false;
-						} else if (res.status != '200') {
-							mui.toast('err#' + res.status + ':' + res.msg);
-						} else {
-							console.log('stop'+stop.value);
-							console.log('成功了！')
-							console.log(res);
-							document.getElementById('wait'+num).value = 1;
-							plus.sqlite.selectSql({
-								name: 'info',
-								sql: 'update infoDB set isUp = 1 where rowid = ' + data.rowid,
-								success: function(e) {
-									console.log('runSql success: ' + JSON.stringify(e));
-									w_showInfo()
-									if(stop.value==0){
-										w_showInfo();
-									}
-								},
-								fail: function(e) {
-									console.log('runSql fail: ' + JSON.stringify(e));
-									if(stop.value==0){
-										w_showInfo();
-									}
-								}
-							});
-							
-						}
-						// mui.hideLoading();
-					},
-					error: function(xhr, type, errorThrown) {
-						
-						console.log(stop.value);
-						stop.value=parseInt(stop.value)-1;
-						console.log(stop.value);
-						console.log(JSON.stringify(xhr));
-						if(stop.value==0){
-							w_showInfo();
-						}
-						mui.hideLoading();
-						
-					},
-					headers: {
-						// 'access_token': AUTH_TOKEN,
-						// 'user_key': USER_KEY,
-					}
-				});
-			}
-
-			function zhenliJson(res, photoId) {
-				res['imgs'] = photoId;
-				var a = res.damage;
-				res.damage = a.split(',').map(Number);
-				console.log(res.damage);
-				res.body1 = res.typea;
-				res.body2 = res.typeb;
-				res.body3 = res.typec;
-				return res;
-			}
-
-
-
-			function upPhoto2(result) {
-				var photoId = new Array();
-				watchJSON(result);
-				var flag = 0;
-				return photoId;
-			}
-
-			function uploadPictuer(files, depict, server) {
-				var wt = plus.nativeUI.showWaiting();
-				var task = plus.uploader.createUpload(server, {
-						method: "POST"
-					},
-					function(t, status) { //上传完成
-						if (status == 200) {
-							alert("上传成功：" + t.responseText);
-							wt.close(); //关闭等待提示按钮
-						} else {
-							alert("上传失败：" + status);
-							wt.close(); //关闭等待提示按钮
-						}
-					}
-				);
-				//添加其他参数
-				task.addData("depict", depict);
-				task.addFile(files.src, {
-					key: "dddd"
-				});
-				task.start();
-			}
-
-
 
 			function w_showInfo() {
 				openDB();
@@ -258,7 +85,12 @@
 					sql: 'select rowid, * from infoDB where isUp==0',
 					success: function(e) {
 						console.log('selectSql success: ' + JSON.stringify(e));
-						showInfo(e);
+						console.log(e);
+						if (e.length == 0) {
+							showInfoFail(e);
+						} else {
+							showInfo(e);
+						}
 						// closeDB();
 					},
 					fail: function(e) {
@@ -268,69 +100,21 @@
 					}
 				});
 			}
-
-			function showInfoFail(result) {
-				watchJSON(result);
-				var mainList = document.getElementById("mainList");
-				mainList.innerHTML = "";
-				var temp = "<li class='mui-table-view-cell'>" +
-					"<div class='mui-input-row mui-checkbox mui-left'>" +
-					"<label> 数据库没有数据 </label>" +
-					"<input name='perChk[]' value='" + 'result[i].rowid' + "' type='checkbox' disabled='disabled' >" +
-					"</div>" +
-					"</li>"
-				// console.log(temp);
-				mainList.innerHTML += temp;
-			}
-
-			function showInfo(result) {
-				watchJSON(result);
-				var mainList = document.getElementById("mainList");
-				mainList.innerHTML = "";
-				for (i = result.length - 1; i >= 0; i--) {
-					var temp = "<li class='mui-table-view-cell'>" +
-						"<div class='mui-input-row mui-checkbox mui-left'>" +
-						"<label>" + result[i].rowid  + "." + result[i].hold + "</label>" +
-						"<input name='perChk[]' value='" + result[i].rowid + "' type='checkbox' >" +
-						"</div>" +
-						"</li>"
-					// console.log(temp);
-					mainList.innerHTML += temp;
-				}
-			}
-			//打开"采集信息"
-			function allChk(iNum) {
-				// var aForm = document.getElementById("mainList");
-				var mychk = document.getElementsByName("perChk[]");
-				for (var i = 0; i < mychk.length; i++) {
-					if (iNum <= 0) {
-						mychk[i].checked = !mychk[i].checked;
-					} else {
-						mychk[i].checked = iNum;
-					}
-				}
-
-			}
-			//打开"任务上传"
-			function openSubmit() {
-				var url = "testTakePhoto.html";
-				plus.webview.create(url).show();
-			}
 		</script>
 	</head>
 	<body onselectstart="return false;">
 		<!-- <div class="mui-inner-wrap" style="position: relative;"> -->
 
-		<header class="mui-bar mui-bar-nav">
+		<!-- <header class="mui-bar mui-bar-nav">
 			<a id="goHome" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">信息预览与上传</h1>
-		</header>
-		<div class="line mui-bar-nav" style="position: fixed; text-indent: 10px; height: 40px; line-height: 40px; top: 44px;padding-top: 10px;width: 100%;">
+		</header> -->
+		<div class="line mui-bar-nav" style="position: fixed; text-indent: 10px; height: 40px; line-height: 40px; top: 0px;padding-top: 0px;width: 100%;">
 			<div class="line" style="width:20%; float: left;">选择</div>
 			<div class="line" style="width:80%; float: right; font-weight: bold; text-align:center;">户主姓名</div>
 		</div>
 		<div class="mui-content">
-			<div id="scroll1" class="mui-scroll-wrapper" style="top: 84px; bottom: 102px;">
+			<div id="scroll1" class="mui-scroll-wrapper" style="top: 40px; bottom: 102px;">
 				<!--MUI默认是position是absolute-->
 				<div class="mui-scroll">
 					<form id='infoForm' class="">

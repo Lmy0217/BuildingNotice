@@ -7,11 +7,15 @@ public class User {
 
     private String pwd;
 
+    private String pwdstatus;
+
     private String salt;
 
     private String token;
 
     private Integer role;
+
+    private String email;
 
     private String device;
 
@@ -41,6 +45,14 @@ public class User {
         this.pwd = pwd == null ? null : pwd.trim();
     }
 
+    public String getPwdstatus() {
+        return pwdstatus;
+    }
+
+    public void setPwdstatus(String pwdstatus) {
+        this.pwdstatus = pwdstatus == null ? null : pwdstatus.trim();
+    }
+
     public String getSalt() {
         return salt;
     }
@@ -63,6 +75,14 @@ public class User {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 
     public String getDevice() {

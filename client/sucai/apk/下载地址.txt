@@ -1,3 +1,28 @@
+v1.35.10
+https://www.lanzous.com/i58rzfa
+修正用户登录文案
+
+v1.35.8
+https://www.lanzous.com/i58huaf
+1. 任务上传后手机端依旧支持查看。手机端任务“消失”需要手动删除
+2. 任务上传增加用户登录限制
+3. 用户信息可以查看已删除文件数
+4. 界面美化工作
+
+v1.12
+https://www.lanzous.com/i57wv1g
+在“我的账户”处调用新接口，我的账户支持显示用户等级
+
+v1.11
+http://t.cn/Aijn5rYX
+修复砖木结构头部编码溢出的问题
+
+v1.1
+https://www.lanzous.com/i57mjqj
+1. 对木结构，砖木结构和砖混结构的部分项目进行增加和调整<br/>
+2. 修复了全部任务上传后，“任务上传”空白不提示的问题<br/>
+3. 精简代码，删除了部分冗余文件
+
 v1.0
 https://www.lanzous.com/i54geih
 1. 增加软件使用说明页面
