@@ -23,4 +23,4 @@ var listUrl = website + '/archive/list';
 var userlistUrl = website + '/user/list';
 
 var w_apkdownUrl = domin + '/apkdown.html';
-var apkdownUrl = 'https://www.lanzous.com/i58rzfa';
+var apkdownUrl = 'https://www.lanzous.com/i5i7pza';
