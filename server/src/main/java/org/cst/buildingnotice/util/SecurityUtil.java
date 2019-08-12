@@ -185,4 +185,19 @@ public class SecurityUtil {
 		
 		return getIdInKey(code);
 	}
+	
+	public static List<String> codeReset(Integer id, String pwd) {
+
+		return pki(id, pwd, Config.GAP_RESET_VERIFY_FALSE);
+	}
+	
+	public static boolean verifyCodeReset(String code, String codeInData) {
+		
+		return verifyPKI(code, codeInData);
+	}
+	
+	public static Integer getIdInCodeReset(String code) {
+		
+		return getIdInKey(code);
+	}
 }

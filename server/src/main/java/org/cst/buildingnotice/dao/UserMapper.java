@@ -19,5 +19,7 @@ public interface UserMapper {
     
     List<User> selectByName(String name);
     
+    List<User> selectByEmail(String email);
+    
     List<User> selectByRole(Integer role);
 }

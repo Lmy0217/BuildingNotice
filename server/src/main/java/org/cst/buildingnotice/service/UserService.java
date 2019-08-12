@@ -12,6 +12,8 @@ public interface UserService {
 	
 	public List<User> getUserByName(String name);
 	
+	public List<User> getUserByEmail(String email);
+	
 	int updateById(User user);
 	
 	public List<User> getUsersByRole(Integer role);

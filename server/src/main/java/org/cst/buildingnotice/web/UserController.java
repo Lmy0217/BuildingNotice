@@ -74,7 +74,7 @@ public class UserController {
 				return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "邀请码已被使用！");
 			}
 		}
-		
+
 		List<User> userList = userService.getUserByName(name);
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
@@ -427,9 +427,9 @@ public class UserController {
 		};
 	}
 	
-	@RequestMapping(value="/email", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@RequestMapping(value="/email/send", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> email(@RequestBody String jsonstring, 
+	public Map<String, Object> emailsend(@RequestBody String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
 		System.out.println(jsonstring);
@@ -507,9 +507,9 @@ public class UserController {
 		};
 	}
 	
-	@RequestMapping(value="/verifyemail", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@RequestMapping(value="/email/verify", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> verifyemail(@RequestBody String jsonstring, 
+	public Map<String, Object> emailverify(@RequestBody String jsonstring, 
 			HttpServletRequest request, Model model) {
 		
 		System.out.println(jsonstring);
@@ -566,6 +566,212 @@ public class UserController {
 			private static final long serialVersionUID = 1L;
 			{
 				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/reset/send", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> resetsend(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		// TODO more test, maybe not work
+		HttpSession session = request.getSession();
+		Object email_timestamp = session.getAttribute("email_timestamp");
+		long timestamp = System.currentTimeMillis();
+		if (email_timestamp == null) {
+			session.setAttribute("email_timestamp", timestamp);
+		} else {
+			if (timestamp < (Long) email_timestamp + Config.GAP_EMAIL_SEND) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "两次邮件发送时间间隔太短！");
+			} else {
+				session.setAttribute("email_timestamp", timestamp);
+			}
+		}
+		
+		String name = json.getString("name");
+		String email = json.getString("email");
+		if (name == null && email == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		if ((name == null || !Pattern.matches(Config.PATTERN_NAME, name)) && 
+				(email == null || !Pattern.matches(Config.PATTERN_EMAIL, email))) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名或邮箱格式不正确！");
+		}
+		
+		List<User> userList = name != null ? userService.getUserByName(name) : userService.getUserByEmail(email);
+		if (userList.size() != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户不存在！");
+		}
+		User user = userList.get(0);
+		
+		if (user.getEmail() == null || user.getEmail().indexOf(";") != -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "未绑定邮箱！");
+		}
+		
+		List<String> codeList = SecurityUtil.codeReset(user.getId(), StringUtil.hex2String(user.getPwd()));
+		if (!EmailUtil.sendReset(user.getEmail(), user.getName(), 
+				Config.RESET_VERIFY_URL + StringUtil.string2Hex(codeList.get(0)))) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "重置邮件发送失败！");
+		}
+		user.setPwdstatus(StringUtil.string2Hex(codeList.get(1)));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+			}
+		};
+	}
+	
+	@RequestMapping(value="/reset/verify", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> resetverify(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String hexCode = json.getString("code");
+		if (hexCode == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String code = StringUtil.hex2String(hexCode);
+		Integer userId = SecurityUtil.getIdInCodeReset(code);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 错误！");
+		}
+		
+		String pwdStatus = user.getPwdstatus();
+		if (pwdStatus == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		
+		Boolean verifyFlag = SecurityUtil.verifyCodeReset(code, StringUtil.hex2String(pwdStatus));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		
+		List<String> codeList = SecurityUtil.codeReset(user.getId(), 
+				StringUtil.hex2String(user.getPwd()) + StringUtil.hex2String(pwdStatus));
+		user.setPwdstatus(StringUtil.string2Hex(codeList.get(1)));
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+				put("code", StringUtil.string2Hex(codeList.get(0)));
+			}
+		};
+	}
+	
+	@RequestMapping(value="/reset/action", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> resetaction(@RequestBody String jsonstring, 
+			HttpServletRequest request, Model model) {
+		
+		System.out.println(jsonstring);
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
+		}
+		
+		String pwd = json.getString("pwd");
+		String hexCode = json.getString("code");
+		if (pwd == null || hexCode == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
+		}
+		
+		String code = StringUtil.hex2String(hexCode);
+		Integer userId = SecurityUtil.getIdInCodeReset(code);
+		if (userId == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 错误！");
+		}
+		
+		String pwdStatus = user.getPwdstatus();
+		if (pwdStatus == null) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 失效！");
+		}
+		
+		Boolean verifyFlag = SecurityUtil.verifyCodeReset(code, StringUtil.hex2String(pwdStatus));
+		if (!verifyFlag) {
+			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Token 失效！");
+		}
+		
+		if (!Pattern.matches(Config.PATTERN_PWD, pwd)) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "密码不符合要求！");
+		}
+		
+		String salt = SecurityUtil.saltGenerate();
+		pwd = SecurityUtil.encrypt(pwd, salt);
+		List<String> tokenList = SecurityUtil.token(userId, salt);
+		user.setSalt(StringUtil.string2Hex(salt));
+		user.setPwd(StringUtil.string2Hex(pwd));
+		user.setToken(StringUtil.string2Hex(tokenList.get(1)));
+		user.setPwdstatus(null);
+		
+		int flag = -1;
+		try {
+			flag = userService.updateById(user);
+		} catch (Exception e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		if (flag != 1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
+		}
+		
+		return new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("status", HttpStatus.OK.value());
+				put("token", StringUtil.string2Hex(tokenList.get(0)));
 			}
 		};
 	}

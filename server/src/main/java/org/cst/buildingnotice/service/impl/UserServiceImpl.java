@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByName(name);
 	}
 
+	public List<User> getUserByEmail(String email) {
+		return userMapper.selectByEmail(email);
+	}
+
 	public int updateById(User user) {
 		return userMapper.updateByPrimaryKey(user);
 	}

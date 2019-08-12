@@ -4,6 +4,8 @@
 //import java.util.HashMap;
 //import java.util.List;
 //
+//import javax.servlet.http.Cookie;
+//
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -142,13 +144,13 @@
 //	}
 //	
 //	//@Test
-//	public void emailTest() throws Exception {
+//	public void emailsendTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "333b382322fc66bf24d770f39e8ef3ec3413f60c9e91cbf3862c4b30f533464886b2");
+//		requestBodyJSON.put("token", "333b4a0d6a5233ecd4aec7f2a13dc5051448965cdfa5798c73d11e550a4de649ec9c");
 //		requestBodyJSON.put("email", "lmy0217@126.com");
 //		
-//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/email")
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/email/send")
 //				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
 //				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
 //		
@@ -159,12 +161,61 @@
 //	}
 //	
 //	//@Test
-//	public void verifyemailTest() throws Exception {
+//	public void emailverifyTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
 //		requestBodyJSON.put("code", "333b6a3d28b0ae1f707d5ad04cf0c3ebb8e4e842a44d370ec77218bb8f6cffcc3653");
 //		
-//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/verifyemail")
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/email/verify")
+//				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//		
+//		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
+//	
+//	//@Test
+//	public void resetsendTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		requestBodyJSON.put("name", "myluo");
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/reset/send")
+//				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//		
+//		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
+//	
+//	//@Test
+//	public void resetverifyTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		requestBodyJSON.put("code", "333bb42037aad2f57cae1a3a4ae457c9183e7601e6746b8e89571afedd64f36fe653");
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/reset/verify")
+//				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
+//				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//		
+//		ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+//        resultActions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+//        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+//        resultActions.andDo(MockMvcResultHandlers.print());
+//	}
+//	
+//	//@Test
+//	public void resetactionTest() throws Exception {
+//		
+//		JSONObject requestBodyJSON = new JSONObject();
+//		requestBodyJSON.put("code", "333b6bb93fac1a4be4a07ab5f0912e18ee407e69b43dbef3d83ab7118dc8b3712084");
+//		requestBodyJSON.put("pwd", "abc123456");
+//		
+//		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/reset/action")
 //				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())
 //				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE);
 //		
@@ -178,7 +229,7 @@
 //	public void myTest() throws Exception {
 //		
 //		JSONObject requestBodyJSON = new JSONObject();
-//		requestBodyJSON.put("token", "383b9123b076a470d6da5ce25bdac62f6b80521180c28530f716334bfc0de8cad3a6");
+//		requestBodyJSON.put("token", "333bdf43624231102c1a32cbeb620684f2dcc7610a751105300b79ade105c98bfbd8");
 //		
 //		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/user/my")
 //	    		.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(requestBodyJSON.toJSONString())

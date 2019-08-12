@@ -41,9 +41,11 @@ public class Config {
 	public final static int EMAIL_SMTP_PORT = 994;
 	public final static String EMAIL_ACCOUNT = "admin@gasfjd.cn";
 	public final static String EMAIL_PWD = "Q63LO!J1irSNY09g";
-	public final static String EMAIL_VERIFY_URL = ROOT_HOST + "/verifyemail.html?code=";
+	public final static String EMAIL_VERIFY_URL = ROOT_HOST + "/emailverify.html?code=";
+	public final static String RESET_VERIFY_URL = ROOT_HOST + "/resetverify.html?code=";
 	
 	public final static long GAP_TOKEN_FALSE = 3 * 24 * 60 * 60 * 1000;
 	public final static long GAP_EMAIL_SEND = 60 * 1000;
 	public final static long GAP_EMAIL_VERIFY_FALSE = 3 * 60 * 60 * 1000;
+	public final static long GAP_RESET_VERIFY_FALSE = 3 * 60 * 60 * 1000;
 }
