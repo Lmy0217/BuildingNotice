@@ -312,52 +312,79 @@ function checkAll(all, cchk) {
 }
 
 //根据checkbox获取勾选的值
-function getChkValue(chk){  
+function getChkValue(chk) {
 	console.log(chk);
-		 var  obj = document.getElementsByName(chk);
-		console.log(obj)
-		 var baseTable=[];
-		 for(var i in obj){
-			 if(obj[i].checked){
-				 baseTable.push(obj[i].value);
-			 }
-		 }
-		 console.log(baseTable)
-		 return baseTable;
- }
- 
- //分页列表展示
- function showPage(page,type,total,url) {
-	page=parseInt(page);
-	total=parseInt(total);
- 	var str = '<span class="current">' + page + '</span>';
- 
- 	for (var i = 1; i <= 3; i++) {
- 		if (page - i > 1) {
- 			str = '<a href='+url+'?type='+type+'&page='+(page - i) +'>' + (page - i) + '</a> ' + str;
- 		}
- 		if (page + i < total) {
- 			str = str + ' ' +'<a href='+url+'?type='+type+'&page='+(page +  i) +'>'+ (page + i)+ '</a> ';
- 		}
- 	}
- 
- 	if (page - 4 > 1) {
- 		str = '<a href="javascript:void(0)">...</a> ' + str;
- 	}
- 
- 	if (page > 1) {
- 		str = '<a href='+url+'?type='+type+'&page='+(page - 1) +'>' +'<上一页 '+'</a> ' + 
- 		'<a href='+url+'?type='+type+'&page='+1 +'>'+ 1 + '</a> '  + str;
- 	}
- 
- 	if (page + 4 < total) {
- 		str = str + '<a href="javascript:void(0)">...</a> ';
- 	}
- 
- 	if (page < total) {
- 		str = str + ' ' + '<a href='+url+'?type='+type+'&page='+(total) +'>' +total+ '</a> '+ 
- 		'<a href='+url+'?type='+type+'&page='+(page +  1) +'>'+' 下一页 >'+ '</a> ';
- 	}
- 
- 	return str;
- }
+	var obj = document.getElementsByName(chk);
+	console.log(obj)
+	var baseTable = [];
+	for (var i in obj) {
+		if (obj[i].checked) {
+			baseTable.push(obj[i].value);
+		}
+	}
+	console.log(baseTable)
+	return baseTable;
+}
+
+//分页列表展示
+function showPage(page, type, total, url) {
+	page = parseInt(page);
+	total = parseInt(total);
+	var str = '<span class="current">' + page + '</span>';
+
+	for (var i = 1; i <= 3; i++) {
+		if (page - i > 1) {
+			str = '<a href=' + url + '?type=' + type + '&page=' + (page - i) + '>' + (page - i) + '</a> ' + str;
+		}
+		if (page + i < total) {
+			str = str + ' ' + '<a href=' + url + '?type=' + type + '&page=' + (page + i) + '>' + (page + i) + '</a> ';
+		}
+	}
+
+	if (page - 4 > 1) {
+		str = '<a href="javascript:void(0)">...</a> ' + str;
+	}
+
+	if (page > 1) {
+		str = '<a href=' + url + '?type=' + type + '&page=' + (page - 1) + '>' + '<上一页 ' + '</a> ' +
+			'<a href=' + url + '?type=' + type + '&page=' + 1 + '>' + 1 + '</a> ' + str;
+	}
+
+	if (page + 4 < total) {
+		str = str + '<a href="javascript:void(0)">...</a> ';
+	}
+
+	if (page < total) {
+		str = str + ' ' + '<a href=' + url + '?type=' + type + '&page=' + (total) + '>' + total + '</a> ' +
+			'<a href=' + url + '?type=' + type + '&page=' + (page + 1) + '>' + ' 下一页 >' + '</a> ';
+	}
+
+	return str;
+}
+
+//公用
+function scroll() {
+	var PartArea = document.getElementById('part2');
+	var Scroll1 = document.getElementById('scroll1');
+	var Scroll2 = document.getElementById('scroll2');
+	console.log(Scroll2);
+	Scroll2.innerHTML = Scroll1.innerHTML;
+
+	function roll() {
+		if (Scroll2.offsetHeight - PartArea.scrollTop <= 0) {
+			PartArea.scrollTop -= Scroll1.offsetHeight;
+		} else {
+			PartArea.scrollTop++;
+		}
+	}
+
+	var StopRoll = setInterval(roll(), 30);
+
+	PartArea.onmouseover = function() {
+		clearInterval(StopRoll);
+	}
+	PartArea.onmouseout = function() {
+		StopRoll = setInterval(roll(), 30);
+	}
+
+}

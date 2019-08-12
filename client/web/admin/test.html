@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+	<HEAD>
+		<TITLE>div+js实现首尾相连循环滚动效果</TITLE>
+	</HEAD>
+	<BODY>
+		用DIV+javascript实现首尾相连循环滚动效果（兼容firefox）：<br /><br />
+		<DIV id="scrollobj" style="white-space:nowrap;overflow:hidden;width:500px;"> 这里是要滚动的内容 111 222 </DIV>
+		<script language="javascript" type="text/javascript">
+			function Moveleft(obj) {
+				var tmp = (obj.scrollTop) ++;
+				//当滚动条到达右边顶端时
+				if (obj.scrollTop == tmp) obj.innerHTML += obj.innerHTML;
+				//当滚动条滚动了初始内容的宽度时滚动条回到最左端
+				if (obj.scrollTop >= obj.firstChild.offsetWidth) obj.scrollTop = 0;
+			}
+			setInterval("Moveleft(document.getElementById('scrollobj'))", 40);
+		</script>
+	</BODY>
+</HTML>

@@ -75,6 +75,14 @@ function showAdmin() {
 	} else {
 		console.log('普通用户登录了,等级：'+perm);
 	}
+	email = getCookie('email');
+	if(email==0){
+		console.log('没有验证邮箱');
+		var emailShow=document.getElementsByClassName("email");
+		for(var i=0;i<emailShow.length;i++){
+			emailShow[i].style.display = "block";
+		}
+	}
 }
 
 function w_checkRole(mubiao) {
