@@ -1,7 +1,7 @@
 var funType = GetUrlParam("fc");
 
 window.onload = function() {
-	// verification();
+	verification();
 	setTimes();
 	main();
 }
