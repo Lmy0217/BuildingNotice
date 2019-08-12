@@ -157,15 +157,18 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据库错误！");
 		}
 		
-		return new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("status", HttpStatus.OK.value());
-				put("token", StringUtil.string2Hex(tokenList.get(0)));
-				put("role", user.getRole());
-				put("email", user.getEmail());
-			}
-		};
+		String email = user.getEmail();
+		if (email != null && email.indexOf(";") != -1) {
+			email = null;
+		}
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("status", HttpStatus.OK.value());
+		result.put("token", StringUtil.string2Hex(tokenList.get(0)));
+		result.put("role", user.getRole());
+		result.put("email", email);
+
+		return result;
 	}
 	
 	@RequestMapping(value="/logout", produces={"application/json; charset=UTF-8"}, method=RequestMethod.POST)
@@ -837,10 +840,15 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "数据错误！");
 		}
 		
+		String email = user.getEmail();
+		if (email != null && email.indexOf(";") != -1) {
+			email = null;
+		}
+		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("status", HttpStatus.OK.value());
 		result.put("role", user.getRole());
-		result.put("email", user.getEmail());
+		result.put("email", email);
 		result.put("archcount", archdown + archnodown + archdelete);
 		result.put("archdown", archdown);
 		result.put("archnodown", archnodown);
