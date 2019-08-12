@@ -8,9 +8,9 @@ window.onload = function() {
 
 function main(){
 	var title = document.getElementById("title");
-	// var name = getCookie('user');
+	var name = getCookie('user');
 	var user = document.getElementById("user");
-	// user.innerText = name;
+	user.innerText = name;
 	var header = document.getElementById("header");
 	var content = document.getElementById("content");
 	
