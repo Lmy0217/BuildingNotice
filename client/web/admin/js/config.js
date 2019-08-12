@@ -22,5 +22,11 @@ var downUrl = website + '/archive/download';
 var listUrl = website + '/archive/list';
 var userlistUrl = website + '/user/list';
 
+var sendMUrl=website+'/user/email/send';
+var verifyEmailUrl=website+'/user/email/verify';
+var sendPUrl=website+'/user/reset/send';
+var verifyPwdUrl=website+'/user/reset/verify'
+var resetPwdUrl=website+'/user/reset/action';
+
 var w_apkdownUrl = domin + '/apkdown.html';
 var apkdownUrl = 'https://www.lanzous.com/i5i7pza';

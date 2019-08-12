@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>『信息采集助手』后台管理-登录</title>
+		<title>『信息采集助手』后台管理-验证邮箱</title>
 		<link rel="icon" href="favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="css/admin_login.css" />
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
@@ -16,25 +16,19 @@
 	<body>
 		<div class="admin_login_wrap">
 			<div class="titleDiv">
-				<img src="images/favicon.png" alt="这里是图片" /> <span>用户登录</span> </div>
+				<img src="images/favicon.png" alt="logo" /> <span>验证用户邮箱</span> </div>
 			<div class="adming_login_border">
 				<div class="admin_input">
 					<form id="myform" method="post">
 						<ul class="admin_items">
 							<li>
-								<label for="name">用户名：</label>
-								<input type="text" name="name" value="" id="name" size="35" onblur="chkuser(this,'userMsg')" class="admin_input_style" />
-								<p id="userMsg" style="color: red; display: inline;"></p>
+								<label for="user">用户名(不可修改)：</label>
+								<input type="text" name="user" value="" id="user" size="35" class="admin_input_style" readonly />
 							</li>
 							<li>
-								<label for="pwd">密码：</label>
-								<input type="password" name="pwd" value="" id="pwd" size="35" onblur="chkvalue(this,'pwdMsg')" class="admin_input_style" />
-								<p id="pwdMsg" style="color: red; display: inline;"></p>
-							</li>
-							<li style="display: none;">
-								<label for="imei">imie：</label>
-								<input type="imei" name="imei" value="" id="imei" size="35" class="admin_input_style" />
-								<!-- <p id="imeiMsg" style="color: red; display: inline;"></p> -->
+								<label for="email">邮箱：</label>
+								<input type="text" name="email" value="" id="email" size="35" onblur="chkvalue(this,'emailMsg')" class="admin_input_style" />
+								<p id="emailMsg" style="color: red; display: inline;"></p>
 							</li>
 							<li>
 								<input type="button" onclick="myLogin()" tabindex="3" value="提交" class="btn btn-primary" />
@@ -50,7 +44,7 @@
 				<br />
 			</p>
 			<p class="admin_copyright">
-				<a tabindex="5" href="http://www.gasfjd.cn/" target="_blank">网站首页</a> &copy; 2019 Powered by
+				<a tabindex="5" href="http://www.gasfjd.cn/admin/index.html" target="_blank">网站首页</a> &copy; 2019 Powered by
 				<a href="https://myluo.cn">明故为知</a> & <a href="https://luov.top">Mr.Luo</a>
 			</p>
 
@@ -61,42 +55,27 @@
 				console.log(osName);
 				document.getElementById('imei').value = osName;
 				document.getElementById('apkdown').href = apkdownUrl;
-			}
-
-			function chkuser(txt, name) {
-				var relue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
-				var show = document.getElementById(name);
-				if (txt.value == "") show.innerText = "输入不能为空";
-				else if (txt.value.match(relue) == null) {
-					show.innerText = "用户名以字母或数字开头，长度在3~16之间，只能包含字母、数字和下划线";
-				} else show.style.display = "none";
-			}
+			}			
 
 			function chkvalue(txt, name) {
-				var relue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
+				var relue = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,10})$/;
 				//console.log(txt.value.match(relue));
 				var show = document.getElementById(name);
 				//console.log(show);
 				if (txt.value == "") show.innerText = "输入不能为空";
 				else if (txt.value.match(relue) == null) {
-					show.innerText = "密码以字母开头，长度在8~18之间，只能包含字母、数字和下划线";
+					show.innerText = "请输入正确的邮箱地址";
 				} else show.style.display = "none";
 			}
 
 			function checkPwd(jsons) {
 				var userRelue = /^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/;
-				var pwdRelue = /^[a-zA-Z][a-zA-Z0-9_]{7,17}$/;
-				if (jsons.name.length == 0) {
-					alert("用户名不能为空");
-					return false;
-				} else if (jsons.pwd.length == 0) {
-					alert("密码不能为空");
-					return false;
-				} else if (jsons.name.match(userRelue) == null) {
-					alert("用户名长度在3~16之间，以字母或数字开头，只能包含字符、数字和下划线");
+				var pwdRelue = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,10})$/;
+				 if (jsons.pwd.length == 0) {
+					alert("邮箱不能为空");
 					return false;
 				} else if (jsons.pwd.match(pwdRelue) == null) {
-					alert("密码长度在8~18之间，以字母开头，只能包含字符、数字和下划线");
+					alert("请输入正确的邮箱地址");
 					return false;
 				} else {
 					return true;
@@ -123,8 +102,10 @@
 				if (flag == false) {
 					//console.log("请检查您的输入");
 				} else {
+					var q = getCookie('token');
+					jsons["token"] = q;
 					$.ajax({
-						url: loginUrl,
+						url: sendMUrl,
 						// cache: false,
 						type: "post",
 						datatype: "json",
@@ -134,18 +115,11 @@
 						success: function(data) {
 							console.log(data);
 							if (data.status == "200") {
-								//根据后台返回值确定是否操作成功
-								document.cookie = setCookie("token", data.token, "3");
-								document.cookie = setCookie("user", jsons.name, "3");
-								document.cookie = setCookie("perm", data.role, "3");
-								if(data.email===null){
-									document.cookie = setCookie("email", 0, "3");
-								}else{
-									document.cookie = setCookie("email", 1, "3");
-								}
-								window.location.href = "index.html";
+								//根据后台返回值确定是否操作成功		
+								var url="mailok.html/?fc=1&email="+jsons.email;
+								window.location.href = url;
 							} else {
-								alert("用户名或者密码错误");
+								alert("错误#"+data.status+"，"+data.msg);
 							}
 						}
 					});
