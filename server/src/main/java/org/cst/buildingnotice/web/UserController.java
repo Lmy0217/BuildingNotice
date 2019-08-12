@@ -163,6 +163,7 @@ public class UserController {
 				put("status", HttpStatus.OK.value());
 				put("token", StringUtil.string2Hex(tokenList.get(0)));
 				put("role", user.getRole());
+				put("email", user.getEmail());
 			}
 		};
 	}
@@ -839,6 +840,7 @@ public class UserController {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("status", HttpStatus.OK.value());
 		result.put("role", user.getRole());
+		result.put("email", user.getEmail());
 		result.put("archcount", archdown + archnodown + archdelete);
 		result.put("archdown", archdown);
 		result.put("archnodown", archnodown);

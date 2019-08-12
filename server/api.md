@@ -53,6 +53,7 @@
 |status|Integer|200|
 |token|String|令牌|
 |role|Integer|权限|
+|email|String|邮箱 (未绑定返回 null)|
 #### 失败返回数据 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -91,6 +92,7 @@
 |-|-|-|
 |status|Integer|200|
 |role|Integer|权限|
+|email|String|邮箱 (未绑定返回 null)|
 |archcount|Integer|总报告数|
 |archdown|Integer|已下载报告数|
 |archnodown|Integer|未下载报告数|
