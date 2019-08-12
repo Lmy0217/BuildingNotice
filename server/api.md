@@ -148,6 +148,7 @@
 发送邮箱验证邮件。发送时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/email/send
+
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -165,8 +166,14 @@
 
 ## **邮箱验证**
 邮箱验证。验证时，请使用 HTTP POST 方式
+
+#### 传入地址
+
+website+/admin/mailok.html?verify=code
+
 #### API地址
 [POST] /user/email/verify
+
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -185,6 +192,7 @@
 发送重置密码邮件。发送时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/reset/send
+
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -204,6 +212,7 @@
 验证重置密码邮件。验证时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/reset/verify
+
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -223,6 +232,7 @@
 重置密码。重置时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/reset/action
+
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
