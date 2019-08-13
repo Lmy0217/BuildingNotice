@@ -64,7 +64,16 @@ function mailCheck() {
 				console.log(result);
 				return result;
 			} else {
-				alert("错误#" + data.ststus + "," + data.msg);
+				var titleC = "错误，邮箱绑定失败！";
+				var headerC = "很遗憾，邮箱绑定失败！";
+				var contentC = "您提交的邮箱已经和您的账号绑定失败！<br>" +
+					"请检查您的账号或密保邮箱，可能是账号信息填写错误，或者链接已过期。" + "<br>" +
+					"错误代码#"+data.status+"，错误信息："+"data.msg" + "<br>" +
+					"您可以凭借此信息咨询管理员。" + "<br>" +
+					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
+				var result = new Array(titleC, headerC, contentC);
+				console.log(result);
+				return result;
 			}
 		}
 	});
@@ -93,7 +102,7 @@ function mailPwdCheck() {
 				var titleC = "错误，验证失败！";
 				var headerC = "密保邮箱验证失败！";
 				var contentC = "请检查您的账号或密保邮箱！<br>" +
-					"可能是账号信息填写错误，或者链接已过期" + "<br>" + "<br>" +
+					"可能是账号信息填写错误，或者链接已过期。" + "<br>" + "<br>" +
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='login.html'>登录</a>" +
 					"&nbsp;<a href='repassword.html'>忘记用户名或密码</a>";
 				var result = new Array(titleC, headerC, contentC);
