@@ -7,11 +7,6 @@ window.onload = function() {
 }
 
 function main() {
-	var title = document.getElementById("title");
-	var name = getCookie('user');
-	var header = document.getElementById("header");
-	var content = document.getElementById("content");
-
 	if (funType == 1) {
 		result = mailOk();
 	} else if (funType == 2) {
@@ -26,16 +21,6 @@ function main() {
 		result = mailPwdCheck();
 		name = result[3];
 	}
-
-	console.log(result);
-	title.innerText = result[0];
-	header.innerText = result[1];
-	content.innerHTML = result[2];
-	if (name === null) {
-		name = "用户"
-	}
-	var user = document.getElementById("user");
-	user.innerText = name;
 }
 
 function mailCheck() {
@@ -62,19 +47,17 @@ function mailCheck() {
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
 				var result = new Array(titleC, headerC, contentC);
 				document.cookie = setCookie("email", 1, "3");
-				console.log(result);
-				return result;
+				showInfo(result);
 			} else {
 				var titleC = "错误，邮箱绑定失败！";
 				var headerC = "很遗憾，邮箱绑定失败！";
 				var contentC = "您提交的邮箱已经和您的账号绑定失败！<br>" +
 					"请检查您的账号或密保邮箱，可能是账号信息填写错误，或者链接已过期。" + "<br>" +
-					"错误代码#"+data.status+"，错误信息："+"data.msg" + "<br>" +
+					"错误代码#" + data.status + "，错误信息：" + "data.msg" + "<br>" +
 					"您可以凭借此信息咨询管理员。" + "<br>" +
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
 				var result = new Array(titleC, headerC, contentC);
-				console.log(result);
-				return result;
+				showInfo(result);
 			}
 		}
 	});
@@ -107,8 +90,7 @@ function mailPwdCheck() {
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='login.html'>登录</a>" +
 					"&nbsp;<a href='repassword.html'>忘记用户名或密码</a>";
 				var result = new Array(titleC, headerC, contentC);
-				console.log(result);
-				return result;
+				showInfo(result);
 			}
 		}
 	});
@@ -126,8 +108,7 @@ function mailOk() {
 		"如果没有收到，请稍等片刻或者查看“垃圾箱”或“广告邮件”查找" + "<br>" +
 		"您可以" + "&nbsp;<a href='" + mailUrl + "' target='_blank'>登录邮箱</a>" + "&nbsp;&nbsp;<a href='/index.html'>返回后台首页</a>";
 	var result = new Array(titleC, headerC, contentC);
-	console.log(result);
-	return result;
+	showInfo(result);
 }
 
 function mailPwdOk() {
@@ -150,10 +131,30 @@ function mailPwdOk() {
 		"如果没有收到，请稍等片刻或者查看“垃圾箱”或“广告邮件”查找" + "<br>" +
 		"您可以" + "&nbsp;<a href='" + mailUrl + "' target='_blank'>登录邮箱</a>" + "&nbsp;&nbsp;<a href='/'>返回网站首页</a>";
 	var result = new Array(titleC, headerC, contentC, user);
-	console.log(result);
-	return result;
+	showInfo(result);
 }
 
+
+function showInfo(result) {
+	var title = document.getElementById("title");
+	if (result.length == 3) {
+		var name = result[3];
+	} else {
+		var name = getCookie('user');
+	}
+
+	var header = document.getElementById("header");
+	var content = document.getElementById("content");
+	console.log(result);
+	title.innerText = result[0];
+	header.innerText = result[1];
+	content.innerHTML = result[2];
+	if (name === null) {
+		name = "用户"
+	}
+	var user = document.getElementById("user");
+	user.innerText = name;
+}
 
 function setTimes() {
 	var date = NOW();
