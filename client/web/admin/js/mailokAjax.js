@@ -27,7 +27,6 @@ function main() {
 		name = result[3];
 	}
 
-
 	console.log(result);
 	title.innerText = result[0];
 	header.innerText = result[1];
@@ -61,6 +60,9 @@ function mailCheck() {
 				var contentC = "您提交的邮箱已经和您的账号绑定成功！<br>" +
 					"您可以通过邮箱进行重置密码等操作，请牢记。" + "<br>" +
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
+				var result = new Array(titleC, headerC, contentC);
+				console.log(result);
+				return result;
 			} else {
 				alert("错误#" + data.ststus + "," + data.msg);
 			}
@@ -94,6 +96,9 @@ function mailPwdCheck() {
 					"可能是账号信息填写错误，或者链接已过期" + "<br>" + "<br>" +
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='login.html'>登录</a>" +
 					"&nbsp;<a href='repassword.html'>忘记用户名或密码</a>";
+				var result = new Array(titleC, headerC, contentC);
+				console.log(result);
+				return result;
 			}
 		}
 	});
