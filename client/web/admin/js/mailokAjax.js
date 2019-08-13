@@ -51,7 +51,7 @@ function mailCheck() {
 		datatype: "json",
 		// contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		contentType: 'application/json; charset=UTF-8',
-		data: JSON.stringify(jsons),
+		data: JSON.stringify(data),
 		success: function(data) {
 			console.log(data);
 			if (data.status == "200") {
@@ -80,7 +80,7 @@ function mailPwdCheck() {
 		datatype: "json",
 		// contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		contentType: 'application/json; charset=UTF-8',
-		data: JSON.stringify(jsons),
+		data: JSON.stringify(data),
 		success: function(data) {
 			console.log(data);
 			if (data.status == "200") {
