@@ -322,3 +322,7 @@
 	text-overflow: ellipsis;
 }
  */
+
+.email{
+	display: none;
+}
