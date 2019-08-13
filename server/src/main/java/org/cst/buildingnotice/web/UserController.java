@@ -75,6 +75,7 @@ public class UserController {
 			}
 		}
 
+		// TODO up / low char is same?
 		List<User> userList = userService.getUserByName(name);
 		if (userList.size() != 0) {
 			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "用户名已存在！");
@@ -486,6 +487,16 @@ public class UserController {
 			return ExceptionUtil.getMsgMap(HttpStatus.UNAUTHORIZED, "Token 失效！");
 		}
 		
+		if (user.getEmail() != null && user.getEmail().indexOf(";") == -1) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "已绑定邮箱！");
+		}
+		
+		email = email.toLowerCase();
+		List<User> users = userService.getUserByEmail(email);
+		if (!users.isEmpty()) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "此邮箱已绑定其他账户！");
+		}
+		
 		List<String> codeList = SecurityUtil.codeEmail(userId, email);
 		if (!EmailUtil.sendVerify(email, user.getName(), Config.EMAIL_VERIFY_URL 
 				+ StringUtil.string2Hex(codeList.get(0)))) {
@@ -547,6 +558,11 @@ public class UserController {
 		int sepIndex = email.indexOf(";");
 		if (sepIndex == -1) {
 			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "Code 失效！");
+		}
+		
+		List<User> users = userService.getUserByEmail(email.substring(0, sepIndex));
+		if (!users.isEmpty()) {
+			return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "Code 失效！");
 		}
 		
 		Boolean verifyFlag = SecurityUtil.verifyCodeEmail(code, 
