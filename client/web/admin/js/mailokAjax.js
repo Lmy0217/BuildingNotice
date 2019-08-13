@@ -139,7 +139,7 @@ function mailPwdOk() {
 
 function showInfo(result) {
 	var title = document.getElementById("title");
-	if (result.length == 3) {
+	if (result.length == 4) {
 		var name = result[3];
 	} else {
 		var name = getCookie('user');
