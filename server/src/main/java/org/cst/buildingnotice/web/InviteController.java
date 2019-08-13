@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.cst.buildingnotice.config.Config;
 import org.cst.buildingnotice.entity.Invite;
@@ -43,6 +44,19 @@ public class InviteController {
 			HttpServletRequest request, Model model) {
 		
 		System.out.println(jsonstring);
+		
+		HttpSession session = request.getSession();
+		Object email_timestamp = session.getAttribute("invite_create_timestamp");
+		long timestamp = System.currentTimeMillis();
+		if (email_timestamp == null) {
+			session.setAttribute("invite_create_timestamp", timestamp);
+		} else {
+			if (timestamp < (Long) email_timestamp + Config.GAP_INVITE_CREATE) {
+				return ExceptionUtil.getMsgMap(HttpStatus.FORBIDDEN, "两次生成邀请码时间间隔太短！");
+			} else {
+				session.setAttribute("invite_create_timestamp", timestamp);
+			}
+		}
 		
 		JSONObject json = null;
 		try {

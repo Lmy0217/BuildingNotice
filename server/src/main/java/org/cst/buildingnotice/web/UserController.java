@@ -439,14 +439,6 @@ public class UserController {
 		
 		System.out.println(jsonstring);
 		
-		JSONObject json = null;
-		try {
-			json = JSONObject.parseObject(jsonstring);
-		} catch (JSONException e) {
-			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
-		}
-		
-		// TODO more test, maybe not work
 		HttpSession session = request.getSession();
 		Object email_timestamp = session.getAttribute("email_timestamp");
 		long timestamp = System.currentTimeMillis();
@@ -458,6 +450,13 @@ public class UserController {
 			} else {
 				session.setAttribute("email_timestamp", timestamp);
 			}
+		}
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
 		}
 		
 		String hexToken = json.getString("token");
@@ -597,14 +596,6 @@ public class UserController {
 		
 		System.out.println(jsonstring);
 		
-		JSONObject json = null;
-		try {
-			json = JSONObject.parseObject(jsonstring);
-		} catch (JSONException e) {
-			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
-		}
-		
-		// TODO more test, maybe not work
 		HttpSession session = request.getSession();
 		Object email_timestamp = session.getAttribute("email_timestamp");
 		long timestamp = System.currentTimeMillis();
@@ -616,6 +607,13 @@ public class UserController {
 			} else {
 				session.setAttribute("email_timestamp", timestamp);
 			}
+		}
+		
+		JSONObject json = null;
+		try {
+			json = JSONObject.parseObject(jsonstring);
+		} catch (JSONException e) {
+			return ExceptionUtil.getMsgMap(HttpStatus.INTERNAL_SERVER_ERROR, "Json 转换错误！");
 		}
 		
 		String name = json.getString("name");

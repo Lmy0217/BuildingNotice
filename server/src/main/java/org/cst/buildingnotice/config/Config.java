@@ -45,6 +45,7 @@ public class Config {
 	public final static String RESET_VERIFY_URL = ROOT_HOST + "/admin/mailok.html?fc=4&verify=";
 	
 	public final static long GAP_TOKEN_FALSE = 3 * 24 * 60 * 60 * 1000;
+	public final static long GAP_INVITE_CREATE = 10 * 1000;
 	public final static long GAP_EMAIL_SEND = 60 * 1000;
 	public final static long GAP_EMAIL_VERIFY_FALSE = 3 * 60 * 60 * 1000;
 	public final static long GAP_RESET_VERIFY_FALSE = 3 * 60 * 60 * 1000;
