@@ -13,13 +13,10 @@ function main() {
 		result = mailCheck();
 	} else if (funType == 3) {
 		result = mailPwdOk();
-		name = result[3];
 	} else if (funType == 4) {
 		result = mailPwdCheck();
-		name = result[3];
 	} else if (funType == 5) {
 		result = mailPwdCheck();
-		name = result[3];
 	}
 }
 
