@@ -44,7 +44,7 @@ function mailCheck() {
 				var headerC = "邮箱绑定成功！";
 				var contentC = "您提交的邮箱已经和您的账号绑定成功！<br>" +
 					"您可以通过邮箱进行重置密码等操作，请牢记。" + "<br>" +
-					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
+					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='index.html'>返回后台首页</a>";
 				var result = new Array(titleC, headerC, contentC);
 				document.cookie = setCookie("email", 1, "3");
 				showInfo(result);
@@ -55,7 +55,7 @@ function mailCheck() {
 					"请检查您的账号或密保邮箱，可能是账号信息填写错误，或者链接已过期。" + "<br>" +
 					"错误代码#" + data.status + "，错误信息：" + data.msg + "<br>" +
 					"您可以凭借此信息咨询管理员。" + "<br>" +
-					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
+					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='index.html'>返回后台首页</a>";
 				var result = new Array(titleC, headerC, contentC);
 				showInfo(result);
 			}
@@ -108,7 +108,7 @@ function mailOk() {
 	var contentC = "您提交的邮箱是：" + email + "<br>" +
 		"请前往邮箱查看" + "<br>" +
 		"如果没有收到，请稍等片刻或者查看“垃圾箱”或“广告邮件”查找" + "<br>" +
-		"您可以" + "&nbsp;<a href='" + mailUrl + "' target='_blank'>登录邮箱</a>" + "&nbsp;&nbsp;<a href='/index.html'>返回后台首页</a>";
+		"您可以" + "&nbsp;<a href='" + mailUrl + "' target='_blank'>登录邮箱</a>" + "&nbsp;&nbsp;<a href='index.html'>返回后台首页</a>";
 	var result = new Array(titleC, headerC, contentC);
 	showInfo(result);
 }
