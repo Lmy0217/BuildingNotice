@@ -620,8 +620,8 @@ public class UserController {
 		
 		String name = json.getString("name");
 		String email = json.getString("email");
-		if (name.length() == 0) name = null;
-		if (email.length() == 0) email = null;
+		if (name == null || name.length() == 0) name = null;
+		if (email == null || email.length() == 0) email = null;
 		
 		if (name == null && email == null) {
 			return ExceptionUtil.getMsgMap(HttpStatus.BAD_REQUEST, "缺少必要参数！");
