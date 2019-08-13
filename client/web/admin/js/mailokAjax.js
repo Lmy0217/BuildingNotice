@@ -1,7 +1,7 @@
 var funType = GetUrlParam("fc");
 
 window.onload = function() {
-	verification();
+	// verification();
 	setTimes();
 	main();
 }
@@ -9,20 +9,95 @@ window.onload = function() {
 function main(){
 	var title = document.getElementById("title");
 	var name = getCookie('user');
-	var user = document.getElementById("user");
-	user.innerText = name;
 	var header = document.getElementById("header");
 	var content = document.getElementById("content");
 	
 	if (funType == 1) {
 		result=mailOk();
+	}elseif(funType==2){
+		result=mailCheck();
+	}elseif(funType==3){
+		result=mailPwdOk();
+		name=result[3];
+	}elseif(funType==4){
+		result=mailPwdCheck();
+		name=result[3];
+	}elseif(funType==5){
+		result=mailPwdCheck();
+		name=result[3];
 	}
+	
+	
 	console.log(result);
 	title.innerText=result[0];
 	header.innerText=result[1];
 	content.innerHTML=result[2];
+	if(name===null){
+		name="用户"
+	}
+	var user = document.getElementById("user");
+	user.innerText = name;
 }
 
+function mailCheck(){
+	var code = GetUrlParam("verify");
+	var data = {
+		code: code,
+	};
+	$.ajax({
+		url: verifyEmailUrl,
+		// cache: false,
+		type: "post",
+		datatype: "json",
+		// contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		contentType: 'application/json; charset=UTF-8',
+		data: JSON.stringify(jsons),
+		success: function(data) {
+			console.log(data);
+			if (data.status == "200") {
+				// window.location.href = "index.html";
+				var titleC = "恭喜，邮箱绑定成功！";
+				var headerC="邮箱绑定成功！";
+				var contentC = "您提交的邮箱已经和您的账号绑定成功！<br>" +
+				"您可以通过邮箱进行重置密码等操作，请牢记。"+"<br>" +
+				"现在您可以"+"&nbsp;"+"&nbsp;<a href='/'>返回网站首页</a>"+"&nbsp;<a href='/index.html'>返回后台首页</a>";
+			} else {
+				alert("错误#"+data.ststus+","+data.msg);
+			}
+		}
+	});
+}
+
+function mailPwdCheck(){
+	var code = GetUrlParam("verify");
+	var data = {
+		code: code,
+	};
+	$.ajax({
+		url: verifyPwdUrl,
+		// cache: false,
+		type: "post",
+		datatype: "json",
+		// contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		contentType: 'application/json; charset=UTF-8',
+		data: JSON.stringify(jsons),
+		success: function(data) {
+			console.log(data);
+			if (data.status == "200"){
+				console.log("验证成功");
+				document.cookie = setCookie("verify", data.code, "1");
+				window.location.href = "changepassword.html";
+			}
+			else {				
+				var titleC = "错误，验证失败！";
+				var headerC="密保邮箱验证失败！";
+				var contentC = "请检查您的账号或密保邮箱！<br>" +
+				"可能是账号信息填写错误，或者链接已过期"+"<br>" +"<br>" +
+				"现在您可以"+"&nbsp;"+"&nbsp;<a href='/'>返回网站首页</a>"+"&nbsp;<a href='login.html'>登录</a>"+"&nbsp;<a href='repassword.html'>忘记用户名或密码</a>";
+			}
+		}
+	});
+}
 
 function mailOk() {
 	var email = GetUrlParam("email");
@@ -36,6 +111,30 @@ function mailOk() {
 	"如果没有收到，请稍等片刻或者查看“垃圾箱”或“广告邮件”查找"+"<br>"+
 	"您可以"+"&nbsp;<a href='"+mailUrl+"' target='_blank'>登录邮箱</a>"+"&nbsp;&nbsp;<a href='/index.html'>返回后台首页</a>";
 	var result=new Array(titleC, headerC, contentC);
+	console.log(result);
+	return result;
+}
+
+function mailPwdOk(){
+	var user = GetUrlParam("name");
+	var email = GetUrlParam("email");
+	if(user==0){
+		user="用户";
+	}
+	if(email==0){
+		var mailUrl = "https://www.baidu.com/s?ie=utf-8&tn=baidu&wd="+"登录邮箱";
+	}else{
+		var arr = email.split('@'); //两部分
+		var mailName=arr[1].split('.');
+		var mailUrl = "https://www.baidu.com/s?ie=utf-8&tn=baidu&wd=" + mailName[0] + "邮箱登录";
+	}
+	var titleC = "邮件发送成功";
+	var headerC=titleC;
+	var contentC = "您提交的邮箱是：" + email + "<br>" +
+	"请前往密保邮箱查看"+"<br>" +
+	"如果没有收到，请稍等片刻或者查看“垃圾箱”或“广告邮件”查找"+"<br>"+
+	"您可以"+"&nbsp;<a href='"+mailUrl+"' target='_blank'>登录邮箱</a>"+"&nbsp;&nbsp;<a href='/'>返回网站首页</a>";
+	var result=new Array(titleC, headerC, contentC,user);
 	console.log(result);
 	return result;
 }
