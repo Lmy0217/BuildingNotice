@@ -13,6 +13,7 @@ import org.cst.buildingnotice.config.Config;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
@@ -45,10 +46,6 @@ public class EmailUtil {
              
             StringBuilder builder = new StringBuilder();
             builder.append(emailContent);
-//            builder.append("<br/><br/>此致<br/>"
-//                    + "<a style=\"text-decoration:none;color:#5bc0eb;\" href=\"" 
-//                    + Config.ROOT_HOST + "\"><strong>" 
-//                    + Config.NAME_TEAM + "</strong></a><br/>");
             builder.append("<br/><br/>此致<br/>" + Config.NAME_TEAM + "<br/>" + Config.ROOT_HOST + "/<br/>");
             
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -80,7 +77,7 @@ public class EmailUtil {
     }
     
     public static boolean sendTemplate(String toEmailAddress, String title, 
-    		String depict, String name, String link) {
+    		String depict, String name, String link, long time) {
     	
     	StringBuilder builder = new StringBuilder();
     	builder.append(name + "，<br/>");
@@ -92,6 +89,9 @@ public class EmailUtil {
     	builder.append("您只需点击下面的链接即可" + title + "：<br/>");
     	builder.append("<a href=\"" + link + "\">" + link + "</a><br/>");
     	builder.append("(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)<br/>");
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis() + time);
+    	builder.append("**注意：该链接在 " + dateFormat.format(date) + " 之前有效**<br/>");
     	builder.append("感谢您的访问，祝您使用愉快！");
     	
     	return sendEmail(toEmailAddress, title, builder.toString());
@@ -99,11 +99,11 @@ public class EmailUtil {
     
     public static boolean sendVerify(String toEmailAddress, String name, String verifyLink) {
     	
-    	return sendTemplate(toEmailAddress, "验证邮箱", "用户填写邮箱使用了这个邮箱地址", name, verifyLink);
+    	return sendTemplate(toEmailAddress, "验证邮箱", "用户填写邮箱使用了这个邮箱地址", name, verifyLink, Config.GAP_EMAIL_VERIFY_FALSE);
     }
     
     public static boolean sendReset(String toEmailAddress, String name, String resetLink) {
     	
-    	return sendTemplate(toEmailAddress, "重置密码", "用户绑定了这个邮箱并正在进行重置密码操作", name, resetLink);
+    	return sendTemplate(toEmailAddress, "重置密码", "用户绑定了这个邮箱并正在进行重置密码操作", name, resetLink, Config.GAP_RESET_VERIFY_FALSE);
     }
 }
