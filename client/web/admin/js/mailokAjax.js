@@ -151,7 +151,7 @@ function showInfo(result) {
 	title.innerText = result[0];
 	header.innerText = result[1];
 	content.innerHTML = result[2];
-	if (name === null) {
+	if (name === null||name===undefined) {
 		name = "用户"
 	}
 	var user = document.getElementById("user");
