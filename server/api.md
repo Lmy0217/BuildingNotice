@@ -146,10 +146,8 @@
 
 ## **发送邮箱验证邮件**
 发送邮箱验证邮件。发送时，请使用 HTTP POST 方式
-
 #### API地址
 [POST] /user/email/send
-
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -167,10 +165,8 @@
 
 ## **邮箱验证**
 邮箱验证。验证时，请使用 HTTP POST 方式
-
 #### API地址
 [POST] /user/email/verify
-
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -189,7 +185,6 @@
 发送重置密码邮件。发送时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/reset/send
-
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -207,10 +202,8 @@
 
 ## **验证重置密码邮件**
 验证重置密码邮件。验证时，请使用 HTTP POST 方式
-
 #### API地址
 [POST] /user/reset/verify
-
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -230,7 +223,6 @@
 重置密码。重置时，请使用 HTTP POST 方式
 #### API地址
 [POST] /user/reset/action
-
 #### POST参数 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -358,9 +350,7 @@
 |参数|类型|说明|
 |-|-|-|
 |json|String|(必填) Json 字符串|
-
 Json 字符串
-
 |参数|类型|说明|
 |-|-|-|
 |token|String|(必填) 令牌|
@@ -418,7 +408,6 @@ Json 字符串
 |-|-|-|
 |token|String|(必填) 令牌|
 |ids|List (Integer)|(必填) 报告 Id 列表|
-
 #### 成功返回数据 (Json)
 |参数|类型|说明|
 |-|-|-|
@@ -438,15 +427,12 @@ Json 字符串
 |参数|类型|说明|
 |-|-|-|
 |json|String|(必填) Json 字符串|
-
 Json 字符串
-
 |参数|类型|说明|
 |-|-|-|
 |token|String|(必填) 令牌|
 |type|Integer|(选填) 报告类型|
 |ids|List (Integer)|(选填) 报告 Id 列表|
-
 #### 成功返回数据 (非Json)
 |参数|类型|说明|
 |-|-|-|
