@@ -147,8 +147,6 @@
 ## **发送邮箱验证邮件**
 发送邮箱验证邮件。发送时，请使用 HTTP POST 方式
 
-
-
 #### API地址
 [POST] /user/email/send
 
@@ -169,17 +167,6 @@
 
 ## **邮箱验证**
 邮箱验证。验证时，请使用 HTTP POST 方式
-
-#### 传入地址
-
-website+/admin/mailok.html?fc=2&verify=code
-
-#### 参数说明
-|参数|值|说明|
-|-|-|-|
-|fc|2|(必填) 方法代号|
-|code|（可变）|(必填) 邮箱验证代码|
-
 
 #### API地址
 [POST] /user/email/verify
@@ -220,16 +207,6 @@ website+/admin/mailok.html?fc=2&verify=code
 
 ## **验证重置密码邮件**
 验证重置密码邮件。验证时，请使用 HTTP POST 方式
-
-#### 传入地址
-
-website+/admin/mailok.html?fc=4&verify=code
-
-#### 参数说明
-| 参数 | 值       | 说明            |
-| ---- | -------- | --------------- |
-| fc   | 4        | (必填) 方法代号 |
-| code | （可变） | (必填) 验证代码 |
 
 #### API地址
 [POST] /user/reset/verify
