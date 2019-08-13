@@ -117,6 +117,7 @@ function mailPwdOk() {
 		user = "用户";
 	}
 	if (email == 0) {
+		email="暂无";
 		var mailUrl = "https://www.baidu.com/s?ie=utf-8&tn=baidu&wd=" + "登录邮箱";
 	} else {
 		var arr = email.split('@'); //两部分
