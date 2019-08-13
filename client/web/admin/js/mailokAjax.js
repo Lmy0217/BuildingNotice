@@ -61,6 +61,7 @@ function mailCheck() {
 					"您可以通过邮箱进行重置密码等操作，请牢记。" + "<br>" +
 					"现在您可以" + "&nbsp;" + "&nbsp;<a href='/'>返回网站首页</a>" + "&nbsp;<a href='/index.html'>返回后台首页</a>";
 				var result = new Array(titleC, headerC, contentC);
+				document.cookie = setCookie("email", 1, "3");
 				console.log(result);
 				return result;
 			} else {
