@@ -54,7 +54,8 @@
 				var osName = getOsInfo();
 				console.log(osName);
 				document.getElementById('imei').value = osName;
-				document.getElementById('apkdown').href = apkdownUrl;
+				var name = getCookie('user');
+				document.getElementById("user").innerText=name;
 			}			
 
 			function chkvalue(txt, name) {
