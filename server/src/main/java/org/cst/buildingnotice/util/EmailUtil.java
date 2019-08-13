@@ -13,7 +13,6 @@ import org.cst.buildingnotice.config.Config;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
