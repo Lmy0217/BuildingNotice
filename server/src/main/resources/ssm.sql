@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 139.199.129.48_3306
+ Source Server         : 49.234.178.101_3306
  Source Server Type    : MariaDB
- Source Server Version : 100213
- Source Host           : 139.199.129.48:3306
+ Source Server Version : 100225
+ Source Host           : 49.234.178.101:3306
  Source Schema         : ssm
 
  Target Server Type    : MariaDB
- Target Server Version : 100213
+ Target Server Version : 100225
  File Encoding         : 65001
 
- Date: 19/07/2019 22:12:34
+ Date: 14/08/2019 20:37:12
 */
 
 SET NAMES utf8mb4;
@@ -170,9 +170,11 @@ CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `pwd` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+  `pwdstatus` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码状态',
   `salt` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '盐',
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '令牌',
   `role` int(11) NOT NULL DEFAULT 0 COMMENT '权限',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件地址',
   `device` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备号',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
@@ -181,8 +183,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (2, 'admin', '0c8b0c323913c23858abd25d518c5646bc0ee5ae856a049665dd89db362a8c7c', 'a456a72721b7c2418072602dd7b97281', NULL, 10, NULL, 0);
-INSERT INTO `user` VALUES (3, 'myluo', '6a37889b791dc510c8f644c9d0e3744c65ea4cf82f6eb95ff3e19756625e9af8', '608a7ade2d1024c22adf1ed4d314fc6e', NULL, 10, NULL, 0);
-INSERT INTO `user` VALUES (4, 'test', 'e83721588f516e483306bd64b4adfd9c2395131a323b43d5f93207df92abfaf8', '5eaf0577f8ff3db68f39fe0997c781e2', NULL, 10, NULL, 0);
+INSERT INTO `user` VALUES (2, 'admin', 'e2657513976719c2b57e7836e0c74b348d30635f8561d6c962b935c0cc1396b8', NULL, '5c9a4009958750c1c1999b293b2310a2', 'e1615ada31f3867cc4c956014d7e7decaf10c2494b32333be00fabf951ebf64d3b31353634383032323038363739', 10, NULL, NULL, 0);
+INSERT INTO `user` VALUES (3, 'myluo', 'ac461aeb630e16cc54decee122c9113ff0c779d257e6d39f87c5ffa5d1fe0c4e', NULL, '932445cb165ae89febe09b085962d852', 'b061e7cf4d876742f27fce47510ccc5c0378e6e19ae4e32df46df4cdd03e6a263b31353636303435343137363331', 10, 'lmy0217@126.com', NULL, 0);
+INSERT INTO `user` VALUES (4, 'test', 'f1e68b18c93390b23051087bdc922d37f192c361b2cc474e33290cc364315939', NULL, 'f1c99abd6ac9991a0994bf2d93a10d79', '03b5c8bea3c6283116c37eee71e386a6cde31031aa866e65e3377dbb4b5e91aa3b31353635393535323037333236', 10, 'rorwey@163.com', NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
