@@ -1,7 +1,7 @@
 # Building Notice Client
 
 ## 目录结构
-
+```
 └-------
   ├ infoaAcquisition
   |   └ 客户端开发主体
@@ -12,4 +12,4 @@
   ├ web
   |  └ 网页版本，目前主要用于展示界面
   └ README.md
-  
+```
